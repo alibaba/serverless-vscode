@@ -9,7 +9,7 @@ export class RemoteResourceProvider implements vscode.TreeDataProvider<vscode.Tr
   _onDidChangeTreeData: vscode.EventEmitter<Resource | undefined> = new vscode.EventEmitter<Resource | undefined>();
   onDidChangeTreeData: vscode.Event<Resource | undefined> = this._onDidChangeTreeData.event;
   functionComputeService: FunctionComputeService = new FunctionComputeService();
-  
+
   refresh(): void {
     this._onDidChangeTreeData.fire();
   }

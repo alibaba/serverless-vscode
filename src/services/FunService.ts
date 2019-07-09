@@ -47,7 +47,7 @@ export class FunService {
       const workerTerminal = terminalService.getFunctionComputeWorkderTerminal();
       command = `open http://localhost:8000/2016-08-15/proxy/${serviceName}/${functionName}/`;
       workerTerminal.sendText(command);
-    }, 2000); 
+    }, 2000);
 
     terminal.show();
   }
@@ -56,12 +56,12 @@ export class FunService {
     const terminal = terminalService.getFunctionComputeTerminal();
     let command = `fun local start -d ${debugPort}`;
     terminal.sendText(command);
-    
+
     setTimeout(() => {
       (async () => {
         await open(`http://localhost:8000/2016-08-15/proxy/${serviceName}/${functionName}/`)
       })()
-    }, 2000); 
+    }, 2000);
 
     terminal.show();
   }

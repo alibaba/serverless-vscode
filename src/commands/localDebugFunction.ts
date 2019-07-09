@@ -134,7 +134,7 @@ function getDebugTypeFromLanguage(runtime: string): string {
 
 function getDebugProtocol(runtime: string): string {
   if (runtime === 'nodejs6') {
-    return 'legacy'; 
+    return 'legacy';
   }
   if (runtime === 'nodejs8') {
     return 'inspector';

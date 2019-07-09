@@ -32,5 +32,5 @@ async function process() {
   funService.deploy();
   setTimeout(() => {
     vscode.commands.executeCommand("fc.extension.remoteResource.refresh");
-  }, 5000); 
+  }, 5000);
 }

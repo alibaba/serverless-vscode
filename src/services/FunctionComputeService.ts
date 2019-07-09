@@ -119,7 +119,7 @@ export class FunctionComputeService {
       return [];
     }
     try {
-      result = await client.invokeFunction(serviceName, functionName, event, { 
+      result = await client.invokeFunction(serviceName, functionName, event, {
         'x-fc-log-type': 'Tail',
        });
     } catch (ex) {

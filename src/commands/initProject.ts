@@ -14,7 +14,7 @@ export function initProject(context: vscode.ExtensionContext) {
     }
 
 		const runtimes = ['nodejs8', 'nodejs6', 'python3', 'python2.7', 'php7.2']
-    vscode.window.showQuickPick(runtimes, { 
+    vscode.window.showQuickPick(runtimes, {
       ignoreFocusOut: true,
       placeHolder: 'Select a runtime for your function project',
       canPickMany: false,
@@ -30,7 +30,7 @@ export function initProject(context: vscode.ExtensionContext) {
         return;
       }
       const funService = new FunService(cwd);
-      
+
       // check template.yml file
       const templateFilePath = path.join(cwd, 'template.yml');
       if (isPathExists(templateFilePath)) {

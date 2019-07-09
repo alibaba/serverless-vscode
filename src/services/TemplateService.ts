@@ -120,7 +120,7 @@ export class TemplateService {
   }
   initTemplate(): boolean {
     try {
-      fs.writeFileSync(this.getTemplatePath(), 
+      fs.writeFileSync(this.getTemplatePath(),
 `ROSTemplateFormatVersion: '2015-09-01'
 Transform: 'Aliyun::Serverless-2018-04-03'
 Resources:
@@ -139,7 +139,7 @@ Resources:
     }
     return true;
   }
-}   
+}
 
 
 interface State {

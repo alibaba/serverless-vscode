@@ -23,7 +23,7 @@ export class LocalResourceProvider implements vscode.TreeDataProvider<Resource> 
     this.tplHasLoaded = false;
     this._onDidChangeTreeData.fire();
   }
-  
+
   getTreeItem(element: Resource): vscode.TreeItem {
     return element;
   }
@@ -67,7 +67,7 @@ export class LocalResourceProvider implements vscode.TreeDataProvider<Resource> 
     }
     if (!element) {
       const services = Object.entries(tpl.Resources)
-        .filter(([_, resource]) => { 
+        .filter(([_, resource]) => {
           return resource.Type === 'Aliyun::Serverless::Service'
         })
         .map(([name]) => new Resource(
@@ -91,7 +91,7 @@ export class LocalResourceProvider implements vscode.TreeDataProvider<Resource> 
     if (services.length === 0) {
       vscode.window.showInformationMessage(`Did not found service ${serviceName} in template.yml`);
       return [];
-    } 
+    }
     if (services.length > 1) {
       vscode.window.showInformationMessage(`Found more than 1 service ${serviceName} in template.yml`);
       return [];

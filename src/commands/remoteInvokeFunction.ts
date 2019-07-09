@@ -68,7 +68,7 @@ async function process(serviceName: string, functionName: string) {
   }, (progress, token) => {
     return task;
   })
-  
+
   task.then(result => {
     const { data = "", headers = {} } = result;
     channel.appendLine(data);
