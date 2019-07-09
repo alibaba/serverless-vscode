@@ -1,3 +1,4 @@
+import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as os from 'os';
 import * as path from 'path';
@@ -14,8 +15,8 @@ if (!isPathExists(confFilePath)) {
   if (createFile(confFilePath)) {
     try {
       fs.writeFileSync(confFilePath, machineId);
-    } catch (ex) {
-
+    } catch (err) {
+      vscode.window.showErrorMessage(err.message);
     }
   }
 } else {
