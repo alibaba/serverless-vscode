@@ -1,6 +1,6 @@
 # Aliyun Serverless Extension
 
-Aliyun Serverless Extension 是阿里云 Serverless 产品 [函数计算 Function Compute](https://www.aliyun.com/product/fc) 的 VSCode IDE 插件，该插件是结合了[函数计算 Fun 工具](https://github.com/aliyun/fun)以及[函数计算 SDK](https://help.aliyun.com/document_detail/53277.html) ，为用户提供 VSCode 图形化开发调试函数计算以及操作函数计算资源的工具。
+Aliyun Serverless Extension 是阿里云 Serverless 产品 [函数计算 Function Compute](https://www.aliyun.com/product/fc) 的 VSCode 插件，该插件是结合了[函数计算 Fun 工具](https://github.com/aliyun/fun)以及[函数计算 SDK](https://help.aliyun.com/document_detail/53277.html) ，为用户提供 VSCode 图形化开发调试函数计算以及操作函数计算资源的工具。
 
 通过该插件，您可以：
 - 快速地在本地初始化项目、创建函数
@@ -10,13 +10,13 @@ Aliyun Serverless Extension 是阿里云 Serverless 产品 [函数计算 Functio
 
 ## 前置需求
 如果您期望使用 Aliyun Serverless Extension 的所有功能，那么您需要确保系统中有以下组件：
-1. VSCode IDE：在 [Visual Studio Code 官网](https://code.visualstudio.com/) 中可以下载安装
+1. VSCode：在 [Visual Studio Code 官网](https://code.visualstudio.com/) 中可以下载安装
 2. 函数计算 Fun 工具以及 Docker：可以在 [aliyun/fun](https://github.com/aliyun/fun) 中根据教程安装配置 Fun 以及 Docker
 
 ## 安装插件
-1. 打开 VSCode IDE 并进入插件市场。
+1. 打开 VSCode 并进入插件市场。
 2. 在插件市场中搜索“Aliyun Serverless Extension”，查看详情并安装。
-3. 重启 VSCode IDE，左侧边栏中会展示已安装的 Aliyun Serverless Extension 插件。
+3. 重启 VSCode，左侧边栏中会展示已安装的 Aliyun Serverless Extension 插件。
 
 ## 功能介绍
 ### 绑定阿里云账户
@@ -26,11 +26,11 @@ Aliyun Serverless Extension 是阿里云 Serverless 产品 [函数计算 Functio
 ![绑定阿里云账户弹窗](https://yqfile.alicdn.com/c7f440c39fde79ef576285f63c347ce11de1cf85.png)
 绑定完成后，可以看到所绑定的阿里云账户的云端服务与函数列表。
 ![绑定阿里云账户结果](https://yqfile.alicdn.com/ea07d8e4e01ac11e9c7f07d01b07eb461b7eeb92.png)
-您可以通过切换区域 Region 来查看不同区域的服务与函数。单击云端资源面板的切换区域按钮或 VSCode IDE 下方的区域信息。
+您可以通过切换区域 Region 来查看不同区域的服务与函数。单击云端资源面板的切换区域按钮或 VSCode 下方的区域信息。
 ![切换区域](https://yqfile.alicdn.com/660f217e0f353315113ca87d6c8c6e4206b0ceb0.png)
 
 ### 创建函数
-通过 VSCode IDE，打开一个空的目录文件。单击本地资源面板中的创建函数按钮，可以在本地初始化一个函数计算项目。
+通过 VSCode，打开一个空的目录文件。单击本地资源面板中的创建函数按钮，可以在本地初始化一个函数计算项目。
 ![创建函数](https://yqfile.alicdn.com/2bf238b36a91d26d794473dcc7deec006e130124.png)
 按照导航依次输入或选择服务名称、函数名称、函数运行时、函数类型。填写完毕后，插件会自动创建函数并在本地资源面板中会展示新建的本地服务与函数。
 ![创建函数结果](https://yqfile.alicdn.com/52620740a01641dafbfc6379157467487a531992.png)
