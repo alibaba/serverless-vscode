@@ -1,12 +1,12 @@
 {
-	"Aliyun::Serverless::Service": {
-		"prefix": "Aliyun::FunctionCompute::Service",
-		"body": [
-			"${1:service}: # service name",
-			"  Type: 'Aliyun::Serverless::Service'",
+  "Aliyun::Serverless::Service": {
+    "prefix": "Aliyun::FunctionCompute::Service",
+    "body": [
+      "${1:service}: # service name",
+      "  Type: 'Aliyun::Serverless::Service'",
       "  ${2:function}: # function name",
       "    Type: 'Aliyun::Serverless::Function'",
-			"    Properties:",
+      "    Properties:",
       "      Handler: index.handler",
       "      Runtime: nodejs8",
       "      CodeUri: '${3:./}' # code uri",
@@ -242,7 +242,7 @@
       "    EventVersion: '1.0.0'",
       "    Notes: cdn events trigger test",
       "    Filter:",
-      "      Domain: ['www.taobao.com','www.tmall.com']"
+      "      Domain: ['fc.console.aliyun.com','ide.fc.aliyun.com/cn-hangzhou']"
     ],
     "description": "Aliyun::FunctionCompute::CDNTrigger"
   }
