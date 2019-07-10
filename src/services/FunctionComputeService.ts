@@ -1,5 +1,5 @@
-import * as vscode from "vscode";
-import * as fc from "@alicloud/fc2";
+import * as vscode from 'vscode';
+import * as fc from '@alicloud/fc2';
 import { getConfig } from '../utils/config';
 
 const FCClient = require('@alicloud/fc2');
@@ -12,8 +12,8 @@ export class FunctionComputeService {
       return;
     }
     let { endpoint } = config;
-    endpoint = (<string>endpoint).replace("https://", "");
-    return (<string>endpoint).substring(0, (<string>endpoint).indexOf("."));
+    endpoint = (<string>endpoint).replace('https://', '');
+    return (<string>endpoint).substring(0, (<string>endpoint).indexOf('.'));
   }
 
   getRegion(): string | undefined {
@@ -22,8 +22,8 @@ export class FunctionComputeService {
       return;
     }
     let { endpoint } = config;
-    endpoint = (<string>endpoint).substring((<string>endpoint).indexOf(".") + 1);
-    return (<string>endpoint).substring(0, (<string>endpoint).indexOf("."));
+    endpoint = (<string>endpoint).substring((<string>endpoint).indexOf('.') + 1);
+    return (<string>endpoint).substring(0, (<string>endpoint).indexOf('.'));
   }
 
   getAccessKeyId(): string | undefined {
@@ -121,7 +121,7 @@ export class FunctionComputeService {
     try {
       result = await client.invokeFunction(serviceName, functionName, event, {
         'x-fc-log-type': 'Tail',
-       });
+      });
     } catch (ex) {
       vscode.window.showErrorMessage(ex.message);
     }

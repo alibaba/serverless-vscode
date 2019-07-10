@@ -12,7 +12,7 @@ const readFile = util.promisify(fs.readFile);
 
 export function bindAccount(context: vscode.ExtensionContext) {
   context.subscriptions.push(vscode.commands.registerCommand('fc.extension.bind.account', async () => {
-    recordPageView("/bindAccount");
+    recordPageView('/bindAccount');
     await process(context).catch(vscode.window.showErrorMessage);
   }));
 }
@@ -130,6 +130,6 @@ async function process(context: vscode.ExtensionContext) {
     return;
   }
   await saveAccountInfo(state);
-  vscode.commands.executeCommand("fc.extension.remoteResource.refresh");
+  vscode.commands.executeCommand('fc.extension.remoteResource.refresh');
   vscode.commands.executeCommand('fc.extension.show.region.status');
 }

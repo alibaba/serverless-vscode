@@ -10,7 +10,8 @@ import { TemplateService } from '../services/TemplateService';
 export function gotoFunctionCode(context: vscode.ExtensionContext) {
   vscode.commands.registerCommand('fc.extension.localResource.gotoFunction', async (node: Resource) => {
     recordPageView('/gotoFunctionCode');
-    const serviceName = node.resourceProperties && node.resourceProperties.serviceName ? node.resourceProperties.serviceName : '';
+    const serviceName = node.resourceProperties && node.resourceProperties.serviceName
+      ? node.resourceProperties.serviceName : '';
     const functionName = node.label;
     await process(serviceName, functionName);
   });

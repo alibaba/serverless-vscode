@@ -26,12 +26,12 @@ export class Resource extends vscode.TreeItem {
 
   getIconName(): string {
     if (this.resourceType === ResourceType.Service) {
-      return "box.svg";
+      return 'box.svg';
     }
     if (this.resourceType === ResourceType.Function) {
-      return "function.svg";
+      return 'function.svg';
     }
-    return "";
+    return '';
   }
 
   convertResourceType2ContextValue(resourceType: ResourceType) {

@@ -8,12 +8,15 @@ import { getFunctionComputeOutputChannel } from '../utils/channel';
 import { Resource } from '../models/resource';
 
 export function remoteInvokeFunction(context: vscode.ExtensionContext) {
-  context.subscriptions.push(vscode.commands.registerCommand('fc.extension.remoteResource.remote.invoke', async (node: Resource) => {
-    recordPageView('/remoteInvoke');
-    const serviceName = node.resourceProperties && node.resourceProperties.serviceName ? node.resourceProperties.serviceName : '';
-    const functionName = node.label;
-    await process(serviceName, functionName);
-  }));
+  context.subscriptions.push(vscode.commands.registerCommand('fc.extension.remoteResource.remote.invoke',
+    async (node: Resource) => {
+      recordPageView('/remoteInvoke');
+      const serviceName = node.resourceProperties && node.resourceProperties.serviceName
+        ? node.resourceProperties.serviceName : '';
+      const functionName = node.label;
+      await process(serviceName, functionName);
+    })
+  );
 }
 
 async function process(serviceName: string, functionName: string) {
@@ -44,8 +47,9 @@ async function process(serviceName: string, functionName: string) {
   channel.clear();
   channel.show();
   channel.appendLine(`invoke remote function: ${serviceName}/${functionName} ...`);
-  channel.appendLine(`local event file path: ${<string>vscode.workspace.getConfiguration().get('aliyun.fc.remoteSource.eventFile.path')}`);
-  channel.appendLine("======================================================");
+  channel.appendLine('local event file path: '
+    + `${<string>vscode.workspace.getConfiguration().get('aliyun.fc.remoteSource.eventFile.path')}`);
+  channel.appendLine('======================================================');
 
   const task: Promise<any> = new Promise(resolve => {
     functionComputeService.invokeFunction(serviceName, functionName, event)
@@ -70,13 +74,13 @@ async function process(serviceName: string, functionName: string) {
   })
 
   task.then(result => {
-    const { data = "", headers = {} } = result;
+    const { data = '', headers = {} } = result;
     channel.appendLine(data);
-    channel.appendLine("======================================================");
-    const logInfo = headers["x-fc-log-result"];
+    channel.appendLine('======================================================');
+    const logInfo = headers['x-fc-log-result'];
     if (logInfo) {
       try {
-        channel.appendLine(Buffer.from(logInfo, "base64").toString("UTF8"));
+        channel.appendLine(Buffer.from(logInfo, 'base64').toString('UTF8'));
       } catch (ex) {
         vscode.window.showErrorMessage(ex.message);
       }

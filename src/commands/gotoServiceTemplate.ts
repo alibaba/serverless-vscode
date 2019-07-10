@@ -5,10 +5,12 @@ import { recordPageView } from '../utils/visitor';
 import { TemplateService } from '../services/TemplateService';
 
 export function gotoServiceTemplate(context: vscode.ExtensionContext) {
-  context.subscriptions.push(vscode.commands.registerCommand('fc.extension.localResource.service.gotoTemplate', async (serviceName: string) => {
-    recordPageView('/gotoServiceTemplate');
-    await process(serviceName);
-  }));
+  context.subscriptions.push(vscode.commands.registerCommand('fc.extension.localResource.service.gotoTemplate',
+    async (serviceName: string) => {
+      recordPageView('/gotoServiceTemplate');
+      await process(serviceName);
+    })
+  );
 }
 
 async function process(serviceName: string) {

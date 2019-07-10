@@ -31,6 +31,6 @@ async function process() {
   const funService = new FunService(cwd);
   funService.deploy();
   setTimeout(() => {
-    vscode.commands.executeCommand("fc.extension.remoteResource.refresh");
+    vscode.commands.executeCommand('fc.extension.remoteResource.refresh');
   }, 5000);
 }

@@ -11,21 +11,24 @@ import { TemplateService } from '../services/TemplateService';
 import { Resource } from '../models/resource';
 
 export function localDebugFunction(context: vscode.ExtensionContext) {
-  context.subscriptions.push(vscode.commands.registerCommand('fc.extension.localResource.local.invoke.debug', async (node: Resource) => {
-    recordPageView('/localDebug');
-    if (! await validateFunInstalled()) {
-      vscode.window.showInformationMessage('You should install "@alicloud/fun" first', 'Goto', 'Cancel')
-        .then(choice => {
-          if (choice === 'Goto') {
-            open(constants.FUN_INSTALL_URL);
-          }
-        });
-      return;
-    }
-    const serviceName = node.resourceProperties && node.resourceProperties.serviceName ? node.resourceProperties.serviceName : '';
-    const functionName = node.label;
-    await process(serviceName, functionName);
-  }));
+  context.subscriptions.push(vscode.commands.registerCommand('fc.extension.localResource.local.invoke.debug',
+    async (node: Resource) => {
+      recordPageView('/localDebug');
+      if (! await validateFunInstalled()) {
+        vscode.window.showInformationMessage('You should install "@alicloud/fun" first', 'Goto', 'Cancel')
+          .then(choice => {
+            if (choice === 'Goto') {
+              open(constants.FUN_INSTALL_URL);
+            }
+          });
+        return;
+      }
+      const serviceName = node.resourceProperties && node.resourceProperties.serviceName
+        ? node.resourceProperties.serviceName : '';
+      const functionName = node.label;
+      await process(serviceName, functionName);
+    })
+  );
 }
 
 async function process(serviceName: string, functionName: string) {
@@ -51,7 +54,8 @@ async function process(serviceName: string, functionName: string) {
   const launchFilePath = path.join(cwd, '.vscode','launch.json');
   const launchInfo = vscode.workspace.getConfiguration('launch', vscode.Uri.file(launchFilePath));
   const configurations = launchInfo.get('configurations');
-  let filterConfigurations = (<vscode.DebugConfiguration[]>configurations).filter(configuration => configuration.name === configurationName);
+  let filterConfigurations = (<vscode.DebugConfiguration[]>configurations)
+    .filter(configuration => configuration.name === configurationName);
   let configuration: vscode.DebugConfiguration;
   if (!filterConfigurations || !filterConfigurations.length) {
     // 生成默认 debug configuration
@@ -61,11 +65,11 @@ async function process(serviceName: string, functionName: string) {
   } else {
     configuration = filterConfigurations[0];
   }
-  let eventFilePath = "";
+  let eventFilePath = '';
   let hasHttpTrigger = false;
   if (functionInfo.Events) {
     Object.entries(functionInfo.Events).forEach(([name, resource]) => {
-      if (resource && (<any>resource).Type === "HTTP") {
+      if (resource && (<any>resource).Type === 'HTTP') {
         hasHttpTrigger = true;
       }
     })
@@ -142,7 +146,8 @@ function getDebugProtocol(runtime: string): string {
   return ''; // TODO: support other runtime;
 }
 
-function generateDebugConfiguration(serviceName: string, functionName: string, resource: TplResourceElementElement): vscode.DebugConfiguration {
+function generateDebugConfiguration(serviceName: string,
+  functionName: string, resource: TplResourceElementElement): vscode.DebugConfiguration {
   const { Properties: properties } = resource;
   let cwd = vscode.workspace.rootPath;
   if (!cwd) {
@@ -162,7 +167,8 @@ function generateDebugConfiguration(serviceName: string, functionName: string, r
   return generateDebugConfigurationItem(serviceName, functionName, properties.Runtime, localRootPath);
 }
 
-function generateDebugConfigurationItem(serviceName: string, functionName: string, runtime: string, localRoot: string): vscode.DebugConfiguration {
+function generateDebugConfigurationItem(serviceName: string,
+  functionName: string, runtime: string, localRoot: string): vscode.DebugConfiguration {
   if (runtime.indexOf('nodejs') > -1) {
     return <vscode.DebugConfiguration> {
       name: getConfigurationName(serviceName, functionName),
@@ -218,7 +224,7 @@ function addDebugConfigurationToLaunchFile(debugConfiguration: vscode.DebugConfi
   const vscodeDirPath = path.join(cwd, '.vscode');
   if (!isPathExists(vscodeDirPath)) {
     if (!createDirectory(vscodeDirPath)) {
-      vscode.window.showErrorMessage(`Create .vscode folder failed`);
+      vscode.window.showErrorMessage('Create .vscode folder failed');
       return;
     }
   }
@@ -226,7 +232,7 @@ function addDebugConfigurationToLaunchFile(debugConfiguration: vscode.DebugConfi
   if (!isPathExists(launchFilePath)) {
     // 生成默认 launch.json 文件
     if (!createLaunchFile(launchFilePath)) {
-      vscode.window.showErrorMessage(`Create launch.json failed`);
+      vscode.window.showErrorMessage('Create launch.json failed');
       return;
     }
   }

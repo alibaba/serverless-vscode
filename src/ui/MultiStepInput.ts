@@ -61,7 +61,8 @@ export class MultiStepInput {
     }
   }
 
-  async showQuickPick<T extends vscode.QuickPickItem, P extends QuickPickParameters<T>>({ title, step, totalSteps, items, activeItem, placeholder }: P) {
+  async showQuickPick<T extends vscode.QuickPickItem,
+    P extends QuickPickParameters<T>>({ title, step, totalSteps, items, activeItem, placeholder }: P) {
     const disposables: vscode.Disposable[] = [];
     try {
       return await new Promise((resolve, reject) => {
@@ -115,7 +116,7 @@ export class MultiStepInput {
         input.title = title;
         input.step = step;
         input.totalSteps = totalSteps;
-        input.value = value || "";
+        input.value = value || '';
         input.prompt = prompt;
         input.buttons = [
           ...(this.steps.length > 1 ? [vscode.QuickInputButtons.Back] : []),

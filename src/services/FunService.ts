@@ -19,7 +19,7 @@ export class FunService {
 
   deploy() {
     const terminal = terminalService.getFunctionComputeTerminal();
-    const command = `fun deploy -t ./template.yml`;
+    const command = 'fun deploy -t ./template.yml';
     terminal.sendText(command);
     terminal.show();
   }
@@ -40,7 +40,7 @@ export class FunService {
 
   localStart(serviceName: string, functionName: string) {
     const terminal = terminalService.getFunctionComputeTerminal();
-    let command = `fun local start`;
+    let command = 'fun local start';
     terminal.sendText(command);
 
     setTimeout(() => {

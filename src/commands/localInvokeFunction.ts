@@ -11,21 +11,24 @@ import { TemplateService } from '../services/TemplateService';
 import { Resource } from '../models/resource';
 
 export function localInvokeFunction(context: vscode.ExtensionContext) {
-  context.subscriptions.push(vscode.commands.registerCommand('fc.extension.localResource.local.invoke', async (node: Resource) => {
-    recordPageView('/localInvoke');
-    if (! await validateFunInstalled()) {
-      vscode.window.showInformationMessage('You should install "@alicloud/fun" first', 'Goto', 'Cancel')
-        .then(choice => {
-          if (choice === 'Goto') {
-            open(constants.FUN_INSTALL_URL);
-          }
-        });
-      return;
-    }
-    const serviceName = node.resourceProperties && node.resourceProperties.serviceName ? node.resourceProperties.serviceName : '';
-    const functionName = node.label;
-    await process(serviceName, functionName);
-  }));
+  context.subscriptions.push(vscode.commands.registerCommand('fc.extension.localResource.local.invoke',
+    async (node: Resource) => {
+      recordPageView('/localInvoke');
+      if (! await validateFunInstalled()) {
+        vscode.window.showInformationMessage('You should install "@alicloud/fun" first', 'Goto', 'Cancel')
+          .then(choice => {
+            if (choice === 'Goto') {
+              open(constants.FUN_INSTALL_URL);
+            }
+          });
+        return;
+      }
+      const serviceName = node.resourceProperties && node.resourceProperties.serviceName
+        ? node.resourceProperties.serviceName : '';
+      const functionName = node.label;
+      await process(serviceName, functionName);
+    })
+  );
 }
 
 async function process(serviceName: string, functionName: string) {
@@ -41,7 +44,7 @@ async function process(serviceName: string, functionName: string) {
   let hasHttpTrigger = false;
   if (functionInfo.Events) {
     Object.entries(functionInfo.Events).forEach(([name, resource]) => {
-      if (resource && (<any>resource).Type === "HTTP") {
+      if (resource && (<any>resource).Type === 'HTTP') {
         hasHttpTrigger = true;
       }
     })

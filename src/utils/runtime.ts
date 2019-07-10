@@ -2,37 +2,37 @@ import { isPathExists } from './file';
 import * as fs from 'fs';
 import * as path from 'path';
 
-const runtimes = ["nodejs6", "nodejs8", "python2.7", "python3", "php7.2"];
-const types = ["NORMAL", "HTTP"];
+const runtimes = ['nodejs6', 'nodejs8', 'python2.7', 'python3', 'php7.2'];
+const types = ['NORMAL', 'HTTP'];
 
 export function getHandlerFileByRuntime(runtime: string): string {
-  if (runtime.indexOf("nodejs") > -1) {
-    return "index.js";
+  if (runtime.indexOf('nodejs') > -1) {
+    return 'index.js';
   }
-  if (runtime.indexOf("python") > -1) {
-    return "index.py";
+  if (runtime.indexOf('python') > -1) {
+    return 'index.py';
   }
-  if (runtime.indexOf("java") > -1) {
-    return ""; // TODO: support java
+  if (runtime.indexOf('java') > -1) {
+    return ''; // TODO: support java
   }
-  if (runtime.indexOf("php") > -1) {
-    return "index.php";
+  if (runtime.indexOf('php') > -1) {
+    return 'index.php';
   }
-  return "";
+  return '';
 }
 
 export function getSuffix(runtime: string): string | undefined {
   if (!runtimes.includes(runtime)) {
     return;
   }
-  if (runtime.includes("nodejs")) {
-    return ".js";
+  if (runtime.includes('nodejs')) {
+    return '.js';
   }
-  if (runtime.includes("python")) {
-    return ".py";
+  if (runtime.includes('python')) {
+    return '.py';
   }
-  if (runtime.includes("php")) {
-    return ".php";
+  if (runtime.includes('php')) {
+    return '.php';
   }
   return;
 }
@@ -47,14 +47,14 @@ export function createIndexFile(type: string, runtime: string, ph: string): bool
   if (isPathExists(ph)) {
     return false;
   }
-  if (runtime.includes("nodejs")) {
-      return type === "NORMAL" ? createNodejsHelloWorldIndexFile(ph) : createNodejsHttpIndexFile(ph);
+  if (runtime.includes('nodejs')) {
+    return type === 'NORMAL' ? createNodejsHelloWorldIndexFile(ph) : createNodejsHttpIndexFile(ph);
   }
-  if (runtime.includes("python")) {
-    return type === "NORMAL" ? createPythonHelloWorldIndexFile(ph) : createPythonHttpIndexFile(ph);
+  if (runtime.includes('python')) {
+    return type === 'NORMAL' ? createPythonHelloWorldIndexFile(ph) : createPythonHttpIndexFile(ph);
   }
-  if (runtime.includes("php")) {
-    return type === "NORMAL" ? createPhpHelloWorldIndexFile(ph) : createPhpHttpIndexFile(ph);
+  if (runtime.includes('php')) {
+    return type === 'NORMAL' ? createPhpHelloWorldIndexFile(ph) : createPhpHttpIndexFile(ph);
   }
   return false;
 }

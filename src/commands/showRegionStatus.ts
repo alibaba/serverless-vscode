@@ -24,7 +24,7 @@ async function process(context: vscode.ExtensionContext) {
   let content = await readFile(accountInfoConfigPath, 'utf8');
   let config = yaml.safeLoad(content);
   let { endpoint } = config;
-  endpoint = (<string>endpoint).replace("https://", "");
+  endpoint = (<string>endpoint).replace('https://', '');
   endpoint = (<string>endpoint).substring((<string>endpoint).indexOf('.') + 1);
   const regionId = (<string>endpoint).substring(0, (<string>endpoint).indexOf('.'));
   regionStatusBarItem.text = `ALIYUN REGION: ${regionId}`;

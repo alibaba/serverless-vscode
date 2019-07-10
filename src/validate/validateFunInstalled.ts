@@ -1,4 +1,3 @@
-import * as vscode from 'vscode';
 import { cpUtils } from '../utils/cpUtils';
 
 export async function validateFunInstalled(): Promise<boolean> {

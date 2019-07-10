@@ -16,7 +16,7 @@ export class TemplateService {
   }
   async getTemplateContent(): Promise<string> {
     if (!this.templateExists()) {
-      return "";
+      return '';
     }
     const content = await readFile(this.getTemplatePath(), 'utf8');
     return content;
@@ -38,7 +38,8 @@ export class TemplateService {
     if (!tpl.Resources) {
       return null;
     }
-    const services = Object.entries(tpl.Resources).filter(([name, resource]) => name === serviceName && resource.Type === 'Aliyun::Serverless::Service' );
+    const services = Object.entries(tpl.Resources)
+      .filter(([name, resource]) => name === serviceName && resource.Type === 'Aliyun::Serverless::Service' );
     if (services.length > 0) {
       return services[0][1];
     }
@@ -52,7 +53,9 @@ export class TemplateService {
     if (!service) {
       return null;
     }
-    const functions = Object.entries(service).filter(([name, resource]) => name === functionName && (<TplResourceElementElement>resource).Type === 'Aliyun::Serverless::Function');
+    const functions = Object.entries(service)
+      .filter(([name, resource]) =>
+        name === functionName && (<TplResourceElementElement>resource).Type === 'Aliyun::Serverless::Function');
     if (functions.length > 0) {
       return functions[0][1];
     }
@@ -62,13 +65,13 @@ export class TemplateService {
     let tpl: any = await this.getTemplateContent();
     if (!tpl) {
       if (!this.initTemplate()) {
-        vscode.window.showErrorMessage("Init template fail");
+        vscode.window.showErrorMessage('Init template fail');
         return false;
       }
     }
     tpl = await this.getTemplateDefinition();
     if (!tpl) {
-      vscode.window.showErrorMessage("Template definition error");
+      vscode.window.showErrorMessage('Template definition error');
       return false;
     }
     if (!tpl.Resources) {
@@ -93,15 +96,15 @@ export class TemplateService {
         CodeUri: codeUri,
       }
     }
-    if (type === "HTTP") {
+    if (type === 'HTTP') {
       tpl.Resources[serviceName][functionName] = {
         ...tpl.Resources[serviceName][functionName],
         Events: {
           httpTrigger: {
-            Type: "HTTP",
+            Type: 'HTTP',
             Properties: {
-              AuthType: "ANONYMOUS",
-              Methods: ["GET", "POST"],
+              AuthType: 'ANONYMOUS',
+              Methods: ['GET', 'POST'],
             }
           }
         }
@@ -120,8 +123,7 @@ export class TemplateService {
   }
   initTemplate(): boolean {
     try {
-      fs.writeFileSync(this.getTemplatePath(),
-`ROSTemplateFormatVersion: '2015-09-01'
+      fs.writeFileSync(this.getTemplatePath(), `ROSTemplateFormatVersion: '2015-09-01'
 Transform: 'Aliyun::Serverless-2018-04-03'
 Resources:
 `

@@ -3,8 +3,11 @@ import * as cp from 'child_process';
 import * as os from 'os';
 
 export namespace cpUtils {
-  export async function tryExecuteCommand(outputChannel: vscode.OutputChannel | undefined, workDirectory: string | undefined, command: string, ...args: string[]): Promise<ICommandResult> {
-    return await new Promise((resolve: (res: ICommandResult) => void, reject: (e: Error) => void) => {
+  export async function tryExecuteCommand(outputChannel: vscode.OutputChannel | undefined,
+    workDirectory: string | undefined,
+    command: string, ...args: string[]): Promise<ICommandResult> {
+    return await new Promise((resolve: (res: ICommandResult) => void,
+      reject: (e: Error) => void) => {
       let output: string = '';
       let outputIncludingStderr: string = '';
       const formattedArgs: string = args.join(' ');
@@ -49,14 +52,17 @@ export namespace cpUtils {
     });
   }
 
-  export async function executeCommand(outputChannel: vscode.OutputChannel | undefined, workDirectory: string | undefined, command: string, ...args: string[]): Promise<string> {
+  export async function executeCommand(outputChannel: vscode.OutputChannel | undefined,
+    workDirectory: string | undefined,
+    command: string, ...args: string[]): Promise<string> {
     const result: ICommandResult = await tryExecuteCommand(outputChannel, workDirectory, command, ...args);
     if (result.code !== 0) {
       if (outputChannel) {
         outputChannel.show();
         throw new Error(`Fail to run ${command} command. Check output for more details`);
       } else {
-        throw new Error(`Command "${command} ${result.formattedArgs}" failed with exit code "${result.code}":${os.EOL}${result.outputIncludingStderr}`);
+        throw new Error(`Command "${command} ${result.formattedArgs}" `
+          + `failed with exit code "${result.code}":${os.EOL}${result.outputIncludingStderr}`);
       }
     } else {
       if (outputChannel) {

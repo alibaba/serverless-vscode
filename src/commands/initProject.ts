@@ -34,7 +34,8 @@ export function initProject(context: vscode.ExtensionContext) {
       // check template.yml file
       const templateFilePath = path.join(cwd, 'template.yml');
       if (isPathExists(templateFilePath)) {
-        vscode.window.showWarningMessage('This project has template.yml. Initializing the project in this case is not recommended. If you insist，please remove it first.');
+        vscode.window.showWarningMessage('This project has template.yml. '
+          + 'Initializing the project in this case is not recommended. If you insist，please remove it first.');
         return;
       }
       funService.init(runtime);

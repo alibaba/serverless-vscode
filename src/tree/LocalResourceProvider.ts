@@ -85,9 +85,9 @@ export class LocalResourceProvider implements vscode.TreeDataProvider<Resource> 
     }
     const serviceName = element.label;
     const services = Object.entries(tpl.Resources)
-        .filter(([name]) => {
-          return name === serviceName
-        })
+      .filter(([name]) => {
+        return name === serviceName
+      })
     if (services.length === 0) {
       vscode.window.showInformationMessage(`Did not found service ${serviceName} in template.yml`);
       return [];

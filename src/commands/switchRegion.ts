@@ -13,7 +13,7 @@ const readFile = util.promisify(fs.readFile);
 
 export function switchRegion(context: vscode.ExtensionContext) {
   context.subscriptions.push(vscode.commands.registerCommand('fc.extension.switch.region', async () => {
-    recordPageView("/switchRegion");
+    recordPageView('/switchRegion');
     await process(context).catch(vscode.window.showErrorMessage);
   }));
 }
@@ -31,10 +31,10 @@ async function process(context: vscode.ExtensionContext) {
 
   async function pickRegion(input: MultiStepInput, state: Partial<State>) {
     const region = await input.showQuickPick({
-      title: "Please Select A Region",
+      title: 'Please Select A Region',
       step: 1,
       totalSteps: 1,
-      placeholder: "Pick function runtime",
+      placeholder: 'Pick function runtime',
       items: FC_REGIONS.map(regionId => <vscode.QuickPickItem>{ label: regionId }),
     });
     state.regionId = (<any>region).label as string;
@@ -57,8 +57,8 @@ async function process(context: vscode.ExtensionContext) {
     let content = await readFile(accountInfoConfigPath, 'utf8');
     const config = yaml.safeLoad(content);
     let { endpoint } = config;
-    endpoint = (<string>endpoint).replace("https://", "");
-    const accountId = (<string>endpoint).substring(0, (<string>endpoint).indexOf("."));
+    endpoint = (<string>endpoint).replace('https://', '');
+    const accountId = (<string>endpoint).substring(0, (<string>endpoint).indexOf('.'));
     config.endpoint = `https://${accountId}.${state.regionId}.fc.aliyuncs.com`;
     config.sls_endpoint = `${accountId}.log.aliyuncs.com`;
     content = yaml.dump(config);
@@ -70,6 +70,6 @@ async function process(context: vscode.ExtensionContext) {
     return;
   }
   await saveRegionInfo(state);
-  vscode.commands.executeCommand("fc.extension.remoteResource.refresh");
+  vscode.commands.executeCommand('fc.extension.remoteResource.refresh');
   vscode.commands.executeCommand('fc.extension.show.region.status');
 }
