@@ -44,13 +44,16 @@ export class FunctionComputeService {
     return access_key_secret;
   }
 
-  getTimeout(): string | undefined {
+  getTimeout(): number | undefined {
     const config = getConfig();
     if (!config || !config.timeout) {
       return;
     }
-    let { timeout = '' } = config;
-    return timeout + '000';
+    let { timeout } = config;
+    if (!timeout || !Number(timeout)) {
+      return 60000; // default is 60s
+    }
+    return Number(timeout) * 1000;
   }
 
   getNewFCClient() {
