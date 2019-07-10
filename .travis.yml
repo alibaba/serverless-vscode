@@ -1,0 +1,20 @@
+sudo: true
+
+language: node_js
+
+node_js:
+  - '10'
+
+os:
+  - linux
+
+services:
+  - xvfb
+
+install:
+  - npm install
+  - npm run vscode:prepublish
+
+script:
+  - npm test --silent
+  - npm run lint

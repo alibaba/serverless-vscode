@@ -1,0 +1,249 @@
+{
+  "Aliyun::Serverless::Service": {
+    "prefix": "Aliyun::FunctionCompute::Service",
+    "body": [
+      "${1:service}: # service name",
+      "  Type: 'Aliyun::Serverless::Service'",
+      "  ${2:function}: # function name",
+      "    Type: 'Aliyun::Serverless::Function'",
+      "    Properties:",
+      "      Handler: index.handler",
+      "      Runtime: nodejs8",
+      "      CodeUri: '${3:./}' # code uri",
+      "      MemorySize: 1024",
+      "      Timeout: 15"
+    ],
+    "description": "Aliyun::Serverless::Service"
+  },
+  "Aliyun::Serverless::Function": {
+    "prefix": "Aliyun::FunctionCompute::Function",
+    "body": [
+      "${1:function}: # function name",
+      "  Type: 'Aliyun::Serverless::Function'",
+      "  Properties:",
+      "    Handler: index.handler",
+      "    Runtime: nodejs8",
+      "    CodeUri: '${2:./}' # code uri",
+      "    MemorySize: 1024",
+      "    Timeout: 15"
+    ],
+    "description": "Aliyun::Serverless::Function"
+  },
+  "Aliyun::Serverless::CustomDomain::HTTP": {
+    "prefix": "Aliyun::FunctionCompute::CustomDomain::HTTP",
+    "body": [
+      "${1:domain}: # domain name",
+      "  Type: 'Aliyun::Serverless::CustomDomain'",
+      "  Properties:",
+      "    Protocol: HTTP",
+      "    RouteConfig:",
+      "      routes:",
+      "        '/':",
+      "          ServiceName: ${2:service} # service name",
+      "          FunctionName: ${3:function} # function name"
+    ],
+    "description": "Aliyun::FunctionCompute::CustomDomain::HTTP"
+  },
+  "Aliyun::Serverless::CustomDomain::HTTPS": {
+    "prefix": "Aliyun::FunctionCompute::CustomDomain::HTTPS",
+    "body": [
+      "${1:domain}: # domain name",
+      "  Type: 'Aliyun::Serverless::CustomDomain'",
+      "  Properties:",
+      "    Protocol: HTTP,HTTPS",
+      "    CertConfig:",
+      "      CertName: '${2:CertName}'",
+      "      PrivateKey: '${3:privateKey.pem}'",
+      "      Certificate: '${4:certificate.pem}'",
+      "    RouteConfig:",
+      "      routes:",
+      "        '/':",
+      "          ServiceName: ${5:service} # service name",
+      "          FunctionName: ${6:function} # function name"
+    ],
+    "description": "Aliyun::FunctionCompute::CustomDomain::HTTPS"
+  },
+  "Aliyun::Serverless::Api": {
+    "prefix": "Aliyun::FunctionCompute::Api",
+    "body": [
+      "StageName: ${1:prod}",
+      "DefinitionUri: ${2:swagger.yml}"
+    ],
+    "description": "Aliyun::FunctionCompute::Api"
+  },
+  "Aliyun::Serverless::TableStore": {
+    "prefix": "Aliyun::FunctionCompute::TableStore",
+    "body": [
+      "${1:tablestore}: # tablestore name",
+      "  Type: 'Aliyun::Serverless::TableStore'",
+      "  Properties:",
+      "    ClusterType: HYBRID",
+      "  ${2:table}: # table name",
+      "    Type: 'Aliyun::Serverless::TableStore::Table'",
+      "    Properties:",
+      "      PrimaryKeyList:",
+      "        - Name: uid",
+      "          Type: STRING"
+    ],
+    "description": "Aliyun::Serverless::TableStore"
+  },
+  "Aliyun::Serverless::TableStore::Table": {
+    "prefix": "Aliyun::FunctionCompute::Table",
+    "body": [
+      "${1:table}: # table name",
+      "  Type: 'Aliyun::Serverless::TableStore::Table'",
+      "  Properties:",
+      "    PrimaryKeyList:",
+      "      - Name: uid",
+      "        Type: STRING"
+    ],
+    "description": "Aliyun::Serverless::TableStore::Table"
+  },
+  "Aliyun::Serverless::Log": {
+    "prefix": "Aliyun::FunctionCompute::Log",
+    "body": [
+      "${1:project}: # log project name",
+      "  Type: 'Aliyun::Serverless::Log'",
+      "  ${2:store}: # log store name",
+      "    Type: 'Aliyun::Serverless::Log::Logstore'",
+      "    Properties:",
+      "      TTL: 10",
+      "      ShardCount: 1"
+    ],
+    "description": "Aliyun::Serverless::Log"
+  },
+  "Aliyun::Serverless::Log::Logstore": {
+    "prefix": "Aliyun::FunctionCompute::Logstore",
+    "body": [
+      "${1:store}: # log store name",
+      "  Type: 'Aliyun::Serverless::Log::Logstore'",
+      "  Properties:",
+      "    TTL: 10",
+      "    ShardCount: 1"
+    ],
+    "description": "Aliyun::Serverless::Log::Logstore"
+  },
+  "Aliyun::Serverless::MNSTopic": {
+    "prefix": "Aliyun::FunctionCompute::MNSTopic",
+    "body": [
+      "${1:topic}: # mns topic name",
+      "  Type: 'Aliyun::Serverless::MNSTopic'",
+      "  Properties:",
+      "    Region: cn-shanghai",
+      "    MaximumMessageSize: 2048",
+      "    LoggingEnabled: false"
+    ],
+    "description": "Aliyun::Serverless::MNSTopic"
+  },
+  "Aliyun::FunctionCompute::TimerTrigger": {
+    "prefix": "Aliyun::FunctionCompute::TimerTrigger",
+    "body": [
+      "${1:trigger}: # trigger name",
+      "  Type: Timer",
+      "  Properties:",
+      "    CronExpression: '0 0 8 * * *' #  函数被触发的时间",
+      "    Enable: true",
+      "    Payload: 'awesome-fc' # 触发器事件本身的输入内容"
+    ],
+    "description": "Aliyun::FunctionCompute::TimerTrigger"
+  },
+  "Aliyun::FunctionCompute::HTTPTrigger": {
+    "prefix": "Aliyun::FunctionCompute::HTTPTrigger",
+    "body": [
+      "${1:trigger}: # trigger name",
+      "  Type: HTTP # trigger type",
+      "  Properties:",
+      "    AuthType: ANONYMOUS",
+      "    Methods: ['GET', 'POST', 'PUT']"
+    ],
+    "description": "Aliyun::FunctionCompute::HTTPTrigger"
+  },
+  "Aliyun::FunctionCompute::LogTrigger": {
+    "prefix": "Aliyun::FunctionCompute::LogTrigger",
+    "body": [
+      "${1:trigger}: # trigger name",
+      "  Type: Log",
+      "  Properties:",
+      "    SourceConfig:",
+      "      Logstore: logstore1 #  数据源的 Logstore 名称",
+      "    JobConfig:",
+      "      MaxRetryTime: 1 # 最大尝试次数",
+      "      TriggerInterval: 30 # 触发函数执行的间隔",
+      "    LogConfig:",
+      "      Project: testlog # 日志服务 Project 名称",
+      "      Logstore: logstore2",
+      "    Enable: true"
+    ],
+    "description": "Aliyun::FunctionCompute::LogTrigger"
+  },
+  "Aliyun::FunctionCompute::RDSTrigger": {
+    "prefix": "Aliyun::FunctionCompute::RDSTrigger",
+    "body": [
+      "${1:trigger}: # trigger name",
+      "  Type: RDS",
+      "  Properties:",
+      "    InstanceId: rm-12345799xyz # RDS 实例 ID",
+      "    SubscriptionObjects:",
+      "      - db1.table1 # 订阅对象，当前支持到表级别",
+      "    Retry: 2",
+      "    Concurrency: 1",
+      "    EventFormat: json",
+      "      TriggerInterval: 30 # 触发函数执行的间隔"
+    ],
+    "description": "Aliyun::FunctionCompute::RDSTrigger"
+  },
+  "Aliyun::FunctionCompute::MNSTrigger": {
+    "prefix": "Aliyun::FunctionCompute::MNSTrigger",
+    "body": [
+      "${1:trigger}: # trigger name",
+      "  Type: MNS",
+      "  Properties:",
+      "    TopicName: test-topic",
+      "    Region: cn-shanghai",
+      "    NotifyContentFormat: JSON",
+      "    NotifyStrategy: BACKOFF_RETRY"
+    ],
+    "description": "Aliyun::FunctionCompute::MNSTrigger"
+  },
+  "Aliyun::FunctionCompute::TableStoreTrigger": {
+    "prefix": "Aliyun::FunctionCompute::TableStoreTrigger",
+    "body": [
+      "${1:trigger}: # trigger name",
+      "  Type: TableStore",
+      "  Properties:",
+      "    InstanceName: test-inst",
+      "    TableName: test-tbl"
+    ],
+    "description": "Aliyun::FunctionCompute::TableStoreTrigger"
+  },
+  "Aliyun::FunctionCompute::OSSTrigger": {
+    "prefix": "Aliyun::FunctionCompute::OSSTrigger",
+    "body": [
+      "${1:trigger}: # trigger name",
+      "  Type: OSS",
+      "  Properties:",
+      "    BucketName: ossBucketName # oss bucket name",
+      "    Events:",
+      "      - oss:ObjectCreated:*",
+      "    Filter:",
+      "      Key:",
+      "        Prefix: source/",
+      "        Suffix: .png"
+    ],
+    "description": "Aliyun::FunctionCompute::OSSTrigger"
+  },
+  "Aliyun::FunctionCompute::CDNTrigger": {
+    "prefix": "Aliyun::FunctionCompute::CDNTrigger",
+    "body": [
+      "${1:trigger}: # trigger name",
+      "  Type: CDN",
+      "  Properties:",
+      "    EventName: LogFileCreated",
+      "    EventVersion: '1.0.0'",
+      "    Notes: cdn events trigger test",
+      "    Filter:",
+      "      Domain: ['fc.console.aliyun.com','ide.fc.aliyun.com/cn-hangzhou']"
+    ],
+    "description": "Aliyun::FunctionCompute::CDNTrigger"
+  }
+}

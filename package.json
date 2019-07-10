@@ -1,0 +1,300 @@
+{
+  "name": "aliyun-serverless-extension",
+  "displayName": "Aliyun Serverless Extension",
+  "publisher": "aliyun",
+  "icon": "media/aliyun-serverless-extension.png",
+  "description": "Aliyun Serverless Extension",
+  "version": "1.0.0",
+  "engines": {
+    "vscode": "^1.31.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/serverless-vscode"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onView:fcLocalResource",
+    "onView:fcRemoteResource",
+    "onCommand:fc.extension.service.deploy",
+    "onCommand:fc.extension.project.init",
+    "onCommand:fc.extension.bind.account",
+    "onCommand:fc.extension.switch.region"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "configurationDefaults": {
+      "[yaml]": {
+        "editor.snippetSuggestions": "inline",
+        "editor.tabSize": 2,
+        "editor.quickSuggestions": true
+      }
+    },
+    "configuration": {
+      "type": "object",
+      "title": "Aliyun Serverless Plugin Configuration",
+      "properties": {
+        "aliyun.fc.remoteSource.enable": {
+          "type": "boolean",
+          "default": true,
+          "description": "Function Compute remote resource management"
+        },
+        "aliyun.fc.remoteSource.eventFile.path": {
+          "type": "string",
+          "default": "./event.dat",
+          "description": "Function Compute remote resource event file path"
+        }
+      }
+    },
+    "commands": [
+      {
+        "command": "fc.extension.project.init",
+        "title": "FC: Init Project"
+      },
+      {
+        "command": "fc.extension.bind.account",
+        "title": "FC: Bind New Account"
+      },
+      {
+        "command": "fc.extension.switch.region",
+        "title": "FC: Switch Region"
+      },
+      {
+        "command": "fc.extension.function.create",
+        "title": "FC: Create Function",
+        "icon": {
+          "light": "media/light/plus.svg",
+          "dark": "media/dark/plus.svg"
+        }
+      },
+      {
+        "command": "fc.extension.service.deploy",
+        "title": "FC: Deploy",
+        "icon": {
+          "light": "media/light/deploy.svg",
+          "dark": "media/dark/deploy.svg"
+        }
+      },
+      {
+        "command": "fc.extension.localResource.refresh",
+        "title": "FC: Refresh",
+        "icon": {
+          "light": "media/light/refresh.svg",
+          "dark": "media/dark/refresh.svg"
+        }
+      },
+      {
+        "command": "fc.extension.localResource.local.invoke",
+        "title": "FC: Local Invoke",
+        "icon": {
+          "light": "media/light/invoke.svg",
+          "dark": "media/dark/invoke.svg"
+        }
+      },
+      {
+        "command": "fc.extension.remoteResource.remote.invoke",
+        "title": "FC: Remote Invoke",
+        "icon": {
+          "light": "media/light/invoke.svg",
+          "dark": "media/dark/invoke.svg"
+        }
+      },
+      {
+        "command": "fc.extension.remoteResource.refresh",
+        "title": "FC: Refresh",
+        "icon": {
+          "light": "media/light/refresh.svg",
+          "dark": "media/dark/refresh.svg"
+        }
+      },
+      {
+        "command": "fc.extension.localResource.local.invoke.debug",
+        "title": "FC: Local Invoke Debug",
+        "icon": {
+          "light": "media/light/debug.svg",
+          "dark": "media/dark/debug.svg"
+        }
+      },
+      {
+        "command": "fc.extension.localResource.gotoFunction",
+        "title": "FC: Goto Function",
+        "icon": {
+          "light": "media/light/code.svg",
+          "dark": "media/dark/code.svg"
+        }
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "fc-vscode-plugin",
+          "icon": "media/fc.svg",
+          "title": "ALIYUN: FUNCTION COMPUTE"
+        }
+      ]
+    },
+    "views": {
+      "fc-vscode-plugin": [
+        {
+          "id": "fcLocalResource",
+          "name": "Local Resources"
+        },
+        {
+          "id": "fcRemoteResource",
+          "name": "Remote Resources"
+        }
+      ]
+    },
+    "menus": {
+      "view/title": [
+        {
+          "command": "fc.extension.localResource.refresh",
+          "group": "navigation",
+          "when": "view == fcLocalResource"
+        },
+        {
+          "command": "fc.extension.service.deploy",
+          "group": "navigation",
+          "when": "view == fcLocalResource"
+        },
+        {
+          "command": "fc.extension.project.init",
+          "when": "view == fcLocalResource"
+        },
+        {
+          "command": "fc.extension.bind.account",
+          "when": "view == fcRemoteResource"
+        },
+        {
+          "command": "fc.extension.switch.region",
+          "when": "view == fcRemoteResource"
+        },
+        {
+          "command": "fc.extension.function.create",
+          "group": "navigation",
+          "when": "view == fcLocalResource"
+        },
+        {
+          "command": "fc.extension.remoteResource.refresh",
+          "group": "navigation",
+          "when": "view == fcRemoteResource"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "fc.extension.function.create",
+          "when": "view == fcLocalResource && viewItem == service",
+          "group": "inline"
+        },
+        {
+          "command": "fc.extension.function.create",
+          "when": "view == fcLocalResource && viewItem == service"
+        },
+        {
+          "command": "fc.extension.localResource.local.invoke",
+          "when": "view == fcLocalResource && viewItem == function",
+          "group": "inline"
+        },
+        {
+          "command": "fc.extension.localResource.local.invoke",
+          "when": "view == fcLocalResource && viewItem == function"
+        },
+        {
+          "command": "fc.extension.localResource.local.invoke.debug",
+          "when": "view == fcLocalResource && viewItem == function",
+          "group": "inline"
+        },
+        {
+          "command": "fc.extension.localResource.local.invoke.debug",
+          "when": "view == fcLocalResource && viewItem == function"
+        },
+        {
+          "command": "fc.extension.localResource.gotoFunction",
+          "when": "view == fcLocalResource && viewItem == function",
+          "group": "inline"
+        },
+        {
+          "command": "fc.extension.localResource.gotoFunction",
+          "when": "view == fcLocalResource && viewItem == function"
+        },
+        {
+          "command": "fc.extension.remoteResource.remote.invoke",
+          "when": "view == fcRemoteResource && viewItem == function",
+          "group": "inline"
+        },
+        {
+          "command": "fc.extension.remoteResource.remote.invoke",
+          "when": "view == fcRemoteResource && viewItem == function"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "fc.extension.function.create",
+          "when": "never"
+        },
+        {
+          "command": "fc.extension.localResource.refresh",
+          "when": "never"
+        },
+        {
+          "command": "fc.extension.localResource.local.invoke",
+          "when": "never"
+        },
+        {
+          "command": "fc.extension.remoteResource.remote.invoke",
+          "when": "never"
+        },
+        {
+          "command": "fc.extension.remoteResource.refresh",
+          "when": "never"
+        },
+        {
+          "command": "fc.extension.localResource.local.invoke.debug",
+          "when": "never"
+        },
+        {
+          "command": "fc.extension.localResource.gotoFunction",
+          "when": "never"
+        }
+      ]
+    },
+    "snippets": [
+      {
+        "language": "yaml",
+        "path": "./snippets.json"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "postinstall": "node ./node_modules/vscode/bin/install",
+    "test": "node ./node_modules/vscode/bin/test",
+    "lint": "./node_modules/.bin/eslint src --ext .ts"
+  },
+  "devDependencies": {
+    "@types/mocha": "^2.2.42",
+    "@types/node": "^10.14.9",
+    "@types/universal-analytics": "^0.4.2",
+    "@types/uuid": "^3.4.5",
+    "eslint": "^6.0.1",
+    "eslint-plugin-typescript": "^0.14.0",
+    "tslint": "^5.12.1",
+    "typescript": "^3.5.3",
+    "typescript-eslint-parser": "^22.0.0",
+    "vscode": "^1.1.28"
+  },
+  "dependencies": {
+    "@alicloud/fc2": "^2.1.0",
+    "@types/js-yaml": "^3.12.1",
+    "@typescript-eslint/eslint-plugin": "^1.11.0",
+    "@typescript-eslint/parser": "^1.11.0",
+    "js-yaml": "^3.13.1",
+    "open": "^6.3.0",
+    "universal-analytics": "^0.4.20",
+    "uuid": "^3.3.2"
+  }
+}
