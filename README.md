@@ -39,6 +39,13 @@ __Tips：__
 您也可以直接单击本地资源面板中服务名右侧的创建函数按钮，来为该服务创建函数。按照导航依次输入或选择函数名称、函数运行时、函数类型即可。
 ![服务创建函数](media/snapshot/create-func-under-service.png?raw=true)
 
+### 部署服务以及函数
+单击本地资源面板中的部署按钮，可以将本地的服务与函数部署到云端。
+![部署服务以及函数](media/snapshot/deploy.png?raw=true)
+部署完成后，单击云端资源面板中的刷新按钮，可以查看部署到云端的服务与函数。
+![部署服务以及函数结果](media/snapshot/deploy-result.png?raw=true)
+
+## 其余功能介绍
 ### 本地调用函数
 在本地资源面板中，单击函数名称右侧的执行按钮，可以在本地调用该函数。
 ![本地调用函数](media/snapshot/local-invoke.png?raw=true)
@@ -59,12 +66,6 @@ __注意：__
 - 若您想要调试 python 2.7 或 python 3 runtime 的函数，需要事先在插件安装 _Python_ 插件。
 - 若您想调试 php runtime 的函数，需要事先在插件安装 _PHP Debug_ 插件。
 
-### 部署服务以及函数
-单击本地资源面板中的部署按钮，可以将本地的服务与函数部署到云端。
-![部署服务以及函数](media/snapshot/deploy.png?raw=true)
-部署完成后，单击云端资源面板中的刷新按钮，可以查看部署到云端的服务与函数。
-![部署服务以及函数结果](media/snapshot/deploy-result.png?raw=true)
-
 ### 执行云端函数
 单击云端资源面板中函数右侧的执行按钮，可以执行云端函数。
 ![执行云端函数](media/snapshot/remote-invoke.png?raw=true)
@@ -73,7 +74,6 @@ __注意：__
 插件会为您在项目根目录下创建 event.dat 文件，您可以通过修改该文件设置每次调用云端函数时触发的事件信息。
 ![云端调用修改事件输入](media/snapshot/remote-invoke-event.png?raw=true)
 
-## 其他功能
 ### 跳转到模版文件定义
 [函数计算 Fun 工具](https://github.com/aliyun/fun) 通过 [YAML 格式](https://yaml.org/spec/1.1/) 的模板文件来描述 serverless 应用。通过 Aliyun Serverless Extension 创建函数时，会使用默认值自动填充模版文件。若您想修改本地服务或函数的配置，可以通过点击本地资源面板中的服务或函数名，跳转到模版文件中的定义。
 ![跳转到模版文件定义](media/snapshot/goto-template.png?raw=true)
