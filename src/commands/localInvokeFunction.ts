@@ -22,7 +22,7 @@ export function localInvokeFunction(context: vscode.ExtensionContext) {
         });
       return;
     }
-		const serviceName = node.resourceProperties && node.resourceProperties.serviceName ? node.resourceProperties.serviceName : '';
+    const serviceName = node.resourceProperties && node.resourceProperties.serviceName ? node.resourceProperties.serviceName : '';
     const functionName = node.label;
     await process(serviceName, functionName);
   }));

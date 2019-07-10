@@ -12,10 +12,10 @@ export function createFunction(context: vscode.ExtensionContext) {
   context.subscriptions.push(vscode.commands.registerCommand('fc.extension.function.create', async (node: Resource) => {
     recordPageView("/functionCreate");
     let serviceName = '';
-		if (node) {
-			serviceName = node.label;
-		}
-		await process(context, serviceName).catch(vscode.window.showErrorMessage);
+    if (node) {
+      serviceName = node.label;
+    }
+    await process(context, serviceName).catch(vscode.window.showErrorMessage);
   }));
 }
 

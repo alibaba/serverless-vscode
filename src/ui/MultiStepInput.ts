@@ -10,17 +10,17 @@ type InputStep = (input: MultiStepInput) => Thenable<InputStep | void>;
 
 interface QuickPickParameters<T extends vscode.QuickPickItem> {
   title: string;
-	step: number;
-	totalSteps: number;
-	items: T[];
-	activeItem?: T;
-	placeholder: string;
+  step: number;
+  totalSteps: number;
+  items: T[];
+  activeItem?: T;
+  placeholder: string;
 }
 
 interface InputBoxParameters {
   title: string;
-	step: number;
-	totalSteps: number;
+  step: number;
+  totalSteps: number;
   value: string,
   prompt: string;
   validate: (value: string) => Promise<string | undefined>;
@@ -72,19 +72,19 @@ export class MultiStepInput {
         input.totalSteps = totalSteps;
         input.items = items;
         input.buttons = [
-					...(this.steps.length > 1 ? [vscode.QuickInputButtons.Back] : []),
-				];
+          ...(this.steps.length > 1 ? [vscode.QuickInputButtons.Back] : []),
+        ];
         if (activeItem) {
           input.activeItems = [activeItem];
         }
         disposables.push(
           input.onDidTriggerButton(item => {
-						if (item === vscode.QuickInputButtons.Back) {
-							reject(InputFlowAction.back);
-						} else {
-							reject();
-						}
-					}),
+            if (item === vscode.QuickInputButtons.Back) {
+              reject(InputFlowAction.back);
+            } else {
+              reject();
+            }
+          }),
           input.onDidChangeSelection(items => {
             resolve(items[0]);
           }),
@@ -118,16 +118,16 @@ export class MultiStepInput {
         input.value = value || "";
         input.prompt = prompt;
         input.buttons = [
-					...(this.steps.length > 1 ? [vscode.QuickInputButtons.Back] : []),
-				];
+          ...(this.steps.length > 1 ? [vscode.QuickInputButtons.Back] : []),
+        ];
         disposables.push(
           input.onDidTriggerButton(item => {
-						if (item === vscode.QuickInputButtons.Back) {
-							reject(InputFlowAction.back);
-						} else {
-							reject();
-						}
-					}),
+            if (item === vscode.QuickInputButtons.Back) {
+              reject(InputFlowAction.back);
+            } else {
+              reject();
+            }
+          }),
           input.onDidAccept(async () => {
             const value = input.value;
             input.enabled = false;

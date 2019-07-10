@@ -16,32 +16,32 @@ import { LocalResourceProvider } from './tree/LocalResourceProvider';
 import { RemoteResourceProvider } from './tree/RemoteResourceExplorer';
 
 export function activate(context: vscode.ExtensionContext) {
-	recordPageView('/');
+  recordPageView('/');
 
-	const cwd = vscode.workspace.rootPath;
+  const cwd = vscode.workspace.rootPath;
 
-	const localResourceProvider = new LocalResourceProvider(cwd);
-	vscode.window.registerTreeDataProvider('fcLocalResource', localResourceProvider);
-	vscode.commands.registerCommand('fc.extension.localResource.refresh', () => localResourceProvider.refresh());
+  const localResourceProvider = new LocalResourceProvider(cwd);
+  vscode.window.registerTreeDataProvider('fcLocalResource', localResourceProvider);
+  vscode.commands.registerCommand('fc.extension.localResource.refresh', () => localResourceProvider.refresh());
 
-	const remoteResourceProvider = new RemoteResourceProvider();
-	vscode.window.registerTreeDataProvider('fcRemoteResource', remoteResourceProvider);
-	vscode.commands.registerCommand('fc.extension.remoteResource.refresh', () => remoteResourceProvider.refresh());
+  const remoteResourceProvider = new RemoteResourceProvider();
+  vscode.window.registerTreeDataProvider('fcRemoteResource', remoteResourceProvider);
+  vscode.commands.registerCommand('fc.extension.remoteResource.refresh', () => remoteResourceProvider.refresh());
 
-	initProject(context); // init project
-	createFunction(context); // create function
-	gotoFunctionCode(context); // goto function code
-	gotoFunctionTemplate(context); // goto function template
-	gotoServiceTemplate(context); // goto service template
-	deploy(context); // deploy
-	localInvokeFunction(context); // local invoke function
-	localDebugFunction(context); // local debug function
-	remoteInvokeFunction(context); // remote invoke function
-	bindAccount(context); // bind account
-	switchRegion(context); // switch region
-	showRegionStatus(context); // show region status
+  initProject(context); // init project
+  createFunction(context); // create function
+  gotoFunctionCode(context); // goto function code
+  gotoFunctionTemplate(context); // goto function template
+  gotoServiceTemplate(context); // goto service template
+  deploy(context); // deploy
+  localInvokeFunction(context); // local invoke function
+  localDebugFunction(context); // local debug function
+  remoteInvokeFunction(context); // remote invoke function
+  bindAccount(context); // bind account
+  switchRegion(context); // switch region
+  showRegionStatus(context); // show region status
 
-	vscode.commands.executeCommand('fc.extension.show.region.status');
+  vscode.commands.executeCommand('fc.extension.show.region.status');
 }
 
 // this method is called when your extension is deactivated

@@ -13,7 +13,7 @@ const readFile = util.promisify(fs.readFile);
 export function bindAccount(context: vscode.ExtensionContext) {
   context.subscriptions.push(vscode.commands.registerCommand('fc.extension.bind.account', async () => {
     recordPageView("/bindAccount");
-		await process(context).catch(vscode.window.showErrorMessage);
+    await process(context).catch(vscode.window.showErrorMessage);
   }));
 }
 

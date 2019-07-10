@@ -12,7 +12,7 @@
       "      CodeUri: '${3:./}' # code uri",
       "      MemorySize: 1024",
       "      Timeout: 15"
-		],
+    ],
     "description": "Aliyun::Serverless::Service"
   },
   "Aliyun::Serverless::Function": {
