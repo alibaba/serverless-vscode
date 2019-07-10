@@ -272,7 +272,8 @@
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
     "postinstall": "node ./node_modules/vscode/bin/install",
-    "test": "npm run compile && node ./node_modules/vscode/bin/test"
+    "test": "node ./node_modules/vscode/bin/test",
+    "lint": "./node_modules/.bin/eslint src --ext .ts"
   },
   "devDependencies": {
     "@types/mocha": "^2.2.42",
