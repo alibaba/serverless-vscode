@@ -31,11 +31,13 @@ export class FunService {
     terminal.show();
   }
 
-  localInvokeDebug(serviceName: string, functionName: string, debugPort: string, eventFilePath: string) {
+  localInvokeDebug(serviceName: string, functionName: string,
+    debugPort: string, eventFilePath: string): vscode.Terminal {
     const terminal =  terminalService.getFunctionComputeTerminal();
     const command = `fun local invoke ${serviceName}/${functionName} -d ${debugPort} -e ${eventFilePath}`
     terminal.sendText(command);
     terminal.show();
+    return terminal;
   }
 
   localStart(serviceName: string, functionName: string) {
@@ -52,7 +54,7 @@ export class FunService {
     terminal.show();
   }
 
-  localStartDebug(serviceName: string, functionName: string, debugPort: string) {
+  localStartDebug(serviceName: string, functionName: string, debugPort: string): vscode.Terminal {
     const terminal = terminalService.getFunctionComputeTerminal();
     let command = `fun local start -d ${debugPort}`;
     terminal.sendText(command);
@@ -64,6 +66,7 @@ export class FunService {
     }, 2000);
 
     terminal.show();
+    return terminal;
   }
 
   private validateInitRumtime(runtime: string): boolean {

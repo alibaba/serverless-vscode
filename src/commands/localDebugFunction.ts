@@ -3,12 +3,15 @@ import * as path from 'path';
 import * as fs from 'fs';
 import * as open from 'open';
 import * as constants from '../utils/constants';
+import * as rt from '../utils/runtime';
 import { validateFunInstalled } from '../validate/validateFunInstalled';
 import { isPathExists, createDirectory, createLaunchFile, createEventFile } from '../utils/file';
 import { recordPageView } from '../utils/visitor';
 import { FunService } from '../services/FunService';
 import { TemplateService } from '../services/TemplateService';
 import { Resource } from '../models/resource';
+
+const debugPortSet = new Set();
 
 export function localDebugFunction(context: vscode.ExtensionContext) {
   context.subscriptions.push(vscode.commands.registerCommand('fc.extension.localResource.local.invoke.debug',
@@ -29,6 +32,12 @@ export function localDebugFunction(context: vscode.ExtensionContext) {
       await process(serviceName, functionName);
     })
   );
+  vscode.debug.onDidStartDebugSession(debugSession => {
+    debugPortSet.add(debugSession.configuration.port);
+  });
+  vscode.debug.onDidTerminateDebugSession(debugSession => {
+    debugPortSet.delete(debugSession.configuration.port);
+  });
 }
 
 async function process(serviceName: string, functionName: string) {
@@ -58,10 +67,11 @@ async function process(serviceName: string, functionName: string) {
     .filter(configuration => configuration.name === configurationName);
   let configuration: vscode.DebugConfiguration;
   if (!filterConfigurations || !filterConfigurations.length) {
-    // 生成默认 debug configuration
+    // 生成 debug configuration
     configuration = generateDebugConfiguration(serviceName, functionName, functionInfo);
-    // 将默认的 debug configuration 添加到 launch.json 中
-    addDebugConfigurationToLaunchFile(configuration);
+    // 不将 debug configuration 添加进配置文件，保证了每次都可以支持多 Session 调试
+    // 如果用户想配置可以自行在 launch.json 中配置
+    // 但是需要注意 launch.json 中配置的 port 不能重复，不然无法支持多 Session 调试
   } else {
     configuration = filterConfigurations[0];
   }
@@ -100,27 +110,71 @@ async function process(serviceName: string, functionName: string) {
   // 启动 fun local
   const funService = new FunService(cwd);
 
-  if (runtime === 'php7.2') {
+  if (rt.isPhp(runtime)) {
     vscode.debug.startDebugging(undefined, configuration);
   }
+  let terminal: vscode.Terminal;
   if (hasHttpTrigger) {
-    funService.localStartDebug(serviceName, functionName, configuration.port);
+    terminal = funService.localStartDebug(serviceName, functionName, configuration.port);
   } else {
-    funService.localInvokeDebug(serviceName, functionName, configuration.port, eventFilePath);
+    terminal = funService.localInvokeDebug(serviceName, functionName, configuration.port, eventFilePath);
   }
-  if (runtime.indexOf('python') > -1) {
-    await new Promise((resolve) => {
-      setTimeout(resolve, 4000);
+  if (rt.isNodejs(runtime) || rt.isPython(runtime)) {
+    try {
+      await untilDebuggerListening(terminal);
+      if (rt.isPython(runtime)) {
+        await new Promise((resolve) => {
+          setTimeout(() => {
+            resolve();
+          }, 3000);
+        })
+      }
+      vscode.debug.startDebugging(undefined, configuration);
+    } catch (ex) {
+      // 用户在初次下载镜像的时候关闭了 Terminal
+    }
+  }
+}
+
+async function untilDebuggerListening(terminal: vscode.Terminal) {
+  const disposables: vscode.Disposable[] = [];
+  try {
+    return await new Promise((resolve, reject) => {
+      let str = '';
+      disposables.push(
+        (<any>terminal).onDidWriteData((data: any) => {
+          str += new String(data);
+          // TODO:
+          // 目前基于日志判断镜像是否存在或 container 是否启动的方法非常不牢靠
+          // 未来需要改为 lib 方式
+          if (str.indexOf('Debugger listening on') > -1
+            || str.indexOf('Downloaded newer image') > -1
+            || str.indexOf('skip pulling image') > -1) {
+            resolve();
+          }
+        }),
+        vscode.window.onDidCloseTerminal((t: vscode.Terminal) => {
+          if (t === terminal) {
+            reject();
+          }
+        })
+      );
     });
-    vscode.debug.startDebugging(undefined, configuration);
-  }
-  if (runtime.indexOf('nodejs') > -1) {
-    vscode.debug.startDebugging(undefined, configuration);
+  } finally {
+    disposables.forEach(d => d.dispose());
   }
 }
 
 function getConfigurationName(serviceName: string, functionName: string) {
   return `fc/${serviceName}/${functionName}`;
+}
+
+function getDebugPort(): number {
+  let port = 3000;
+  while (debugPortSet.has(port)) {
+    port = 3000 + Math.floor(Math.random() * 100);
+  }
+  return port;
 }
 
 function getDebugTypeFromLanguage(runtime: string): string {
@@ -175,7 +229,7 @@ function generateDebugConfigurationItem(serviceName: string,
       type: getDebugTypeFromLanguage(runtime),
       request: 'attach',
       address: 'localhost',
-      port: 3000,
+      port: getDebugPort(),
       localRoot: localRoot,
       remoteRoot: '/code',
       protocol: getDebugProtocol(runtime),
@@ -188,7 +242,7 @@ function generateDebugConfigurationItem(serviceName: string,
       type: getDebugTypeFromLanguage(runtime),
       request: 'attach',
       host: 'localhost',
-      port: 3000,
+      port: getDebugPort(),
       pathMappings: [
         {
           localRoot: localRoot,
@@ -202,7 +256,7 @@ function generateDebugConfigurationItem(serviceName: string,
       name: getConfigurationName(serviceName, functionName),
       type: getDebugTypeFromLanguage(runtime),
       request: 'launch',
-      port: 3000,
+      port: getDebugPort(),
       stopOnEntry: false,
       pathMappings: {
         '/code': localRoot,

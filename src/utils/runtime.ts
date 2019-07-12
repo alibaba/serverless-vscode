@@ -119,3 +119,15 @@ export function createPhpHttpIndexFile(ph: string): boolean {
     return false;
   }
 }
+
+export function isPython(runtime: string): boolean {
+  return runtime.indexOf('python') > -1;
+}
+
+export function isNodejs(runtime: string): boolean {
+  return runtime.indexOf('nodejs') > -1;
+}
+
+export function isPhp(runtime: string): boolean {
+  return runtime.indexOf('php') > -1;
+}
