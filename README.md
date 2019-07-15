@@ -86,4 +86,4 @@ __注意：__
 
 欢迎感兴趣的同学加入钉钉群(钉钉群号： 21915868 )。欢迎随时提出宝贵的意见和建议，我们将会根据你们的需求不断完善，力求给大家带来更好的开发体验。
 
-<img src="https://github.com/alibaba/serverless-vscode/blob/master/media/snapshot/two-dimension-code.png?raw=true" width="200px" height="200px" />
+<img src="https://github.com/alibaba/serverless-vscode/blob/master/media/snapshot/two-dimension-code.png?raw=true" width="360px" />
