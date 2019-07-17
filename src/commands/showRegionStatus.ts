@@ -23,11 +23,12 @@ async function process(context: vscode.ExtensionContext) {
   const readFile = util.promisify(fs.readFile);
   let content = await readFile(accountInfoConfigPath, 'utf8');
   let config = yaml.safeLoad(content);
-  let { endpoint } = config;
+  let { endpoint, account_alias: accountAlias } = config;
   endpoint = (<string>endpoint).replace('https://', '');
+  const accountId = (<string>endpoint).substring(0, (<string>endpoint).indexOf('.'));
   endpoint = (<string>endpoint).substring((<string>endpoint).indexOf('.') + 1);
   const regionId = (<string>endpoint).substring(0, (<string>endpoint).indexOf('.'));
-  regionStatusBarItem.text = `ALIYUN REGION: ${regionId}`;
-  regionStatusBarItem.command = 'fc.extension.switch.region';
+  regionStatusBarItem.text = `Aliyun: ${accountAlias ? accountAlias : accountId}@${regionId}`;
+  regionStatusBarItem.command = 'fc.extension.switch.regionOrAccount';
   regionStatusBarItem.show();
 }

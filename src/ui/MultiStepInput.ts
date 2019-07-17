@@ -72,6 +72,7 @@ export class MultiStepInput {
         input.step = step;
         input.totalSteps = totalSteps;
         input.items = items;
+        input.placeholder = placeholder;
         input.buttons = [
           ...(this.steps.length > 1 ? [vscode.QuickInputButtons.Back] : []),
         ];

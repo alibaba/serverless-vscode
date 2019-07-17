@@ -10,7 +10,10 @@ import { localInvokeFunction } from './commands/localInvokeFunction';
 import { localDebugFunction } from './commands/localDebugFunction';
 import { remoteInvokeFunction } from './commands/remoteInvokeFunction';
 import { bindAccount } from './commands/bindAccount';
+import { switchAccount } from './commands/switchAccount';
 import { switchRegion } from './commands/switchRegion';
+import { switchRegionOrAccount } from './commands/switchRegionOrAccount';
+import { switchOrBindAccount } from './commands/switchOrBindAccount';
 import { showRegionStatus } from './commands/showRegionStatus';
 import { LocalResourceProvider } from './tree/LocalResourceProvider';
 import { RemoteResourceProvider } from './tree/RemoteResourceExplorer';
@@ -40,6 +43,9 @@ export function activate(context: vscode.ExtensionContext) {
   bindAccount(context); // bind account
   switchRegion(context); // switch region
   showRegionStatus(context); // show region status
+  switchRegionOrAccount(context); // switch region or account
+  switchOrBindAccount(context); // switch or bind account
+  switchAccount(context); // switch account
 
   vscode.commands.executeCommand('fc.extension.show.region.status');
 }
