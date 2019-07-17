@@ -15,6 +15,7 @@ import { switchRegion } from './commands/switchRegion';
 import { switchRegionOrAccount } from './commands/switchRegionOrAccount';
 import { switchOrBindAccount } from './commands/switchOrBindAccount';
 import { showRegionStatus } from './commands/showRegionStatus';
+import { ServerlessLensProvider } from './lens/ServerlessLensProvider';
 import { LocalResourceProvider } from './tree/LocalResourceProvider';
 import { RemoteResourceProvider } from './tree/RemoteResourceExplorer';
 
@@ -48,6 +49,8 @@ export function activate(context: vscode.ExtensionContext) {
   switchAccount(context); // switch account
 
   vscode.commands.executeCommand('fc.extension.show.region.status');
+
+  vscode.languages.registerCodeLensProvider(['javascript', 'python', 'php'], new ServerlessLensProvider(cwd));
 }
 
 // this method is called when your extension is deactivated

@@ -149,8 +149,8 @@ async function processCommand(context: vscode.ExtensionContext) {
           accessKeyId: state.accessKeyId,
           accessKeySecret: state.accessKeySecret,
         }
+        break;
       }
-      break;
     }
     if (!doFound) {
       accounts.push({

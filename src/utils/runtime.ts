@@ -131,3 +131,7 @@ export function isNodejs(runtime: string): boolean {
 export function isPhp(runtime: string): boolean {
   return runtime.indexOf('php') > -1;
 }
+
+export function isJava(runtime: string): boolean {
+  return runtime.indexOf('java') > -1;
+}
