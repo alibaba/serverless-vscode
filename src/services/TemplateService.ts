@@ -3,6 +3,10 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as yaml from 'js-yaml';
 import * as util from 'util';
+import { isJava } from '../utils/runtime';
+import { isDirectory } from '../utils/file';
+import { ALIYUN_SERVERLESS_FUNCTION_TYPE } from '../utils/constants';
+import { getSuffix } from '../utils/runtime';
 
 const readFile = util.promisify(fs.readFile);
 
@@ -13,6 +17,57 @@ export class TemplateService {
   }
   getTemplatePath(): string {
     return this.templatePath;
+  }
+  getHandlerFilePathFromFunctionInfo(rootPath: string, functionInfo: any): string {
+    if (!this.validateFunctionResource(functionInfo)) {
+      return '';
+    }
+    const {
+      Properties: {
+        CodeUri: functionCodeUri,
+        Runtime: runtime,
+        Handler: handler,
+      }
+    } = functionInfo;
+    let functionHandlerFilePath = path.join(rootPath, functionCodeUri);
+    if (isDirectory(functionHandlerFilePath)) {
+      functionHandlerFilePath = path.join(functionHandlerFilePath,
+        this.getHandlerFileName(handler, runtime));
+    }
+    return functionHandlerFilePath;
+  }
+  getHandlerFunctionNameFromFunctionInfo(functionInfo: any): string {
+    if (!this.validateFunctionResource(functionInfo)) {
+      return '';
+    }
+    const {
+      Properties: {
+        Handler: handler,
+      }
+    } = functionInfo;
+    return this.getHandlerFunctionName(handler);
+  }
+  validateFunctionResource(functionInfo: any): boolean {
+    if (!functionInfo
+    || functionInfo.Type !== ALIYUN_SERVERLESS_FUNCTION_TYPE
+    || !functionInfo.Properties
+    || !functionInfo.Properties.CodeUri
+    || !functionInfo.Properties.Runtime
+    || !functionInfo.Properties.Handler) {
+      return false;
+    }
+    return true;
+  }
+  getHandlerFileName(handler: string, runtime: string): string {
+    if (isJava(runtime)) {
+      const packageAndClass = handler.split('::')[0];
+      return `${packageAndClass.split('.').join('/')}.java`;
+    }
+    const prefix = handler.substring(0, handler.indexOf('.'));
+    return `${prefix}${getSuffix(runtime)}`;
+  }
+  getHandlerFunctionName(handler: string): string {
+    return handler.substring(handler.indexOf('.') + 1);
   }
   async getTemplateContent(): Promise<string> {
     if (!this.templateExists()) {
