@@ -67,6 +67,10 @@
         "title": "FC: Switch Region"
       },
       {
+        "command": "fc.extension.switch.account",
+        "title": "FC: Switch Account"
+      },
+      {
         "command": "fc.extension.function.create",
         "title": "FC: Create Function",
         "icon": {
@@ -170,6 +174,10 @@
         },
         {
           "command": "fc.extension.bind.account",
+          "when": "view == fcRemoteResource"
+        },
+        {
+          "command": "fc.extension.switch.account",
           "when": "view == fcRemoteResource"
         },
         {

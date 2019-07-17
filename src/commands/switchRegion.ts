@@ -10,6 +10,7 @@ import { MultiStepInput } from '../ui/MultiStepInput';
 import { recordPageView } from '../utils/visitor';
 
 const readFile = util.promisify(fs.readFile);
+const writeFile = util.promisify(fs.writeFile);
 
 export function switchRegion(context: vscode.ExtensionContext) {
   context.subscriptions.push(vscode.commands.registerCommand('fc.extension.switch.region', async () => {
@@ -49,20 +50,41 @@ async function process(context: vscode.ExtensionContext) {
   }
 
   async function saveRegionInfo(state: State) {
-    const accountInfoConfigPath = path.join(os.homedir(), '.fcli', 'config.yaml');
-    if (!isPathExists(accountInfoConfigPath)) {
+    const configPath = path.join(os.homedir(), '.fcli', 'config.yaml');
+    if (!isPathExists(configPath)) {
       vscode.window.showInformationMessage('Please Bind New Account First');
       return;
     }
-    let content = await readFile(accountInfoConfigPath, 'utf8');
+    let content = await readFile(configPath, 'utf8');
     const config = yaml.safeLoad(content);
     let { endpoint } = config;
     endpoint = (<string>endpoint).replace('https://', '');
     const accountId = (<string>endpoint).substring(0, (<string>endpoint).indexOf('.'));
     config.endpoint = `https://${accountId}.${state.regionId}.fc.aliyuncs.com`;
-    config.sls_endpoint = `${accountId}.log.aliyuncs.com`;
+    config.sls_endpoint = `${state.regionId}.log.aliyuncs.com`;
     content = yaml.dump(config);
-    fs.writeFileSync(accountInfoConfigPath, content);
+    await writeFile(configPath, content);
+
+    const funConfigFilePath = path.join(os.homedir(), '.fun', 'config.yaml');
+    let funConfig: any = {};
+    if (!isPathExists(funConfigFilePath)) {
+      if (!createFile(funConfigFilePath)) {
+        vscode.window.showErrorMessage(`Failed to create ${funConfigFilePath}`);
+        return;
+      }
+    } else {
+      content = await readFile(funConfigFilePath, 'utf8');
+      funConfig = yaml.safeLoad(content);
+    }
+    if (!funConfig) {
+      funConfig = {};
+    }
+    funConfig.context = {
+      ...funConfig.context,
+      region: state.regionId,
+    }
+    content = yaml.dump(funConfig);
+    await writeFile(funConfigFilePath, content);
   }
 
   const state = await collectRegionInfo();
