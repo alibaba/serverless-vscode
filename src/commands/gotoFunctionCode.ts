@@ -1,11 +1,12 @@
 import * as vscode from 'vscode';
+import { serverlessCommands } from '../utils/constants';
 import { isPathExists } from '../utils/file';
 import { recordPageView } from '../utils/visitor';
 import { Resource } from '../models/resource';
 import { TemplateService } from '../services/TemplateService';
 
 export function gotoFunctionCode(context: vscode.ExtensionContext) {
-  vscode.commands.registerCommand('fc.extension.localResource.gotoFunction', async (node: Resource) => {
+  vscode.commands.registerCommand(serverlessCommands.GOTO_FUNCTION_CODE.id, async (node: Resource) => {
     recordPageView('/gotoFunctionCode');
     const serviceName = node.resourceProperties && node.resourceProperties.serviceName
       ? node.resourceProperties.serviceName : '';

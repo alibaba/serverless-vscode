@@ -4,6 +4,7 @@ import * as fs from 'fs';
 import * as os from 'os';
 import * as path from 'path';
 import * as yaml from 'js-yaml';
+import { serverlessCommands } from '../utils/constants';
 import { convertAccountInfoToConfig } from '../utils/config';
 import { isPathExists } from '../utils/file';
 import { MultiStepInput } from '../ui/MultiStepInput';
@@ -13,7 +14,7 @@ const readFile = util.promisify(fs.readFile);
 const writeFile = util.promisify(fs.writeFile);
 
 export function switchAccount(context: vscode.ExtensionContext) {
-  context.subscriptions.push(vscode.commands.registerCommand('fc.extension.switch.account', async () => {
+  context.subscriptions.push(vscode.commands.registerCommand(serverlessCommands.SWITCH_ACCOUNT.id, async () => {
     recordPageView('/switchAccount');
     await process(context);
   }));
@@ -97,7 +98,8 @@ async function process(context: vscode.ExtensionContext) {
     return;
   }
   await saveAccountInfo(state);
-  vscode.commands.executeCommand('fc.extension.remoteResource.refresh');
-  vscode.commands.executeCommand('fc.extension.show.region.status');
-
+  vscode.commands.executeCommand(serverlessCommands.REFRESH_REMOTE_RESOURCE.id);
+  vscode.commands.executeCommand(serverlessCommands.SHOW_REGION_STATUS.id);
+  vscode.commands.executeCommand(serverlessCommands.CLEAR_REMOTE_FUNCTION_INFO.id);
+  vscode.commands.executeCommand(serverlessCommands.CLEAR_REMOTE_SERVICE_INFO.id);
 }

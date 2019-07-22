@@ -1,11 +1,12 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
+import { serverlessCommands } from '../utils/constants';
 import { isPathExists } from '../utils/file';
 import { recordPageView } from '../utils/visitor';
 import { TemplateService } from '../services/TemplateService';
 
 export function gotoFunctionTemplate(context: vscode.ExtensionContext) {
-  context.subscriptions.push(vscode.commands.registerCommand('fc.extension.localResource.function.gotoTemplate',
+  context.subscriptions.push(vscode.commands.registerCommand(serverlessCommands.GOTO_FUNCTION_TEMPLATE.id,
     async (serviceName: string, functionName: string) => {
       recordPageView('/gotoFunctionTemplate');
       await process(serviceName, functionName);

@@ -1,4 +1,5 @@
 import * as vscode from 'vscode';
+import { serverlessCommands } from './utils/constants';
 import { recordPageView } from './utils/visitor';
 import { initProject } from './commands/initProject';
 import { createFunction } from './commands/createFunction';
@@ -18,6 +19,8 @@ import { showRegionStatus } from './commands/showRegionStatus';
 import { ServerlessLensProvider } from './lens/ServerlessLensProvider';
 import { LocalResourceProvider } from './tree/LocalResourceProvider';
 import { RemoteResourceProvider } from './tree/RemoteResourceExplorer';
+import { showRemoteFunctionInfo, clearRemoteFunctionInfo } from './commands/showRemoteFunctionInfo';
+import { showRemoteServiceInfo, clearRemoteServiceInfo } from './commands/showRemoteServiceInfo';
 
 export function activate(context: vscode.ExtensionContext) {
   recordPageView('/');
@@ -26,11 +29,15 @@ export function activate(context: vscode.ExtensionContext) {
 
   const localResourceProvider = new LocalResourceProvider(cwd);
   vscode.window.registerTreeDataProvider('fcLocalResource', localResourceProvider);
-  vscode.commands.registerCommand('fc.extension.localResource.refresh', () => localResourceProvider.refresh());
+  vscode.commands.registerCommand(serverlessCommands.REFRESH_LOCAL_RESOURCE.id,
+    () => localResourceProvider.refresh()
+  );
 
   const remoteResourceProvider = new RemoteResourceProvider();
   vscode.window.registerTreeDataProvider('fcRemoteResource', remoteResourceProvider);
-  vscode.commands.registerCommand('fc.extension.remoteResource.refresh', () => remoteResourceProvider.refresh());
+  vscode.commands.registerCommand(serverlessCommands.REFRESH_REMOTE_RESOURCE.id,
+    () => remoteResourceProvider.refresh()
+  );
 
   initProject(context); // init project
   createFunction(context); // create function
@@ -44,12 +51,15 @@ export function activate(context: vscode.ExtensionContext) {
   bindAccount(context); // bind account
   switchRegion(context); // switch region
   showRegionStatus(context); // show region status
-  switchRegionOrAccount(context); // switch region or account
+  switchRegionOrAccount(context);
   switchOrBindAccount(context); // switch or bind account
   switchAccount(context); // switch account
+  showRemoteFunctionInfo(context); // show remote function info
+  clearRemoteFunctionInfo(context);
+  showRemoteServiceInfo(context); // show remote service info
+  clearRemoteServiceInfo(context);
 
-  vscode.commands.executeCommand('fc.extension.show.region.status');
-
+  vscode.commands.executeCommand(serverlessCommands.SHOW_REGION_STATUS.id);
   vscode.languages.registerCodeLensProvider(['javascript', 'python', 'php'], new ServerlessLensProvider(cwd));
 }
 

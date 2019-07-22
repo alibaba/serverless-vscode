@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import * as os from 'os';
 import * as path from 'path';
+import { serverlessCommands } from '../utils/constants';
 import { isPathExists } from '../utils/file';
 import { Resource, ResourceType } from '../models/resource';
 import { FunctionComputeService } from '../services/FunctionComputeService';
@@ -28,8 +29,8 @@ export class RemoteResourceProvider implements vscode.TreeDataProvider<vscode.Tr
           vscode.TreeItemCollapsibleState.None,
           {},
           {
-            title: 'Bind New Account...',
-            command: 'fc.extension.bind.account',
+            title: serverlessCommands.BIND_ACCOUNT.title,
+            command: serverlessCommands.BIND_ACCOUNT.id,
           },
         ),
       ]);
@@ -45,6 +46,12 @@ export class RemoteResourceProvider implements vscode.TreeDataProvider<vscode.Tr
             service.serviceName,
             ResourceType.Service,
             vscode.TreeItemCollapsibleState.Collapsed,
+            {},
+            {
+              title: 'Show Service Info',
+              command: serverlessCommands.SHOW_REMOTE_SERVICE_INFO.id,
+              arguments: [service.serviceName],
+            }
           ))))
       );
     }
@@ -57,6 +64,11 @@ export class RemoteResourceProvider implements vscode.TreeDataProvider<vscode.Tr
           {
             serviceName: element.label,
             ...func
+          },
+          {
+            title: 'Show Function Info',
+            command: serverlessCommands.SHOW_REMOTE_FUNCTION_INFO.id,
+            arguments: [element.label, func.functionName],
           }
         ))))
     );

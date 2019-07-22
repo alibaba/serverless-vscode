@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
 import { MultiStepInput } from '../ui/MultiStepInput';
+import { serverlessCommands } from '../utils/constants';
 import { isPathExists, createDirectory } from '../utils/file';
 import { getSuffix, createIndexFile } from '../utils/runtime';
 import { recordPageView } from '../utils/visitor';
@@ -9,14 +10,16 @@ import { TemplateService } from '../services/TemplateService';
 import { process as gotoFunctionCode } from './gotoFunctionCode';
 
 export function createFunction(context: vscode.ExtensionContext) {
-  context.subscriptions.push(vscode.commands.registerCommand('fc.extension.function.create', async (node: Resource) => {
-    recordPageView('/functionCreate');
-    let serviceName = '';
-    if (node) {
-      serviceName = node.label;
-    }
-    await process(context, serviceName).catch(vscode.window.showErrorMessage);
-  }));
+  context.subscriptions.push(vscode.commands.registerCommand(serverlessCommands.CREATE_FUNCTION.id,
+    async (node: Resource) => {
+      recordPageView('/functionCreate');
+      let serviceName = '';
+      if (node) {
+        serviceName = node.label;
+      }
+      await process(context, serviceName).catch(vscode.window.showErrorMessage);
+    })
+  );
 }
 
 async function process(context: vscode.ExtensionContext, serviceName = '') {
@@ -175,6 +178,6 @@ async function process(context: vscode.ExtensionContext, serviceName = '') {
   if (!await templateService.addFunction(state)) {
     return;
   }
-  vscode.commands.executeCommand('fc.extension.localResource.refresh');
+  vscode.commands.executeCommand(serverlessCommands.REFRESH_LOCAL_RESOURCE.id);
   await gotoFunctionCode(state.serviceName, state.functionName);
 }

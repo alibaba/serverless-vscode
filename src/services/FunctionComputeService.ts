@@ -130,4 +130,24 @@ export class FunctionComputeService {
     }
     return result;
   }
+
+  async getService(serviceName: string) {
+    const client = this.getNewFCClient();
+    try {
+      const { data } = await client.getService(serviceName);
+      return data;
+    } catch (ex) {
+      vscode.window.showErrorMessage(ex.message);
+    }
+  }
+
+  async getFunction(serviceName: string, functionName: string) {
+    const client = this.getNewFCClient();
+    try {
+      const { data } = await client.getFunction(serviceName, functionName);
+      return data;
+    } catch (ex) {
+      vscode.window.showErrorMessage(ex.message);
+    }
+  }
 }

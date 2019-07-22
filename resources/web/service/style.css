@@ -1,0 +1,112 @@
+body, div, ul {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  vertical-align: baseline;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+.breadcrumb {
+  position: sticky;
+  top: 0;
+  padding: 10px 10px;
+  z-index: 10;
+  font-size: 10px;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+.vscode-dark .breadcrumb {
+  background-color: #1e1e1e;
+}
+
+.vscode-light .breadcrumb {
+  background-color: #ffffff;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: auto;
+  line-height: 1.5;
+}
+
+.app {
+  width: 75%;
+  padding: 16px 0;
+}
+
+.info {
+  width: 100%;
+  margin-bottom: 48px;
+}
+
+.info-main-title {
+  font-weight: 700;
+  margin-bottom: 24px;
+  font-size: 26px;
+}
+
+.info .info-title {
+  font-weight: 700;
+  margin-bottom: 18px;
+  font-size: 20px;
+}
+
+.container {
+  margin-bottom: 24px;
+  display: flex;
+}
+
+.container .bar {
+  width: 50%;
+}
+
+.container .bar.left-bar {
+  margin-right: 32px;
+}
+
+.container .bar.left-bar .item-li .value,
+.container .bar.right-bar .item-li .value {
+  overflow: auto;
+}
+
+.container .bar.left-bar .item-li .key,
+.container .bar.right-bar .item-li .key{
+  width: 70px;
+  min-width: 70px;
+}
+
+.container .item-ul {
+  font-size: 13px;
+}
+
+.container .item-ul .item-li {
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+}
+
+.container .item-ul .item-li .key {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.table {
+  padding: 10px 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.1);
+  table-layout: fixed;
+}
+
+.table .thead {
+  text-align: left;
+}
+
+.table .tbody td div {
+  word-break: break-all;
+}

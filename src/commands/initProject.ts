@@ -1,11 +1,12 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
+import { serverlessCommands } from '../utils/constants';
 import { isPathExists } from '../utils/file';
 import { recordPageView } from '../utils/visitor';
 import { FunService } from '../services/FunService';
 
 export function initProject(context: vscode.ExtensionContext) {
-  context.subscriptions.push(vscode.commands.registerCommand('fc.extension.project.init', async () => {
+  context.subscriptions.push(vscode.commands.registerCommand(serverlessCommands.INIT_PROJECT.id, async () => {
     recordPageView('/initProject');
     let cwd = vscode.workspace.rootPath;
     if (!cwd) {

@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
 import * as fs from 'fs';
+import { serverlessCommands } from '../utils/constants';
 import { isPathExists, createEventFile } from '../utils/file';
 import { recordPageView } from '../utils/visitor';
 import { FunctionComputeService } from '../services/FunctionComputeService';
@@ -8,7 +9,7 @@ import { getFunctionComputeOutputChannel } from '../utils/channel';
 import { Resource } from '../models/resource';
 
 export function remoteInvokeFunction(context: vscode.ExtensionContext) {
-  context.subscriptions.push(vscode.commands.registerCommand('fc.extension.remoteResource.remote.invoke',
+  context.subscriptions.push(vscode.commands.registerCommand(serverlessCommands.REMOTE_INVOKE.id,
     async (node: Resource) => {
       recordPageView('/remoteInvoke');
       const serviceName = node.resourceProperties && node.resourceProperties.serviceName
