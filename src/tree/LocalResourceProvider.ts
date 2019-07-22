@@ -3,6 +3,11 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as util from 'util';
 import * as yaml from 'js-yaml';
+import {
+  serverlessCommands,
+  ALIYUN_SERVERLESS_SERVICE_TYPE,
+  ALIYUN_SERVERLESS_FUNCTION_TYPE,
+} from '../utils/constants';
 import { isPathExists } from '../utils/file';
 import { Resource, ResourceType } from '../models/resource';
 
@@ -68,7 +73,7 @@ export class LocalResourceProvider implements vscode.TreeDataProvider<Resource> 
     if (!element) {
       const services = Object.entries(tpl.Resources)
         .filter(([_, resource]) => {
-          return resource.Type === 'Aliyun::Serverless::Service'
+          return resource.Type === ALIYUN_SERVERLESS_SERVICE_TYPE
         })
         .map(([name]) => new Resource(
           name,
@@ -76,8 +81,8 @@ export class LocalResourceProvider implements vscode.TreeDataProvider<Resource> 
           vscode.TreeItemCollapsibleState.Collapsed,
           {},
           {
-            title: 'goto',
-            command: 'fc.extension.localResource.service.gotoTemplate',
+            title: serverlessCommands.GOTO_SERVICE_TEMPLATE.title,
+            command: serverlessCommands.GOTO_SERVICE_TEMPLATE.id,
             arguments: [name],
           }
         ));
@@ -98,7 +103,7 @@ export class LocalResourceProvider implements vscode.TreeDataProvider<Resource> 
     }
     const functions = Object.entries(services[0][1])
       .filter(([name, resource]) => {
-        return resource.Type === 'Aliyun::Serverless::Function'
+        return resource.Type === ALIYUN_SERVERLESS_FUNCTION_TYPE
       })
       .map(([name, resource]) => {
         return new Resource(
@@ -110,8 +115,8 @@ export class LocalResourceProvider implements vscode.TreeDataProvider<Resource> 
             functionType: (<any>resource).Events && (<any>resource).Events.HttpTrigger ? 'HTTP' : 'NORMAL',
           },
           {
-            title: 'goto',
-            command: 'fc.extension.localResource.function.gotoTemplate',
+            title: serverlessCommands.GOTO_FUNCTION_TEMPLATE.title,
+            command: serverlessCommands.GOTO_FUNCTION_TEMPLATE.id,
             arguments: [serviceName, name],
           }
         )

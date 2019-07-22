@@ -1,12 +1,15 @@
 import * as vscode from 'vscode';
+import { serverlessCommands } from '../utils/constants';
 import { MultiStepInput } from '../ui/MultiStepInput';
 import { recordPageView } from '../utils/visitor';
 
 export function switchRegionOrAccount(context: vscode.ExtensionContext) {
-  context.subscriptions.push(vscode.commands.registerCommand('fc.extension.switch.regionOrAccount', async () => {
-    recordPageView('/switchRegionOrAccount');
-    await process(context);
-  }));
+  context.subscriptions.push(vscode.commands.registerCommand(serverlessCommands.SWITCH_REGION_OR_ACCOUNT.id,
+    async () => {
+      recordPageView('/switchRegionOrAccount');
+      await process(context);
+    }))
+  ;
 }
 
 async function process(context: vscode.ExtensionContext) {
@@ -51,9 +54,9 @@ async function process(context: vscode.ExtensionContext) {
     return;
   }
   if (state.choice === 'Switch Region') {
-    vscode.commands.executeCommand('fc.extension.switch.region');
+    vscode.commands.executeCommand(serverlessCommands.SWITCH_REGION.id);
   }
   if (state.choice === 'Switch Account') {
-    vscode.commands.executeCommand('fc.extension.switchOrBind.account');
+    vscode.commands.executeCommand(serverlessCommands.SWITCH_OR_BIND_ACCOUNT.id);
   }
 }

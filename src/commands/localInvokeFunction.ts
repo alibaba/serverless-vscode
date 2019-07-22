@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import * as path from 'path';
 import * as fs from 'fs';
 import * as open from 'open';
-import * as constants from '../utils/constants';
+import { serverlessCommands, FUN_INSTALL_URL } from '../utils/constants';
 import { validateFunInstalled } from '../validate/validateFunInstalled';
 import { isPathExists, createEventFile } from '../utils/file';
 import { recordPageView } from '../utils/visitor';
@@ -11,14 +11,14 @@ import { TemplateService } from '../services/TemplateService';
 import { Resource } from '../models/resource';
 
 export function localInvokeFunction(context: vscode.ExtensionContext) {
-  context.subscriptions.push(vscode.commands.registerCommand('fc.extension.localResource.local.invoke',
+  context.subscriptions.push(vscode.commands.registerCommand(serverlessCommands.LOCAL_RUN.id,
     async (node: Resource) => {
       recordPageView('/localInvoke');
       if (! await validateFunInstalled()) {
         vscode.window.showInformationMessage('You should install "@alicloud/fun" first', 'Goto', 'Cancel')
           .then(choice => {
             if (choice === 'Goto') {
-              open(constants.FUN_INSTALL_URL);
+              open(FUN_INSTALL_URL);
             }
           });
         return;

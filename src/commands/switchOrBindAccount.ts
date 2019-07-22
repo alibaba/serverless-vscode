@@ -1,12 +1,15 @@
 import * as vscode from 'vscode';
+import { serverlessCommands } from '../utils/constants';
 import { MultiStepInput } from '../ui/MultiStepInput';
 import { recordPageView } from '../utils/visitor';
 
 export function switchOrBindAccount(context: vscode.ExtensionContext) {
-  context.subscriptions.push(vscode.commands.registerCommand('fc.extension.switchOrBind.account', async () => {
-    recordPageView('/switchOrBindAccount');
-    await process(context);
-  }));
+  context.subscriptions.push(vscode.commands.registerCommand(serverlessCommands.SWITCH_OR_BIND_ACCOUNT.id,
+    async () => {
+      recordPageView('/switchOrBindAccount');
+      await process(context);
+    })
+  );
 }
 
 async function process(context: vscode.ExtensionContext) {
@@ -51,9 +54,9 @@ async function process(context: vscode.ExtensionContext) {
     return;
   }
   if (state.choice === 'Switch Account') {
-    vscode.commands.executeCommand('fc.extension.switch.account');
+    vscode.commands.executeCommand(serverlessCommands.SWITCH_ACCOUNT.id);
   }
   if (state.choice === 'Bind New Account') {
-    vscode.commands.executeCommand('fc.extension.bind.account');
+    vscode.commands.executeCommand(serverlessCommands.BIND_ACCOUNT.id);
   }
 }

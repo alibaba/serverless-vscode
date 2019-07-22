@@ -2,8 +2,8 @@ import * as vscode from 'vscode';
 import * as path from 'path';
 import * as fs from 'fs';
 import * as open from 'open';
-import * as constants from '../utils/constants';
 import * as rt from '../utils/runtime';
+import { serverlessCommands, FUN_INSTALL_URL } from '../utils/constants';
 import { validateFunInstalled } from '../validate/validateFunInstalled';
 import { isPathExists, createDirectory, createLaunchFile, createEventFile } from '../utils/file';
 import { recordPageView } from '../utils/visitor';
@@ -14,14 +14,14 @@ import { Resource } from '../models/resource';
 const debugPortSet = new Set();
 
 export function localDebugFunction(context: vscode.ExtensionContext) {
-  context.subscriptions.push(vscode.commands.registerCommand('fc.extension.localResource.local.invoke.debug',
+  context.subscriptions.push(vscode.commands.registerCommand(serverlessCommands.LOCAL_DEBUG.id,
     async (node: Resource) => {
       recordPageView('/localDebug');
       if (! await validateFunInstalled()) {
         vscode.window.showInformationMessage('You should install "@alicloud/fun" first', 'Goto', 'Cancel')
           .then(choice => {
             if (choice === 'Goto') {
-              open(constants.FUN_INSTALL_URL);
+              open(FUN_INSTALL_URL);
             }
           });
         return;

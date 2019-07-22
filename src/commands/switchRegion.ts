@@ -4,7 +4,7 @@ import * as fs from 'fs';
 import * as os from 'os';
 import * as yaml from 'js-yaml';
 import * as util from 'util';
-import { FC_REGIONS } from '../utils/constants';
+import { FC_REGIONS, serverlessCommands } from '../utils/constants';
 import { isPathExists, createFile } from '../utils/file';
 import { MultiStepInput } from '../ui/MultiStepInput';
 import { recordPageView } from '../utils/visitor';
@@ -13,7 +13,7 @@ const readFile = util.promisify(fs.readFile);
 const writeFile = util.promisify(fs.writeFile);
 
 export function switchRegion(context: vscode.ExtensionContext) {
-  context.subscriptions.push(vscode.commands.registerCommand('fc.extension.switch.region', async () => {
+  context.subscriptions.push(vscode.commands.registerCommand(serverlessCommands.SWITCH_REGION.id, async () => {
     recordPageView('/switchRegion');
     await process(context).catch(vscode.window.showErrorMessage);
   }));
@@ -92,6 +92,8 @@ async function process(context: vscode.ExtensionContext) {
     return;
   }
   await saveRegionInfo(state);
-  vscode.commands.executeCommand('fc.extension.remoteResource.refresh');
-  vscode.commands.executeCommand('fc.extension.show.region.status');
+  vscode.commands.executeCommand(serverlessCommands.REFRESH_REMOTE_RESOURCE.id);
+  vscode.commands.executeCommand(serverlessCommands.SHOW_REGION_STATUS.id);
+  vscode.commands.executeCommand(serverlessCommands.CLEAR_REMOTE_FUNCTION_INFO.id);
+  vscode.commands.executeCommand(serverlessCommands.CLEAR_REMOTE_SERVICE_INFO.id);
 }
