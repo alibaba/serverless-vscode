@@ -37,6 +37,17 @@ export function getSuffix(runtime: string): string | undefined {
   return;
 }
 
+export function getHandlerFileName(handler: string, runtime: string): string | undefined {
+  if (!runtimes.includes(runtime)) {
+    return;
+  }
+  const arr = handler.split('.');
+  if (arr.length !== 2) {
+    return;
+  }
+  return `${arr[0]}${getSuffix(runtime)}`;
+}
+
 export function createIndexFile(type: string, runtime: string, ph: string): boolean {
   if (!runtimes.includes(runtime)) {
     return false;

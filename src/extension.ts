@@ -17,6 +17,7 @@ import { switchRegionOrAccount } from './commands/switchRegionOrAccount';
 import { switchOrBindAccount } from './commands/switchOrBindAccount';
 import { showRegionStatus } from './commands/showRegionStatus';
 import { ServerlessLensProvider } from './lens/ServerlessLensProvider';
+import { ServerlessDefinitionProvider } from './definitions/ServerlessDefinitionProvider';
 import { LocalResourceProvider } from './tree/LocalResourceProvider';
 import { RemoteResourceProvider } from './tree/RemoteResourceExplorer';
 import { showRemoteFunctionInfo, clearRemoteFunctionInfo } from './commands/showRemoteFunctionInfo';
@@ -61,6 +62,10 @@ export function activate(context: vscode.ExtensionContext) {
 
   vscode.commands.executeCommand(serverlessCommands.SHOW_REGION_STATUS.id);
   vscode.languages.registerCodeLensProvider(['javascript', 'python', 'php'], new ServerlessLensProvider(cwd));
+  vscode.languages.registerDefinitionProvider(
+    { pattern: '**/template.{yml,yaml}' },
+    new ServerlessDefinitionProvider()
+  );
 }
 
 // this method is called when your extension is deactivated
