@@ -78,11 +78,19 @@ export namespace serverlessCommands {
   export const REFRESH_REMOTE_RESOURCE = {
     id: 'fc.extension.remoteResource.refresh',
     title: 'Refresh Remote Resource',
-  }
+  };
   export const REFRESH_LOCAL_RESOURCE = {
     id: 'fc.extension.localResource.refresh',
     title: 'Refresh Local Resource',
-  }
+  };
+  export const IMPORT_SERVICE = {
+    id: 'fc.extension.service.import',
+    title: 'Import Service',
+  };
+  export const IMPORT_FUNCTION = {
+    id: 'fc.extension.function.import',
+    title: 'Import Function',
+  };
 }
 export const FUN_INSTALL_URL = 'https://github.com/aliyun/fun';
 export const FC_REGIONS = [
