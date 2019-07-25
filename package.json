@@ -26,7 +26,9 @@
     "onCommand:fc.extension.service.deploy",
     "onCommand:fc.extension.project.init",
     "onCommand:fc.extension.bind.account",
-    "onCommand:fc.extension.switch.region"
+    "onCommand:fc.extension.switch.region",
+    "workspaceContains:template.yml",
+    "workspaceContains:template.yaml"
   ],
   "main": "./out/extension.js",
   "contributes": {
