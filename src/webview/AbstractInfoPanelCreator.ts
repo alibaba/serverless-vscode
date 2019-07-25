@@ -33,7 +33,7 @@ export abstract class AbstractInfoPanelCreator<T extends ResourceDescriptor> imp
     );
     panel.webview.html = this.getHtmlForWebview();
     panel.onDidDispose(() => this.dispose(), null, this.disposables);
-    panel.onDidChangeViewState(message => this.receiveMessage(message, descriptor), null, this.disposables);
+    panel.webview.onDidReceiveMessage(message => this.receiveMessage(message, descriptor), null, this.disposables);
     this.update(panel, descriptor);
     return panel;
   }
