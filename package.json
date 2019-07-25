@@ -133,6 +133,22 @@
           "light": "media/light/code.svg",
           "dark": "media/dark/code.svg"
         }
+      },
+      {
+        "command": "fc.extension.service.import",
+        "title": "FC: Import Service",
+        "icon": {
+          "light": "media/light/download.svg",
+          "dark": "media/dark/download.svg"
+        }
+      },
+      {
+        "command": "fc.extension.function.import",
+        "title": "FC: Import Function",
+        "icon": {
+          "light": "media/light/download.svg",
+          "dark": "media/dark/download.svg"
+        }
       }
     ],
     "viewsContainers": {
@@ -240,6 +256,24 @@
         {
           "command": "fc.extension.remoteResource.remote.invoke",
           "when": "view == fcRemoteResource && viewItem == function"
+        },
+        {
+          "command": "fc.extension.service.import",
+          "when": "view == fcRemoteResource && viewItem == service",
+          "group": "inline"
+        },
+        {
+          "command": "fc.extension.function.import",
+          "when": "view == fcRemoteResource && viewItem == function",
+          "group": "inline"
+        },
+        {
+          "command": "fc.extension.service.import",
+          "when": "view == fcRemoteResource && viewItem == service"
+        },
+        {
+          "command": "fc.extension.function.import",
+          "when": "view == fcRemoteResource && viewItem == function"
         }
       ],
       "commandPalette": [
@@ -302,6 +336,7 @@
   },
   "dependencies": {
     "@alicloud/fc2": "^2.1.0",
+    "@alicloud/fun": "git://github.com/alibaba/funcraft.git#6af7b5f1cb0577f42517c07d9b69d530719864c9",
     "@types/js-yaml": "^3.12.1",
     "@typescript-eslint/eslint-plugin": "^1.11.0",
     "@typescript-eslint/parser": "^1.11.0",

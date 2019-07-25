@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 import * as fc from '@alicloud/fc2';
+import * as output from '../utils/output';
 import { getConfig } from '../utils/config';
 
 const FCClient = require('@alicloud/fc2');
@@ -65,7 +66,7 @@ export class FunctionComputeService {
         timeout: this.getTimeout(),
       });
     } catch (ex) {
-      vscode.window.showErrorMessage(ex.message);
+      output.error(ex.message);
     }
   }
 
@@ -85,7 +86,7 @@ export class FunctionComputeService {
           services.push(...result.data.services);
         }
       } catch (ex) {
-        vscode.window.showErrorMessage(ex.message);
+        output.error(ex.message);
         break;
       }
     } while (result.data && result.data.nextToken);
@@ -108,7 +109,7 @@ export class FunctionComputeService {
           functions.push(...result.data.functions);
         }
       } catch (ex) {
-        vscode.window.showErrorMessage(ex.message);
+        output.error(ex.message);
         break;
       }
     } while (result.data && result.data.nextToken);
@@ -126,7 +127,7 @@ export class FunctionComputeService {
         'x-fc-log-type': 'Tail',
       });
     } catch (ex) {
-      vscode.window.showErrorMessage(ex.message);
+      output.error(ex.message);
     }
     return result;
   }
@@ -137,7 +138,7 @@ export class FunctionComputeService {
       const { data } = await client.getService(serviceName);
       return data;
     } catch (ex) {
-      vscode.window.showErrorMessage(ex.message);
+      output.error(ex.message);
     }
   }
 
@@ -147,7 +148,7 @@ export class FunctionComputeService {
       const { data } = await client.getFunction(serviceName, functionName);
       return data;
     } catch (ex) {
-      vscode.window.showErrorMessage(ex.message);
+      output.error(ex.message);
     }
   }
 }

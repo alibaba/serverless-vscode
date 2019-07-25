@@ -1,4 +1,5 @@
 import * as vscode from 'vscode';
+import * as output from './utils/output';
 import { serverlessCommands } from './utils/constants';
 import { recordPageView } from './utils/visitor';
 import { initProject } from './commands/initProject';
@@ -21,6 +22,8 @@ import { LocalResourceProvider } from './tree/LocalResourceProvider';
 import { RemoteResourceProvider } from './tree/RemoteResourceExplorer';
 import { showRemoteFunctionInfo, clearRemoteFunctionInfo } from './commands/showRemoteFunctionInfo';
 import { showRemoteServiceInfo, clearRemoteServiceInfo } from './commands/showRemoteServiceInfo';
+import { importService } from './commands/importService';
+import { importFunction } from './commands/importFunction';
 
 export function activate(context: vscode.ExtensionContext) {
   recordPageView('/');
@@ -58,6 +61,11 @@ export function activate(context: vscode.ExtensionContext) {
   clearRemoteFunctionInfo(context);
   showRemoteServiceInfo(context); // show remote service info
   clearRemoteServiceInfo(context);
+  importService(context);
+  importFunction(context);
+
+  console.log = output.log;
+  console.error = output.error;
 
   vscode.commands.executeCommand(serverlessCommands.SHOW_REGION_STATUS.id);
   vscode.languages.registerCodeLensProvider(['javascript', 'python', 'php'], new ServerlessLensProvider(cwd));

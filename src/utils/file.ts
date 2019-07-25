@@ -19,6 +19,14 @@ export function isDirectory(p: string): boolean {
   }
 }
 
+export function isNotEmpty(p: string): boolean {
+  try {
+    return fs.readdirSync(p).length > 0;
+  } catch (err) {
+    return false;
+  }
+}
+
 export function createDirectory(p: string): boolean {
   try {
     if (isPathExists(dirname(p))) {
