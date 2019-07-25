@@ -1,5 +1,4 @@
 import * as vscode from 'vscode';
-import * as output from './utils/output';
 import { serverlessCommands } from './utils/constants';
 import { recordPageView } from './utils/visitor';
 import { initProject } from './commands/initProject';
@@ -64,9 +63,6 @@ export function activate(context: vscode.ExtensionContext) {
   clearRemoteServiceInfo(context);
   importService(context);
   importFunction(context);
-
-  console.log = output.log;
-  console.error = output.error;
 
   vscode.commands.executeCommand(serverlessCommands.SHOW_REGION_STATUS.id);
   vscode.languages.registerCodeLensProvider(['javascript', 'python', 'php'], new ServerlessLensProvider(cwd));

@@ -26,7 +26,7 @@ export class FunService {
 
   localInvoke(serviceName: string, functionName: string, eventFilePath: string) {
     const terminal =  terminalService.getFunctionComputeTerminal();
-    const command = `fun local invoke ${serviceName}/${functionName} -e ${eventFilePath}`
+    const command = `fun local invoke ${serviceName}/${functionName} -e ${eventFilePath.replace(/ /g, '\\ ')}`
     terminal.sendText(command);
     terminal.show();
   }
@@ -34,7 +34,8 @@ export class FunService {
   localInvokeDebug(serviceName: string, functionName: string,
     debugPort: string, eventFilePath: string): vscode.Terminal {
     const terminal =  terminalService.getFunctionComputeTerminal();
-    const command = `fun local invoke ${serviceName}/${functionName} -d ${debugPort} -e ${eventFilePath}`
+    const command =
+      `fun local invoke ${serviceName}/${functionName} -d ${debugPort} -e ${eventFilePath.replace(/ /g, '\\ ')}`
     terminal.sendText(command);
     terminal.show();
     return terminal;
