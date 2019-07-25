@@ -38,7 +38,9 @@ async function process(serviceName: string) {
     }
   }
   const { importService } = require('@alicloud/fun/lib/import/service.js');
-  await importService(serviceName, cwd).catch((ex: any) => { output.error(ex.message) });
+  await output.output(() =>
+    importService(serviceName, cwd).catch((ex: any) => { output.error(ex.message) })
+  );
   vscode.commands.executeCommand(serverlessCommands.REFRESH_LOCAL_RESOURCE.id);
 }
 
