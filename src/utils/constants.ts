@@ -113,3 +113,10 @@ export const FC_REGIONS = [
 ]
 export const ALIYUN_SERVERLESS_SERVICE_TYPE = 'Aliyun::Serverless::Service';
 export const ALIYUN_SERVERLESS_FUNCTION_TYPE = 'Aliyun::Serverless::Function';
+export const ALIYUN_SERVERLESS_CUSTOMDOMAIN_TYPE = 'Aliyun::Serverless::CustomDomain';
+export const ALIYUN_SERVERLESS_API_TYPE = 'Aliyun::Serverless::Api';
+export const ALIYUN_SERVERLESS_TABLESTORE_TYPE = 'Aliyun::Serverless::TableStore';
+export const ALIYUN_SERVERLESS_TABLESTORE_TABLE_TYPE = 'Aliyun::Serverless::TableStore::Table';
+export const ALIYUN_SERVERLESS_LOG_TYPE = 'Aliyun::Serverless::Log';
+export const ALIYUN_SERVERLESS_LOG_LOGSTORE_TYPE = 'Aliyun::Serverless::Log::Logstore';
+export const ALIYUN_SERVERLESS_MNSTOPIC_TYPE = 'Aliyun::Serverless::MNSTopic';
