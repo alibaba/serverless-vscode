@@ -24,6 +24,10 @@ import { showRemoteFunctionInfo, clearRemoteFunctionInfo } from './commands/show
 import { showRemoteServiceInfo, clearRemoteServiceInfo } from './commands/showRemoteServiceInfo';
 import { importService } from './commands/importService';
 import { importFunction } from './commands/importFunction';
+import { viewDocumentation } from './commands/viewDocumentation';
+import { viewSource } from './commands/viewSource';
+import { reportIssue } from './commands/reportIssue';
+import { viewQuickStart } from './commands/viewQuickStart';
 
 export function activate(context: vscode.ExtensionContext) {
   recordPageView('/');
@@ -63,6 +67,10 @@ export function activate(context: vscode.ExtensionContext) {
   clearRemoteServiceInfo(context);
   importService(context);
   importFunction(context);
+  viewQuickStart(context);
+  viewDocumentation(context);
+  viewSource(context);
+  reportIssue(context);
 
   vscode.commands.executeCommand(serverlessCommands.SHOW_REGION_STATUS.id);
   vscode.languages.registerCodeLensProvider(['javascript', 'python', 'php'], new ServerlessLensProvider(cwd));

@@ -58,7 +58,7 @@
     "commands": [
       {
         "command": "fc.extension.project.init",
-        "title": "FC: Init Project"
+        "title": "Create an Serverless Project"
       },
       {
         "command": "fc.extension.bind.account",
@@ -151,6 +151,22 @@
           "light": "media/light/download.svg",
           "dark": "media/dark/download.svg"
         }
+      },
+      {
+        "command": "fc.extension.view.quickstart",
+        "title": "View Quick Start"
+      },
+      {
+        "command": "fc.extension.view.documentation",
+        "title": "View Documentation"
+      },
+      {
+        "command": "fc.extension.view.sourceOnGithub",
+        "title": "View Source on Github"
+      },
+      {
+        "command": "fc.extension.report.issue",
+        "title": "Report an Issue"
       }
     ],
     "viewsContainers": {
@@ -188,7 +204,8 @@
         },
         {
           "command": "fc.extension.project.init",
-          "when": "view == fcLocalResource"
+          "when": "view == fcLocalResource",
+          "group": "0_project"
         },
         {
           "command": "fc.extension.bind.account",
@@ -211,6 +228,26 @@
           "command": "fc.extension.remoteResource.refresh",
           "group": "navigation",
           "when": "view == fcRemoteResource"
+        },
+        {
+          "command": "fc.extension.view.quickstart",
+          "when": "view == fcLocalResource",
+          "group": "1_quickstart"
+        },
+        {
+          "command": "fc.extension.view.documentation",
+          "when": "view == fcLocalResource",
+          "group": "2_documentation@1"
+        },
+        {
+          "command": "fc.extension.view.sourceOnGithub",
+          "when": "view == fcLocalResource",
+          "group": "2_documentation@2"
+        },
+        {
+          "command": "fc.extension.report.issue",
+          "when": "view == fcLocalResource",
+          "group": "2_documentation@3"
         }
       ],
       "view/item/context": [
