@@ -91,6 +91,10 @@ export namespace serverlessCommands {
     id: 'fc.extension.function.import',
     title: 'Import Function',
   };
+  export const SHOW_UPDATE_NOTIFICATION = {
+    id: 'fc.extension.show.update.notification',
+    titile: 'Show Update Notification',
+  };
 }
 export const FUN_INSTALL_URL = 'https://github.com/aliyun/fun';
 export const FC_REGIONS = [
@@ -113,3 +117,6 @@ export const FC_REGIONS = [
 ]
 export const ALIYUN_SERVERLESS_SERVICE_TYPE = 'Aliyun::Serverless::Service';
 export const ALIYUN_SERVERLESS_FUNCTION_TYPE = 'Aliyun::Serverless::Function';
+
+export const ALIYUN_SERVERLESS_VERSION = 'v1.3.0';
+export const ALIYUN_SERVERLESS_CHANGELOG_URL = 'https://github.com/alibaba/serverless-vscode/blob/master/CHANGELOG.md';

@@ -24,6 +24,7 @@ import { showRemoteFunctionInfo, clearRemoteFunctionInfo } from './commands/show
 import { showRemoteServiceInfo, clearRemoteServiceInfo } from './commands/showRemoteServiceInfo';
 import { importService } from './commands/importService';
 import { importFunction } from './commands/importFunction';
+import { showUpdateNotification } from './commands/showUpdateNotification';
 
 export function activate(context: vscode.ExtensionContext) {
   recordPageView('/');
@@ -63,8 +64,10 @@ export function activate(context: vscode.ExtensionContext) {
   clearRemoteServiceInfo(context);
   importService(context);
   importFunction(context);
+  showUpdateNotification(context);
 
   vscode.commands.executeCommand(serverlessCommands.SHOW_REGION_STATUS.id);
+  vscode.commands.executeCommand(serverlessCommands.SHOW_UPDATE_NOTIFICATION.id);
   vscode.languages.registerCodeLensProvider(['javascript', 'python', 'php'], new ServerlessLensProvider(cwd));
   vscode.languages.registerDefinitionProvider(
     { pattern: '**/template.{yml,yaml}' },
