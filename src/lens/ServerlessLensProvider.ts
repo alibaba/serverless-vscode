@@ -91,6 +91,7 @@ export class ServerlessLensProvider implements vscode.CodeLensProvider {
           },
           end: {
             line: i,
+            character: 0,
           }
         }
       }

@@ -18,6 +18,7 @@ import { switchOrBindAccount } from './commands/switchOrBindAccount';
 import { showRegionStatus } from './commands/showRegionStatus';
 import { ServerlessLensProvider } from './lens/ServerlessLensProvider';
 import { ServerlessDefinitionProvider } from './definitions/ServerlessDefinitionProvider';
+import { ServerlessCompletionProvider } from './completions/ServerlessCompletionProvider';
 import { LocalResourceProvider } from './tree/LocalResourceProvider';
 import { RemoteResourceProvider } from './tree/RemoteResourceExplorer';
 import { showRemoteFunctionInfo, clearRemoteFunctionInfo } from './commands/showRemoteFunctionInfo';
@@ -28,6 +29,7 @@ import { viewDocumentation } from './commands/viewDocumentation';
 import { viewSource } from './commands/viewSource';
 import { reportIssue } from './commands/reportIssue';
 import { viewQuickStart } from './commands/viewQuickStart';
+import { showUpdateNotification } from './commands/showUpdateNotification';
 
 export function activate(context: vscode.ExtensionContext) {
   recordPageView('/');
@@ -71,12 +73,20 @@ export function activate(context: vscode.ExtensionContext) {
   viewDocumentation(context);
   viewSource(context);
   reportIssue(context);
+  showUpdateNotification(context);
 
   vscode.commands.executeCommand(serverlessCommands.SHOW_REGION_STATUS.id);
+  vscode.commands.executeCommand(serverlessCommands.SHOW_UPDATE_NOTIFICATION.id);
   vscode.languages.registerCodeLensProvider(['javascript', 'python', 'php'], new ServerlessLensProvider(cwd));
+
+  const selector = { pattern: '**/template.{yml,yaml}' };
   vscode.languages.registerDefinitionProvider(
-    { pattern: '**/template.{yml,yaml}' },
+    selector,
     new ServerlessDefinitionProvider()
+  );
+  vscode.languages.registerCompletionItemProvider(
+    selector,
+    new ServerlessCompletionProvider(),
   );
 }
 

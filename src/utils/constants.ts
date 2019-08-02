@@ -107,6 +107,10 @@ export namespace serverlessCommands {
     id: 'fc.extension.report.issue',
     title: 'Report an Issue',
   }
+  export const SHOW_UPDATE_NOTIFICATION = {
+    id: 'fc.extension.show.update.notification',
+    titile: 'Show Update Notification',
+  };
 }
 export const SERVERLESS_EXTENTION_DOCUMENTATION_URL =
   'https://github.com/alibaba/serverless-vscode/blob/master/README.md';
@@ -137,3 +141,16 @@ export const FC_REGIONS = [
 ]
 export const ALIYUN_SERVERLESS_SERVICE_TYPE = 'Aliyun::Serverless::Service';
 export const ALIYUN_SERVERLESS_FUNCTION_TYPE = 'Aliyun::Serverless::Function';
+
+
+export const ALIYUN_SERVERLESS_VERSION = 'v1.3.0';
+export const ALIYUN_SERVERLESS_CHANGELOG_URL = 'https://github.com/alibaba/serverless-vscode/blob/master/CHANGELOG.md';
+
+export const ALIYUN_SERVERLESS_CUSTOMDOMAIN_TYPE = 'Aliyun::Serverless::CustomDomain';
+export const ALIYUN_SERVERLESS_API_TYPE = 'Aliyun::Serverless::Api';
+export const ALIYUN_SERVERLESS_TABLESTORE_TYPE = 'Aliyun::Serverless::TableStore';
+export const ALIYUN_SERVERLESS_TABLESTORE_TABLE_TYPE = 'Aliyun::Serverless::TableStore::Table';
+export const ALIYUN_SERVERLESS_LOG_TYPE = 'Aliyun::Serverless::Log';
+export const ALIYUN_SERVERLESS_LOG_LOGSTORE_TYPE = 'Aliyun::Serverless::Log::Logstore';
+export const ALIYUN_SERVERLESS_MNSTOPIC_TYPE = 'Aliyun::Serverless::MNSTopic';
+
