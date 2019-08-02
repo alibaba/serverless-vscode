@@ -4,7 +4,7 @@ import * as os from 'os';
 import * as fs from 'fs';
 import * as util from 'util';
 import * as open from 'open';
-import { isPathExists, isDirectory } from '../utils/file';
+import { isPathExists, isDirectory, createFile } from '../utils/file';
 import { serverlessCommands, ALIYUN_SERVERLESS_VERSION, ALIYUN_SERVERLESS_CHANGELOG_URL } from '../utils/constants';
 import { recordPageView } from '../utils/visitor';
 
@@ -46,6 +46,8 @@ async function process(context: vscode.ExtensionContext) {
         });
       }
     );
-    writeFile(versionFilePath, ALIYUN_SERVERLESS_VERSION).catch((ex) => vscode.window.showErrorMessage(ex.message));
+    if (createFile(versionFilePath)) {
+      writeFile(versionFilePath, ALIYUN_SERVERLESS_VERSION).catch((ex) => vscode.window.showErrorMessage(ex.message));
+    }
   }
 }
