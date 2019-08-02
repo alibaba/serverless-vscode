@@ -119,7 +119,7 @@
               </ul>
           </div>
         </div>
-        <div>
+        <div id="nasMountTable" style="visibility: hidden;">
           <table class="table">
             <thead class="thead">
               <tr>
@@ -151,6 +151,7 @@
       const groupIdElement = document.getElementById('groupId');
       const mountPointsElement = document.getElementById('mountPoints');
       const breadcrumbElement = document.getElementById('breadcrumb');
+      const nasMountTableElement = document.getElementById('nasMountTable');
       window.addEventListener('message', event => {
         const message = event.data;
         switch (message.command) {
@@ -189,6 +190,11 @@
                 }).join('')
               :
                 '';
+              if (!serviceInfo.nasConfig.mountPoints || !serviceInfo.nasConfig.mountPoints.length) {
+                nasMountTableElement.setAttribute('style', 'visibility: hidden;');
+              } else {
+                nasMountTableElement.setAttribute('style', 'visibility: visible;');
+              }
             }
           }
         }
