@@ -2,6 +2,30 @@
 
 所有对 "Aliyun Serverless" 插件的更改都将记录在这个文件中。
 
+## 1.3.0 - 2019-08-02
+
+### Fixed
+- 函数入口文件本地执行与本地调试快捷入口在视窗外时，输入内容会导致滚动条抖动。
+
+### Added
+- 支持模版文件 template.yml 内属性自动补全。自动补全会依据缩进层级给出更精准的提示选项。
+
+![支持模版文件内所有资源属性的自动补全](https://github.com/alibaba/serverless-vscode/blob/master/media/changelog/v1.3.0/template-auto-complete.gif?raw=true)
+
+- 提供模版文件 template.yml 资源配置文档地址。在 template.yml 中，输入符合正确缩进的资源名，会列出匹配的资源名列表，资源名右侧会显示资源配置文档地址，鼠标左击可跳转到相应地址。
+
+![提供模版文件内所有资源的配置文档地址](https://github.com/alibaba/serverless-vscode/blob/master/media/changelog/v1.3.0/template-resource-url.gif?raw=true)
+
+- 本地资源面板提供更多菜单项。在本地资源面板的右上角按钮中，提供了更多的菜单选项，如：View Quick Start, View Documentation, Report an Issue 等。
+
+![本地资源面板提供更多菜单项](https://github.com/alibaba/serverless-vscode/blob/master/media/changelog/v1.3.0/menu-added.gif?raw=true)
+
+- 支持版本更新通知。当插件更新版本后，会在 VSCode 右下角弹出更新通知，可点击 Release Notes 查看更新内容。
+
+### Other
+- 优化模版文件内的代码智能提示。在 template.yml 中，智能提示的展示时机更加精准。
+- 优化远端服务资源的信息展示。在服务未配置 NAS 挂载信息时，不展现挂载信息表格。
+
 ## 1.2.0 - 2019-07-26
 
 ### Fixed
