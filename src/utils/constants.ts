@@ -91,11 +91,35 @@ export namespace serverlessCommands {
     id: 'fc.extension.function.import',
     title: 'Import Function',
   };
+  export const VIEW_QUICK_START = {
+    id: 'fc.extension.view.quickstart',
+    title: 'View Quick Start',
+  };
+  export const VIEW_DOCUMENTATION = {
+    id: 'fc.extension.view.documentation',
+    title: 'View Documentation',
+  };
+  export const VIEW_SOURCE_ON_GITHUB = {
+    id: 'fc.extension.view.sourceOnGithub',
+    title: 'View Source on Github',
+  };
+  export const REPORT_ISSUE = {
+    id: 'fc.extension.report.issue',
+    title: 'Report an Issue',
+  }
   export const SHOW_UPDATE_NOTIFICATION = {
     id: 'fc.extension.show.update.notification',
     titile: 'Show Update Notification',
   };
 }
+export const SERVERLESS_EXTENTION_DOCUMENTATION_URL =
+  'https://github.com/alibaba/serverless-vscode/blob/master/README.md';
+export const SERVERLESS_EXTENTION_SOURCE_URL =
+  'https://github.com/alibaba/serverless-vscode';
+export const SERVERLESS_EXTENTION_REPORT_ISSUE_URL =
+  'https://github.com/alibaba/serverless-vscode/issues/new/choose';
+export const SERVERLESS_EXTENTION_QUICKSTART_URL =
+  'https://github.com/alibaba/serverless-vscode#%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8';
 export const FUN_INSTALL_URL = 'https://github.com/aliyun/fun';
 export const FC_REGIONS = [
   'cn-hangzhou',
