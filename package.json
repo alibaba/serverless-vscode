@@ -356,9 +356,11 @@
     "lint": "./node_modules/.bin/eslint src --ext .ts"
   },
   "devDependencies": {
+    "@types/download": "^6.2.4",
     "@types/mocha": "^2.2.42",
     "@types/node": "^10.14.9",
     "@types/universal-analytics": "^0.4.2",
+    "@types/unzipper": "^0.10.0",
     "@types/uuid": "^3.4.5",
     "eslint": "^6.0.1",
     "eslint-plugin-typescript": "^0.14.0",
@@ -369,13 +371,15 @@
   },
   "dependencies": {
     "@alicloud/fc2": "^2.1.0",
-    "@alicloud/fun": "git://github.com/alibaba/funcraft.git#6af7b5f1cb0577f42517c07d9b69d530719864c9",
+    "@alicloud/fun": "^2.16.1",
     "@types/js-yaml": "^3.12.1",
     "@typescript-eslint/eslint-plugin": "^1.11.0",
     "@typescript-eslint/parser": "^1.11.0",
+    "download": "^7.1.0",
     "js-yaml": "^3.13.1",
     "open": "^6.3.0",
     "universal-analytics": "^0.4.20",
+    "unzipper": "^0.10.3",
     "uuid": "^3.3.2",
     "yaml-ast-parser": "0.0.43"
   }
