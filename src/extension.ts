@@ -1,4 +1,5 @@
 import * as vscode from 'vscode';
+import { ext } from './extensionVariables';
 import { serverlessCommands } from './utils/constants';
 import { recordPageView } from './utils/visitor';
 import { initProject } from './commands/initProject';
@@ -33,7 +34,7 @@ import { showUpdateNotification } from './commands/showUpdateNotification';
 
 export function activate(context: vscode.ExtensionContext) {
   recordPageView('/');
-
+  ext.context = context;
   const cwd = vscode.workspace.rootPath;
 
   const localResourceProvider = new LocalResourceProvider(cwd);
