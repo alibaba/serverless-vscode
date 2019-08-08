@@ -1,6 +1,8 @@
 import { ASTNode } from './ASTNode';
 import { StringASTNode } from './StringASTNode';
 import { SlotASTNode } from './SlotASTNode';
+import { JSONSchema } from '../language-service/jsonSchema';
+import { ValidationResult, ISchemaCollector } from '../language-service/parser/jsonParser';
 
 export class PropertyASTNode extends SlotASTNode {
   key: StringASTNode;
@@ -26,5 +28,18 @@ export class PropertyASTNode extends SlotASTNode {
 
   getValue(): any {
     return this.value;
+  }
+
+  validate(
+    schema: JSONSchema,
+    validationResult: ValidationResult,
+    matchingSchemas: ISchemaCollector,
+  ): void {
+    if (!matchingSchemas.include(this)) {
+      return;
+    }
+    if (this.value) {
+      this.value.validate(schema, validationResult, matchingSchemas);
+    }
   }
 }

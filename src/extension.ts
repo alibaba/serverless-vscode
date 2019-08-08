@@ -20,6 +20,7 @@ import { showRegionStatus } from './commands/showRegionStatus';
 import { ServerlessLensProvider } from './lens/ServerlessLensProvider';
 import { ServerlessDefinitionProvider } from './definitions/ServerlessDefinitionProvider';
 import { ServerlessCompletionProvider } from './completions/ServerlessCompletionProvider';
+import { ServerlessDiagnosticsProvider } from './diagnostics/ServerlessDiagnosticsProvider';
 import { LocalResourceProvider } from './tree/LocalResourceProvider';
 import { RemoteResourceProvider } from './tree/RemoteResourceExplorer';
 import { showRemoteFunctionInfo, clearRemoteFunctionInfo } from './commands/showRemoteFunctionInfo';
@@ -89,6 +90,7 @@ export function activate(context: vscode.ExtensionContext) {
     selector,
     new ServerlessCompletionProvider(),
   );
+  new ServerlessDiagnosticsProvider().startDiagnostic();
 }
 
 // this method is called when your extension is deactivated

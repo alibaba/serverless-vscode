@@ -1,5 +1,7 @@
 import { ASTNode } from './ASTNode';
 import { ItemASTNode } from './ItemASTNode';
+import { JSONSchema } from '../language-service/jsonSchema';
+import { ValidationResult, ISchemaCollector } from '../language-service/parser/jsonParser';
 
 export class ArrayASTNode extends ASTNode {
   private items: ItemASTNode[];
@@ -27,6 +29,28 @@ export class ArrayASTNode extends ASTNode {
       return true;
     }
     return false;
+  }
+
+  validate(
+    schema: JSONSchema,
+    validationResult: ValidationResult,
+    matchingSchemas: ISchemaCollector,
+  ): void {
+    if (!matchingSchemas.include(this)) {
+      return;
+    }
+    super.validate(schema, validationResult, matchingSchemas);
+    if (schema.items) {
+      this.items.forEach(item => {
+        const itemValidationResult = new ValidationResult();
+        item.validate(
+          schema.items as JSONSchema,
+          itemValidationResult,
+          matchingSchemas,
+        );
+        validationResult.mergePropertyMatch(itemValidationResult);
+      });
+    }
   }
 
 }
