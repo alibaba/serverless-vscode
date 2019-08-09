@@ -32,6 +32,13 @@
   ],
   "main": "./out/extension.js",
   "contributes": {
+    "iconThemes": [
+      {
+        "id": "Aliyun Serverless",
+        "label": "Aliyun Serverless",
+        "path": "./fileicons/vs-seti-icon-theme.json"
+      }
+    ],
     "configurationDefaults": {
       "[yaml]": {
         "editor.snippetSuggestions": "inline",
