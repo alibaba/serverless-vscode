@@ -4,6 +4,14 @@ import { serverlessCommands } from '../utils/constants';
 import { isPathExists } from '../utils/file';
 import { recordPageView } from '../utils/visitor';
 import { TemplateService } from '../services/TemplateService';
+import { findBlockEndLine, createDecorationTypes, decorateEditor } from '../utils/document';
+
+const functionDecorationTypes: vscode.TextEditorDecorationType[] = createDecorationTypes(
+  { r: 255, g: 64, b: 255 },
+  0.3,
+  0.01,
+  0.03,
+);
 
 export function gotoFunctionTemplate(context: vscode.ExtensionContext) {
   context.subscriptions.push(vscode.commands.registerCommand(serverlessCommands.GOTO_FUNCTION_TEMPLATE.id,
@@ -53,5 +61,10 @@ async function process(serviceName: string, functionName: string) {
   await vscode.window.showTextDocument(document).then(editor => {
     editor.selections = [new vscode.Selection(cursorPosition, cursorPosition)];
     editor.revealRange(new vscode.Range(cursorPosition, new vscode.Position(lineNumber + 10, 0)));
+    if (functionFound) {
+      const endLine = findBlockEndLine(document, cursorPosition);
+      const decorationRange = new vscode.Range(new vscode.Position(lineNumber, 0), new vscode.Position(endLine + 1, 0));
+      decorateEditor(editor, decorationRange, functionDecorationTypes);
+    }
   });
 }

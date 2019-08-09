@@ -3,6 +3,7 @@ import * as path from 'path';
 import { isPathExists, isDirectory } from '../utils/file';
 import { getHandlerFileName } from '../utils/runtime';
 import { recordPageView } from '../utils/visitor';
+import { countLeadingSpace } from '../utils/document';
 
 export class ServerlessDefinitionProvider implements vscode.DefinitionProvider {
   provideDefinition(document: vscode.TextDocument, position: vscode.Position, token: vscode.CancellationToken):
@@ -90,7 +91,7 @@ export class ServerlessDefinitionProvider implements vscode.DefinitionProvider {
     : string | undefined {
     let lineNumber = position.line;
     let lineTxt = document.lineAt(position.line).text;
-    const spaceCnt = this.countLeadingSpace(lineTxt);
+    const spaceCnt = countLeadingSpace(lineTxt);
     let cnt = spaceCnt;
     while(cnt >= spaceCnt) {
       if (cnt === spaceCnt && lineTxt.indexOf(propName) > -1) {
@@ -100,11 +101,11 @@ export class ServerlessDefinitionProvider implements vscode.DefinitionProvider {
         break;
       }
       lineTxt = document.lineAt(lineNumber).text;
-      cnt = this.countLeadingSpace(lineTxt);
+      cnt = countLeadingSpace(lineTxt);
     }
     lineNumber = position.line;
     lineTxt = document.lineAt(lineNumber).text;
-    cnt = this.countLeadingSpace(lineTxt);;
+    cnt = countLeadingSpace(lineTxt);;
     while(cnt >= spaceCnt) {
       if (cnt === spaceCnt && lineTxt.indexOf(propName) > -1) {
         return this.getValue(lineTxt);
@@ -113,21 +114,9 @@ export class ServerlessDefinitionProvider implements vscode.DefinitionProvider {
         break;
       }
       lineTxt = document.lineAt(lineNumber).text;
-      cnt = this.countLeadingSpace(lineTxt);
+      cnt = countLeadingSpace(lineTxt);
     }
     return;
-  }
-
-  private countLeadingSpace(str: string) {
-    let preSpaceCnt = 0;
-    for (const ch of str) {
-      if (ch === ' ') {
-        preSpaceCnt++;
-      } else {
-        break;
-      }
-    }
-    return preSpaceCnt;
   }
 
   private getValue(kvLine: string): string |  undefined {
