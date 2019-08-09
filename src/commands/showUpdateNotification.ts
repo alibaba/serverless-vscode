@@ -14,7 +14,6 @@ const writeFile = util.promisify(fs.writeFile);
 export function showUpdateNotification(context: vscode.ExtensionContext) {
   context.subscriptions.push(vscode.commands.registerCommand(serverlessCommands.SHOW_UPDATE_NOTIFICATION.id,
     async () => {
-      recordPageView('/showUpdateNotification');
       await process(context).catch((ex) => vscode.window.showErrorMessage(ex.message));;
     }
   ));
@@ -30,6 +29,7 @@ async function process(context: vscode.ExtensionContext) {
     }
   }
   if (showNotification) {
+    recordPageView('/showUpdateNotification');
     vscode.window.withProgress(
       {
         location: vscode.ProgressLocation.Notification,

@@ -143,7 +143,7 @@ export const ALIYUN_SERVERLESS_SERVICE_TYPE = 'Aliyun::Serverless::Service';
 export const ALIYUN_SERVERLESS_FUNCTION_TYPE = 'Aliyun::Serverless::Function';
 
 
-export const ALIYUN_SERVERLESS_VERSION = 'v1.3.0';
+export const ALIYUN_SERVERLESS_VERSION = 'v1.4.0';
 export const ALIYUN_SERVERLESS_CHANGELOG_URL = 'https://github.com/alibaba/serverless-vscode/blob/master/CHANGELOG.md';
 
 export const ALIYUN_SERVERLESS_CUSTOMDOMAIN_TYPE = 'Aliyun::Serverless::CustomDomain';
