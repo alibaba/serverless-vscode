@@ -1,0 +1,224 @@
+{
+  "$id": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "definitions": {
+    "Aliyun::Serverless::Service": {
+      "$id": "Aliyun::Serverless::Service",
+      "type": "object",
+      "properties": {
+        "Type": {
+          "type": "string",
+          "enum": [
+            "Aliyun::Serverless::Service"
+          ]
+        },
+        "Properties": {
+          "type": "object",
+          "properties": {
+            "Description": {
+              "type": "string"
+            },
+            "Role": {
+              "type": "string"
+            },
+            "Policies": {
+              "oneOf": [
+                { "type": "string" },
+                {
+                  "$ref": "#/definitions/Aliyun::Serverless::Service::Role"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "oneOf": [
+                      { "type": "string" },
+                      { "$ref": "#/definitions/Aliyun::Serverless::Service::Role" }
+                    ]
+                  }
+                }
+              ]
+            },
+            "InternetAccess": {
+              "type": "boolean"
+            },
+            "VpcConfig": {
+              "oneOf": [
+                { "type": "string" },
+                {
+                  "type": "object",
+                  "properties": {
+                    "VpcId": { "type": "string" },
+                    "VSwitchIds": {
+                      "type": "array",
+                      "items": { "type": "string" }
+                    },
+                    "SecurityGroupId": { "type": "string" }
+                  },
+                  "required": ["VpcId", "VSwitchIds", "SecurityGroupId"],
+                  "additionalProperties": false
+                }
+              ]
+            },
+            "LogConfig": {
+              "type": "object",
+              "properties": {
+                "Project": { "type": "string" },
+                "Logstore": { "type": "string" }
+              },
+              "required": ["Project", "Logstore"],
+              "additionalProperties": false
+            },
+            "NasConfig": {
+              "oneOf": [
+                { "type": "string" },
+                {
+                  "type": "object",
+                  "properties": {
+                    "UserId": { "type": "integer" },
+                    "GroupId": { "type": "integer" },
+                    "MountPoints": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "ServerAddr": { "type": "string" },
+                          "MountDir": { "type": "string" }
+                        },
+                        "required": ["ServerAddr", "MountDir"],
+                        "additionalProperties": false
+                      }
+                    }
+                  },
+                  "required": ["UserId", "GroupId", "MountPoints"],
+                  "additionalProperties": false
+                }
+              ]
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "patternProperties": {
+        "^(?!Type|Properties)[a-zA-Z_][a-zA-Z0-9_-]{0,127}$": {
+          "$ref": "#/definitions/Aliyun::Serverless::Function"
+        }
+      },
+      "required": ["Type"],
+      "additionalProperties": false
+    },
+    "Aliyun::Serverless::Function": {
+      "$id": "Aliyun::Serverless::Function",
+      "type": "object",
+      "properties": {
+        "Type": {
+          "type": "string",
+          "enum": [
+            "Aliyun::Serverless::Function"
+          ]
+        },
+        "Properties": {
+          "type": "object",
+          "properties": {
+            "Handler": {
+              "type": "string"
+            },
+            "Initializer": {
+              "type": "string"
+            },
+            "Runtime": {
+              "type": "string",
+              "enum": ["nodejs6", "nodejs8", "python2.7", "python3", "java8", "php7.2", "dotnetcore2.1"]
+            },
+            "CodeUri": {
+              "type": "string"
+            },
+            "Description": {
+              "type": "string"
+            },
+            "Timeout": {
+              "type": "integer"
+            },
+            "InitializationTimeout": {
+              "type": "integer"
+            },
+            "EnvironmentVariables": {
+              "type": "object"
+            },
+            "MemorySize": {
+              "type": "integer",
+              "enum": [
+                128, 192, 256, 320, 384, 448, 512, 576, 640, 704,
+                768, 832, 896, 960, 1024, 1088, 1152, 1216, 1280,
+                1344, 1408, 1472, 1536, 1600, 1664, 1728, 1792,
+                1856, 1920, 1984, 2048, 2112, 2176, 2240, 2304,
+                2368, 2432, 2496, 2560, 2624, 2688, 2752, 2816,
+                2880, 2944, 3008, 3072
+              ]
+            }
+          },
+          "required": ["Handler", "Runtime", "CodeUri"],
+          "additionalProperties": false
+        }
+      },
+      "required": ["Type"]
+    },
+    "Aliyun::Serverless::Service::Role": {
+      "$id": "Aliyun::Serverless::Service::Role",
+      "type": "object",
+      "properties": {
+        "Version": {
+          "type": "string"
+        },
+        "Statement": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "Effect": {
+                "type": "string"
+              },
+              "Action": {
+                "type": "array",
+                "items": { "type": "string" }
+              },
+              "Resource": {
+                "type": "string"
+              }
+            },
+            "required": ["Effect", "Action", "Resource"],
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "properties": {
+    "ROSTemplateFormatVersion": {
+      "type": "string",
+      "enum": [
+        "2015-09-01"
+      ]
+    },
+    "Transform": {
+      "type": "string",
+      "enum": [
+        "Aliyun::Serverless-2018-04-03"
+      ]
+    },
+    "Resources": {
+      "type": "object",
+      "patternProperties": {
+        "^[a-zA-Z_][a-zA-Z.0-9_-]{0,127}$": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Aliyun::Serverless::Service"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "required": ["ROSTemplateFormatVersion", "Resources"],
+  "additionalProperties": false
+}
