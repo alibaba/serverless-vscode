@@ -2,6 +2,13 @@
 
 所有对 "Aliyun Serverless" 插件的更改都将记录在这个文件中。
 
+## 1.4.1 - 2019-08-10
+### Added
+- 补充模版文件 template.yml 资源配置信息的校验。在 template.yml 中会检测资源配置信息是否符合[规格说明](https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03-zh-cn.md)，并在不符合的地方进行标示，鼠标移动到标示位置即可看到相关提示信息。
+
+### Other
+- Windows 平台静默下载 Fun。
+
 ## 1.4.0 - 2019-08-09
 ### Added
 - 去除了对 Fun CLI 的安装依赖。安装插件后可以直接使用插件的所有功能，无需再额外安装 Fun。
