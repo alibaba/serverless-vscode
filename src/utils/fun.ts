@@ -39,9 +39,12 @@ class PosixFunExecutorGenerator extends FunExecutorGenerator {
   }
   async needUpdate(): Promise<boolean> {
     const funPath = this.getFunPath();
+    const actualFunEntryPath =
+      path.resolve(ext.context.extensionPath, 'node_modules', '@alicloud', 'fun', 'bin', 'fun.js');
     try {
       const electronPath = await cpUtils.executeCommand(undefined, undefined, `${funPath}`, '--electron-path');
-      return process.argv0 !== electronPath.trim();
+      const funEntryPath = await cpUtils.executeCommand(undefined, undefined, `${funPath}`, '--fun-path');
+      return process.argv0 !== electronPath.trim() || actualFunEntryPath !== funEntryPath.trim();
     } catch (ex) {
       return true;
     }
