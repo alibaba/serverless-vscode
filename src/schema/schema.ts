@@ -28,6 +28,9 @@ import {
   TABLESTORE_DOCUMENTATION_URL,
   LOG_DOCUMENTATION_URL,
   MNSTOPIC_DOCUMENTATION_URL,
+  VPCCONFIG_INSERT_TEXT,
+  LOGCONFIG_INSERT_TEXT,
+  NASCONFIG_INSERT_TEXT,
 } from './constants';
 
 // TODO: schema 的进一步定义
@@ -60,6 +63,7 @@ const vpcConfigSchema = {
     'VSwitchIds': {},
     'SecurityGroupId': {},
   },
+  insertText: VPCCONFIG_INSERT_TEXT,
 };
 
 const logConfigSchema = {
@@ -67,6 +71,7 @@ const logConfigSchema = {
     'Project': {},
     'Logstore': {},
   },
+  insertText: LOGCONFIG_INSERT_TEXT,
 };
 
 const nasConfigSchema = {
@@ -80,6 +85,7 @@ const nasConfigSchema = {
       },
     },
   },
+  insertText: NASCONFIG_INSERT_TEXT,
 };
 
 const serviceSchema = {

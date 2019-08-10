@@ -191,6 +191,229 @@
         }
       },
       "additionalProperties": false
+    },
+    "Aliyun::Serverless::CustomDomain": {
+      "$id": "Aliyun::Serverless::CustomDomain",
+      "type": "object",
+      "properties": {
+        "Type": {
+          "type": "string",
+          "enum": [
+            "Aliyun::Serverless::CustomDomain"
+          ]
+        },
+        "Properties": {
+          "type": "object",
+          "properties": {
+            "Protocol": {
+              "type": "string",
+              "enum": ["HTTP", "HTTP,HTTPS"]
+            },
+            "RouteConfig": {
+              "type": "object",
+              "properties": {
+                "Routes": {
+                  "type": "object",
+                  "patternProperties": {
+                    "^/.*$": {
+                      "anyOf": [
+                        { "$ref": "#/definitions/Aliyun::Serverless::CustomDomain::PathConfig" }
+                      ]
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "routes": {
+                  "type": "object",
+                  "patternProperties": {
+                    "^/.*$": {
+                      "anyOf": [
+                        { "$ref": "#/definitions/Aliyun::Serverless::CustomDomain::PathConfig" }
+                      ]
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            },
+            "CertConfig": {
+              "type": "object",
+              "properties": {
+                "CertName": {
+                  "type": "string"
+                },
+                "PrivateKey": {
+                  "type": "string"
+                },
+                "Certificate": {
+                  "type": "string"
+                }
+              },
+              "required": ["CertName", "PrivateKey", "Certificate"],
+              "additionalProperties": false
+            }
+          },
+          "required": ["Protocol", "RouteConfig"]
+        }
+      },
+      "required": ["Type"]
+    },
+    "Aliyun::Serverless::CustomDomain::PathConfig": {
+      "$id": "Aliyun::Serverless::CustomDomain::PathConfig",
+      "type": "object",
+      "properties": {
+        "serviceName": {
+          "type": "string"
+        },
+        "ServiceName": {
+          "type": "string"
+        },
+        "functionName": {
+          "type": "string"
+        },
+        "FunctionName": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "Aliyun::Serverless::Api": {
+      "$id": "Aliyun::Serverless::Api",
+      "type": "object",
+      "properties": {
+        "Type": {
+          "type": "string",
+          "enum": [
+            "Aliyun::Serverless::Api"
+          ]
+        },
+        "Properties": {
+          "type": "object",
+          "properties": {
+            "Name": {
+              "type": "string"
+            },
+            "StageName": {
+              "type": "string"
+            },
+            "DefinitionBody": {
+              "type": "object"
+            },
+            "DefinitionUri": {
+              "type": "string"
+            },
+            "Cors": {
+              "oneOf": [
+                { "type": "string" },
+                { "$ref": "#/definitions/Aliyun::Serverless::Api::CORS" }
+              ]
+            }
+          },
+          "required": ["StageName"],
+          "additionalProperties": false
+        }
+      },
+      "required": ["Type"],
+      "additionalProperties": false
+    },
+    "Aliyun::Serverless::Api::CORS": {
+      "$id": "Aliyun::Serverless::Api::CORS",
+      "type": "object",
+      "properties": {
+        "AllowMethods": {
+          "type": "string"
+        },
+        "AllowHeaders": {
+          "type": "string"
+        },
+        "AllowOrigin": {
+          "type": "string"
+        },
+        "MaxAge": {
+          "type": "string"
+        }
+      },
+      "required": ["AllowOrigin"],
+      "additionalProperties": false
+    },
+    "Aliyun::Serverless::TableStore": {
+      "$id": "Aliyun::Serverless::TableStore",
+      "type": "object",
+      "properties": {
+        "Type": {
+          "type": "string",
+          "enum": [
+            "Aliyun::Serverless::TableStore"
+          ]
+        },
+        "Properties": {
+          "type": "object",
+          "properties": {
+            "ClusterType": {
+              "type": "string",
+              "enum": ["HYBRID", "SSD"]
+            },
+            "Description": {
+              "type": "string"
+            }
+          },
+          "required": ["ClusterType"],
+          "additionalProperties": false
+        }
+      },
+      "required": ["Type", "Properties"]
+    },
+    "Aliyun::Serverless::Log": {
+      "$id": "Aliyun::Serverless::Log",
+      "type": "object",
+      "properties": {
+        "Type": {
+          "type": "string",
+          "enum": [
+            "Aliyun::Serverless::Log"
+          ]
+        },
+        "Properties": {
+          "type": "object",
+          "properties": {
+            "Description": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "required": ["Type"]
+    },
+    "Aliyun::Serverless::MNSTopic": {
+      "$id": "Aliyun::Serverless::MNSTopic",
+      "type": "object",
+      "properties": {
+        "Type": {
+          "type": "string",
+          "enum": [
+            "Aliyun::Serverless::MNSTopic"
+          ]
+        },
+        "Properties": {
+          "type": "object",
+          "properties": {
+            "Region": {
+              "type": "string"
+            },
+            "MaximumMessageSize": {
+              "type": "integer"
+            },
+            "LoggingEnabled": {
+              "type": "boolean"
+            }
+          },
+          "required": ["Region"],
+          "additionalProperties": false
+        }
+      },
+      "required": ["Type", "Properties"],
+      "additionalProperties": false
     }
   },
   "properties": {
@@ -213,6 +436,21 @@
           "anyOf": [
             {
               "$ref": "#/definitions/Aliyun::Serverless::Service"
+            },
+            {
+              "$ref": "#/definitions/Aliyun::Serverless::CustomDomain"
+            },
+            {
+              "$ref": "#/definitions/Aliyun::Serverless::Api"
+            },
+            {
+              "$ref": "#/definitions/Aliyun::Serverless::TableStore"
+            },
+            {
+              "$ref": "#/definitions/Aliyun::Serverless::Log"
+            },
+            {
+              "$ref": "#/definitions/Aliyun::Serverless::MNSTopic"
             }
           ]
         }
