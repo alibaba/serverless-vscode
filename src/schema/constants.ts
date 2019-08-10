@@ -52,8 +52,10 @@ export const CUSTOMDOMAIN_INSERT_TEXT =
 
 export const API_INSERT_TEXT =
   "${1:api}: # api name\n" +
-  "  StageName: ${1:prod}\n" +
-  "  DefinitionUri: ${2:swagger.yml}\n"
+  "  Type: 'Aliyun::Serverless::Api'\n" +
+  "  Properties:\n" +
+  "    StageName: ${2:prod}\n" +
+  "    DefinitionUri: ${3:swagger.yml}"
 
 export const TABLESTORE_INSERT_TEXT =
   "${1:tablestore}: # tablestore name\n" +
@@ -99,6 +101,17 @@ export const MNSTOPIC_INSERT_TEXT =
 "    MaximumMessageSize: 2048\n" +
 "    LoggingEnabled: false"
 
+export const VPCCONFIG_INSERT_TEXT =
+  "VpcConfig:\n" +
+  "  VpcId: ${1:vpcId}\n" +
+  "  VSwitchIds: [\"${2:switchId}\"]\n" +
+  "  SecurityGroupId: ${3:securityGroupId}"
 
+export const LOGCONFIG_INSERT_TEXT =
+  "LogConfig:\n" +
+  "  Project: ${1:project}\n" +
+  "  Logstore: ${2:logStore}"
 
+export const NASCONFIG_INSERT_TEXT =
+  "NasConfig: auto"
 
