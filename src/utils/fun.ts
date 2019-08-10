@@ -99,17 +99,6 @@ class WindowsFunExecutorGenerator extends FunExecutorGenerator {
       }
     }
     const funFileName = `fun-v${FUN_VERSION}-win-${process.arch === 'x64' ? 'x64' : 'x86'}.exe`;
-    vscode.window.withProgress(
-      {
-        location: vscode.ProgressLocation.Notification,
-      },
-      () => {
-        return vscode.window.showInformationMessage(
-          `Downloading ${funFileName}...`,
-          'OK',
-        );
-      }
-    );
     await new Promise((resolve, reject) => {
       download(`https://gosspublic.alicdn.com/fun/${funFileName}.zip`)
         .pipe(unzipper.Parse())
