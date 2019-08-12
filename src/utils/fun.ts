@@ -136,6 +136,10 @@ class WindowsFunExecutorGenerator extends FunExecutorGenerator {
 }
 
 export async function getFunPath(): Promise<string> {
+  const externalFunPath = getExternalFunPath();
+  if (externalFunPath) {
+    return externalFunPath;
+  }
   let funExecutorGenerator: FunExecutorGenerator;
   if (os.platform() === 'win32') {
     funExecutorGenerator = new WindowsFunExecutorGenerator();
@@ -143,4 +147,12 @@ export async function getFunPath(): Promise<string> {
     funExecutorGenerator = new PosixFunExecutorGenerator();
   }
   return funExecutorGenerator.generate();
+}
+
+function getExternalFunPath(): string | undefined {
+  const externalFunPath = vscode.workspace.getConfiguration().get('aliyun.fc.fun.path');
+  if (typeof externalFunPath === 'string') {
+    return externalFunPath;
+  }
+  return;
 }
