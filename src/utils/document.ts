@@ -140,7 +140,7 @@ export function countLeadingSpace(str: string) {
   return preSpaceCnt;
 }
 
-export function createDecorationTypes(
+export function createDecorationTypesByOpacity(
   rgb: { r: number, g: number, b: number},
   opacityStart: number,
   opacityEnd: number,
@@ -161,6 +161,20 @@ export function createDecorationTypes(
     )
   }
   return result.reverse();
+}
+
+export function createDecorationTypesByColors(
+  ...rgba: { r: number, g: number, b: number, a: number }[]
+) {
+  const result: vscode.TextEditorDecorationType[] = [];
+  for (const color of rgba) {
+    result.push(
+      vscode.window.createTextEditorDecorationType({
+        backgroundColor: `rgba(${color.r},${color.g},${color.b},${color.a})`
+      })
+    );
+  }
+  return result;
 }
 
 export function decorateEditor(
