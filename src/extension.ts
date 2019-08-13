@@ -8,6 +8,8 @@ import { gotoFunctionCode } from './commands/gotoFunctionCode';
 import { gotoFunctionTemplate } from './commands/gotoFunctionTemplate';
 import { gotoServiceTemplate } from './commands/gotoServiceTemplate';
 import { deploy } from './commands/deploy';
+import { deployService } from './commands/deployService';
+import { deployFunction } from './commands/deployFunction';
 import { localInvokeFunction } from './commands/localInvokeFunction';
 import { localDebugFunction } from './commands/localDebugFunction';
 import { remoteInvokeFunction } from './commands/remoteInvokeFunction';
@@ -76,6 +78,8 @@ export function activate(context: vscode.ExtensionContext) {
   viewSource(context);
   reportIssue(context);
   showUpdateNotification(context);
+  deployService(context);
+  deployFunction(context);
 
   vscode.commands.executeCommand(serverlessCommands.SHOW_REGION_STATUS.id);
   vscode.commands.executeCommand(serverlessCommands.SHOW_UPDATE_NOTIFICATION.id);

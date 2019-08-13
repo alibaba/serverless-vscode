@@ -7,9 +7,17 @@ export namespace serverlessCommands {
     id: 'fc.extension.function.create',
     title: 'Create Function',
   };
-  export const SERVICE_DEPLOY = {
-    id: 'fc.extension.service.deploy',
+  export const DEPLOY = {
+    id: 'fc.extension.deploy',
+    title: 'Deploy',
+  };
+  export const DEPLOY_SERVICE = {
+    id: 'fc.extension.deploy.service',
     title: 'Deploy Service',
+  };
+  export const DEPLOY_FUNCTION = {
+    id: 'fc.extension.deploy.function',
+    title: 'Deploy Function',
   };
   export const GOTO_FUNCTION_CODE = {
     id: 'fc.extension.localResource.gotoFunction',
