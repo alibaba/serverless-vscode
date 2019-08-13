@@ -21,10 +21,13 @@ export class FunService {
     })
   }
 
-  deploy() {
+  deploy(serviceName?: string, functionName? :string) {
     const terminal = terminalService.getFunctionComputeTerminal();
     getFunPath().then(funPath => {
-      const command = `${funPath} deploy -t ./template.yml`;
+      const command =
+        functionName ? `${funPath} deploy ${serviceName}/${functionName} -t ./template.yml` :
+          serviceName ? `${funPath} deploy ${serviceName} -t ./template.yml` :
+            `${funPath} deploy -t ./template.yml`;
       terminal.sendText(command);
       terminal.show();
     })

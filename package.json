@@ -23,7 +23,7 @@
   "activationEvents": [
     "onView:fcLocalResource",
     "onView:fcRemoteResource",
-    "onCommand:fc.extension.service.deploy",
+    "onCommand:fc.extension.deploy",
     "onCommand:fc.extension.project.init",
     "onCommand:fc.extension.bind.account",
     "onCommand:fc.extension.switch.region",
@@ -88,7 +88,23 @@
         }
       },
       {
-        "command": "fc.extension.service.deploy",
+        "command": "fc.extension.deploy.service",
+        "title": "FC: Deploy Service",
+        "icon": {
+          "light": "media/light/deploy.svg",
+          "dark": "media/dark/deploy.svg"
+        }
+      },
+      {
+        "command": "fc.extension.deploy.function",
+        "title": "FC: Deploy Function",
+        "icon": {
+          "light": "media/light/deploy.svg",
+          "dark": "media/dark/deploy.svg"
+        }
+      },
+      {
+        "command": "fc.extension.deploy",
         "title": "FC: Deploy",
         "icon": {
           "light": "media/light/deploy.svg",
@@ -205,7 +221,7 @@
           "when": "view == fcLocalResource"
         },
         {
-          "command": "fc.extension.service.deploy",
+          "command": "fc.extension.deploy",
           "group": "navigation",
           "when": "view == fcLocalResource"
         },
@@ -258,6 +274,14 @@
         }
       ],
       "view/item/context": [
+        {
+          "command": "fc.extension.deploy.service",
+          "when": "view == fcLocalResource && viewItem == service"
+        },
+        {
+          "command": "fc.extension.deploy.function",
+          "when": "view == fcLocalResource && viewItem == function"
+        },
         {
           "command": "fc.extension.function.create",
           "when": "view == fcLocalResource && viewItem == service",
@@ -325,6 +349,14 @@
       "commandPalette": [
         {
           "command": "fc.extension.function.create",
+          "when": "never"
+        },
+        {
+          "command": "fc.extension.deploy.service",
+          "when": "never"
+        },
+        {
+          "command": "fc.extension.deploy.function",
           "when": "never"
         },
         {
