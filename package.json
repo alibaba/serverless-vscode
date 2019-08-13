@@ -59,6 +59,10 @@
           "type": "string",
           "default": "./event.dat",
           "description": "Function Compute remote resource event file path"
+        },
+        "aliyun.fc.fun.path": {
+          "type": "string",
+          "description": "External Fun command which will replace the internal Fun"
         }
       }
     },
