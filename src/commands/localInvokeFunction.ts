@@ -6,16 +6,17 @@ import { isPathExists, createEventFile } from '../utils/file';
 import { recordPageView } from '../utils/visitor';
 import { FunService } from '../services/FunService';
 import { TemplateService } from '../services/TemplateService';
-import { Resource } from '../models/resource';
+import { Resource, ResourceType, FunctionResource } from '../models/resource';
 
 export function localInvokeFunction(context: vscode.ExtensionContext) {
   context.subscriptions.push(vscode.commands.registerCommand(serverlessCommands.LOCAL_RUN.id,
     async (node: Resource) => {
       recordPageView('/localInvoke');
-      const serviceName = node.resourceProperties && node.resourceProperties.serviceName
-        ? node.resourceProperties.serviceName : '';
-      const functionName = node.label;
-      await process(serviceName, functionName);
+      if (node.resourceType !== ResourceType.Function) {
+        return;
+      }
+      const funcRes = node as FunctionResource;
+      await process(funcRes.serviceName, funcRes.functionName);
     })
   );
 }

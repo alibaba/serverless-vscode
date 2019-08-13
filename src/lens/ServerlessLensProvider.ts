@@ -3,7 +3,7 @@ import { ALIYUN_SERVERLESS_SERVICE_TYPE, ALIYUN_SERVERLESS_FUNCTION_TYPE } from 
 import { TemplateService } from '../services/TemplateService';
 import { SeverlessLensInvokeItem } from './ServerlessLensInvokeItem';
 import { SeverlessLensDebugItem } from './ServerlessLensDebugItem';
-import { Resource, ResourceType } from '../models/resource';
+import { FunctionResource } from '../models/resource';
 
 export class ServerlessLensProvider implements vscode.CodeLensProvider {
   _onDidChangeCodeLenses: vscode.EventEmitter<void | undefined> = new vscode.EventEmitter<void | undefined>();
@@ -53,30 +53,12 @@ export class ServerlessLensProvider implements vscode.CodeLensProvider {
 
   createSeverlessLensInvokeItem(documentRange:vscode.Range, serviceName: string, functionName: string)
     : SeverlessLensInvokeItem {
-    return new SeverlessLensInvokeItem(documentRange,
-      new Resource(
-        functionName,
-        ResourceType.Function,
-        vscode.TreeItemCollapsibleState.None,
-        {
-          serviceName: serviceName
-        }
-      )
-    );
+    return new SeverlessLensInvokeItem(documentRange, new FunctionResource(serviceName, functionName));
   }
 
   createSeverlessLensDebugItem(documentRange:vscode.Range, serviceName: string, functionName: string)
     : SeverlessLensDebugItem {
-    return new SeverlessLensDebugItem(documentRange,
-      new Resource(
-        functionName,
-        ResourceType.Function,
-        vscode.TreeItemCollapsibleState.None,
-        {
-          serviceName: serviceName
-        }
-      )
-    );
+    return new SeverlessLensDebugItem(documentRange, new FunctionResource(serviceName, functionName));
   }
 
   getCodeLensRange(document: vscode.TextDocument, functionName: string): vscode.Range {

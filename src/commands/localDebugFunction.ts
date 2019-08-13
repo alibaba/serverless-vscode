@@ -7,7 +7,7 @@ import { isPathExists, createDirectory, createLaunchFile, createEventFile } from
 import { recordPageView } from '../utils/visitor';
 import { FunService } from '../services/FunService';
 import { TemplateService } from '../services/TemplateService';
-import { Resource } from '../models/resource';
+import { Resource, ResourceType, FunctionResource } from '../models/resource';
 
 const debugPortSet = new Set();
 
@@ -15,10 +15,11 @@ export function localDebugFunction(context: vscode.ExtensionContext) {
   context.subscriptions.push(vscode.commands.registerCommand(serverlessCommands.LOCAL_DEBUG.id,
     async (node: Resource) => {
       recordPageView('/localDebug');
-      const serviceName = node.resourceProperties && node.resourceProperties.serviceName
-        ? node.resourceProperties.serviceName : '';
-      const functionName = node.label;
-      await process(serviceName, functionName);
+      if (node.resourceType !== ResourceType.Function) {
+        return;
+      }
+      const funcRes = node as FunctionResource;
+      await process(funcRes.serviceName, funcRes.functionName);
     })
   );
   vscode.debug.onDidStartDebugSession(debugSession => {

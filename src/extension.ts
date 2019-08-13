@@ -7,6 +7,7 @@ import { createFunction } from './commands/createFunction';
 import { gotoFunctionCode } from './commands/gotoFunctionCode';
 import { gotoFunctionTemplate } from './commands/gotoFunctionTemplate';
 import { gotoServiceTemplate } from './commands/gotoServiceTemplate';
+import { gotoTriggerTemplate } from './commands/gotoTriggerTemplate';
 import { deploy } from './commands/deploy';
 import { deployService } from './commands/deployService';
 import { deployFunction } from './commands/deployFunction';
@@ -57,6 +58,7 @@ export function activate(context: vscode.ExtensionContext) {
   gotoFunctionCode(context); // goto function code
   gotoFunctionTemplate(context); // goto function template
   gotoServiceTemplate(context); // goto service template
+  gotoTriggerTemplate(context);
   deploy(context); // deploy
   localInvokeFunction(context); // local invoke function
   localDebugFunction(context); // local debug function

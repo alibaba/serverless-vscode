@@ -31,6 +31,10 @@ export namespace serverlessCommands {
     id: 'fc.extension.localResource.service.gotoTemplate',
     title: 'Goto Service Template'
   };
+  export const GOTO_TRIGGER_TEMPLATE = {
+    id: 'fc.extension.localResource.trigger.gotoTemplate',
+    title: 'Goto Trigger Template'
+  };
   export const INIT_PROJECT = {
     id: 'fc.extension.project.init',
     title: 'Init Project',
@@ -162,3 +166,14 @@ export const ALIYUN_SERVERLESS_LOG_TYPE = 'Aliyun::Serverless::Log';
 export const ALIYUN_SERVERLESS_LOG_LOGSTORE_TYPE = 'Aliyun::Serverless::Log::Logstore';
 export const ALIYUN_SERVERLESS_MNSTOPIC_TYPE = 'Aliyun::Serverless::MNSTopic';
 
+
+export const ALIYUN_SERVERLESS_EVENT_TYPES = [
+  'Timer',
+  'HTTP',
+  'Log',
+  'RDS',
+  'MNSTopic',
+  'TableStore',
+  'OSS',
+  'CDN',
+];

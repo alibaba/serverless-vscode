@@ -50,7 +50,7 @@
       "type": "object",
       "title": "Aliyun Serverless Plugin Configuration",
       "properties": {
-        "aliyun.fc.remoteSource.enable": {
+        "aliyun.fc.remoteResource.enable": {
           "type": "boolean",
           "default": true,
           "description": "Function Compute remote resource management"

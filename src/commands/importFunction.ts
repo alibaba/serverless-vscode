@@ -5,7 +5,7 @@ import { isDirectory, isNotEmpty } from '../utils/file';
 import { serverlessCommands } from '../utils/constants';
 import { recordPageView } from '../utils/visitor';
 import { getFunctionComputeOutputChannel } from '../utils/channel';
-import { Resource } from '../models/resource';
+import { Resource, ResourceType, FunctionResource } from '../models/resource';
 
 const cwd = vscode.workspace.rootPath;
 
@@ -13,9 +13,11 @@ export function importFunction(context: vscode.ExtensionContext) {
   context.subscriptions.push(vscode.commands.registerCommand(serverlessCommands.IMPORT_FUNCTION.id,
     async (node: Resource) => {
       recordPageView('importFunction');
-      const serviceName = (<any>node.resourceProperties).serviceName;
-      const functionName = node.label;
-      await process(serviceName, functionName);
+      if (node.resourceType !== ResourceType.Function) {
+        return;
+      }
+      const funcRes = node as FunctionResource;
+      await process(funcRes.serviceName, funcRes.functionName);
     })
   );
 }
