@@ -6,16 +6,17 @@ import { isPathExists, createEventFile } from '../utils/file';
 import { recordPageView } from '../utils/visitor';
 import { FunctionComputeService } from '../services/FunctionComputeService';
 import { getFunctionComputeOutputChannel } from '../utils/channel';
-import { Resource } from '../models/resource';
+import { Resource, ResourceType, FunctionResource } from '../models/resource';
 
 export function remoteInvokeFunction(context: vscode.ExtensionContext) {
   context.subscriptions.push(vscode.commands.registerCommand(serverlessCommands.REMOTE_INVOKE.id,
     async (node: Resource) => {
       recordPageView('/remoteInvoke');
-      const serviceName = node.resourceProperties && node.resourceProperties.serviceName
-        ? node.resourceProperties.serviceName : '';
-      const functionName = node.label;
-      await process(serviceName, functionName);
+      if (node.resourceType !== ResourceType.Function) {
+        return;
+      }
+      const funcRes = node as FunctionResource;
+      await process(funcRes.serviceName, funcRes.functionName);
     })
   );
 }

@@ -5,7 +5,7 @@ import { serverlessCommands } from '../utils/constants';
 import { FunctionDescriptor } from '../descriptors/descriptor';
 import { AbstractInfoPanelCreator } from './AbstractInfoPanelCreator';
 import { FunctionComputeService } from '../services/FunctionComputeService';
-import { Resource, ResourceType } from '../models/resource';
+import { FunctionResource } from '../models/resource';
 
 export class FunctionInfoPanelCreator extends AbstractInfoPanelCreator<FunctionDescriptor> {
   viewType = 'functionInfo';
@@ -30,15 +30,9 @@ export class FunctionInfoPanelCreator extends AbstractInfoPanelCreator<FunctionD
   protected receiveMessage(message: any, descriptor: FunctionDescriptor) {
     switch (message.command) {
       case 'remoteInvoke': {
-        vscode.commands.executeCommand(serverlessCommands.REMOTE_INVOKE.id,
-          new Resource(
-            descriptor.functionName,
-            ResourceType.Function,
-            vscode.TreeItemCollapsibleState.None,
-            {
-              serviceName: descriptor.serviceName,
-            }
-          ),
+        vscode.commands.executeCommand(
+          serverlessCommands.REMOTE_INVOKE.id,
+          new FunctionResource(descriptor.serviceName, descriptor.functionName)
         );
         return;
       }

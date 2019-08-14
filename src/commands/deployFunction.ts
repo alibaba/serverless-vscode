@@ -1,16 +1,18 @@
 import * as vscode from 'vscode';
 import { serverlessCommands } from '../utils/constants';
 import { recordPageView } from '../utils/visitor';
-import { Resource } from '../models/resource';
+import { Resource, FunctionResource, ResourceType } from '../models/resource';
 import { FunService } from '../services/FunService';
 
 export function deployFunction(context: vscode.ExtensionContext) {
   context.subscriptions.push(vscode.commands.registerCommand(serverlessCommands.DEPLOY_FUNCTION.id,
     async (node: Resource) => {
       recordPageView('/deployFunction');
-      const serviceName = node.resourceProperties && node.resourceProperties.serviceName;
-      const functionName = node.label;
-      await process(serviceName as string, functionName);
+      if (node.resourceType !== ResourceType.Function) {
+        return;
+      }
+      const funcRes = node as FunctionResource;
+      await process(funcRes.serviceName, funcRes.functionName);
     })
   );
 }

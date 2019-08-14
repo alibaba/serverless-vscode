@@ -43,7 +43,7 @@ async function process(serviceName: string) {
   let lineNumber = 0;
   let serviceFound = false;
   for (const line of templateContentLines) {
-    if (line.includes(serviceName)) {
+    if (serviceName + ':' === line.trim()) {
       serviceFound = true;
       break;
     }

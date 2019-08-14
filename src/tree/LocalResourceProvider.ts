@@ -4,12 +4,13 @@ import * as path from 'path';
 import * as util from 'util';
 import * as yaml from 'js-yaml';
 import {
-  serverlessCommands,
   ALIYUN_SERVERLESS_SERVICE_TYPE,
   ALIYUN_SERVERLESS_FUNCTION_TYPE,
+  serverlessCommands,
+  ALIYUN_SERVERLESS_EVENT_TYPES,
 } from '../utils/constants';
 import { isPathExists } from '../utils/file';
-import { Resource, ResourceType } from '../models/resource';
+import { Resource, ServiceResource, FunctionResource, ResourceType, TriggerResource } from '../models/resource';
 
 const readFile = util.promisify(fs.readFile);
 
@@ -46,7 +47,7 @@ export class LocalResourceProvider implements vscode.TreeDataProvider<Resource> 
 
     if (this.tplHasLoaded) {
       return Promise.resolve(
-        this.getResourceInTpl(this.tpl, element)
+        this.getResourceInTpl(element)
       )
     } else {
       return Promise.resolve(
@@ -54,7 +55,7 @@ export class LocalResourceProvider implements vscode.TreeDataProvider<Resource> 
           .then(tpl => {
             this.tpl = tpl;
             this.tplHasLoaded = true;
-            return Promise.resolve(this.getResourceInTpl(this.tpl, element));
+            return Promise.resolve(this.getResourceInTpl(element));
           })
       )
     }
@@ -66,62 +67,122 @@ export class LocalResourceProvider implements vscode.TreeDataProvider<Resource> 
     return tpl;
   }
 
-  private getResourceInTpl(tpl: Tpl, element?: Resource): Resource[] {
+  private getResourceInTpl(element?: Resource): Resource[] {
+    if (!element) {
+      return this.getServiceResourceInTpl();
+    }
+    if (element.resourceType === ResourceType.Service) {
+      return this.getFunctionResourceInTpl((element as ServiceResource).serviceName);
+    }
+    if (element.resourceType === ResourceType.Function) {
+      return this.getTriggerResourceInTpl(
+        (element as FunctionResource).serviceName,
+        (element as FunctionResource).functionName
+      );
+    }
+    return [];
+  }
+
+  private getServiceResourceInTpl(): ServiceResource[] {
+    const tpl = this.tpl;
     if (!tpl || !tpl.Resources) {
       return [];
     }
-    if (!element) {
-      const services = Object.entries(tpl.Resources)
-        .filter(([_, resource]) => {
-          return resource.Type === ALIYUN_SERVERLESS_SERVICE_TYPE
-        })
-        .map(([name]) => new Resource(
-          name,
-          ResourceType.Service,
-          vscode.TreeItemCollapsibleState.Collapsed,
-          {},
-          {
-            title: serverlessCommands.GOTO_SERVICE_TEMPLATE.title,
-            command: serverlessCommands.GOTO_SERVICE_TEMPLATE.id,
-            arguments: [name],
-          }
-        ));
-      return services;
-    }
-    const serviceName = element.label;
     const services = Object.entries(tpl.Resources)
-      .filter(([name]) => {
-        return name === serviceName
+      .filter(([_, resource]) => {
+        return resource.Type === ALIYUN_SERVERLESS_SERVICE_TYPE
       })
-    if (services.length === 0) {
-      vscode.window.showInformationMessage(`Did not found service ${serviceName} in template.yml`);
+      .map(([name]) => new ServiceResource(name,
+        {
+          title: serverlessCommands.GOTO_SERVICE_TEMPLATE.title,
+          command: serverlessCommands.GOTO_SERVICE_TEMPLATE.id,
+          arguments: [name],
+        })
+      );
+    return services;
+  }
+
+  private getFunctionResourceInTpl(serviceName: string): FunctionResource[] {
+    const tpl = this.tpl;
+    if (!tpl || !tpl.Resources) {
       return [];
     }
-    if (services.length > 1) {
-      vscode.window.showInformationMessage(`Found more than 1 service ${serviceName} in template.yml`);
+    const services = Object.entries(tpl.Resources)
+      .filter(([name, resource]) => {
+        return name === serviceName && resource.Type === ALIYUN_SERVERLESS_SERVICE_TYPE
+      });
+    if (!this.checkResourceUnique(serviceName, services)) {
       return [];
     }
     const functions = Object.entries(services[0][1])
-      .filter(([name, resource]) => {
+      .filter(([_, resource]) => {
         return resource.Type === ALIYUN_SERVERLESS_FUNCTION_TYPE
       })
-      .map(([name, resource]) => {
-        return new Resource(
+      .map(([name]) => {
+        return new FunctionResource(
+          serviceName,
           name,
-          ResourceType.Function,
-          vscode.TreeItemCollapsibleState.None,
           {
-            serviceName,
-            functionType: (<any>resource).Events && (<any>resource).Events.HttpTrigger ? 'HTTP' : 'NORMAL',
-          },
-          {
-            title: serverlessCommands.GOTO_FUNCTION_TEMPLATE.title,
             command: serverlessCommands.GOTO_FUNCTION_TEMPLATE.id,
+            title: serverlessCommands.GOTO_FUNCTION_TEMPLATE.title,
             arguments: [serviceName, name],
           }
         )
       })
-
     return functions;
+  }
+
+  private getTriggerResourceInTpl(serviceName: string, functionName: string): TriggerResource[] {
+    const tpl = this.tpl;
+    if (!tpl || !tpl.Resources) {
+      return [];
+    }
+    const services = Object.entries(tpl.Resources)
+      .filter(([name, resource]) => {
+        return name === serviceName && resource.Type === ALIYUN_SERVERLESS_SERVICE_TYPE
+      });
+    if (!this.checkResourceUnique(serviceName, services)) {
+      return [];
+    }
+    const functions = Object.entries(services[0][1])
+      .filter(([name, resource]) => {
+        return name === functionName && resource.Type === ALIYUN_SERVERLESS_FUNCTION_TYPE
+      });
+    if (!this.checkResourceUnique(`${serviceName}/${functionName}`, services)) {
+      return [];
+    }
+    if (!Object.keys(functions[0][1]).includes('Events')) {
+      return [];
+    }
+    const triggers = Object.entries((<any>functions[0][1]).Events)
+      .filter(([_, resource]) =>
+        (<any>resource).Type && ALIYUN_SERVERLESS_EVENT_TYPES.includes((<any>resource).Type)
+      )
+      .map(([name, resource]) => (
+        new TriggerResource(
+          serviceName,
+          functionName,
+          name,
+          (<any>resource).Type,
+          {
+            command: serverlessCommands.GOTO_TRIGGER_TEMPLATE.id,
+            title: serverlessCommands.GOTO_TRIGGER_TEMPLATE.title,
+            arguments: [serviceName, functionName, name],
+          }
+        )
+      ))
+    return triggers;
+  }
+
+  private checkResourceUnique(resourceName: string, resources: any) {
+    if (resources.length === 0) {
+      vscode.window.showInformationMessage(`Did not found ${resourceName} in template.yml`);
+      return false;
+    }
+    if (resources.length > 1) {
+      vscode.window.showInformationMessage(`Found more than 1 ${resourceName} in template.yml`);
+      return false;
+    }
+    return true;
   }
 }

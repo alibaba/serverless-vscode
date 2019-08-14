@@ -5,7 +5,7 @@ export enum ResourceType {
   Service = 0,
   Function = 1,
   Trigger = 2,
-  None = 99,
+  Command = 99,
 }
 
 export class Resource extends vscode.TreeItem {
@@ -13,40 +13,112 @@ export class Resource extends vscode.TreeItem {
     public readonly label: string,
     public readonly resourceType: ResourceType,
     public readonly collapsibleState: vscode.TreeItemCollapsibleState,
-    public readonly resourceProperties?: ResourceProperties,
     public readonly command?: vscode.Command
   ) {
     super(label, collapsibleState);
   }
-
-  iconPath = {
-    light: path.join(__filename, '..', '..', '..', 'media', 'light', this.getIconName()),
-    dark: path.join(__filename, '..', '..', '..', 'media', 'dark', this.getIconName()),
-  };
-
-  getIconName(): string {
-    if (this.resourceType === ResourceType.Service) {
-      return 'box.svg';
-    }
-    if (this.resourceType === ResourceType.Function) {
-      return 'function.svg';
-    }
-    return '';
-  }
-
-  convertResourceType2ContextValue(resourceType: ResourceType) {
-    if (resourceType === ResourceType.Service) {
-      return 'service';
-    }
-    if (resourceType === ResourceType.Function) {
-      return 'function';
-    }
-    return '';
-  }
-
-  contextValue = this.convertResourceType2ContextValue(this.resourceType);
 }
 
-export class ResourceProperties {
-  [key: string]: string;
+export class CommandResource extends Resource {
+  constructor(title: string, command: string) {
+    super(
+      title,
+      ResourceType.Command,
+      vscode.TreeItemCollapsibleState.None,
+      {
+        title,
+        command,
+      },
+    );
+    this.contextValue = 'command';
+  }
+}
+
+export class ServiceResource extends Resource {
+  serviceName: string;
+  constructor(
+    serviceName: string,
+    command?: vscode.Command,
+  ) {
+    super(
+      serviceName,
+      ResourceType.Service,
+      vscode.TreeItemCollapsibleState.Collapsed,
+      command,
+    );
+    this.serviceName = serviceName;
+    this.iconPath = {
+      light: path.resolve(__dirname, '..', '..', 'media', 'light', 'box.svg'),
+      dark: path.resolve(__dirname, '..', '..', 'media', 'dark', 'box.svg'),
+    }
+    this.contextValue = 'service';
+  }
+}
+
+export class FunctionResource extends Resource {
+  serviceName: string;
+  functionName: string;
+  constructor(
+    serviceName: string,
+    functionName: string,
+    command?: vscode.Command,
+  ) {
+    super(
+      functionName,
+      ResourceType.Function,
+      vscode.TreeItemCollapsibleState.Collapsed,
+      command,
+    );
+    this.serviceName = serviceName;
+    this.functionName = functionName;
+    this.iconPath = {
+      light: path.resolve(__dirname, '..', '..', 'media', 'light', 'function.svg'),
+      dark: path.resolve(__dirname, '..', '..', 'media', 'dark', 'function.svg'),
+    }
+    this.contextValue = 'function';
+  }
+}
+
+export class TriggerResource extends Resource {
+  serviceName: string;
+  functionName: string;
+  triggerName: string;
+  triggerType: string;
+  constructor(
+    serviceName: string,
+    functionName: string,
+    triggerName: string,
+    triggerType: string,
+    command?: vscode.Command,
+  ) {
+    super(
+      triggerName,
+      ResourceType.Trigger,
+      vscode.TreeItemCollapsibleState.None,
+      command,
+    );
+    this.serviceName = serviceName;
+    this.functionName = functionName;
+    this.triggerName = triggerName;
+    this.triggerType = triggerType;
+    this.iconPath = {
+      light: path.resolve(__dirname, '..', '..', 'media', 'light', TriggerResource.getIconName(triggerType) + '.svg'),
+      dark: path.resolve(__dirname, '..', '..', 'media', 'dark', TriggerResource.getIconName(triggerType) + '.svg'),
+    }
+    this.contextValue = 'trigger';
+  }
+
+  private static getIconName(triggerType: string) {
+    const iconMap: { [key: string]: string } = {
+      'Timer': 'clock',
+      'HTTP': 'http',
+      'Log': 'sls',
+      'RDS': 'rds',
+      'MNSTopic': 'mns',
+      'TableStore': 'ots',
+      'OSS': 'oss',
+      'CDN': 'cdn',
+    };
+    return iconMap[triggerType];
+  }
 }
