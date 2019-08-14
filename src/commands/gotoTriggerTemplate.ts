@@ -47,14 +47,14 @@ async function process(serviceName: string, functionName: string, triggerName: s
   let lineNumber = 0;
   for (const line of templateContentLines) {
     if (!serviceFound) {
-      if (serviceName + ':' === line.trim()) {
+      if (line.trim().indexOf(serviceName + ':') >= 0) {
         serviceFound = true;
       }
     } else if (!functionFound) {
-      if (functionName + ':' ===  line.trim()) {
+      if (line.trim().indexOf(functionName + ':') >= 0) {
         functionFound = true;
       }
-    } else if (triggerName + ':' === line.trim()) {
+    } else if (line.trim().indexOf(triggerName + ':') >= 0) {
       triggerFound = true;
       break;
     }

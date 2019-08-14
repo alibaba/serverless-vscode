@@ -113,5 +113,5 @@ export const LOGCONFIG_INSERT_TEXT =
   "  Logstore: ${2:logStore}"
 
 export const NASCONFIG_INSERT_TEXT =
-  "NasConfig: auto"
+  "NasConfig: Auto"
 

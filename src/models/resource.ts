@@ -5,6 +5,7 @@ export enum ResourceType {
   Service = 0,
   Function = 1,
   Trigger = 2,
+  Nas = 3,
   Command = 99,
 }
 
@@ -55,6 +56,33 @@ export class ServiceResource extends Resource {
   }
 }
 
+export class NasResource extends Resource {
+  serviceName: string;
+  serverAddr: string;
+  mountDir: string;
+  constructor(
+    serviceName: string,
+    serverAddr: string,
+    mountDir: string,
+    command?: vscode.Command,
+  ) {
+    super(
+      mountDir === 'Auto' ? 'nas:///mnt/auto' : `nas://${mountDir}`,
+      ResourceType.Nas,
+      vscode.TreeItemCollapsibleState.None,
+      command,
+    );
+    this.serviceName = serviceName;
+    this.serverAddr = serverAddr;
+    this.mountDir = mountDir;
+    this.iconPath = {
+      light: path.resolve(__dirname, '..', '..', 'media', 'light', 'nas.svg'),
+      dark: path.resolve(__dirname, '..', '..', 'media', 'dark', 'nas.svg'),
+    }
+    this.contextValue = 'nas';
+  }
+}
+
 export class FunctionResource extends Resource {
   serviceName: string;
   functionName: string;
@@ -62,11 +90,12 @@ export class FunctionResource extends Resource {
     serviceName: string,
     functionName: string,
     command?: vscode.Command,
+    collapsibleState?: vscode.TreeItemCollapsibleState,
   ) {
     super(
       functionName,
       ResourceType.Function,
-      vscode.TreeItemCollapsibleState.Collapsed,
+      collapsibleState || vscode.TreeItemCollapsibleState.None,
       command,
     );
     this.serviceName = serviceName;

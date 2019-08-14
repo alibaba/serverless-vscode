@@ -10,7 +10,14 @@ import {
   ALIYUN_SERVERLESS_EVENT_TYPES,
 } from '../utils/constants';
 import { isPathExists } from '../utils/file';
-import { Resource, ServiceResource, FunctionResource, ResourceType, TriggerResource } from '../models/resource';
+import {
+  Resource,
+  ServiceResource,
+  FunctionResource,
+  ResourceType,
+  TriggerResource,
+  NasResource
+} from '../models/resource';
 
 const readFile = util.promisify(fs.readFile);
 
@@ -72,7 +79,10 @@ export class LocalResourceProvider implements vscode.TreeDataProvider<Resource> 
       return this.getServiceResourceInTpl();
     }
     if (element.resourceType === ResourceType.Service) {
-      return this.getFunctionResourceInTpl((element as ServiceResource).serviceName);
+      return [
+        ...this.getFunctionResourceInTpl((element as ServiceResource).serviceName),
+        ...this.getNasResourceInTpl((element as ServiceResource).serviceName),
+      ]
     }
     if (element.resourceType === ResourceType.Function) {
       return this.getTriggerResourceInTpl(
@@ -126,10 +136,79 @@ export class LocalResourceProvider implements vscode.TreeDataProvider<Resource> 
             command: serverlessCommands.GOTO_FUNCTION_TEMPLATE.id,
             title: serverlessCommands.GOTO_FUNCTION_TEMPLATE.title,
             arguments: [serviceName, name],
-          }
+          },
+          this.getTriggerResourceInTpl(serviceName, name).length > 0
+            ? vscode.TreeItemCollapsibleState.Collapsed
+            : vscode.TreeItemCollapsibleState.None,
         )
       })
     return functions;
+  }
+
+  private getNasResourceInTpl(serviceName: string): NasResource[] {
+    const tpl = this.tpl;
+    if (!tpl || !tpl.Resources) {
+      return [];
+    }
+    const services = Object.entries(tpl.Resources)
+      .filter(([name, resource]) => {
+        return name === serviceName && resource.Type === ALIYUN_SERVERLESS_SERVICE_TYPE
+      });
+    if (!this.checkResourceUnique(serviceName, services)) {
+      return [];
+    }
+    if (!Object.keys(services[0][1]).includes('Properties')
+      || typeof (<any>services[0][1]).Properties !== 'object'
+      || !Object.keys((<any>services[0][1]).Properties).includes('NasConfig')
+    ) {
+      return [];
+    }
+    if (typeof (<any>services[0][1]).Properties.NasConfig === 'string') {
+      return (<any>services[0][1]).Properties.NasConfig === 'Auto' ?
+        [
+          new NasResource(
+            serviceName,
+            'auto-default',
+            'Auto',
+            {
+              command: serverlessCommands.GOTO_NAS_TEMPLATE.id,
+              title: serverlessCommands.GOTO_NAS_TEMPLATE.title,
+              arguments: [serviceName, 'Auto'],
+            }
+          )
+        ]
+        :
+        [];
+    }
+    if (
+      typeof (<any>services[0][1]).Properties.NasConfig !== 'object'
+      || !Object.keys((<any>services[0][1]).Properties.NasConfig).includes('MountPoints')
+      || !((<any>services[0][1]).Properties.NasConfig.MountPoints instanceof Array)
+    ) {
+      return [];
+    }
+
+
+    const result = (<any>services[0][1]).Properties.NasConfig.MountPoints
+      .filter((mountPoint: any) => mountPoint
+        && mountPoint.ServerAddr
+        && mountPoint.MountDir
+        && typeof mountPoint.ServerAddr === 'string'
+        && typeof mountPoint.MountDir === 'string'
+      )
+      .map((mountPoint: any) => (
+        new NasResource(
+          serviceName,
+          mountPoint.ServerAddr,
+          mountPoint.MountDir,
+          {
+            command: serverlessCommands.GOTO_NAS_TEMPLATE.id,
+            title: serverlessCommands.GOTO_NAS_TEMPLATE.title,
+            arguments: [serviceName, mountPoint.MountDir],
+          }
+        )
+      ));
+    return result;
   }
 
   private getTriggerResourceInTpl(serviceName: string, functionName: string): TriggerResource[] {

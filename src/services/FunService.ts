@@ -33,6 +33,16 @@ export class FunService {
     })
   }
 
+  syncNas(serviceName: string, mountDir: string) {
+    const terminal =  terminalService.getFunctionComputeTerminal();
+    getFunPath().then(funPath => {
+      const command =
+      `${funPath} nas init && ${funPath} nas sync nas://${serviceName}:${mountDir}`;
+      terminal.sendText(command);
+      terminal.show();
+    });
+  }
+
   localInvoke(serviceName: string, functionName: string, eventFilePath: string) {
     const terminal =  terminalService.getFunctionComputeTerminal();
     getFunPath().then(funPath => {
