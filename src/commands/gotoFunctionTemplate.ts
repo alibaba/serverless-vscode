@@ -4,9 +4,9 @@ import { serverlessCommands } from '../utils/constants';
 import { isPathExists } from '../utils/file';
 import { recordPageView } from '../utils/visitor';
 import { TemplateService } from '../services/TemplateService';
-import { findBlockEndLine, createDecorationTypes, decorateEditor } from '../utils/document';
+import { findBlockEndLine, createDecorationTypesByOpacity, decorateEditor } from '../utils/document';
 
-const functionDecorationTypes: vscode.TextEditorDecorationType[] = createDecorationTypes(
+const functionDecorationTypes: vscode.TextEditorDecorationType[] = createDecorationTypesByOpacity(
   { r: 255, g: 64, b: 255 },
   0.3,
   0.01,
