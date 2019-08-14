@@ -35,6 +35,10 @@ export namespace serverlessCommands {
     id: 'fc.extension.localResource.trigger.gotoTemplate',
     title: 'Goto Trigger Template'
   };
+  export const GOTO_NAS_TEMPLATE = {
+    id: 'fc.extension.localResource.nas.gotoTemplate',
+    title: 'Goto NAS Template'
+  };
   export const INIT_PROJECT = {
     id: 'fc.extension.project.init',
     title: 'Init Project',
@@ -122,6 +126,14 @@ export namespace serverlessCommands {
   export const SHOW_UPDATE_NOTIFICATION = {
     id: 'fc.extension.show.update.notification',
     titile: 'Show Update Notification',
+  };
+  export const SYNC_NAS = {
+    id: 'fc.extension.nas.sync',
+    title: 'Sync NAS',
+  };
+  export const OPEN_NAS_LOCAL_DIR = {
+    id: 'fc.extension.nas.open.local.dir',
+    title: 'Open NAS local dir',
   };
 }
 export const SERVERLESS_EXTENTION_DOCUMENTATION_URL =

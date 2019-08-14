@@ -116,6 +116,22 @@
         }
       },
       {
+        "command": "fc.extension.nas.sync",
+        "title": "FC: NAS Sync",
+        "icon": {
+          "light": "media/light/deploy.svg",
+          "dark": "media/dark/deploy.svg"
+        }
+      },
+      {
+        "command": "fc.extension.nas.open.local.dir",
+        "title": "FC: Open NAS Local Dir",
+        "icon": {
+          "light": "media/light/folder.svg",
+          "dark": "media/dark/folder.svg"
+        }
+      },
+      {
         "command": "fc.extension.localResource.refresh",
         "title": "FC: Refresh",
         "icon": {
@@ -287,6 +303,24 @@
           "when": "view == fcLocalResource && viewItem == function"
         },
         {
+          "command": "fc.extension.nas.sync",
+          "when": "view == fcLocalResource && viewItem == nas"
+        },
+        {
+          "command": "fc.extension.nas.sync",
+          "when": "view == fcLocalResource && viewItem == nas",
+          "group": "inline"
+        },
+        {
+          "command": "fc.extension.nas.open.local.dir",
+          "when": "view == fcLocalResource && viewItem == nas"
+        },
+        {
+          "command": "fc.extension.nas.open.local.dir",
+          "when": "view == fcLocalResource && viewItem == nas",
+          "group": "inline"
+        },
+        {
           "command": "fc.extension.function.create",
           "when": "view == fcLocalResource && viewItem == service",
           "group": "inline"
@@ -361,6 +395,14 @@
         },
         {
           "command": "fc.extension.deploy.function",
+          "when": "never"
+        },
+        {
+          "command": "fc.extension.nas.sync",
+          "when": "never"
+        },
+        {
+          "command": "fc.extension.nas.open.local.dir",
           "when": "never"
         },
         {
