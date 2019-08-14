@@ -46,7 +46,7 @@ async function process(context: vscode.ExtensionContext) {
         });
       }
     );
-    if (createFile(versionFilePath)) {
+    if (isPathExists(versionFilePath) || createFile(versionFilePath)) {
       writeFile(versionFilePath, ALIYUN_SERVERLESS_VERSION).catch((ex) => vscode.window.showErrorMessage(ex.message));
     }
   }
