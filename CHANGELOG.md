@@ -2,6 +2,30 @@
 
 所有对 "Aliyun Serverless" 插件的更改都将记录在这个文件中。
 
+## 1.5.0 - 2019-08-15
+### Added
+- 模版文件 template.yml 提供层级色彩。在 template.yml 中会根据设定的缩进大小进行彩虹色渲染。
+
+![rainbow](https://github.com/alibaba/serverless-vscode/blob/master/media/changelog/v1.5.0/rainbow.gif?raw=true)
+
+- 支持服务级别以及函数级别的部署。在本地资源面板中，右击服务名或函数名，选择部署服务或函数，会进行相应的局部部署。
+
+![partial-deploy](https://github.com/alibaba/serverless-vscode/blob/master/media/changelog/v1.5.0/partial-deploy.gif?raw=true)
+
+- 本地资源面板提供触发器列表。在本地资源面板中，会在函数下列出该函数的触发器列表，左击触发器名称会跳转至模版文件 template.yml 中的对应行，该触发器描述块的背景会高亮并逐渐退去。
+
+![local-resource-trigger](https://github.com/alibaba/serverless-vscode/blob/master/media/changelog/v1.5.0/local-resource-trigger.gif?raw=true)
+
+- 本地资源面板提供 NAS 列表。在本地资源面板中，会在服务下列出该服务的 NAS 挂载点列表。左击 NAS 挂载点名称会跳转至模版文件 template.yml 中的对应行，该 NAS 挂载点描述块的背景会高亮并逐渐退去。
+- 支持将本地 NAS 资源同步到云端 NAS 服务。在本地资源面板中，左击 NAS 挂载点名称右侧的上传图标，即可将本地 NAS 资源同步到云端 NAS 服务。
+- 支持从本地资源面板快速打开 NAS 挂载点对应的本地 NAS 资源目录。在本地资源面板中，左击 NAS 挂载点名称右侧的文件夹图标，即可打开该 NAS 挂载点对应的本地 NAS 资源目录。
+
+![local-resource-nas](https://github.com/alibaba/serverless-vscode/blob/master/media/changelog/v1.5.0/local-resource-nas.gif?raw=true)
+
+### Other
+- 支持配置外部 Fun。在 Settings 中可以通过设定 `aliyun.fc.fun.path` 替代插件使用的 fun。
+
+
 ## 1.4.2 - 2019-08-10
 ### Added
 - 补充模版文件 template.yml 资源配置信息的校验。在 template.yml 中会检测资源配置信息是否符合[规格说明](https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03-zh-cn.md)，并在不符合的地方进行标示，鼠标移动到标示位置即可看到相关提示信息。

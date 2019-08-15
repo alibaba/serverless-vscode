@@ -8,7 +8,7 @@ import { cpUtils  } from './cpUtils';
 import { createFile, isPathExists, createDirectory } from './file';
 import { ext } from '../extensionVariables';
 
-const FUN_VERSION = '2.16.3';
+const FUN_VERSION = '2.16.4';
 
 abstract class FunExecutorGenerator {
   async generate(): Promise<string>  {
