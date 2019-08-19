@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
+import { isSupportedDocument } from '../utils/document';
 import { isPathExists, isDirectory } from '../utils/file';
 import { getHandlerFileName } from '../utils/runtime';
 import { recordPageView } from '../utils/visitor';
@@ -12,7 +13,7 @@ export class ServerlessDefinitionProvider implements vscode.DefinitionProvider {
     if (!cwd) {
       return;
     }
-    if (!this.containsTemplate(document)) {
+    if (!isSupportedDocument(document)) {
       return;
     }
     recordPageView('/showFuncDefineLink');
@@ -24,7 +25,7 @@ export class ServerlessDefinitionProvider implements vscode.DefinitionProvider {
       if (!codeUri) {
         return;
       }
-      codeUri = path.join(cwd, codeUri);
+      codeUri = path.resolve(path.dirname(document.uri.fsPath), codeUri);
       if (!isPathExists(codeUri)) {
         return;
       }
@@ -68,18 +69,6 @@ export class ServerlessDefinitionProvider implements vscode.DefinitionProvider {
         }
       ]
     }
-  }
-
-  private containsTemplate(document: vscode.TextDocument): boolean {
-    const cwd = vscode.workspace.rootPath;
-    if (!cwd) {
-      return false;
-    }
-    if (path.join(cwd, 'template.yml') !== document.fileName
-      && path.join(cwd, 'template.yaml') !== document.fileName) {
-      return false;
-    }
-    return true;
   }
 
   /**

@@ -9,7 +9,11 @@ module.exports = {
     "max-len": ["error", {
       "code": 120
     }],
-    "quotes": [1, "single", { "avoidEscape": true }]
+    "quotes": [1, "single", { "avoidEscape": true }],
+    "comma-spacing": ["error", {
+      "before": false,
+      "after": true,
+    }]
   },
   parserOptions: {
     "ecmaVersion": 6,

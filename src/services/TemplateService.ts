@@ -12,8 +12,8 @@ const readFile = util.promisify(fs.readFile);
 
 export class TemplateService {
   private templatePath: string;
-  constructor(private workspaceRoot: string) {
-    this.templatePath = path.join(workspaceRoot, 'template.yml');
+  constructor(templatePath: string) {
+    this.templatePath = templatePath;
   }
   getTemplatePath(): string {
     return this.templatePath;
@@ -81,6 +81,14 @@ export class TemplateService {
       return null;
     }
     const content = await readFile(this.getTemplatePath(), 'utf8');
+    const tpl = yaml.safeLoad(content);
+    return tpl;
+  }
+  getTemplateDefinitionSync(): any {
+    if (!this.templateExists()) {
+      return null;
+    }
+    const content = fs.readFileSync(this.getTemplatePath(), 'utf8');
     const tpl = yaml.safeLoad(content);
     return tpl;
   }

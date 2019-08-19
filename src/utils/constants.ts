@@ -23,21 +23,25 @@ export namespace serverlessCommands {
     id: 'fc.extension.localResource.gotoFunction',
     title: 'Goto Function Code',
   };
-  export const GOTO_FUNCTION_TEMPLATE = {
-    id: 'fc.extension.localResource.function.gotoTemplate',
-    title: 'Goto Function Template',
+  export const GOTO_TEMPLATE = {
+    id: 'fc.extension.localResource.gotoTemplate',
+    title: 'Goto Template',
   };
-  export const GOTO_SERVICE_TEMPLATE = {
-    id: 'fc.extension.localResource.service.gotoTemplate',
-    title: 'Goto Service Template'
+  export const GOTO_FUNCTION_DEFINITION = {
+    id: 'fc.extension.localResource.function.gotoDefinition',
+    title: 'Goto Function Definition',
   };
-  export const GOTO_TRIGGER_TEMPLATE = {
-    id: 'fc.extension.localResource.trigger.gotoTemplate',
-    title: 'Goto Trigger Template'
+  export const GOTO_SERVICE_DEFINITION = {
+    id: 'fc.extension.localResource.service.gotoDefinition',
+    title: 'Goto Service Definition'
   };
-  export const GOTO_NAS_TEMPLATE = {
-    id: 'fc.extension.localResource.nas.gotoTemplate',
-    title: 'Goto NAS Template'
+  export const GOTO_TRIGGER_DEFINITION = {
+    id: 'fc.extension.localResource.trigger.gotoDefinition',
+    title: 'Goto Trigger Definition'
+  };
+  export const GOTO_NAS_DEFINITION = {
+    id: 'fc.extension.localResource.nas.gotoDefinition',
+    title: 'Goto NAS Definition'
   };
   export const INIT_PROJECT = {
     id: 'fc.extension.project.init',

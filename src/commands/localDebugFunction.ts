@@ -2,6 +2,7 @@ import * as vscode from 'vscode';
 import * as path from 'path';
 import * as fs from 'fs';
 import * as rt from '../utils/runtime';
+import { ext } from '../extensionVariables';
 import { serverlessCommands } from '../utils/constants';
 import { isPathExists, createDirectory, createLaunchFile, createEventFile } from '../utils/file';
 import { recordPageView } from '../utils/visitor';
@@ -19,7 +20,7 @@ export function localDebugFunction(context: vscode.ExtensionContext) {
         return;
       }
       const funcRes = node as FunctionResource;
-      await process(funcRes.serviceName, funcRes.functionName);
+      await process(funcRes.serviceName, funcRes.functionName, funcRes.templatePath as string);
     })
   );
   vscode.debug.onDidStartDebugSession(debugSession => {
@@ -30,14 +31,13 @@ export function localDebugFunction(context: vscode.ExtensionContext) {
   });
 }
 
-async function process(serviceName: string, functionName: string) {
-  let cwd = vscode.workspace.rootPath;
-  if (!cwd) {
+async function process(serviceName: string, functionName: string, templatePath: string) {
+  if (!ext.cwd) {
     vscode.window.showErrorMessage('Please open a workspace');
     return;
   }
 
-  const templateService = new TemplateService(cwd);
+  const templateService = new TemplateService(templatePath);
   const functionInfo = await templateService.getFunction(serviceName, functionName);
   if (!functionInfo.Properties) {
     vscode.window.showInformationMessage(`Please complete ${serviceName}/${functionName} properties`);
@@ -50,7 +50,7 @@ async function process(serviceName: string, functionName: string) {
   }
   // 尝试从 launch.json 读取配置
   const configurationName = getConfigurationName(serviceName, functionName);
-  const launchFilePath = path.join(cwd, '.vscode','launch.json');
+  const launchFilePath = path.join(ext.cwd, '.vscode', 'launch.json');
   const launchInfo = vscode.workspace.getConfiguration('launch', vscode.Uri.file(launchFilePath));
   const configurations = launchInfo.get('configurations');
   let filterConfigurations = (<vscode.DebugConfiguration[]>configurations)
@@ -58,7 +58,7 @@ async function process(serviceName: string, functionName: string) {
   let configuration: vscode.DebugConfiguration;
   if (!filterConfigurations || !filterConfigurations.length) {
     // 生成 debug configuration
-    configuration = generateDebugConfiguration(serviceName, functionName, functionInfo);
+    configuration = generateDebugConfiguration(serviceName, functionName, functionInfo, templatePath);
     // 不将 debug configuration 添加进配置文件，保证了每次都可以支持多 Session 调试
     // 如果用户想配置可以自行在 launch.json 中配置
     // 但是需要注意 launch.json 中配置的 port 不能重复，不然无法支持多 Session 调试
@@ -77,7 +77,7 @@ async function process(serviceName: string, functionName: string) {
   if (!hasHttpTrigger) {
     // 普通的函数，读取 event 文件
     try {
-      const codeUri = path.join(cwd, functionInfo.Properties.CodeUri);
+      const codeUri = path.resolve(path.dirname(templatePath), functionInfo.Properties.CodeUri);
       const eventFileStat = fs.statSync(codeUri);
       if (eventFileStat.isDirectory()) {
         eventFilePath = path.join(codeUri, 'event.dat');
@@ -98,7 +98,7 @@ async function process(serviceName: string, functionName: string) {
     }
   }
   // 启动 fun local
-  const funService = new FunService(cwd);
+  const funService = new FunService(templatePath);
 
   if (rt.isPhp(runtime)) {
     vscode.debug.startDebugging(undefined, configuration);
@@ -191,14 +191,9 @@ function getDebugProtocol(runtime: string): string {
 }
 
 function generateDebugConfiguration(serviceName: string,
-  functionName: string, resource: TplResourceElementElement): vscode.DebugConfiguration {
+  functionName: string, resource: TplResourceElementElement, templatePath: string): vscode.DebugConfiguration {
   const { Properties: properties } = resource;
-  let cwd = vscode.workspace.rootPath;
-  if (!cwd) {
-    vscode.window.showErrorMessage('Please open a workspace');
-    return <vscode.DebugConfiguration> {};
-  }
-  let localRootPath = path.join(cwd, properties.CodeUri);
+  let localRootPath = path.join(path.dirname(templatePath), properties.CodeUri);
   try {
     const localRootStat = fs.statSync(localRootPath);
     if (localRootStat.isFile()) {
@@ -272,7 +267,7 @@ function addDebugConfigurationToLaunchFile(debugConfiguration: vscode.DebugConfi
       return;
     }
   }
-  const launchFilePath = path.join(cwd, '.vscode','launch.json');
+  const launchFilePath = path.join(cwd, '.vscode', 'launch.json');
   if (!isPathExists(launchFilePath)) {
     // 生成默认 launch.json 文件
     if (!createLaunchFile(launchFilePath)) {

@@ -5,10 +5,11 @@ import { recordPageView } from './utils/visitor';
 import { initProject } from './commands/initProject';
 import { createFunction } from './commands/createFunction';
 import { gotoFunctionCode } from './commands/gotoFunctionCode';
-import { gotoFunctionTemplate } from './commands/gotoFunctionTemplate';
-import { gotoServiceTemplate } from './commands/gotoServiceTemplate';
-import { gotoTriggerTemplate } from './commands/gotoTriggerTemplate';
-import { gotoNasTemplate } from './commands/gotoNasTemplate';
+import { gotoTemplate } from './commands/gotoTemplate';
+import { gotoFunctionDefinition } from './commands/gotoFunctionDefinition';
+import { gotoServiceDefinition } from './commands/gotoServiceDefinition';
+import { gotoTriggerDefinition } from './commands/gotoTriggerDefinition';
+import { gotoNasDefinition } from './commands/gotoNasDefinition';
 import { openNasLocalDir } from './commands/openNasLocalDir';
 import { deploy } from './commands/deploy';
 import { deployService } from './commands/deployService';
@@ -39,11 +40,14 @@ import { viewSource } from './commands/viewSource';
 import { reportIssue } from './commands/reportIssue';
 import { viewQuickStart } from './commands/viewQuickStart';
 import { showUpdateNotification } from './commands/showUpdateNotification';
+import { isSupportedDocument } from './utils/document';
+import { templateChangeEventEmitter } from './models/events';
 
 export function activate(context: vscode.ExtensionContext) {
   recordPageView('/');
   ext.context = context;
   const cwd = vscode.workspace.rootPath;
+  ext.cwd = cwd;
 
   const localResourceProvider = new LocalResourceProvider(cwd);
   vscode.window.registerTreeDataProvider('fcLocalResource', localResourceProvider);
@@ -60,10 +64,10 @@ export function activate(context: vscode.ExtensionContext) {
   initProject(context); // init project
   createFunction(context); // create function
   gotoFunctionCode(context); // goto function code
-  gotoFunctionTemplate(context); // goto function template
-  gotoServiceTemplate(context); // goto service template
-  gotoTriggerTemplate(context);
-  gotoNasTemplate(context);
+  gotoFunctionDefinition(context); // goto function template
+  gotoServiceDefinition(context); // goto service template
+  gotoTriggerDefinition(context);
+  gotoNasDefinition(context);
   openNasLocalDir(context);
   deploy(context); // deploy
   localInvokeFunction(context); // local invoke function
@@ -89,6 +93,7 @@ export function activate(context: vscode.ExtensionContext) {
   deployService(context);
   deployFunction(context);
   syncNas(context);
+  gotoTemplate(context);
 
   vscode.commands.executeCommand(serverlessCommands.SHOW_REGION_STATUS.id);
   vscode.commands.executeCommand(serverlessCommands.SHOW_UPDATE_NOTIFICATION.id);
@@ -106,6 +111,13 @@ export function activate(context: vscode.ExtensionContext) {
     new ServerlessCompletionProvider(),
   );
   new ServerlessDiagnosticsProvider().startDiagnostic();
+
+  vscode.workspace.onDidChangeTextDocument((event) => {
+    const document = event.document;
+    if (isSupportedDocument(document)) {
+      templateChangeEventEmitter.fire();
+    }
+  })
 }
 
 // this method is called when your extension is deactivated

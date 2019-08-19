@@ -1,11 +1,11 @@
 import * as vscode from 'vscode';
+import * as path from 'path';
 import * as terminalService from '../utils/terminal';
 import * as open from 'open';
-import * as path from 'path';
 import { getFunPath } from '../utils/fun';
 
 export class FunService {
-  constructor (private workspace: string) {
+  constructor (private templatePath: string) {
 
   }
 
@@ -24,10 +24,12 @@ export class FunService {
   deploy(serviceName?: string, functionName? :string) {
     const terminal = terminalService.getFunctionComputeTerminal();
     getFunPath().then(funPath => {
-      const command =
-        functionName ? `${funPath} deploy ${serviceName}/${functionName} -t ./template.yml` :
-          serviceName ? `${funPath} deploy ${serviceName} -t ./template.yml` :
-            `${funPath} deploy -t ./template.yml`;
+      let command = `cd ${path.dirname(this.templatePath)} && `;
+      command +=
+        functionName ?
+          `${funPath} deploy ${serviceName}/${functionName} -t ${this.templatePath}` :
+          serviceName ? `${funPath} deploy ${serviceName} -t ${this.templatePath}` :
+            `${funPath} deploy -t ${this.templatePath}`;
       terminal.sendText(command);
       terminal.show();
     })
@@ -37,6 +39,7 @@ export class FunService {
     const terminal =  terminalService.getFunctionComputeTerminal();
     getFunPath().then(funPath => {
       const command =
+      `cd ${path.dirname(this.templatePath)} && ` +
       `${funPath} nas init && ${funPath} nas sync nas://${serviceName}:${mountDir}`;
       terminal.sendText(command);
       terminal.show();
@@ -47,6 +50,7 @@ export class FunService {
     const terminal =  terminalService.getFunctionComputeTerminal();
     getFunPath().then(funPath => {
       const command =
+  `cd ${path.dirname(this.templatePath)} && ` +
   `${funPath} local invoke ${serviceName}/${functionName} -e ${this.escapeSpace(eventFilePath)}`
       terminal.sendText(command);
       terminal.show();
@@ -59,6 +63,7 @@ export class FunService {
     getFunPath().then(funPath => {
       /* eslint-disable max-len */
       const command =
+    `cd ${path.dirname(this.templatePath)} && ` +
     `${funPath} local invoke ${serviceName}/${functionName} -d ${debugPort} -e ${this.escapeSpace(eventFilePath)}`
       terminal.sendText(command);
       terminal.show();
@@ -69,7 +74,7 @@ export class FunService {
   localStart(serviceName: string, functionName: string) {
     const terminal = terminalService.getFunctionComputeTerminal();
     getFunPath().then(funPath => {
-      let command = `${funPath} local start`;
+      let command = `cd ${path.dirname(this.templatePath)} && ${funPath} local start`;
       terminal.sendText(command);
 
       setTimeout(() => {
@@ -85,7 +90,7 @@ export class FunService {
   localStartDebug(serviceName: string, functionName: string, debugPort: string): vscode.Terminal {
     const terminal = terminalService.getFunctionComputeTerminal();
     getFunPath().then(funPath => {
-      let command = `${funPath} local start -d ${debugPort}`;
+      let command = `cd ${path.dirname(this.templatePath)} && ${funPath} local start -d ${debugPort}`;
       terminal.sendText(command);
 
       setTimeout(() => {
