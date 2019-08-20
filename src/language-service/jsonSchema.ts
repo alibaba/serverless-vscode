@@ -41,6 +41,7 @@ export interface JSONSchema {
   enumDescriptions?: string[]; // VSCode extension
   ignoreCase?: string; // VSCode extension
   aliases?: string[]; // VSCode extension
+  document?: { [key: string]: string };
 }
 
 export interface JSONSchemaMap {
