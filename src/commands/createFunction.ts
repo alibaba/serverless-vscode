@@ -1,28 +1,32 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
+import { ext } from '../extensionVariables';
 import { MultiStepInput } from '../ui/MultiStepInput';
 import { serverlessCommands } from '../utils/constants';
 import { isPathExists, createDirectory } from '../utils/file';
 import { getSuffix, createIndexFile } from '../utils/runtime';
 import { recordPageView } from '../utils/visitor';
-import { Resource } from '../models/resource';
+import { ServiceResource } from '../models/resource';
 import { TemplateService } from '../services/TemplateService';
 import { process as gotoFunctionCode } from './gotoFunctionCode';
+import { templateChangeEventEmitter } from '../models/events';
 
 export function createFunction(context: vscode.ExtensionContext) {
   context.subscriptions.push(vscode.commands.registerCommand(serverlessCommands.CREATE_FUNCTION.id,
-    async (node: Resource) => {
+    async (node?: ServiceResource) => {
       recordPageView('/functionCreate');
-      let serviceName = '';
-      if (node) {
-        serviceName = node.label;
+      if (!node) {
+        await process(context, '', path.resolve(ext.cwd ? ext.cwd : '', 'template.yml'))
+          .catch(vscode.window.showErrorMessage);
+        return;
       }
-      await process(context, serviceName).catch(vscode.window.showErrorMessage);
+      await process(context, node.serviceName ? node.serviceName : '', node.templatePath as string)
+        .catch(vscode.window.showErrorMessage);
     })
   );
 }
 
-async function process(context: vscode.ExtensionContext, serviceName = '') {
+async function process(context: vscode.ExtensionContext, serviceName: string, templatePath: string) {
   const functionTypes: vscode.QuickPickItem[] = [{
     label: 'NORMAL',
     description: 'Event Trigger',
@@ -42,12 +46,6 @@ async function process(context: vscode.ExtensionContext, serviceName = '') {
     step: number;
     totalSteps: number;
     codeUri: string;
-  }
-
-  const cwd = vscode.workspace.rootPath;
-  if (!cwd) {
-    vscode.window.showErrorMessage('You should open a workspace');
-    return;
   }
 
   async function collectFuncInfo() {
@@ -131,11 +129,11 @@ async function process(context: vscode.ExtensionContext, serviceName = '') {
 
   async function createFunctionFile(state: State): Promise<boolean> {
     const { serviceName, functionName, runtime, type } = state;
-    if (!cwd) {
+    if (!ext.cwd) {
       vscode.window.showErrorMessage('You should open a workspace');
       return false;
     }
-    const servicePath = path.join(cwd, serviceName);
+    const servicePath = path.join(path.dirname(templatePath as string), serviceName);
     if (!isPathExists(servicePath)) {
       if (!createDirectory(servicePath)) {
         vscode.window.showErrorMessage(`Create ${servicePath} error`);
@@ -174,10 +172,11 @@ async function process(context: vscode.ExtensionContext, serviceName = '') {
   if (!await createFunctionFile(state)) {
     return;
   }
-  const templateService = new TemplateService(cwd);
+  const templateService = new TemplateService(templatePath as string);
   if (!await templateService.addFunction(state)) {
     return;
   }
+  templateChangeEventEmitter.fire();
   vscode.commands.executeCommand(serverlessCommands.REFRESH_LOCAL_RESOURCE.id);
-  await gotoFunctionCode(state.serviceName, state.functionName);
+  await gotoFunctionCode(state.serviceName, state.functionName, templatePath);
 }

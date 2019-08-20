@@ -1,39 +1,35 @@
 import * as vscode from 'vscode';
-import * as fs from 'fs';
 import * as path from 'path';
 import * as util from 'util';
-import * as yaml from 'js-yaml';
+import * as glob from 'glob';
 import {
   ALIYUN_SERVERLESS_SERVICE_TYPE,
   ALIYUN_SERVERLESS_FUNCTION_TYPE,
   serverlessCommands,
   ALIYUN_SERVERLESS_EVENT_TYPES,
 } from '../utils/constants';
-import { isPathExists } from '../utils/file';
 import {
   Resource,
   ServiceResource,
   FunctionResource,
   ResourceType,
   TriggerResource,
-  NasResource
+  NasResource,
+  TemplateResource
 } from '../models/resource';
+import { TemplateService } from '../services/TemplateService';
 
-const readFile = util.promisify(fs.readFile);
+const findFile = util.promisify(glob);
 
 export class LocalResourceProvider implements vscode.TreeDataProvider<Resource> {
   _onDidChangeTreeData: vscode.EventEmitter<Resource | undefined> = new vscode.EventEmitter<Resource | undefined>();
   onDidChangeTreeData: vscode.Event<Resource | undefined> = this._onDidChangeTreeData.event;
-
-  tpl: Tpl = {};
-  tplHasLoaded: boolean = false;
 
   constructor(private workspaceRoot: string | undefined) {
 
   }
 
   refresh(): void {
-    this.tplHasLoaded = false;
     this._onDidChangeTreeData.fire();
   }
 
@@ -41,123 +37,141 @@ export class LocalResourceProvider implements vscode.TreeDataProvider<Resource> 
     return element;
   }
 
-  getChildren(element?: Resource): Thenable<Resource[]> {
+  async getChildren(element?: Resource): Promise<Resource[]> {
     if (!this.workspaceRoot) {
       vscode.window.showInformationMessage('No template.yml in empty workspace');
       return Promise.resolve([]);
     }
-    const tplPath = path.join(this.workspaceRoot, 'template.yml');
-    if (!isPathExists(tplPath)) {
+
+    const files = await findFile('**/template.{yml,yaml}', {
+      cwd: this.workspaceRoot,
+    })
+    if (!files || !files.length) {
       vscode.window.showInformationMessage('No template.yml in current workspace');
-      return Promise.resolve([]);
+      return [];
     }
 
-    if (this.tplHasLoaded) {
-      return Promise.resolve(
-        this.getResourceInTpl(element)
-      )
-    } else {
-      return Promise.resolve(
-        this.getTpl(tplPath)
-          .then(tpl => {
-            this.tpl = tpl;
-            this.tplHasLoaded = true;
-            return Promise.resolve(this.getResourceInTpl(element));
-          })
-      )
-    }
-  }
-
-  private async getTpl(tplPath: string): Promise<object> {
-    const tplContent = await readFile(tplPath, 'utf8');
-    const tpl = yaml.safeLoad(tplContent);
-    return tpl;
-  }
-
-  private getResourceInTpl(element?: Resource): Resource[] {
     if (!element) {
-      return this.getServiceResourceInTpl();
+      if (files.length === 1) {
+        return [
+          new TemplateResource(
+            path.resolve(this.workspaceRoot as string, files[0]),
+            {
+              title: serverlessCommands.GOTO_TEMPLATE.title,
+              command: serverlessCommands.GOTO_TEMPLATE.id,
+              arguments: [path.resolve(this.workspaceRoot as string, files[0])],
+            },
+            vscode.TreeItemCollapsibleState.Expanded,
+          ),
+        ];
+      }
+      return files.sort((a, b) => a.length <= b.length ? -1 : 1).map(file => {
+        return new TemplateResource(
+          path.resolve(this.workspaceRoot as string, file),
+          {
+            title: serverlessCommands.GOTO_TEMPLATE.title,
+            command: serverlessCommands.GOTO_TEMPLATE.id,
+            arguments: [path.resolve(this.workspaceRoot as string, file)],
+          },
+        );
+      });
+    }
+
+    return await this.getResourceInTpl(element);
+  }
+
+  private async getResourceInTpl(element: Resource): Promise<Resource[]> {
+    if (element.resourceType === ResourceType.Template) {
+      return this.getServiceResourceInTpl(element as TemplateResource);
     }
     if (element.resourceType === ResourceType.Service) {
       return [
-        ...this.getFunctionResourceInTpl((element as ServiceResource).serviceName),
-        ...this.getNasResourceInTpl((element as ServiceResource).serviceName),
+        ...await this.getFunctionResourceInTpl(element as ServiceResource),
+        ...await this.getNasResourceInTpl(element as ServiceResource),
       ]
     }
     if (element.resourceType === ResourceType.Function) {
-      return this.getTriggerResourceInTpl(
-        (element as FunctionResource).serviceName,
-        (element as FunctionResource).functionName
-      );
+      return await this.getTriggerResourceInTpl(element as FunctionResource);
     }
     return [];
   }
 
-  private getServiceResourceInTpl(): ServiceResource[] {
-    const tpl = this.tpl;
+  private async getServiceResourceInTpl(element: TemplateResource): Promise<ServiceResource[]> {
+    const templateService = new TemplateService(element.templatePath);
+    const tpl = await templateService.getTemplateDefinition();
     if (!tpl || !tpl.Resources) {
       return [];
     }
     const services = Object.entries(tpl.Resources)
       .filter(([_, resource]) => {
-        return resource.Type === ALIYUN_SERVERLESS_SERVICE_TYPE
+        return (<any>resource).Type === ALIYUN_SERVERLESS_SERVICE_TYPE
       })
-      .map(([name]) => new ServiceResource(name,
+      .map(([name]) => new ServiceResource(
+        name,
         {
-          title: serverlessCommands.GOTO_SERVICE_TEMPLATE.title,
-          command: serverlessCommands.GOTO_SERVICE_TEMPLATE.id,
-          arguments: [name],
-        })
-      );
+          title: serverlessCommands.GOTO_SERVICE_DEFINITION.title,
+          command: serverlessCommands.GOTO_SERVICE_DEFINITION.id,
+          arguments: [name, element.templatePath],
+        },
+        element.templatePath,
+      ));
     return services;
   }
 
-  private getFunctionResourceInTpl(serviceName: string): FunctionResource[] {
-    const tpl = this.tpl;
+  private async getFunctionResourceInTpl(element: ServiceResource): Promise<FunctionResource[]> {
+    const serviceName = element.serviceName;
+    const templateService = new TemplateService(element.templatePath as string);
+    const tpl = await templateService.getTemplateDefinition();;
     if (!tpl || !tpl.Resources) {
       return [];
     }
     const services = Object.entries(tpl.Resources)
       .filter(([name, resource]) => {
-        return name === serviceName && resource.Type === ALIYUN_SERVERLESS_SERVICE_TYPE
+        return name === serviceName && (<any>resource).Type === ALIYUN_SERVERLESS_SERVICE_TYPE
       });
     if (!this.checkResourceUnique(serviceName, services)) {
       return [];
     }
-    const functions = Object.entries(services[0][1])
+    const functions = Object.entries((<any>services)[0][1])
       .filter(([_, resource]) => {
-        return resource.Type === ALIYUN_SERVERLESS_FUNCTION_TYPE
+        return (<any>resource).Type === ALIYUN_SERVERLESS_FUNCTION_TYPE
       })
       .map(([name]) => {
         return new FunctionResource(
           serviceName,
           name,
           {
-            command: serverlessCommands.GOTO_FUNCTION_TEMPLATE.id,
-            title: serverlessCommands.GOTO_FUNCTION_TEMPLATE.title,
-            arguments: [serviceName, name],
+            command: serverlessCommands.GOTO_FUNCTION_DEFINITION.id,
+            title: serverlessCommands.GOTO_FUNCTION_DEFINITION.title,
+            arguments: [serviceName, name, element.templatePath],
           },
-          this.getTriggerResourceInTpl(serviceName, name).length > 0
-            ? vscode.TreeItemCollapsibleState.Collapsed
-            : vscode.TreeItemCollapsibleState.None,
+          this.getTriggerResourceInTpl(
+            new FunctionResource(serviceName, name, undefined, undefined, element.templatePath)
+          ).length > 0 ?
+            vscode.TreeItemCollapsibleState.Collapsed
+            :
+            vscode.TreeItemCollapsibleState.None,
+          element.templatePath,
         )
       })
     return functions;
   }
 
-  private getNasResourceInTpl(serviceName: string): NasResource[] {
-    const tpl = this.tpl;
+  private async getNasResourceInTpl(element: ServiceResource): Promise<NasResource[]> {
+    const serviceName = element.serviceName;
+    const templateService = new TemplateService(element.templatePath as string);
+    const tpl = await templateService.getTemplateDefinition();;
     if (!tpl || !tpl.Resources) {
       return [];
     }
     const services = Object.entries(tpl.Resources)
       .filter(([name, resource]) => {
-        return name === serviceName && resource.Type === ALIYUN_SERVERLESS_SERVICE_TYPE
+        return name === serviceName && (<any>resource).Type === ALIYUN_SERVERLESS_SERVICE_TYPE
       });
     if (!this.checkResourceUnique(serviceName, services)) {
       return [];
     }
-    if (!Object.keys(services[0][1]).includes('Properties')
+    if (!Object.keys((<any>services)[0][1]).includes('Properties')
       || typeof (<any>services[0][1]).Properties !== 'object'
       || !Object.keys((<any>services[0][1]).Properties).includes('NasConfig')
     ) {
@@ -171,10 +185,11 @@ export class LocalResourceProvider implements vscode.TreeDataProvider<Resource> 
             'auto-default',
             'Auto',
             {
-              command: serverlessCommands.GOTO_NAS_TEMPLATE.id,
-              title: serverlessCommands.GOTO_NAS_TEMPLATE.title,
-              arguments: [serviceName, 'Auto'],
-            }
+              command: serverlessCommands.GOTO_NAS_DEFINITION.id,
+              title: serverlessCommands.GOTO_NAS_DEFINITION.title,
+              arguments: [serviceName, 'Auto', element.templatePath],
+            },
+            element.templatePath,
           )
         ]
         :
@@ -202,35 +217,39 @@ export class LocalResourceProvider implements vscode.TreeDataProvider<Resource> 
           mountPoint.ServerAddr,
           mountPoint.MountDir,
           {
-            command: serverlessCommands.GOTO_NAS_TEMPLATE.id,
-            title: serverlessCommands.GOTO_NAS_TEMPLATE.title,
-            arguments: [serviceName, mountPoint.MountDir],
-          }
+            command: serverlessCommands.GOTO_NAS_DEFINITION.id,
+            title: serverlessCommands.GOTO_NAS_DEFINITION.title,
+            arguments: [serviceName, mountPoint.MountDir, element.templatePath],
+          },
+          element.templatePath,
         )
       ));
     return result;
   }
 
-  private getTriggerResourceInTpl(serviceName: string, functionName: string): TriggerResource[] {
-    const tpl = this.tpl;
+  private getTriggerResourceInTpl(element: FunctionResource): TriggerResource[] {
+    const serviceName = element.serviceName;
+    const functionName = element.functionName;
+    const templateService = new TemplateService(element.templatePath as string);
+    const tpl = templateService.getTemplateDefinitionSync();;
     if (!tpl || !tpl.Resources) {
       return [];
     }
     const services = Object.entries(tpl.Resources)
       .filter(([name, resource]) => {
-        return name === serviceName && resource.Type === ALIYUN_SERVERLESS_SERVICE_TYPE
+        return name === serviceName && (<any>resource).Type === ALIYUN_SERVERLESS_SERVICE_TYPE
       });
     if (!this.checkResourceUnique(serviceName, services)) {
       return [];
     }
-    const functions = Object.entries(services[0][1])
+    const functions = Object.entries((<any>services)[0][1])
       .filter(([name, resource]) => {
-        return name === functionName && resource.Type === ALIYUN_SERVERLESS_FUNCTION_TYPE
+        return name === functionName && (<any>resource).Type === ALIYUN_SERVERLESS_FUNCTION_TYPE
       });
     if (!this.checkResourceUnique(`${serviceName}/${functionName}`, services)) {
       return [];
     }
-    if (!Object.keys(functions[0][1]).includes('Events')) {
+    if (!Object.keys((<any>functions)[0][1]).includes('Events')) {
       return [];
     }
     const triggers = Object.entries((<any>functions[0][1]).Events)
@@ -244,10 +263,11 @@ export class LocalResourceProvider implements vscode.TreeDataProvider<Resource> 
           name,
           (<any>resource).Type,
           {
-            command: serverlessCommands.GOTO_TRIGGER_TEMPLATE.id,
-            title: serverlessCommands.GOTO_TRIGGER_TEMPLATE.title,
-            arguments: [serviceName, functionName, name],
-          }
+            command: serverlessCommands.GOTO_TRIGGER_DEFINITION.id,
+            title: serverlessCommands.GOTO_TRIGGER_DEFINITION.title,
+            arguments: [serviceName, functionName, name, element.templatePath],
+          },
+          element.templatePath,
         )
       ))
     return triggers;

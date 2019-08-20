@@ -1,11 +1,13 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
+import { ext } from '../extensionVariables';
 
 export enum ResourceType {
   Service = 0,
   Function = 1,
   Trigger = 2,
   Nas = 3,
+  Template = 98,
   Command = 99,
 }
 
@@ -35,11 +37,35 @@ export class CommandResource extends Resource {
   }
 }
 
+export class TemplateResource extends Resource {
+  templatePath: string;
+  constructor(
+    templatePath: string,
+    command?: vscode.Command,
+    collapsibleState?: vscode.TreeItemCollapsibleState,
+  ) {
+    const templatePaths = templatePath.split(path.sep);
+    super(
+      templatePaths[templatePaths.length - 1],
+      ResourceType.Template,
+      collapsibleState || vscode.TreeItemCollapsibleState.Collapsed,
+      command,
+    );
+    this.description = path.relative(ext.cwd as string, templatePath);
+    const prefix = this.description.split(path.sep).length > 1 ? `.${path.sep}` : ''
+    this.description = prefix + this.description.substring(0, this.description.lastIndexOf(path.sep));
+    this.templatePath = templatePath;
+    this.contextValue = 'template';
+  }
+}
+
 export class ServiceResource extends Resource {
   serviceName: string;
+  templatePath: string | undefined;
   constructor(
     serviceName: string,
     command?: vscode.Command,
+    templatePath?: string,
   ) {
     super(
       serviceName,
@@ -48,6 +74,7 @@ export class ServiceResource extends Resource {
       command,
     );
     this.serviceName = serviceName;
+    this.templatePath = templatePath;
     this.iconPath = {
       light: path.resolve(__dirname, '..', '..', 'media', 'light', 'box.svg'),
       dark: path.resolve(__dirname, '..', '..', 'media', 'dark', 'box.svg'),
@@ -60,11 +87,13 @@ export class NasResource extends Resource {
   serviceName: string;
   serverAddr: string;
   mountDir: string;
+  templatePath: string | undefined;
   constructor(
     serviceName: string,
     serverAddr: string,
     mountDir: string,
     command?: vscode.Command,
+    templatePath?: string,
   ) {
     super(
       mountDir === 'Auto' ? 'nas:///mnt/auto' : `nas://${mountDir}`,
@@ -73,6 +102,7 @@ export class NasResource extends Resource {
       command,
     );
     this.serviceName = serviceName;
+    this.templatePath = templatePath;
     this.serverAddr = serverAddr;
     this.mountDir = mountDir;
     this.iconPath = {
@@ -86,11 +116,13 @@ export class NasResource extends Resource {
 export class FunctionResource extends Resource {
   serviceName: string;
   functionName: string;
+  templatePath: string | undefined;
   constructor(
     serviceName: string,
     functionName: string,
     command?: vscode.Command,
     collapsibleState?: vscode.TreeItemCollapsibleState,
+    templatePath?: string,
   ) {
     super(
       functionName,
@@ -100,6 +132,7 @@ export class FunctionResource extends Resource {
     );
     this.serviceName = serviceName;
     this.functionName = functionName;
+    this.templatePath = templatePath;
     this.iconPath = {
       light: path.resolve(__dirname, '..', '..', 'media', 'light', 'function.svg'),
       dark: path.resolve(__dirname, '..', '..', 'media', 'dark', 'function.svg'),
@@ -113,12 +146,14 @@ export class TriggerResource extends Resource {
   functionName: string;
   triggerName: string;
   triggerType: string;
+  templatePath: string | undefined;
   constructor(
     serviceName: string,
     functionName: string,
     triggerName: string,
     triggerType: string,
     command?: vscode.Command,
+    templatePath?: string,
   ) {
     super(
       triggerName,
@@ -128,6 +163,7 @@ export class TriggerResource extends Resource {
     );
     this.serviceName = serviceName;
     this.functionName = functionName;
+    this.templatePath = templatePath;
     this.triggerName = triggerName;
     this.triggerType = triggerType;
     this.iconPath = {

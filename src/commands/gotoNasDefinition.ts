@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import * as path from 'path';
+import { ext } from '../extensionVariables';
 import { serverlessCommands } from '../utils/constants';
 import { isPathExists } from '../utils/file';
 import { recordPageView } from '../utils/visitor';
@@ -13,28 +13,26 @@ const nasDecorationTypes: vscode.TextEditorDecorationType[] = createDecorationTy
   0.03,
 );
 
-export function gotoNasTemplate(context: vscode.ExtensionContext) {
-  context.subscriptions.push(vscode.commands.registerCommand(serverlessCommands.GOTO_NAS_TEMPLATE.id,
-    async (serviceName: string, mountDir: string) => {
-      recordPageView('/gotoNasTemplate');
-      await process(serviceName, mountDir);
+export function gotoNasDefinition(context: vscode.ExtensionContext) {
+  context.subscriptions.push(vscode.commands.registerCommand(serverlessCommands.GOTO_NAS_DEFINITION.id,
+    async (serviceName: string, mountDir: string, templatePath: string) => {
+      recordPageView('/gotoNasDefinition');
+      await process(serviceName, mountDir, templatePath);
     })
   );
 }
 
-async function process(serviceName: string, mountDir: string) {
-  let cwd = vscode.workspace.rootPath;
-  if (!cwd) {
+async function process(serviceName: string, mountDir: string, templatePath: string) {
+  if (!ext.cwd) {
     vscode.window.showErrorMessage('Please open a workspace');
     return;
   }
 
-  const localRoot = path.join(cwd, 'template.yml');
-  if (!isPathExists(localRoot)) {
-    vscode.window.showErrorMessage(`${localRoot} did not found`);
+  if (!isPathExists(templatePath)) {
+    vscode.window.showErrorMessage(`${templatePath} did not found`);
     return;
   }
-  const templateService = new TemplateService(cwd);
+  const templateService = new TemplateService(templatePath);
   const templateContent = await templateService.getTemplateContent();
   if (!templateContent) {
     vscode.window.showErrorMessage('template.yml is empty or not exist');
@@ -66,7 +64,7 @@ async function process(serviceName: string, mountDir: string) {
   }
   lineNumber = nasFound ? lineNumber : 0;
   const cursorPosition = new vscode.Position(lineNumber, 0);
-  const document = await vscode.workspace.openTextDocument(vscode.Uri.file(localRoot));
+  const document = await vscode.workspace.openTextDocument(vscode.Uri.file(templatePath));
   await vscode.window.showTextDocument(document).then(editor => {
     editor.selections = [new vscode.Selection(cursorPosition, cursorPosition)];
     editor.revealRange(new vscode.Range(cursorPosition, new vscode.Position(lineNumber + 10, 0)));

@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
 import * as fs from 'fs';
+import { ext } from '../extensionVariables';
 import { serverlessCommands } from '../utils/constants';
 import { isPathExists, createEventFile } from '../utils/file';
 import { recordPageView } from '../utils/visitor';
@@ -16,19 +17,18 @@ export function localInvokeFunction(context: vscode.ExtensionContext) {
         return;
       }
       const funcRes = node as FunctionResource;
-      await process(funcRes.serviceName, funcRes.functionName);
+      await process(funcRes.serviceName, funcRes.functionName, funcRes.templatePath as string);
     })
   );
 }
 
-async function process(serviceName: string, functionName: string) {
-  let cwd = vscode.workspace.rootPath;
-  if (!cwd) {
+async function process(serviceName: string, functionName: string, templatePath: string) {
+  if (!ext.cwd) {
     vscode.window.showErrorMessage('Please open a workspace');
     return;
   }
 
-  const templateService = new TemplateService(cwd);
+  const templateService = new TemplateService(templatePath);
   const functionInfo = await templateService.getFunction(serviceName, functionName);
   let eventFilePath = '';
   let hasHttpTrigger = false;
@@ -42,7 +42,7 @@ async function process(serviceName: string, functionName: string) {
   if (!hasHttpTrigger) {
     // 普通的函数，读取 event 文件
     try {
-      const localRoot = path.join(cwd, functionInfo.Properties.CodeUri);
+      const localRoot = path.resolve(path.dirname(templatePath), functionInfo.Properties.CodeUri);
       const eventFileStat = fs.statSync(localRoot);
       if (eventFileStat.isDirectory()) {
         eventFilePath = path.join(localRoot, 'event.dat');
@@ -62,7 +62,7 @@ async function process(serviceName: string, functionName: string) {
     }
   }
   // 启动 fun local
-  const funService = new FunService(cwd);
+  const funService = new FunService(templatePath);
   if (hasHttpTrigger) {
     funService.localStart(serviceName, functionName);
   } else {

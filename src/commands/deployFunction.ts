@@ -1,4 +1,5 @@
 import * as vscode from 'vscode';
+import { ext } from '../extensionVariables';
 import { serverlessCommands } from '../utils/constants';
 import { recordPageView } from '../utils/visitor';
 import { Resource, FunctionResource, ResourceType } from '../models/resource';
@@ -12,19 +13,18 @@ export function deployFunction(context: vscode.ExtensionContext) {
         return;
       }
       const funcRes = node as FunctionResource;
-      await process(funcRes.serviceName, funcRes.functionName);
+      await process(funcRes.serviceName, funcRes.functionName, funcRes.templatePath as string);
     })
   );
 }
 
-async function process(serviceName: string, functionName: string) {
-  const cwd = vscode.workspace.rootPath;
-  if (!cwd) {
+async function process(serviceName: string, functionName: string, templatePath: string) {
+  if (!ext.cwd) {
     vscode.window.showErrorMessage('Please open a workspace');
     return;
   }
 
-  const funService = new FunService(cwd);
+  const funService = new FunService(templatePath);
   funService.deploy(serviceName, functionName);
   setTimeout(() => {
     vscode.commands.executeCommand(serverlessCommands.REFRESH_REMOTE_RESOURCE.id);

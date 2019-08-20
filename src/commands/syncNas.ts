@@ -1,4 +1,5 @@
 import * as vscode from 'vscode';
+import { ext } from '../extensionVariables';
 import { serverlessCommands } from '../utils/constants';
 import { recordPageView } from '../utils/visitor';
 import { Resource, ResourceType, NasResource } from '../models/resource';
@@ -12,18 +13,17 @@ export function syncNas(context: vscode.ExtensionContext) {
         return;
       }
       const nasRes = node as NasResource;
-      await process(nasRes.serviceName, nasRes.mountDir);
+      await process(nasRes.serviceName, nasRes.mountDir, nasRes.templatePath as string);
     }
   ));
 }
 
-async function process(serviceName: string, mountDir: string) {
-  const cwd = vscode.workspace.rootPath;
-  if (!cwd) {
+async function process(serviceName: string, mountDir: string, templatePath: string) {
+  if (!ext.cwd) {
     vscode.window.showErrorMessage('Please open a workspace');
     return;
   }
 
-  const funService = new FunService(cwd);
-  funService.syncNas(serviceName, mountDir);
+  const funService = new FunService(templatePath);
+  funService.syncNas(serviceName, mountDir === 'Auto' ? '/mnt/auto' : mountDir);
 }
