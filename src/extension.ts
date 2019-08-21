@@ -1,4 +1,5 @@
 import * as vscode from 'vscode';
+import * as osLocale from 'os-locale';
 import { ext } from './extensionVariables';
 import { serverlessCommands } from './utils/constants';
 import { recordPageView } from './utils/visitor';
@@ -42,6 +43,7 @@ import { viewQuickStart } from './commands/viewQuickStart';
 import { showUpdateNotification } from './commands/showUpdateNotification';
 import { isSupportedDocument } from './utils/document';
 import { templateChangeEventEmitter } from './models/events';
+import { TemplateHoverProvider } from './hovers/TemplateHoverProvider';
 
 export function activate(context: vscode.ExtensionContext) {
   recordPageView('/');
@@ -109,6 +111,10 @@ export function activate(context: vscode.ExtensionContext) {
   vscode.languages.registerCompletionItemProvider(
     selector,
     new ServerlessCompletionProvider(),
+  );
+  vscode.languages.registerHoverProvider(
+    selector,
+    new TemplateHoverProvider(),
   );
   new ServerlessDiagnosticsProvider().startDiagnostic();
 

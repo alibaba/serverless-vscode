@@ -77,6 +77,9 @@ export class ASTNode {
         });
       }
     }
+
+    let findMatch = false;
+
     const testAlternatives = (
       alternatives: JSONSchema[],
       maxOneMatch: boolean,
@@ -124,11 +127,13 @@ export class ASTNode {
         });
       }
       if (bestMatch) {
+        findMatch = true;
         validationResult.merge(bestMatch.validationResult);
         validationResult.propertiesMatches +=
           bestMatch.validationResult.propertiesMatches;
         validationResult.propertiesValueMatches +=
           bestMatch.validationResult.propertiesValueMatches;
+        matchingSchemas.merge(bestMatch.matchingSchemas);
       }
       return matches.length;
     }
@@ -161,8 +166,9 @@ export class ASTNode {
         });
       }
     }
-
-    matchingSchemas.add({ node: this, schema });
+    if (!findMatch) {
+      matchingSchemas.add({ node: this, schema });
+    }
   }
 }
 

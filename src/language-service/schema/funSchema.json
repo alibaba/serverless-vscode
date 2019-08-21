@@ -95,7 +95,12 @@
               ]
             }
           },
-          "additionalProperties": false
+          "additionalProperties": false,
+          "document": {
+            "default": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03.md#aliyunserverlessservice",
+            "zh-CN": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03-zh-cn.md#aliyunserverlessservice",
+            "zh-TW": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03-zh-cn.md#aliyunserverlessservice"
+          }
         }
       },
       "patternProperties": {
@@ -104,7 +109,12 @@
         }
       },
       "required": ["Type"],
-      "additionalProperties": false
+      "additionalProperties": false,
+      "document": {
+        "default": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03.md#aliyunserverlessservice",
+        "zh-CN": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03-zh-cn.md#aliyunserverlessservice",
+        "zh-TW": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03-zh-cn.md#aliyunserverlessservice"
+      }
     },
     "Aliyun::Serverless::Function": {
       "$id": "Aliyun::Serverless::Function",
@@ -157,10 +167,20 @@
             }
           },
           "required": ["Handler", "Runtime", "CodeUri"],
-          "additionalProperties": false
+          "additionalProperties": false,
+          "document": {
+            "default": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03.md#aliyunserverlessfunction",
+            "zh-CN": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03-zh-cn.md#aliyunserverlessfunction",
+            "zh-TW": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03-zh-cn.md#aliyunserverlessfunction"
+          }
         }
       },
-      "required": ["Type"]
+      "required": ["Type"],
+      "document": {
+        "default": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03.md#aliyunserverlessfunction",
+        "zh-CN": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03-zh-cn.md#aliyunserverlessfunction",
+        "zh-TW": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03-zh-cn.md#aliyunserverlessfunction"
+      }
     },
     "Aliyun::Serverless::Service::Role": {
       "$id": "Aliyun::Serverless::Service::Role",
@@ -256,7 +276,12 @@
           "required": ["Protocol", "RouteConfig"]
         }
       },
-      "required": ["Type"]
+      "required": ["Type"],
+      "document": {
+        "default": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03.md#aliyunserverlesscustomdomain",
+        "zh-CN": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03-zh-cn.md#aliyunserverlesscustomdomain",
+        "zh-TW": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03-zh-cn.md#aliyunserverlesscustomdomain"
+      }
     },
     "Aliyun::Serverless::CustomDomain::PathConfig": {
       "$id": "Aliyun::Serverless::CustomDomain::PathConfig",
@@ -314,7 +339,12 @@
         }
       },
       "required": ["Type"],
-      "additionalProperties": false
+      "additionalProperties": false,
+      "document": {
+        "default": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03.md#aliyunserverlessapi",
+        "zh-CN": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03-zh-cn.md#aliyunserverlessapi",
+        "zh-TW": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03-zh-cn.md#aliyunserverlessapi"
+      }
     },
     "Aliyun::Serverless::Api::CORS": {
       "$id": "Aliyun::Serverless::Api::CORS",
@@ -361,7 +391,12 @@
           "additionalProperties": false
         }
       },
-      "required": ["Type", "Properties"]
+      "required": ["Type", "Properties"],
+      "document": {
+        "default": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03.md#aliyunserverlesstablestore",
+        "zh-CN": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03-zh-cn.md#aliyunserverlesstablestore",
+        "zh-TW": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03-zh-cn.md#aliyunserverlesstablestore"
+      }
     },
     "Aliyun::Serverless::Log": {
       "$id": "Aliyun::Serverless::Log",
@@ -383,7 +418,12 @@
           "additionalProperties": false
         }
       },
-      "required": ["Type"]
+      "required": ["Type"],
+      "document": {
+        "default": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03.md#aliyunserverlesslog",
+        "zh-CN": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03-zh-cn.md#aliyunserverlesslog",
+        "zh-TW": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03-zh-cn.md#aliyunserverlesslog"
+      }
     },
     "Aliyun::Serverless::MNSTopic": {
       "$id": "Aliyun::Serverless::MNSTopic",
@@ -413,7 +453,12 @@
         }
       },
       "required": ["Type", "Properties"],
-      "additionalProperties": false
+      "additionalProperties": false,
+      "document": {
+        "default": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03.md#aliyunserverlessmnstopic",
+        "zh-CN": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03-zh-cn.md#aliyunserverlessmnstopic",
+        "zh-TW": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03-zh-cn.md#aliyunserverlessmnstopic"
+      }
     }
   },
   "properties": {
