@@ -17,6 +17,7 @@ import {
   NasResource,
   TemplateResource
 } from '../models/resource';
+import { templateChangeEventEmitter } from '../models/events';
 import { TemplateService } from '../services/TemplateService';
 
 const findFile = util.promisify(glob);
@@ -24,9 +25,12 @@ const findFile = util.promisify(glob);
 export class LocalResourceProvider implements vscode.TreeDataProvider<Resource> {
   _onDidChangeTreeData: vscode.EventEmitter<Resource | undefined> = new vscode.EventEmitter<Resource | undefined>();
   onDidChangeTreeData: vscode.Event<Resource | undefined> = this._onDidChangeTreeData.event;
-
+  onDidChangeTemplateContent: vscode.Event<string>;
   constructor(private workspaceRoot: string | undefined) {
-
+    this.onDidChangeTemplateContent = templateChangeEventEmitter.event;
+    this.onDidChangeTemplateContent(() => {
+      this.refresh();
+    })
   }
 
   refresh(): void {

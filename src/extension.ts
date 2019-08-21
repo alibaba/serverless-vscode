@@ -1,5 +1,4 @@
 import * as vscode from 'vscode';
-import * as osLocale from 'os-locale';
 import { ext } from './extensionVariables';
 import { serverlessCommands } from './utils/constants';
 import { recordPageView } from './utils/visitor';
@@ -41,7 +40,7 @@ import { viewSource } from './commands/viewSource';
 import { reportIssue } from './commands/reportIssue';
 import { viewQuickStart } from './commands/viewQuickStart';
 import { showUpdateNotification } from './commands/showUpdateNotification';
-import { isSupportedDocument } from './utils/document';
+import { isTemplateYaml } from './utils/document';
 import { templateChangeEventEmitter } from './models/events';
 import { TemplateHoverProvider } from './hovers/TemplateHoverProvider';
 
@@ -120,7 +119,7 @@ export function activate(context: vscode.ExtensionContext) {
 
   vscode.workspace.onDidChangeTextDocument((event) => {
     const document = event.document;
-    if (isSupportedDocument(document)) {
+    if (isTemplateYaml(document) && !document.isDirty) {
       templateChangeEventEmitter.fire();
     }
   })
