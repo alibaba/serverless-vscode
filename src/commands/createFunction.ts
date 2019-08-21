@@ -2,6 +2,7 @@ import * as vscode from 'vscode';
 import * as path from 'path';
 import { ext } from '../extensionVariables';
 import { MultiStepInput } from '../ui/MultiStepInput';
+import { getSupportedRuntimes, isSupportedRuntime } from '../utils/runtime';
 import { serverlessCommands } from '../utils/constants';
 import { isPathExists, createDirectory } from '../utils/file';
 import { getSuffix, createIndexFile } from '../utils/runtime';
@@ -34,9 +35,7 @@ async function process(context: vscode.ExtensionContext, serviceName: string, te
     label: 'HTTP',
     description: 'HTTP Trigger',
   }];
-  const runtimes: vscode.QuickPickItem[] =
-    ['nodejs6', 'nodejs8', 'python2.7', 'python3', 'php7.2']
-      .map(label => <vscode.QuickPickItem>{ label });
+  const runtimes: vscode.QuickPickItem[] = getSupportedRuntimes().map(label => <vscode.QuickPickItem>{ label });
 
   interface State {
     type: string;
@@ -118,10 +117,9 @@ async function process(context: vscode.ExtensionContext, serviceName: string, te
 
   async function validateCreateFuncionState(state: State): Promise<boolean> {
     const functionTypes = ['NORMAL', 'HTTP'];
-    const runtimes = ['nodejs6', 'nodejs8', 'python2.7', 'python3', 'php7.2'];
     if (!state || !state.serviceName
       || !state.functionName || !functionTypes.includes(state.type)
-      || !runtimes.includes(state.runtime)) {
+      || !isSupportedRuntime(state.runtime)) {
       return false;
     }
     return true;
