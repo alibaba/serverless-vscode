@@ -8,36 +8,36 @@ import { JSONSchemaService } from '../language-service/services/jsonSchemaServic
 import { ValidationResult, SchemaCollector } from '../language-service/parser/jsonParser';
 
 const validationDelayMs = 200;
-const pendingValidationRequests: { [uri: string]: NodeJS.Timer } = {};
 const diagnosticResult: { [uri: string]: vscode.DiagnosticCollection } = {};
 export class ServerlessDiagnosticsProvider {
-
+  private timer: NodeJS.Timer | undefined;
   public startDiagnostic() {
-    const currentTextEditor = vscode.window.activeTextEditor;
-    const currentDocument = currentTextEditor && currentTextEditor.document;
-    if (currentDocument) {
-      this.validateAndDiagnostic(currentDocument);
+    if (vscode.window.activeTextEditor) {
+      this.validateAndDiagnostic(vscode.window.activeTextEditor);
     }
-    ext.context.subscriptions.push(
-      vscode.window.onDidChangeActiveTextEditor(editor => {
-        this.clearPendingValidation();
-        if (editor) {
-          const document = editor.document;
-          this.validateAndDiagnostic(document);
-        }
-      })
-    );
+    vscode.window.onDidChangeActiveTextEditor((editor) => {
+      if (editor) {
+        this.validateAndDiagnostic(editor);
+      }
+    });
+    vscode.workspace.onDidChangeTextDocument((event) => {
+      if (vscode.window.activeTextEditor
+        && event.document === vscode.window.activeTextEditor.document
+      ) {
+        this.validateAndDiagnostic(vscode.window.activeTextEditor);
+      }
+    });
   }
 
-  private validateAndDiagnostic(document: vscode.TextDocument) {
-    if (document && isSupportedDocument(document)) {
-      pendingValidationRequests[document.uri.fsPath] = setInterval(
-        () => {
-          this.doDiagnostic(document);
-        },
-        validationDelayMs,
-      );
+  private validateAndDiagnostic(editor: vscode.TextEditor) {
+    const document = editor.document;
+    if (!document || !isSupportedDocument(document)) {
+      return;
     }
+    this.cleanTimer();
+    this.timer = setTimeout(() => {
+      this.doDiagnostic(document);
+    }, validationDelayMs);
   }
 
   private async doDiagnostic(document: vscode.TextDocument): Promise<void> {
@@ -80,14 +80,14 @@ export class ServerlessDiagnosticsProvider {
     diagnosticCollection.set(document.uri, diagnostics);
   }
 
-  private clearPendingValidation() {
-    Object.entries(pendingValidationRequests).forEach(([uri, timer]) => {
-      clearInterval(timer);
-    });
-  }
-
   private parse(text: string): ASTNode {
     return buildAstRecursively(undefined, Yaml.load(text));;
+  }
+
+  private cleanTimer() {
+    if (this.timer) {
+      clearTimeout(this.timer);
+    }
   }
 
 }

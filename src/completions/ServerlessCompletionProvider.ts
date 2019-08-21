@@ -1,12 +1,27 @@
 import * as vscode from 'vscode';
 import * as Yaml from 'yaml-ast-parser';
-import { isSupportedDocument, fixNodeForCompletion } from '../utils/document';
+import { isSupportedDocument, fixNodeForCompletion, isTemplateYaml } from '../utils/document';
 import { buildAstRecursively, getNodeFromOffset } from '../parser/parser';
 import { ASTNode } from '../parser/ASTNode';
 import { StringASTNode } from '../parser/StringASTNode';
 import { ObjectASTNode } from '../parser/ObjectASTNode';
 import { schema } from '../schema/schema';
 import { recordPageView } from '../utils/visitor';
+import { ROS_TEMPLATE_INSERT_TEXT, TRANSFORM_INSERT_TEXT } from '../schema/constants';
+import { serverlessCommands } from '../utils/constants';
+
+const triggerSuggestCmd = {
+  command: serverlessCommands.TRIGGER_SUGGEST.id,
+  title: serverlessCommands.TRIGGER_SUGGEST.title,
+}
+
+const rosTempCompletionItem = new vscode.CompletionItem('ROSTemplateFormatVersion');
+rosTempCompletionItem.command = triggerSuggestCmd;
+rosTempCompletionItem.insertText = ROS_TEMPLATE_INSERT_TEXT;
+
+const transformCompletionItem = new vscode.CompletionItem('Transform');
+transformCompletionItem.command = triggerSuggestCmd;
+transformCompletionItem.insertText = TRANSFORM_INSERT_TEXT;
 
 export class ServerlessCompletionProvider implements vscode.CompletionItemProvider {
   provideCompletionItems(
@@ -15,6 +30,14 @@ export class ServerlessCompletionProvider implements vscode.CompletionItemProvid
   ):
     vscode.ProviderResult<vscode.CompletionItem[] | vscode.CompletionList> {
     if (!isSupportedDocument(document)) {
+      if (isTemplateYaml(document)) {
+        if (position.line === 0) {
+          return [rosTempCompletionItem];
+        }
+        if (position.line === 1) {
+          return [transformCompletionItem];
+        }
+      }
       return Promise.resolve([]);
     }
     recordPageView('/templateAutoCompletion');
@@ -102,6 +125,9 @@ function doCompletion(
     }
     if (itemInfo.documentation) {
       completionItem.documentation = new vscode.MarkdownString(`[文档地址：${item}](${itemInfo.documentation})`)
+    }
+    if (itemInfo.triggerSuggest) {
+      completionItem.command = triggerSuggestCmd;
     }
     return completionItem;
   })

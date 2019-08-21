@@ -8,13 +8,16 @@ const transformRegExp = /"?'?Transform"?'?:\s*"?'?Aliyun::Serverless-2018-04-03"
  * @param textDocument
  */
 export function isSupportedDocument(document: vscode.TextDocument): boolean {
-  if (document.fileName.endsWith('template.yml') ||
-    document.fileName.endsWith('template.yaml')
-  ) {
+  if (isTemplateYaml(document)) {
     const textDocument = document.getText();
     return rosRegExp.test(textDocument) && transformRegExp.test(textDocument);
   }
   return false;
+}
+
+export function isTemplateYaml(document: vscode.TextDocument): boolean {
+  return document.fileName.endsWith('template.yml') || document.fileName.endsWith('template.yaml')
+    || document.fileName.endsWith('template.build.yml') || document.fileName.endsWith('template.packaged.yml');
 }
 
 interface Output {
