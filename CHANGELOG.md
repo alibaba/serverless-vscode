@@ -2,6 +2,27 @@
 
 所有对 "Aliyun Serverless" 插件的更改都将记录在这个文件中。
 
+## 1.6.0 - 2019-08-22
+### Added
+- 支持 nodejs10 运行时。
+- 支持空模版文件快速构建 ROS 模版。在新建的 template.yml 中，输入 ROS 字样，会出现自动补全的可选项。
+
+![quick-ros](https://github.com/alibaba/serverless-vscode/blob/master/media/changelog/v1.6.0/quick-ros.gif?raw=true)
+
+- 支持 template.yml 模版文件资源配置的上下文帮助。在 template.yml 中，将鼠标悬浮在相关资源的键名上，会出现关于该键下可配置字段的悬浮信息展示 (字段名、字段类型、文档地址)。
+
+![template-hover](https://github.com/alibaba/serverless-vscode/blob/master/media/changelog/v1.6.0/template-hover.gif?raw=true)
+
+- 支持项目中包含多 template.yml 模版文件。在本地资源面板中会显示多个 template.yml 节点，左击模版文件名称会跳转至对应的 template.yml 模版文件
+  - 支持指定 template.yml 模版文件创建函数。在本地资源面板中左击模版文件名称右侧的创建函数按钮，会弹出创建函数向导。完成向导后，相关函数会创建在模版文件的同目录下并将函数描述块自动填充在模版文件中。
+  - 支持指定 template.yml 模版文件进行部署。在本地资源面板中右击模版文件名称选择部署，会根据所指定模版文件的描述内容进行部署。
+
+![multi-tmp](https://github.com/alibaba/serverless-vscode/blob/master/media/changelog/v1.6.0/template-hover.gif?raw=true)
+
+### Other
+- 远端调用带有 HTTP 触发器的函数时，在输出面板提供访问链接。
+- 本地资源面板监听模版文件变化，进行自动刷新。
+
 ## 1.5.0 - 2019-08-15
 ### Added
 - 模版文件 template.yml 提供层级色彩。在 template.yml 中会根据设定的缩进大小进行彩虹色渲染。
