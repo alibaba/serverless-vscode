@@ -31,6 +31,7 @@ import {
   VPCCONFIG_INSERT_TEXT,
   LOGCONFIG_INSERT_TEXT,
   NASCONFIG_INSERT_TEXT,
+  RESOURCES_INSERT_TEXT,
 } from './constants';
 
 // TODO: schema 的进一步定义
@@ -234,6 +235,8 @@ const resourceSchema = {
     [ALIYUN_SERVERLESS_LOG_TYPE]: logSchema,
     [ALIYUN_SERVERLESS_MNSTOPIC_TYPE]: mnstopicSchema,
   },
+  insertText: RESOURCES_INSERT_TEXT,
+  triggerSuggest: true,
 };
 
 export const schema = {

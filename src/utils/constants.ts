@@ -139,6 +139,10 @@ export namespace serverlessCommands {
     id: 'fc.extension.nas.open.local.dir',
     title: 'Open NAS local dir',
   };
+  export const TRIGGER_SUGGEST = {
+    id: 'editor.action.triggerSuggest',
+    title: 'Trigger Suggest',
+  };
 }
 export const SERVERLESS_EXTENTION_DOCUMENTATION_URL =
   'https://github.com/alibaba/serverless-vscode/blob/master/README.md';

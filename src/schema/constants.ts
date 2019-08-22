@@ -20,6 +20,8 @@ export const MNSTOPIC_DOCUMENTATION_URL =
 export const SERVICE_INSERT_TEXT =
   "${1:service}: # service name\n" +
   "  Type: 'Aliyun::Serverless::Service'\n" +
+  "  Properties:\n" +
+  "    Description: This is FC service\n" +
   "  ${2:function}: # function name\n" +
   "    Type: 'Aliyun::Serverless::Function'\n" +
   "    Properties:\n" +
@@ -115,3 +117,12 @@ export const LOGCONFIG_INSERT_TEXT =
 export const NASCONFIG_INSERT_TEXT =
   "NasConfig: Auto"
 
+export const ROS_TEMPLATE_INSERT_TEXT =
+  "ROSTemplateFormatVersion: '2015-09-01'\n"
+
+export const TRANSFORM_INSERT_TEXT =
+  "Transform: 'Aliyun::Serverless-2018-04-03'\n"
+
+export const RESOURCES_INSERT_TEXT =
+  "Resources:\n" +
+  "  "

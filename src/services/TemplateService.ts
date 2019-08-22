@@ -142,7 +142,10 @@ export class TemplateService {
     }
     if (!tpl.Resources[serviceName]) {
       tpl.Resources[serviceName] = {
-        Type: 'Aliyun::Serverless::Service'
+        Type: 'Aliyun::Serverless::Service',
+        Properties: {
+          Description: `This is ${serviceName} service`,
+        }
       };
     }
     if (tpl.Resources[serviceName][functionName]) {
