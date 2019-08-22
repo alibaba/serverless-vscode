@@ -17,7 +17,7 @@
   - 支持指定 template.yml 模版文件创建函数。在本地资源面板中左击模版文件名称右侧的创建函数按钮，会弹出创建函数向导。完成向导后，相关函数会创建在模版文件的同目录下并将函数描述块自动填充在模版文件中。
   - 支持指定 template.yml 模版文件进行部署。在本地资源面板中右击模版文件名称选择部署，会根据所指定模版文件的描述内容进行部署。
 
-![multi-tmp](https://github.com/alibaba/serverless-vscode/blob/master/media/changelog/v1.6.0/template-hover.gif?raw=true)
+![multi-tmp](https://github.com/alibaba/serverless-vscode/blob/master/media/changelog/v1.6.0/multi-tmp.gif?raw=true)
 
 ### Other
 - 远端调用带有 HTTP 触发器的函数时，在输出面板提供访问链接。
