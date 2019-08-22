@@ -49,14 +49,40 @@ async function process(serviceName: string, functionName: string) {
   channel.clear();
   channel.show();
   channel.appendLine(`invoke remote function: ${serviceName}/${functionName} ...`);
-  channel.appendLine('local event file path: '
-    + `${<string>vscode.workspace.getConfiguration().get('aliyun.fc.remoteSource.eventFile.path')}`);
-  channel.appendLine('======================================================');
 
   const task: Promise<any> = new Promise(resolve => {
-    functionComputeService.invokeFunction(serviceName, functionName, event)
-      .then(result => {
-        resolve(result);
+    const httpTriggerUrls: any[] = [];
+    functionComputeService.listTriggers(serviceName, functionName)
+      .then(triggers => {
+        (<any[]>triggers).forEach(trigger => {
+          if (trigger.triggerType === 'http') {
+            httpTriggerUrls.push(
+              `https://${functionComputeService.getAccountId()}.${functionComputeService.getRegion()}.` +
+              `fc.aliyuncs.com/2016-08-15/proxy/${serviceName}.${trigger.qualifier || 'LATEST'}/${functionName}/`
+            );
+          }
+        })
+        if (httpTriggerUrls.length > 0) {
+          const result = {
+            data: httpTriggerUrls.join('\n'),
+          }
+          channel.appendLine(
+            'This HTTP trigger can be accessed ' +
+            'through the folowing url by your favourite toolkit such as curl or postman.'
+          );
+          channel.appendLine('======================================================');
+          resolve(result);
+          return;
+        } else {
+          channel.appendLine('local event file path: '
+            + `${<string>vscode.workspace.getConfiguration().get('aliyun.fc.remoteSource.eventFile.path')}`);
+          channel.appendLine('======================================================');
+          functionComputeService.invokeFunction(serviceName, functionName, event)
+            .then(result => {
+              resolve(result);
+            });
+          return;
+        }
       });
   })
 

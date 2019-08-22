@@ -57,7 +57,7 @@ export class FunctionComputeService {
     return Number(timeout) * 1000;
   }
 
-  getNewFCClient() {
+  newFCClient() {
     try {
       return new FCClient(this.getAccountId(), {
         accessKeyID: this.getAccessKeyId(),
@@ -74,7 +74,7 @@ export class FunctionComputeService {
     let result, nextToken = null;
     const limit = 50;
     const services = [];
-    const client = this.getNewFCClient();
+    const client = this.newFCClient();
     if (!client) {
       return [];
     }
@@ -97,7 +97,7 @@ export class FunctionComputeService {
     let result, nextToken = null;
     const limit = 50;
     const functions = [];
-    const client = this.getNewFCClient();
+    const client = this.newFCClient();
     if (!client) {
       return [];
     }
@@ -118,7 +118,7 @@ export class FunctionComputeService {
 
   async invokeFunction(serviceName: string, functionName: string, event: string) {
     let result: any = {};
-    const client = this.getNewFCClient();
+    const client = this.newFCClient();
     if (!client) {
       return [];
     }
@@ -132,8 +132,22 @@ export class FunctionComputeService {
     return result;
   }
 
+  async listTriggers(serviceName: string, functionName: string) {
+    const client = this.newFCClient();
+    if (!client) {
+      return [];
+    }
+    try {
+      const { data: { triggers = [] } = {} } = await client.listTriggers(serviceName, functionName);
+      return triggers;
+    } catch (ex) {
+      output.error(ex.message);
+    }
+    return [];
+  }
+
   async getService(serviceName: string) {
-    const client = this.getNewFCClient();
+    const client = this.newFCClient();
     try {
       const { data } = await client.getService(serviceName);
       return data;
@@ -143,7 +157,7 @@ export class FunctionComputeService {
   }
 
   async getFunction(serviceName: string, functionName: string) {
-    const client = this.getNewFCClient();
+    const client = this.newFCClient();
     try {
       const { data } = await client.getFunction(serviceName, functionName);
       return data;
