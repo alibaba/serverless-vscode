@@ -51,32 +51,36 @@ class FunctionInfoDict {
     files.forEach(file => {
       const templatePath = path.resolve(ext.cwd as string, file);
       const templateService = new TemplateService(templatePath);
-      const tpl = templateService.getTemplateDefinitionSync();
-      if (!tpl || !tpl.Resources) {
-        return;
-      }
-      const services = Object.entries(tpl.Resources)
-        .filter(([_, resource]) => {
-          return (<any>resource).Type === ALIYUN_SERVERLESS_SERVICE_TYPE
+      try {
+        const tpl = templateService.getTemplateDefinitionSync();
+        if (!tpl || !tpl.Resources) {
+          return;
+        }
+        const services = Object.entries(tpl.Resources)
+          .filter(([_, resource]) => {
+            return (<any>resource).Type === ALIYUN_SERVERLESS_SERVICE_TYPE
+          });
+        services.forEach(([serviceName, serviceResource]) => {
+          Object.entries(<any>serviceResource)
+            .filter(([_, functionResource]) => {
+              return (<any>functionResource).Type === ALIYUN_SERVERLESS_FUNCTION_TYPE;
+            })
+            .forEach(([functionName, functionResource]) => {
+              const functionHandlerFilePath =
+                templateService.getHandlerFilePathFromFunctionInfo(path.dirname(templatePath), functionResource);
+              if (functionHandlerFilePath) {
+                this.comparisonTable.set(functionHandlerFilePath, {
+                  serviceName,
+                  functionName,
+                  templatePath,
+                  functionResource,
+                });
+              }
+            })
         });
-      services.forEach(([serviceName, serviceResource]) => {
-        Object.entries(<any>serviceResource)
-          .filter(([_, functionResource]) => {
-            return (<any>functionResource).Type === ALIYUN_SERVERLESS_FUNCTION_TYPE;
-          })
-          .forEach(([functionName, functionResource]) => {
-            const functionHandlerFilePath =
-              templateService.getHandlerFilePathFromFunctionInfo(path.dirname(templatePath), functionResource);
-            if (functionHandlerFilePath) {
-              this.comparisonTable.set(functionHandlerFilePath, {
-                serviceName,
-                functionName,
-                templatePath,
-                functionResource,
-              });
-            }
-          })
-      });
+      } catch (ex) {
+        // 解析某个 template.yml 失败
+      }
     });
     this.needLoad = false;
   }
