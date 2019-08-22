@@ -2,8 +2,16 @@ import { isPathExists } from './file';
 import * as fs from 'fs';
 import * as path from 'path';
 
-const runtimes = ['nodejs6', 'nodejs8', 'python2.7', 'python3', 'php7.2'];
+const supportedRuntimes = ['nodejs6', 'nodejs8', 'nodejs10', 'python2.7', 'python3', 'php7.2'];
 const types = ['NORMAL', 'HTTP'];
+
+export function getSupportedRuntimes() {
+  return supportedRuntimes;
+}
+
+export function isSupportedRuntime(runtime: string) {
+  return supportedRuntimes.includes(runtime);
+}
 
 export function getHandlerFileByRuntime(runtime: string): string {
   if (runtime.indexOf('nodejs') > -1) {
@@ -22,7 +30,7 @@ export function getHandlerFileByRuntime(runtime: string): string {
 }
 
 export function getSuffix(runtime: string): string | undefined {
-  if (!runtimes.includes(runtime)) {
+  if (!supportedRuntimes.includes(runtime)) {
     return;
   }
   if (runtime.includes('nodejs')) {
@@ -38,7 +46,7 @@ export function getSuffix(runtime: string): string | undefined {
 }
 
 export function getHandlerFileName(handler: string, runtime: string): string | undefined {
-  if (!runtimes.includes(runtime)) {
+  if (!supportedRuntimes.includes(runtime)) {
     return;
   }
   const arr = handler.split('.');
@@ -49,7 +57,7 @@ export function getHandlerFileName(handler: string, runtime: string): string | u
 }
 
 export function createIndexFile(type: string, runtime: string, ph: string): boolean {
-  if (!runtimes.includes(runtime)) {
+  if (!supportedRuntimes.includes(runtime)) {
     return false;
   }
   if (!types.includes(type)) {

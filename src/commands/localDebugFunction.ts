@@ -43,10 +43,10 @@ async function process(serviceName: string, functionName: string, templatePath: 
     vscode.window.showInformationMessage(`Please complete ${serviceName}/${functionName} properties`);
     return;
   }
-  const supportRuntome = ['nodejs6', 'nodejs8', 'python2.7', 'python3', 'php7.2'];
   const runtime = functionInfo.Properties.Runtime;
-  if (!supportRuntome.includes(runtime)) {
+  if (!rt.isSupportedRuntime(runtime)) {
     vscode.window.showInformationMessage(`${runtime} debug will be support soon.`);
+    return;
   }
   // 尝试从 launch.json 读取配置
   const configurationName = getConfigurationName(serviceName, functionName);
