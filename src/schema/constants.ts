@@ -27,7 +27,7 @@ export const SERVICE_INSERT_TEXT =
   "    Properties:\n" +
   "      Handler: index.handler\n" +
   "      Runtime: nodejs8\n" +
-  "      CodeUri: '${3:./}' # code uri\n" +
+  "      CodeUri: ${3:./}\n" +
   "      MemorySize: 1024\n" +
   "      Timeout: 15\n";
 
@@ -37,7 +37,7 @@ export const FUNCTION_INSERT_TEXT =
   "  Properties:\n" +
   "    Handler: index.handler\n" +
   "    Runtime: nodejs8\n" +
-  "    CodeUri: '${2:./}' # code uri\n" +
+  "    CodeUri: ${2:./}\n" +
   "    MemorySize: 1024\n" +
   "    Timeout: 15";
 

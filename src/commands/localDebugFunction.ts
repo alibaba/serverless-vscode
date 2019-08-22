@@ -184,7 +184,7 @@ function getDebugProtocol(runtime: string): string {
   if (runtime === 'nodejs6') {
     return 'legacy';
   }
-  if (runtime === 'nodejs8') {
+  if (runtime === 'nodejs8' || runtime === 'nodejs10') {
     return 'inspector';
   }
   return ''; // TODO: support other runtime;
