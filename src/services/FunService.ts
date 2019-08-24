@@ -1,4 +1,5 @@
 import * as vscode from 'vscode';
+import * as os from 'os';
 import * as path from 'path';
 import * as terminalService from '../utils/terminal';
 import * as open from 'open';
@@ -22,36 +23,34 @@ export class FunService {
   }
 
   deploy(serviceName?: string, functionName? :string) {
-    const terminal = terminalService.getFunctionComputeTerminal();
+    const terminal = terminalService.getFunctionComputeTerminal(path.dirname(this.templatePath));
     getFunPath().then(funPath => {
-      let command = `cd ${path.dirname(this.templatePath)} && `;
-      command +=
-        functionName ?
-          `${funPath} deploy ${serviceName}/${functionName} -t ${this.templatePath}` :
-          serviceName ? `${funPath} deploy ${serviceName} -t ${this.templatePath}` :
-            `${funPath} deploy -t ${this.templatePath}`;
+      const command = functionName ?
+        `${funPath} deploy ${serviceName}/${functionName} -t ${this.templatePath}` :
+        serviceName ? `${funPath} deploy ${serviceName} -t ${this.templatePath}` :
+          `${funPath} deploy -t ${this.templatePath}`;
       terminal.sendText(command);
       terminal.show();
     })
   }
 
   syncNas(serviceName: string, mountDir: string) {
-    const terminal =  terminalService.getFunctionComputeTerminal();
+    const terminal =  terminalService.getFunctionComputeTerminal(path.dirname(this.templatePath));
     getFunPath().then(funPath => {
-      const command =
-      `cd ${path.dirname(this.templatePath)} && ` +
-      `${funPath} nas init && ${funPath} nas sync nas://${serviceName}:${mountDir}`;
+      const command = this.andIf(
+        `${funPath} nas init`,
+        `${funPath} nas sync nas://${serviceName}:${mountDir}`,
+      );
       terminal.sendText(command);
       terminal.show();
     });
   }
 
   localInvoke(serviceName: string, functionName: string, eventFilePath: string) {
-    const terminal =  terminalService.getFunctionComputeTerminal();
+    const terminal =  terminalService.getFunctionComputeTerminal(path.dirname(this.templatePath));
     getFunPath().then(funPath => {
       const command =
-  `cd ${path.dirname(this.templatePath)} && ` +
-  `${funPath} local invoke ${serviceName}/${functionName} -e ${this.escapeSpace(eventFilePath)}`
+        `${funPath} local invoke ${serviceName}/${functionName} -e ${this.escapeSpace(eventFilePath)}`;
       terminal.sendText(command);
       terminal.show();
     })
@@ -59,12 +58,11 @@ export class FunService {
 
   localInvokeDebug(serviceName: string, functionName: string,
     debugPort: string, eventFilePath: string): vscode.Terminal {
-    const terminal =  terminalService.getFunctionComputeTerminal();
+    const terminal =  terminalService.getFunctionComputeTerminal(path.dirname(this.templatePath));
     getFunPath().then(funPath => {
       /* eslint-disable max-len */
       const command =
-    `cd ${path.dirname(this.templatePath)} && ` +
-    `${funPath} local invoke ${serviceName}/${functionName} -d ${debugPort} -e ${this.escapeSpace(eventFilePath)}`
+      `${funPath} local invoke ${serviceName}/${functionName} -d ${debugPort} -e ${this.escapeSpace(eventFilePath)}`;
       terminal.sendText(command);
       terminal.show();
     })
@@ -72,9 +70,9 @@ export class FunService {
   }
 
   localStart(serviceName: string, functionName: string) {
-    const terminal = terminalService.getFunctionComputeTerminal();
+    const terminal = terminalService.getFunctionComputeTerminal(path.dirname(this.templatePath));
     getFunPath().then(funPath => {
-      let command = `cd ${path.dirname(this.templatePath)} && ${funPath} local start`;
+      const command = `${funPath} local start`;
       terminal.sendText(command);
 
       setTimeout(() => {
@@ -88,9 +86,9 @@ export class FunService {
   }
 
   localStartDebug(serviceName: string, functionName: string, debugPort: string): vscode.Terminal {
-    const terminal = terminalService.getFunctionComputeTerminal();
+    const terminal = terminalService.getFunctionComputeTerminal(path.dirname(this.templatePath));
     getFunPath().then(funPath => {
-      let command = `cd ${path.dirname(this.templatePath)} && ${funPath} local start -d ${debugPort}`;
+      const command = `${funPath} local start -d ${debugPort}`;
       terminal.sendText(command);
 
       setTimeout(() => {
@@ -112,5 +110,18 @@ export class FunService {
 
   private escapeSpace(str: string): string {
     return str.replace(/ /g, '\\ ');
+  }
+
+  private andIf(formerCmd: string, latterCmd: string) {
+    if (os.platform() === 'win32') {
+      const terminal = vscode.workspace.getConfiguration().get('terminal.integrated.shell.windows') as string;
+      if (terminal && terminal.toLocaleLowerCase().indexOf('powershell') === -1) {
+        return `${formerCmd} && ${latterCmd}`;
+      } else {
+        return `${formerCmd}; if($?) { ${latterCmd}; }`;
+      }
+    } else {
+      return `${formerCmd} && ${latterCmd}`;
+    }
   }
 }

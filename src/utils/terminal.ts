@@ -1,11 +1,11 @@
 import * as vscode from 'vscode'
 
-export function getFunctionComputeTerminal(): vscode.Terminal {
+export function getFunctionComputeTerminal(cwd?: string): vscode.Terminal {
   const terminal = isExistFunctionComputeTerminal();
   if (terminal) {
     terminal.dispose();
   }
-  return createFunctionComputeTerminal();
+  return createFunctionComputeTerminal(cwd);
 }
 
 export function getFunctionComputeWorkderTerminal(): vscode.Terminal {
@@ -37,8 +37,11 @@ function isExistFunctionComputeWorkerTerminal(): vscode.Terminal | null {
   return null;
 }
 
-function createFunctionComputeTerminal(): vscode.Terminal {
-  return vscode.window.createTerminal(FUNCTION_COMPUTE_TERMINAL);
+function createFunctionComputeTerminal(cwd?: string): vscode.Terminal {
+  return vscode.window.createTerminal({
+    name: FUNCTION_COMPUTE_TERMINAL,
+    cwd,
+  });
 }
 
 function createFunctionComputeWorkerTerminal(): vscode.Terminal {
