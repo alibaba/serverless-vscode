@@ -2,6 +2,10 @@
 
 所有对 "Aliyun Serverless" 插件的更改都将记录在这个文件中。
 
+## 1.6.1 - 2019-08-25
+### Fixed
+- 多模版下适配 Terminal 进行命令输出时 PowerShell 不支持 && 的问题。
+
 ## 1.6.0 - 2019-08-22
 ### Added
 - 支持 nodejs10 运行时。
