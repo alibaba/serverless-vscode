@@ -1,4 +1,5 @@
 import * as vscode from 'vscode';
+import * as path from 'path';
 import { ext } from '../extensionVariables';
 import { serverlessCommands } from '../utils/constants';
 import { recordPageView } from '../utils/visitor';
@@ -9,7 +10,11 @@ export function deploy(context: vscode.ExtensionContext) {
   context.subscriptions.push(vscode.commands.registerCommand(serverlessCommands.DEPLOY.id,
     async (node?: TemplateResource) => {
       recordPageView('/deploy');
-      await process(node ? node.templatePath : './template.yml');
+      if (!ext.cwd) {
+        vscode.window.showErrorMessage('Not supported in empty workspace');
+        return;
+      }
+      await process(node ? node.templatePath : path.resolve(ext.cwd, './template.yml'));
     })
   );
 }
