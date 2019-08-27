@@ -63,6 +63,11 @@
         "aliyun.fc.fun.path": {
           "type": "string",
           "description": "External Fun command which will replace the internal Fun"
+        },
+        "aliyun.fc.referenceLib.tip": {
+          "type": "boolean",
+          "description": "Tips for enable reference lib that are provided by the runtime",
+          "default": true
         }
       }
     },
@@ -454,6 +459,7 @@
     "lint": "./node_modules/.bin/eslint src --ext .ts"
   },
   "devDependencies": {
+    "@types/dotenv": "^6.1.1",
     "@types/download": "^6.2.4",
     "@types/glob": "^7.1.1",
     "@types/mocha": "^2.2.42",
@@ -475,6 +481,7 @@
     "@types/js-yaml": "^3.12.1",
     "@typescript-eslint/eslint-plugin": "^1.11.0",
     "@typescript-eslint/parser": "^1.11.0",
+    "dotenv": "^8.1.0",
     "download": "^7.1.0",
     "glob": "^7.1.4",
     "inquirer": "^5.2.0",

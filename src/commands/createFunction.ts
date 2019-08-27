@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import * as path from 'path';
 import { ext } from '../extensionVariables';
 import { MultiStepInput } from '../ui/MultiStepInput';
-import { getSupportedRuntimes, isSupportedRuntime } from '../utils/runtime';
+import { getSupportedRuntimes, isSupportedRuntime, isNodejs, isPython } from '../utils/runtime';
 import { serverlessCommands } from '../utils/constants';
 import { isPathExists, createDirectory } from '../utils/file';
 import { getSuffix, createIndexFile } from '../utils/runtime';
@@ -177,4 +177,7 @@ async function process(context: vscode.ExtensionContext, serviceName: string, te
   templateChangeEventEmitter.fire();
   vscode.commands.executeCommand(serverlessCommands.REFRESH_LOCAL_RESOURCE.id);
   await gotoFunctionCode(state.serviceName, state.functionName, templatePath);
+  if (isNodejs(state.runtime) || isPython(state.runtime)) {
+    vscode.commands.executeCommand(serverlessCommands.REFERENCE_RUNTIME_LIB.id, state.runtime);
+  }
 }

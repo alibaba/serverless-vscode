@@ -40,6 +40,7 @@ import { viewSource } from './commands/viewSource';
 import { reportIssue } from './commands/reportIssue';
 import { viewQuickStart } from './commands/viewQuickStart';
 import { showUpdateNotification } from './commands/showUpdateNotification';
+import { referRuntimeLib } from './commands/referRuntimeLib';
 import { isTemplateYaml } from './utils/document';
 import { templateChangeEventEmitter } from './models/events';
 import { TemplateHoverProvider } from './hovers/TemplateHoverProvider';
@@ -95,6 +96,7 @@ export function activate(context: vscode.ExtensionContext) {
   deployFunction(context);
   syncNas(context);
   gotoTemplate(context);
+  referRuntimeLib(context);
 
   vscode.commands.executeCommand(serverlessCommands.SHOW_REGION_STATUS.id);
   vscode.commands.executeCommand(serverlessCommands.SHOW_UPDATE_NOTIFICATION.id);
