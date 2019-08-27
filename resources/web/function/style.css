@@ -19,7 +19,7 @@ button {
   top: 0;
   padding: 10px 10px;
   z-index: 10;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: bold;
   margin-bottom: 12px;
 }
@@ -100,7 +100,7 @@ button {
 .base-info-main .container .item-ul .item-li {
   margin-bottom: 8px;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .base-info-main .container .item-ul .item-li .key {

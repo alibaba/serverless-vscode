@@ -79,6 +79,14 @@ export namespace serverlessCommands {
     id: 'fc.extension.clear.remote.serviceInfo',
     title: 'Clear Remote Service Info',
   };
+  export const SHOW_REMOTE_TRIGGER_INFO = {
+    id: 'fc.extension.show.remote.triggerInfo',
+    title: 'Show Remote Trigger Info',
+  };
+  export const CLEAR_REMOTE_TRIGGER_INFO = {
+    id: 'fc.extension.clear.remote.triggerInfo',
+    title: 'Clear Remote Trigger Info',
+  };
   export const SWITCH_ACCOUNT = {
     id: 'fc.extension.switch.account',
     title: 'Switch Account',

@@ -265,7 +265,7 @@ export class LocalResourceProvider implements vscode.TreeDataProvider<Resource> 
           serviceName,
           functionName,
           name,
-          (<any>resource).Type,
+          triggerTypeMapping[(<any>resource).Type],
           {
             command: serverlessCommands.GOTO_TRIGGER_DEFINITION.id,
             title: serverlessCommands.GOTO_TRIGGER_DEFINITION.title,
@@ -289,3 +289,15 @@ export class LocalResourceProvider implements vscode.TreeDataProvider<Resource> 
     return true;
   }
 }
+
+
+const triggerTypeMapping: { [key: string]: string } = {
+  'Timer': 'timer',
+  'HTTP': 'http',
+  'Log': 'log',
+  'OSS': 'oss',
+  'RDS': 'rds',
+  'MNSTopic': 'mns_topic',
+  'TableStore': 'tablestore',
+  'CDN': 'cdn_events'
+};

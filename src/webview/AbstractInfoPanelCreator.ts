@@ -6,7 +6,7 @@ export abstract class AbstractInfoPanelCreator<T extends ResourceDescriptor> imp
   protected viewType = '';
   protected readonly extensionPath: string;
 
-  protected abstract getHtmlForWebview(): string;
+  protected abstract getHtmlForWebview(descriptor: T): string;
   protected abstract receiveMessage(message: any, descriptor: T): any;
   protected abstract async update(panel: vscode.WebviewPanel, descriptor: T): Promise<any>;
   protected abstract getPanelTitle(descriptor: T): string;
@@ -31,7 +31,7 @@ export abstract class AbstractInfoPanelCreator<T extends ResourceDescriptor> imp
         retainContextWhenHidden: true,
       },
     );
-    panel.webview.html = this.getHtmlForWebview();
+    panel.webview.html = this.getHtmlForWebview(descriptor);
     panel.onDidDispose(() => this.dispose(), null, this.disposables);
     panel.webview.onDidReceiveMessage(message => this.receiveMessage(message, descriptor), null, this.disposables);
     this.update(panel, descriptor);

@@ -167,23 +167,9 @@ export class TriggerResource extends Resource {
     this.triggerName = triggerName;
     this.triggerType = triggerType;
     this.iconPath = {
-      light: path.resolve(__dirname, '..', '..', 'media', 'light', TriggerResource.getIconName(triggerType) + '.svg'),
-      dark: path.resolve(__dirname, '..', '..', 'media', 'dark', TriggerResource.getIconName(triggerType) + '.svg'),
+      light: path.resolve(__dirname, '..', '..', 'media', 'light', triggerType + '.svg'),
+      dark: path.resolve(__dirname, '..', '..', 'media', 'dark', triggerType + '.svg'),
     }
     this.contextValue = 'trigger';
-  }
-
-  private static getIconName(triggerType: string) {
-    const iconMap: { [key: string]: string } = {
-      'Timer': 'clock',
-      'HTTP': 'http',
-      'Log': 'sls',
-      'RDS': 'rds',
-      'MNSTopic': 'mns',
-      'TableStore': 'ots',
-      'OSS': 'oss',
-      'CDN': 'cdn',
-    };
-    return iconMap[triggerType];
   }
 }

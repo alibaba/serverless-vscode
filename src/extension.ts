@@ -33,6 +33,7 @@ import { LocalResourceProvider } from './tree/LocalResourceProvider';
 import { RemoteResourceProvider } from './tree/RemoteResourceExplorer';
 import { showRemoteFunctionInfo, clearRemoteFunctionInfo } from './commands/showRemoteFunctionInfo';
 import { showRemoteServiceInfo, clearRemoteServiceInfo } from './commands/showRemoteServiceInfo';
+import { showRemoteTriggerInfo, clearRemoteTriggerInfo } from './commands/showRemoteTriggerInfo';
 import { importService } from './commands/importService';
 import { importFunction } from './commands/importFunction';
 import { viewDocumentation } from './commands/viewDocumentation';
@@ -84,6 +85,8 @@ export function activate(context: vscode.ExtensionContext) {
   clearRemoteFunctionInfo(context);
   showRemoteServiceInfo(context); // show remote service info
   clearRemoteServiceInfo(context);
+  showRemoteTriggerInfo(context);
+  clearRemoteTriggerInfo(context);
   importService(context);
   importFunction(context);
   viewQuickStart(context);
