@@ -99,8 +99,8 @@
             </div>
           </div>
         </div>
-        <div class="info">
-          <h4 class="info-title">文件系统配置</h4>
+        <div id="nasConfig" class="info" style="visibility: hidden;">
+          <h4 class="info-title">NAS 配置</h4>
           <div class="container">
             <div class="bar left-bar">
               <ul class="item-ul">
@@ -152,6 +152,7 @@
       const mountPointsElement = document.getElementById('mountPoints');
       const breadcrumbElement = document.getElementById('breadcrumb');
       const nasMountTableElement = document.getElementById('nasMountTable');
+      const nasConfigElement = document.getElementById('nasConfig');
       window.addEventListener('message', event => {
         const message = event.data;
         switch (message.command) {
@@ -192,8 +193,10 @@
                 '';
               if (!serviceInfo.nasConfig.mountPoints || !serviceInfo.nasConfig.mountPoints.length) {
                 nasMountTableElement.setAttribute('style', 'visibility: hidden;');
+                nasConfigElement.setAttribute('style', 'visibility: hidden;');
               } else {
                 nasMountTableElement.setAttribute('style', 'visibility: visible;');
+                nasConfigElement.setAttribute('style', 'visibility: visible;');
               }
             }
           }

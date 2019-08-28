@@ -3,7 +3,14 @@ import * as os from 'os';
 import * as path from 'path';
 import { serverlessCommands } from '../utils/constants';
 import { isPathExists } from '../utils/file';
-import { Resource, CommandResource, ServiceResource, FunctionResource } from '../models/resource';
+import {
+  Resource,
+  CommandResource,
+  ServiceResource,
+  FunctionResource,
+  ResourceType,
+  TriggerResource
+} from '../models/resource';
 import { FunctionComputeService } from '../services/FunctionComputeService';
 
 export class RemoteResourceProvider implements vscode.TreeDataProvider<vscode.TreeItem> {
@@ -30,34 +37,69 @@ export class RemoteResourceProvider implements vscode.TreeDataProvider<vscode.Tr
     if (!remoteResourceEnable) {
       return Promise.resolve([]);
     }
+    return this.getRemoteResource(element);
+  }
+
+  private async getRemoteResource(element: Resource | undefined): Promise<Resource[]> {
     if (!element) {
-      return Promise.resolve(
-        this.functionComputeService.listAllRemoteServices()
-          .then(services => services.map(service => (
-            new ServiceResource(
-              service.serviceName,
-              {
-                command: serverlessCommands.SHOW_REMOTE_SERVICE_INFO.id,
-                title: serverlessCommands.SHOW_REMOTE_SERVICE_INFO.title,
-                arguments: [service.serviceName],
-              }
-            )))
-          )
-      );
+      return await this.getRemoteServiceResource();
     }
-    return Promise.resolve(
-      this.functionComputeService.listAllRemoteFunctionInService(element.label)
-        .then(functions => functions.map(func => (
-          new FunctionResource(
-            element.label,
-            func.functionName,
-            {
-              command: serverlessCommands.SHOW_REMOTE_FUNCTION_INFO.id,
-              title: serverlessCommands.SHOW_REMOTE_FUNCTION_INFO.title,
-              arguments: [element.label, func.functionName],
-            }
-          )
-        )))
-    );
+    if (element.resourceType === ResourceType.Service) {
+      return await this.getRemoteFunctionResource(element as ServiceResource);
+    }
+    if (element.resourceType === ResourceType.Function) {
+      return await this.getRemoteTriggerResource(element as FunctionResource);
+    }
+    return [];
+  }
+
+  private async getRemoteServiceResource(): Promise<Resource[]> {
+    const services = await this.functionComputeService.listAllRemoteServices();
+    return services.map(service => (
+      new ServiceResource(
+        service.serviceName,
+        {
+          command: serverlessCommands.SHOW_REMOTE_SERVICE_INFO.id,
+          title: serverlessCommands.SHOW_REMOTE_SERVICE_INFO.title,
+          arguments: [service.serviceName],
+        }
+      )
+    ));
+  }
+
+  private async getRemoteFunctionResource(element: ServiceResource): Promise<Resource[]> {
+    const serviceName = element.serviceName;
+    const functions = await this.functionComputeService.listAllRemoteFunctionInService(serviceName);
+    return functions.map(func => (
+      new FunctionResource(
+        element.label,
+        func.functionName,
+        {
+          command: serverlessCommands.SHOW_REMOTE_FUNCTION_INFO.id,
+          title: serverlessCommands.SHOW_REMOTE_FUNCTION_INFO.title,
+          arguments: [element.label, func.functionName],
+        },
+        vscode.TreeItemCollapsibleState.Collapsed,
+      )
+    ));
+  }
+
+  private async getRemoteTriggerResource(element: FunctionResource): Promise<Resource[]> {
+    const serviceName = element.serviceName;
+    const functionName = element.functionName;
+    const triggers = await this.functionComputeService.listTriggers(serviceName, functionName);
+    return triggers.map(trigger => (
+      new TriggerResource(
+        serviceName,
+        functionName,
+        trigger.triggerName,
+        trigger.triggerType,
+        {
+          command: serverlessCommands.SHOW_REMOTE_TRIGGER_INFO.id,
+          title: serverlessCommands.SHOW_REMOTE_TRIGGER_INFO.title,
+          arguments: [serviceName, functionName, trigger.triggerName, trigger.triggerType],
+        }
+      )
+    ));
   }
 }

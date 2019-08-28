@@ -132,7 +132,7 @@ export class FunctionComputeService {
     return result;
   }
 
-  async listTriggers(serviceName: string, functionName: string) {
+  async listTriggers(serviceName: string, functionName: string): Promise<any[]> {
     const client = this.newFCClient();
     if (!client) {
       return [];
@@ -163,6 +163,17 @@ export class FunctionComputeService {
       return data;
     } catch (ex) {
       output.error(ex.message);
+    }
+  }
+
+  async getTrigger(serviceName: string, functionName: string, triggerName: string) {
+    const client = this.newFCClient();
+    try {
+      const { data } = await client.getTrigger(serviceName, functionName, triggerName);
+      return data;
+    } catch (ex) {
+      output.error(ex.message);
+      return {};
     }
   }
 }

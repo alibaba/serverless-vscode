@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+  <html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <base href="${baseHref}/">
+      <link rel="stylesheet" type="text/css" href="./style.css">
+      <title>Trigger Info</title>
+  </head>
+  <body>
+    <div id="breadcrumb" class="breadcrumb">
+    </div>
+    <div id="root">
+      <div class="app">
+        <h4 class="info-main-title">HTTP 触发器</h4>
+        <div class="info">
+          <h4 class="info-title">基本信息</h4>
+          <div class="container">
+            <div class="bar left-bar">
+              <ul class="item-ul">
+                <li class="item-li">
+                  <span class="key">触发器名：</span>
+                  <span id="triggerName" class="value"></span>
+                </li>
+                <li class="item-li">
+                  <span class="key">版本别名：</span>
+                  <span id="qualifier" class="value"></span>
+                </li>
+              </ul>
+            </div>
+            <div class="bar right-bar">
+              <ul class="item-ul">
+                <li class="item-li">
+                  <span class="key">创建时间：</span>
+                  <span id="createdTime" class="value"></span>
+                </li>
+                <li class="item-li">
+                  <span class="key">修改时间：</span>
+                  <span id="lastModifiedTime" class="value"></span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="info">
+          <h4 class="info-title">配置信息</h4>
+          <div class="container">
+            <div class="bar left-bar">
+              <ul class="item-ul">
+                <li class="item-li">
+                  <span class="key">请求方式：</span>
+                  <span id="methods" class="value"></span>
+                </li>
+              </ul>
+            </div>
+            <div class="bar right-bar">
+              <ul class="item-ul">
+                <li class="item-li">
+                  <span class="key">认证方式：</span>
+                  <span id="authType" class="value"></span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      const elements = ['triggerName', 'createdTime', 'lastModifiedTime',
+        'qualifier', 'methods', 'authType'
+      ];
+      window.addEventListener('message', event => {
+        const message = event.data;
+        switch (message.command) {
+          case 'updateInfo': {
+            const {
+              regionId = '',
+              serviceName = '',
+              functionName = '',
+              triggerName = '',
+              triggerType = '',
+              createdTime = '',
+              lastModifiedTime = '',
+              qualifier = '',
+              sourceArn = '',
+              triggerConfig: {
+                authType = '',
+                methods = [],
+              } = {},
+            } = message.data;
+            const triggerInfo = {
+              regionId,
+              serviceName,
+              functionName,
+              triggerName,
+              triggerType,
+              createdTime: new Date(createdTime).toLocaleString(),
+              lastModifiedTime: new Date(lastModifiedTime).toLocaleString(),
+              qualifier,
+              sourceArn,
+              authType,
+              methods: methods.join(', '),
+            };
+            document.getElementById('breadcrumb').textContent =
+              `函数计算 / ${triggerInfo.regionId} / ${triggerInfo.serviceName} / ${triggerInfo.functionName}`;
+            for (const e of elements) {
+              document.getElementById(e).textContent = triggerInfo[e];
+            }
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

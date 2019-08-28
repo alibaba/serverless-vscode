@@ -102,4 +102,5 @@ async function process(context: vscode.ExtensionContext) {
   vscode.commands.executeCommand(serverlessCommands.SHOW_REGION_STATUS.id);
   vscode.commands.executeCommand(serverlessCommands.CLEAR_REMOTE_FUNCTION_INFO.id);
   vscode.commands.executeCommand(serverlessCommands.CLEAR_REMOTE_SERVICE_INFO.id);
+  vscode.commands.executeCommand(serverlessCommands.CLEAR_REMOTE_TRIGGER_INFO.id);
 }
