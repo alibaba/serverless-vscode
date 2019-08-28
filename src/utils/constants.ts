@@ -55,6 +55,10 @@ export namespace serverlessCommands {
     id: 'fc.extension.localResource.local.invoke',
     title: 'Local Run',
   };
+  export const LOCAL_INVOKE_CONFIG = {
+    id: 'fc.extension.local.invoke.config',
+    title: 'Invoke Config',
+  };
   export const REMOTE_INVOKE = {
     id: 'fc.extension.remoteResource.remote.invoke',
     title: 'Remote Invoke',

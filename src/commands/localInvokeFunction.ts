@@ -1,13 +1,12 @@
 import * as vscode from 'vscode';
-import * as path from 'path';
-import * as fs from 'fs';
 import { ext } from '../extensionVariables';
 import { serverlessCommands } from '../utils/constants';
-import { isPathExists, createEventFile } from '../utils/file';
 import { recordPageView } from '../utils/visitor';
+import { getOrInitEventConfig } from '../utils/localConfig';
 import { FunService } from '../services/FunService';
 import { TemplateService } from '../services/TemplateService';
 import { Resource, ResourceType, FunctionResource } from '../models/resource';
+import { isPathExists, createEventFile } from '../utils/file';
 
 export function localInvokeFunction(context: vscode.ExtensionContext) {
   context.subscriptions.push(vscode.commands.registerCommand(serverlessCommands.LOCAL_RUN.id,
@@ -17,7 +16,8 @@ export function localInvokeFunction(context: vscode.ExtensionContext) {
         return;
       }
       const funcRes = node as FunctionResource;
-      await process(funcRes.serviceName, funcRes.functionName, funcRes.templatePath as string);
+      await process(funcRes.serviceName, funcRes.functionName, funcRes.templatePath as string)
+        .catch(ex => vscode.window.showErrorMessage(ex.message));
     })
   );
 }
@@ -41,23 +41,16 @@ async function process(serviceName: string, functionName: string, templatePath: 
   }
   if (!hasHttpTrigger) {
     // 普通的函数，读取 event 文件
-    try {
-      const localRoot = path.resolve(path.dirname(templatePath), functionInfo.Properties.CodeUri);
-      const eventFileStat = fs.statSync(localRoot);
-      if (eventFileStat.isDirectory()) {
-        eventFilePath = path.join(localRoot, 'event.dat');
-      } else if (eventFileStat.isFile()) {
-        eventFilePath = path.join(path.dirname(localRoot), 'event.dat');
-      }
-    } catch (err) {
-      vscode.window.showErrorMessage(err.message);
-      return;
-    }
+    eventFilePath = await getOrInitEventConfig(
+      templatePath,
+      serviceName,
+      functionName,
+      functionInfo.Properties.CodeUri
+    );
     if (!isPathExists(eventFilePath)) {
       // 生成默认 event 文件
       if (!createEventFile(eventFilePath)) {
-        vscode.window.showErrorMessage(`Create ${eventFilePath} event file failed`);
-        return;
+        throw new Error(`Create ${eventFilePath} event file failed`);
       }
     }
   }

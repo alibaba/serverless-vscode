@@ -57,7 +57,7 @@
         },
         "aliyun.fc.remoteSource.eventFile.path": {
           "type": "string",
-          "default": "./event.dat",
+          "default": "./event.evt",
           "description": "Function Compute remote resource event file path"
         },
         "aliyun.fc.fun.path": {
