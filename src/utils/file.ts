@@ -62,6 +62,29 @@ export function createFile(p: string): boolean {
   }
 }
 
+export function createJsonFile(p: string): boolean {
+  try {
+    if (isPathExists(p)) {
+      return false;
+    }
+    if (isPathExists(dirname(p))) {
+      fs.writeFileSync(p, `{
+
+}`);
+      return true;
+    }
+    if (!createDirectory(dirname(p))) {
+      return false;
+    }
+    fs.writeFileSync(p, `{
+
+}`);
+    return true;
+  } catch (err) {
+    return false;
+  }
+}
+
 export function createEventFile(eventFilePath: string): boolean {
   try {
     fs.writeFileSync(eventFilePath, `{

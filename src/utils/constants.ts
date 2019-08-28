@@ -139,11 +139,20 @@ export namespace serverlessCommands {
     id: 'fc.extension.nas.open.local.dir',
     title: 'Open NAS local dir',
   };
+  export const REFERENCE_RUNTIME_LIB = {
+    id: 'fc.extension.reference.runtime.lib',
+    title: 'Reference libs that are provided by the runtime',
+  };
   export const TRIGGER_SUGGEST = {
     id: 'editor.action.triggerSuggest',
     title: 'Trigger Suggest',
   };
 }
+
+export namespace serverlessConfigs {
+  export const ALIYUN_FC_REFERERENCE_LIB_TIP = 'aliyun.fc.referenceLib.tip';
+}
+
 export const SERVERLESS_EXTENTION_DOCUMENTATION_URL =
   'https://github.com/alibaba/serverless-vscode/blob/master/README.md';
 export const SERVERLESS_EXTENTION_SOURCE_URL =
