@@ -78,19 +78,19 @@
       },
       {
         "command": "fc.extension.bind.account",
-        "title": "FC: Bind New Account"
+        "title": "Bind New Account"
       },
       {
         "command": "fc.extension.switch.region",
-        "title": "FC: Switch Region"
+        "title": "Switch Region"
       },
       {
         "command": "fc.extension.switch.account",
-        "title": "FC: Switch Account"
+        "title": "Switch Account"
       },
       {
         "command": "fc.extension.function.create",
-        "title": "FC: Create Function",
+        "title": "Create Function",
         "icon": {
           "light": "media/light/plus.svg",
           "dark": "media/dark/plus.svg"
@@ -98,7 +98,7 @@
       },
       {
         "command": "fc.extension.deploy.service",
-        "title": "FC: Deploy Service",
+        "title": "Deploy Service",
         "icon": {
           "light": "media/light/deploy.svg",
           "dark": "media/dark/deploy.svg"
@@ -106,7 +106,7 @@
       },
       {
         "command": "fc.extension.deploy.function",
-        "title": "FC: Deploy Function",
+        "title": "Deploy Function",
         "icon": {
           "light": "media/light/deploy.svg",
           "dark": "media/dark/deploy.svg"
@@ -114,7 +114,7 @@
       },
       {
         "command": "fc.extension.deploy",
-        "title": "FC: Deploy",
+        "title": "Deploy",
         "icon": {
           "light": "media/light/deploy.svg",
           "dark": "media/dark/deploy.svg"
@@ -122,7 +122,7 @@
       },
       {
         "command": "fc.extension.nas.sync",
-        "title": "FC: NAS Sync",
+        "title": "NAS Sync",
         "icon": {
           "light": "media/light/deploy.svg",
           "dark": "media/dark/deploy.svg"
@@ -130,7 +130,7 @@
       },
       {
         "command": "fc.extension.nas.open.local.dir",
-        "title": "FC: Open NAS Local Dir",
+        "title": "Open NAS Local Dir",
         "icon": {
           "light": "media/light/folder.svg",
           "dark": "media/dark/folder.svg"
@@ -138,7 +138,7 @@
       },
       {
         "command": "fc.extension.localResource.refresh",
-        "title": "FC: Refresh",
+        "title": "Refresh",
         "icon": {
           "light": "media/light/refresh.svg",
           "dark": "media/dark/refresh.svg"
@@ -146,7 +146,7 @@
       },
       {
         "command": "fc.extension.localResource.local.invoke",
-        "title": "FC: Local Invoke",
+        "title": "Local Invoke",
         "icon": {
           "light": "media/light/invoke.svg",
           "dark": "media/dark/invoke.svg"
@@ -154,7 +154,7 @@
       },
       {
         "command": "fc.extension.remoteResource.remote.invoke",
-        "title": "FC: Remote Invoke",
+        "title": "Remote Invoke",
         "icon": {
           "light": "media/light/invoke.svg",
           "dark": "media/dark/invoke.svg"
@@ -162,7 +162,7 @@
       },
       {
         "command": "fc.extension.remoteResource.refresh",
-        "title": "FC: Refresh",
+        "title": "Refresh",
         "icon": {
           "light": "media/light/refresh.svg",
           "dark": "media/dark/refresh.svg"
@@ -170,7 +170,7 @@
       },
       {
         "command": "fc.extension.localResource.local.invoke.debug",
-        "title": "FC: Local Invoke Debug",
+        "title": "Local Invoke Debug",
         "icon": {
           "light": "media/light/debug.svg",
           "dark": "media/dark/debug.svg"
@@ -178,7 +178,7 @@
       },
       {
         "command": "fc.extension.localResource.gotoFunction",
-        "title": "FC: Goto Function",
+        "title": "Goto Function",
         "icon": {
           "light": "media/light/code.svg",
           "dark": "media/dark/code.svg"
@@ -186,7 +186,7 @@
       },
       {
         "command": "fc.extension.service.import",
-        "title": "FC: Import Service",
+        "title": "Import Service",
         "icon": {
           "light": "media/light/download.svg",
           "dark": "media/dark/download.svg"
@@ -194,7 +194,7 @@
       },
       {
         "command": "fc.extension.function.import",
-        "title": "FC: Import Function",
+        "title": "Import Function",
         "icon": {
           "light": "media/light/download.svg",
           "dark": "media/dark/download.svg"
@@ -215,6 +215,10 @@
       {
         "command": "fc.extension.report.issue",
         "title": "Report an Issue"
+      },
+      {
+        "command": "fc.extension.install.package",
+        "title": "Install Package"
       }
     ],
     "viewsContainers": {
@@ -309,6 +313,10 @@
         },
         {
           "command": "fc.extension.deploy.function",
+          "when": "view == fcLocalResource && viewItem == function"
+        },
+        {
+          "command": "fc.extension.install.package",
           "when": "view == fcLocalResource && viewItem == function"
         },
         {
@@ -445,6 +453,10 @@
         },
         {
           "command": "fc.extension.localResource.gotoFunction",
+          "when": "never"
+        },
+        {
+          "command": "fc.extension.install.package",
           "when": "never"
         }
       ]

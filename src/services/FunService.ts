@@ -4,6 +4,7 @@ import * as path from 'path';
 import * as terminalService from '../utils/terminal';
 import * as open from 'open';
 import { getFunPath } from '../utils/fun';
+import { isDirectory } from '../utils/file';
 
 export class FunService {
   constructor (private templatePath: string) {
@@ -101,6 +102,19 @@ export class FunService {
     })
 
     return terminal;
+  }
+
+  install(runtime: string, codeUri: string, packageType: string, packageNames: string) {
+    let functionDirPath = path.resolve(path.dirname(this.templatePath), codeUri);
+    if (!isDirectory(functionDirPath)) {
+      functionDirPath = path.dirname(functionDirPath);
+    }
+    const terminal = terminalService.getFunctionComputeTerminal(functionDirPath);
+    getFunPath().then(funPath => {
+      const command = `${funPath} install -r ${runtime} -p ${packageType} ${packageNames} --save`;
+      terminal.sendText(command);
+      terminal.show();
+    });
   }
 
   private validateInitRumtime(runtime: string): boolean {
