@@ -38,10 +38,7 @@ export class FunService {
   syncNas(serviceName: string, mountDir: string) {
     const terminal =  terminalService.getFunctionComputeTerminal(path.dirname(this.templatePath));
     getFunPath().then(funPath => {
-      const command = this.andIf(
-        `${funPath} nas init`,
-        `${funPath} nas sync nas://${serviceName}:${mountDir}`,
-      );
+      const command = `${funPath} nas sync -s ${serviceName} -m ${mountDir}`;
       terminal.sendText(command);
       terminal.show();
     });
