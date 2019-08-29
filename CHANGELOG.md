@@ -2,6 +2,28 @@
 
 所有对 "Aliyun Serverless" 插件的更改都将记录在这个文件中。
 
+## 1.7.0 - 2019-08-29
+### Added
+- 支持引用 nodejs、python runtime 的内置模块。通过插件创建函数后，会弹出模块引用向导。完成向导后，可以在编辑器中引用 runtime 的内置模块以及获得相关智能提示。
+
+![runtime-lib-refer](https://github.com/alibaba/serverless-vscode/blob/master/media/changelog/v1.7.0/runtime-lib-refer.gif?raw=true)
+
+- 新增本地调用的配置文件。插件将会根据用户设定的函数入口文件，在函数入口方法名上显示 FC: Invoke Config，左击后将跳转至本地调用配置文件。
+
+- 支持函数级别安装倚赖。在本地资源面板中，右击函数名选择安装倚赖，会弹出安装倚赖向导。完成向导后，相关倚赖将会安装在函数目录中。
+
+![install](https://github.com/alibaba/serverless-vscode/blob/master/media/changelog/v1.7.0/install.gif?raw=true)
+
+- 提供云端触发器资源的显示。在云端资源面板中会显示函数的触发器列表，左击可看到触发器的详细信息。
+
+### Changed
+- 默认事件文件名由 event.dat 变更为 event.evt。
+
+### Other
+- 支持未打开工作区时调用云端函数。
+- 优化部分弹窗显示时机。
+- 优化云端视图样式。
+
 ## 1.6.2 - 2019-08-26
 ### Fixed
 - 修复本地资源面板顶层 deploy 无效的问题。

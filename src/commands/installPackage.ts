@@ -87,6 +87,11 @@ async function process(serviceName: string, functionName: string, templatePath: 
   }
 
   const state = await collectInfo();
+
+  if (!state.packageNames || !state.packageType) {
+    return;
+  }
+
   const funService = new FunService(templatePath);
   funService.install(runtime, codeUri, state.packageType, state.packageNames);
 }
