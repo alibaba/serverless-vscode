@@ -46,6 +46,7 @@ import { referRuntimeLib } from './commands/referRuntimeLib';
 import { isTemplateYaml } from './utils/document';
 import { templateChangeEventEmitter } from './models/events';
 import { TemplateHoverProvider } from './hovers/TemplateHoverProvider';
+import { installPackage } from './commands/installPackage';
 
 export function activate(context: vscode.ExtensionContext) {
   recordPageView('/');
@@ -102,6 +103,7 @@ export function activate(context: vscode.ExtensionContext) {
   syncNas(context);
   gotoTemplate(context);
   referRuntimeLib(context);
+  installPackage(context);
 
   vscode.commands.executeCommand(serverlessCommands.SHOW_REGION_STATUS.id);
   vscode.commands.executeCommand(serverlessCommands.SHOW_UPDATE_NOTIFICATION.id);
