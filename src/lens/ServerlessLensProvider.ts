@@ -9,6 +9,7 @@ import { TemplateService } from '../services/TemplateService';
 import { SeverlessLensInvokeItem } from './ServerlessLensInvokeItem';
 import { SeverlessLensDebugItem } from './ServerlessLensDebugItem';
 import { FunctionResource } from '../models/resource';
+import { ServerlessLensConfigItem } from './ServerlessLensConfigItem';
 
 const findFile = util.promisify(glob);
 
@@ -45,7 +46,6 @@ class FunctionInfoDict {
       cwd: ext.cwd,
     });
     if (!files || !files.length) {
-      vscode.window.showInformationMessage('No template.yml in current workspace');
       return;
     }
     files.forEach(file => {
@@ -126,6 +126,11 @@ export class ServerlessLensProvider implements vscode.CodeLensProvider {
           documentRange, functionInfo.serviceName, functionInfo.functionName, functionInfo.templatePath),
         this.createServerlessLensDebugItem(
           documentRange, functionInfo.serviceName, functionInfo.functionName, functionInfo.templatePath),
+        this.createServerlessLensConfigItem(
+          documentRange, functionInfo.serviceName,
+          functionInfo.functionName, functionInfo.templatePath,
+          functionInfo.functionResource.Properties.CodeUri,
+        ),
       ]
     }
     return <vscode.CodeLens[]>[];
@@ -156,6 +161,19 @@ export class ServerlessLensProvider implements vscode.CodeLensProvider {
       new FunctionResource(
         serviceName, functionName, undefined, undefined, templatePath
       )
+    );
+  }
+
+  createServerlessLensConfigItem(
+    documentRange:vscode.Range,
+    serviceName: string,
+    functionName: string,
+    templatePath: string,
+    codeUri: string,
+  )
+    : ServerlessLensConfigItem {
+    return new ServerlessLensConfigItem(
+      documentRange, templatePath, serviceName, functionName, codeUri
     );
   }
 

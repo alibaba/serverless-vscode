@@ -52,7 +52,7 @@ __Tips：__
 函数的日志以及结果会输出在 Terminal 中。
 ![本地调用函数结果](https://github.com/alibaba/serverless-vscode/blob/master/media/snapshot/local-invoke-result.png?raw=true)
 
-插件会为您在函数入口文件同目录下创建 event.dat 文件，您可以通过修改该文件设置每次调用函数时触发的事件信息。
+插件会为您在函数入口文件同目录下创建 event.evt 文件，您可以通过修改该文件设置每次调用函数时触发的事件信息。
 ![本地调用修改事件输入](https://github.com/alibaba/serverless-vscode/blob/master/media/snapshot/local-invoke-event.png?raw=true)
 
 ### 本地调试函数
@@ -60,7 +60,7 @@ __Tips：__
 ![本地调试函数](https://github.com/alibaba/serverless-vscode/blob/master/media/snapshot/local-debug.png?raw=true)
 在代码文件中插入断点，启动调试后即可看到调试信息。
 ![本地调试函数结果](https://github.com/alibaba/serverless-vscode/blob/master/media/snapshot/local-debug-result.png?raw=true)
-插件会为您在函数入口文件同目录下创建 event.dat 文件，您可以通过修改该文件设置每次调试函数时触发的事件信息。
+插件会为您在函数入口文件同目录下创建 event.evt 文件，您可以通过修改该文件设置每次调试函数时触发的事件信息。
 
 __注意：__
 - 若您想要调试 python 2.7 或 python 3 runtime 的函数，需要事先在插件安装 _Python_ 插件。
@@ -71,7 +71,7 @@ __注意：__
 ![执行云端函数](https://github.com/alibaba/serverless-vscode/blob/master/media/snapshot/remote-invoke.png?raw=true)
 函数的日志以及结果会输出在 Output 中。
 ![执行云端函数结果](https://github.com/alibaba/serverless-vscode/blob/master/media/snapshot/remote-invoke-result.png?raw=true)
-插件会为您在项目根目录下创建 event.dat 文件，您可以通过修改该文件设置每次调用云端函数时触发的事件信息。
+插件会为您在项目根目录下创建 event.evt 文件，您可以通过修改该文件设置每次调用云端函数时触发的事件信息。
 ![云端调用修改事件输入](https://github.com/alibaba/serverless-vscode/blob/master/media/snapshot/remote-invoke-event.png?raw=true)
 
 ### 跳转到模版文件定义

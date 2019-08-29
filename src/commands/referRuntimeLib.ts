@@ -222,7 +222,7 @@ class PythonRuntimeLibManager extends AbstractRuntimeLibManager {
     }
     const expectedPythonPath = this.getExpectedPythonPath();
     const configInfo = dotenv.config({ path: configFilePath }).parsed;
-    if (!configInfo
+    if (!configInfo || !configInfo[PYTHONPATH]
       || !configInfo[PYTHONPATH].split(path.delimiter).includes(expectedPythonPath)
     ) {
       return false;

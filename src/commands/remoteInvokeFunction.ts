@@ -23,26 +23,25 @@ export function remoteInvokeFunction(context: vscode.ExtensionContext) {
 
 async function process(serviceName: string, functionName: string) {
   let cwd = vscode.workspace.rootPath;
-  if (!cwd) {
-    vscode.window.showErrorMessage('Please open a workspace');
-    return;
-  }
-  // 获取 event 文件
   let eventFilePath = <string>vscode.workspace.getConfiguration().get('aliyun.fc.remoteSource.eventFile.path');
-  if (!eventFilePath) {
-    vscode.window.showErrorMessage('Please config aliyun.fc.remoteSource.eventFile.path');
-    return;
-  }
-  if (!path.isAbsolute(eventFilePath)) {
-    eventFilePath = path.join(cwd, eventFilePath);
-  }
-  if (!isPathExists(eventFilePath)) {
-    if (!createEventFile(eventFilePath)) {
-      vscode.window.showErrorMessage(`Create ${eventFilePath} event file failed`);
+  if (cwd) {
+    // 获取 event 文件
+    if (!eventFilePath) {
+      vscode.window.showErrorMessage('Please config aliyun.fc.remoteSource.eventFile.path');
       return;
     }
+    if (!path.isAbsolute(eventFilePath)) {
+      eventFilePath = path.join(cwd, eventFilePath);
+    }
+    if (!isPathExists(eventFilePath)) {
+      if (!createEventFile(eventFilePath)) {
+        vscode.window.showErrorMessage(`Create ${eventFilePath} event file failed`);
+        return;
+      }
+    }
   }
-  const event: string = fs.readFileSync(eventFilePath, 'utf8');
+
+  const event: string = cwd ? fs.readFileSync(eventFilePath, 'utf8') : '{}';
   const functionComputeService = new FunctionComputeService();
   const channel = getFunctionComputeOutputChannel();
 
@@ -74,8 +73,10 @@ async function process(serviceName: string, functionName: string) {
           resolve(result);
           return;
         } else {
-          channel.appendLine('local event file path: '
+          if (cwd) {
+            channel.appendLine('local event file path: '
             + `${<string>vscode.workspace.getConfiguration().get('aliyun.fc.remoteSource.eventFile.path')}`);
+          }
           channel.appendLine('======================================================');
           functionComputeService.invokeFunction(serviceName, functionName, event)
             .then(result => {

@@ -17,6 +17,7 @@ import { deployFunction } from './commands/deployFunction';
 import { syncNas } from './commands/syncNas';
 import { localInvokeFunction } from './commands/localInvokeFunction';
 import { localDebugFunction } from './commands/localDebugFunction';
+import { localInvokeConfig } from './commands/localInvokeConfig';
 import { remoteInvokeFunction } from './commands/remoteInvokeFunction';
 import { bindAccount } from './commands/bindAccount';
 import { switchAccount } from './commands/switchAccount';
@@ -75,6 +76,7 @@ export function activate(context: vscode.ExtensionContext) {
   deploy(context); // deploy
   localInvokeFunction(context); // local invoke function
   localDebugFunction(context); // local debug function
+  localInvokeConfig(context);
   remoteInvokeFunction(context); // remote invoke function
   bindAccount(context); // bind account
   switchRegion(context); // switch region

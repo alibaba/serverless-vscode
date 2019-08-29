@@ -51,7 +51,6 @@ export class LocalResourceProvider implements vscode.TreeDataProvider<Resource> 
       cwd: this.workspaceRoot,
     })
     if (!files || !files.length) {
-      vscode.window.showInformationMessage('No template.yml in current workspace');
       return [];
     }
 

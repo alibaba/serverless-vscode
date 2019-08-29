@@ -6,6 +6,7 @@ import { ext } from '../extensionVariables';
 import { serverlessCommands } from '../utils/constants';
 import { isPathExists, createDirectory, createLaunchFile, createEventFile } from '../utils/file';
 import { recordPageView } from '../utils/visitor';
+import { getOrInitEventConfig } from '../utils/localConfig';
 import { FunService } from '../services/FunService';
 import { TemplateService } from '../services/TemplateService';
 import { Resource, ResourceType, FunctionResource } from '../models/resource';
@@ -20,7 +21,8 @@ export function localDebugFunction(context: vscode.ExtensionContext) {
         return;
       }
       const funcRes = node as FunctionResource;
-      await process(funcRes.serviceName, funcRes.functionName, funcRes.templatePath as string);
+      await process(funcRes.serviceName, funcRes.functionName, funcRes.templatePath as string)
+        .catch(ex => vscode.window.showErrorMessage(ex.message));
     })
   );
   vscode.debug.onDidStartDebugSession(debugSession => {
@@ -76,24 +78,16 @@ async function process(serviceName: string, functionName: string, templatePath: 
   }
   if (!hasHttpTrigger) {
     // 普通的函数，读取 event 文件
-    try {
-      const codeUri = path.resolve(path.dirname(templatePath), functionInfo.Properties.CodeUri);
-      const eventFileStat = fs.statSync(codeUri);
-      if (eventFileStat.isDirectory()) {
-        eventFilePath = path.join(codeUri, 'event.dat');
-      }
-      if (eventFileStat.isFile()) {
-        eventFilePath = path.join(path.dirname(codeUri), 'event.dat');
-      }
-    } catch (err) {
-      vscode.window.showErrorMessage(err.message);
-      return;
-    }
+    eventFilePath = await getOrInitEventConfig(
+      templatePath,
+      serviceName,
+      functionName,
+      functionInfo.Properties.CodeUri
+    );
     if (!isPathExists(eventFilePath)) {
       // 生成默认 event 文件
       if (!createEventFile(eventFilePath)) {
-        vscode.window.showErrorMessage(`Create ${eventFilePath} event file failed`);
-        return;
+        throw new Error(`Create ${eventFilePath} event file failed`);
       }
     }
   }
