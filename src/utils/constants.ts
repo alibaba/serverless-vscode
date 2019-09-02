@@ -167,6 +167,7 @@ export namespace serverlessCommands {
 
 export namespace serverlessConfigs {
   export const ALIYUN_FC_REFERERENCE_LIB_TIP = 'aliyun.fc.referenceLib.tip';
+  export const ALIYUN_FC_IMPORT_BASE_PATH = 'aliyun.fc.import.base.path';
 }
 
 export const SERVERLESS_EXTENTION_DOCUMENTATION_URL =
