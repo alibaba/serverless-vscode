@@ -59,6 +59,10 @@ export namespace serverlessCommands {
     id: 'fc.extension.install.package',
     title: 'INSTALL PACKAGE',
   };
+  export const START_LOCAL_SANDBOX = {
+    id: 'fc.extension.start.local.sandbox',
+    title: 'Start local sandbox',
+  };
   export const LOCAL_INVOKE_CONFIG = {
     id: 'fc.extension.local.invoke.config',
     title: 'Invoke Config',

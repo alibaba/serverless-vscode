@@ -8,7 +8,11 @@ import { cpUtils  } from './cpUtils';
 import { createFile, isPathExists, createDirectory } from './file';
 import { ext } from '../extensionVariables';
 
-const FUN_VERSION = '2.16.5';
+function getFunVersion(): string {
+  const packageFilePath = path.resolve(ext.context.extensionPath, 'package.json');
+  const dependencies = require(packageFilePath).dependencies;
+  return dependencies['@alicloud/fun'];
+}
 
 abstract class FunExecutorGenerator {
   async generate(): Promise<string>  {
@@ -88,7 +92,7 @@ class WindowsFunExecutorGenerator extends FunExecutorGenerator {
     const funPath = this.getFunPath();
     try {
       const version = await cpUtils.executeCommand(undefined, undefined, `${funPath}`, '--version');
-      return version.trim() !== FUN_VERSION;
+      return version.trim() !== getFunVersion();
     } catch (ex) {
       return true;
     }
@@ -101,7 +105,7 @@ class WindowsFunExecutorGenerator extends FunExecutorGenerator {
         throw new Error(`Create ${path.dirname(funPath)} fail`)
       }
     }
-    const funFileName = `fun-v${FUN_VERSION}-win-${process.arch === 'x64' ? 'x64' : 'x86'}.exe`;
+    const funFileName = `fun-v${getFunVersion()}-win-${process.arch === 'x64' ? 'x64' : 'x86'}.exe`;
     await new Promise((resolve, reject) => {
       download(`https://gosspublic.alicdn.com/fun/${funFileName}.zip`)
         .pipe(unzipper.Parse())

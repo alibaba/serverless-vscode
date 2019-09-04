@@ -47,6 +47,7 @@ import { isTemplateYaml } from './utils/document';
 import { templateChangeEventEmitter } from './models/events';
 import { TemplateHoverProvider } from './hovers/TemplateHoverProvider';
 import { installPackage } from './commands/installPackage';
+import { startLocalSandbox } from './commands/startLocalSandbox';
 
 export function activate(context: vscode.ExtensionContext) {
   recordPageView('/');
@@ -104,6 +105,7 @@ export function activate(context: vscode.ExtensionContext) {
   gotoTemplate(context);
   referRuntimeLib(context);
   installPackage(context);
+  startLocalSandbox(context);
 
   vscode.commands.executeCommand(serverlessCommands.SHOW_REGION_STATUS.id);
   vscode.commands.executeCommand(serverlessCommands.SHOW_UPDATE_NOTIFICATION.id);
