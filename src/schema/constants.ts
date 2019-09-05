@@ -126,3 +126,82 @@ export const TRANSFORM_INSERT_TEXT =
 export const RESOURCES_INSERT_TEXT =
   "Resources:\n" +
   "  "
+export const EVENTS_INSERT_TEXT =
+  "Events:\n" +
+  "  "
+export const TIMER_TRIGGER_INSERT_TEXT =
+  "${1:timeTrigger}:\n" +
+  "  Type: Timer\n" +
+  "  Properties:\n" +
+  "    CronExpression: '${2:0 0 8 * * *}'\n" +
+  "    Enable: true"
+
+export const HTTP_TRIGGER_INSERT_TEXT =
+  "${1:httpTrigger}:\n" +
+  "  Type: HTTP\n" +
+  "  Properties:\n" +
+  "    AuthType: ${2|ANONYMOUS,FUNCTION|}\n" +
+  "    Methods: ['GET', 'POST', 'PUT']"
+
+export const LOG_TRIGGER_INSERT_TEXT =
+  "${1:logTrigger}:\n" +
+  "  Type: Log\n" +
+  "  Properties:\n" +
+  "    SourceConfig:\n" +
+  "      Logstore: ${2:logstore1}\n" +
+  "    JobConfig:\n" +
+  "      MaxRetryTime: 1\n" +
+  "      TriggerInterval: 30\n" +
+  "    LogConfig:\n" +
+  "      Project: ${3:testlog}\n" +
+  "      Logstore: ${4:logstore2}\n" +
+  "    Enable: true"
+
+export const OSS_TRIGGER_INSERT_TEXT =
+  "${1:ossTrigger}:\n" +
+  "  Type: OSS\n" +
+  "  Properties:\n" +
+  "    BucketName: ${2:ossBucketName}\n" +
+  "    Events:\n" +
+  "      - oss:ObjectCreated:*\n" +
+  "      - oss:ObjectRemoved:DeleteObject\n" +
+  "    Filter:\n" +
+  "      Key:\n" +
+  "        Prefix: ${3:source/}\n" +
+  "        Suffix: ${4:.png}"
+
+export const RDS_TRIGGER_INSERT_TEXT =
+  "${1:rdsTrigger}:\n" +
+  "  Type: RDS\n" +
+  "  Properties:\n" +
+  "    InstanceId: ${2:instanceId}\n" +
+  "    SubscriptionObjects:\n" +
+  "      - db1.table1\n" +
+  "    Retry: 3\n" +
+  "    Concurrency: 1\n" +
+  "    EventFormat: ${3|json,protobuf|}"
+
+export const MNSTOPIC_TRIGGER_INSERT_TEXT =
+  "${1:mnsTrigger}:\n" +
+  "  Type: MNSTopic\n" +
+  "  Properties:\n" +
+  "    TopicName: ${2:test-topic}\n" +
+  "    NotifyContentFormat: ${3|STREAM,JSON|}\n" +
+  "    NotifyStrategy: ${4|BACKOFF_RETRY,EXPONENTIAL_DECAY_RETRY|}"
+
+export const TABLESTORE_TRIGGER_INSERT_TEXT =
+  "${1:tableStoreTrigger}:\n" +
+  "  Type: TableStore\n" +
+  "  Properties:\n" +
+  "    InstanceName: ${2:test-inst}\n" +
+  "    TableName: ${3:test-tbl}"
+
+export const CDN_TRIGGER_INSERT_TEXT =
+  "${1:cdnTrigger}:\n" +
+  "  Type: CDN\n" +
+  "  Properties:\n" +
+  "    EventName: ${2:test-event}\n" +
+  "    EventVersion: '1.0.0'\n" +
+  "    Notes: cdn events trigger test\n" +
+  "    Filter:\n" +
+  "      Domain: ['fc.console.aliyun.com']"

@@ -9,6 +9,14 @@ import {
   ALIYUN_SERVERLESS_LOG_TYPE,
   ALIYUN_SERVERLESS_LOG_LOGSTORE_TYPE,
   ALIYUN_SERVERLESS_MNSTOPIC_TYPE,
+  ALIYUN_SERVERLESS_TRIGGERS_HTTP_TYPE,
+  ALIYUN_SERVERLESS_TRIGGES_TIMERR_TYPE,
+  ALIYUN_SERVERLESS_TRIGGERS_LOG_TYPE,
+  ALIYUN_SERVERLESS_TRIGGERS_OSS_TYPE,
+  ALIYUN_SERVERLESS_TRIGGERS_RDS_TYPE,
+  ALIYUN_SERVERLESS_TRIGGERS_MNSTOPIC_TYPE,
+  ALIYUN_SERVERLESS_TRIGGERS_TABLESTORE_TYPE,
+  ALIYUN_SERVERLESS_TRIGGERS_CDN_TYPE,
 } from '../utils/constants';
 
 import {
@@ -32,14 +40,163 @@ import {
   LOGCONFIG_INSERT_TEXT,
   NASCONFIG_INSERT_TEXT,
   RESOURCES_INSERT_TEXT,
+  EVENTS_INSERT_TEXT,
+  TIMER_TRIGGER_INSERT_TEXT,
+  HTTP_TRIGGER_INSERT_TEXT,
+  LOG_TRIGGER_INSERT_TEXT,
+  OSS_TRIGGER_INSERT_TEXT,
+  RDS_TRIGGER_INSERT_TEXT,
+  MNSTOPIC_TRIGGER_INSERT_TEXT,
+  TABLESTORE_TRIGGER_INSERT_TEXT,
+  CDN_TRIGGER_INSERT_TEXT,
 } from './constants';
 
 // TODO: schema 的进一步定义
 
+const timerTriggerSchema = {
+  properties: {
+    Properties: {
+      properties: {
+        'CronExpression': {},
+        'Payload': {},
+        'Enable': {},
+        'Qualifier': {},
+      },
+    },
+  },
+  insertText: TIMER_TRIGGER_INSERT_TEXT,
+};
+
+const httpTriggerSchema = {
+  properties: {
+    Properties: {
+      properties: {
+        'AuthType': {},
+        'Methods': {},
+        'InvocationRole': {},
+        'Qualifier': {},
+      },
+    },
+  },
+  insertText: HTTP_TRIGGER_INSERT_TEXT,
+};
+
+const logTriggerSchema = {
+  properties: {
+    Properties: {
+      properties: {
+        'SourceConfig': {},
+        'JobConfig': {},
+        'LogConfig': {},
+        'Enable': {},
+        'InvocationRole': {},
+        'Qualifier': {},
+      },
+    },
+  },
+  insertText: LOG_TRIGGER_INSERT_TEXT,
+};
+
+const ossTriggerSchema = {
+  properties: {
+    Properties: {
+      properties: {
+        'Events': {},
+        'BucketName': {},
+        'Filter': {},
+        'Key': {},
+        'InvocationRole': {},
+        'Qualifier': {},
+      },
+    },
+  },
+  insertText: OSS_TRIGGER_INSERT_TEXT,
+};
+
+const rdsTriggerSchema = {
+  properties: {
+    Properties: {
+      properties: {
+        'InstanceId': {},
+        'SubscriptionObjects': {},
+        'Retry': {},
+        'Concurrency': {},
+        'EventFormat': {},
+        'InvocationRole': {},
+        'Qualifier': {},
+      },
+    },
+  },
+  insertText: RDS_TRIGGER_INSERT_TEXT,
+};
+
+const mnsTopicTriggerSchema = {
+  properties: {
+    Properties: {
+      properties: {
+        'TopicName': {},
+        'Region': {},
+        'NotifyContentFormat': {},
+        'NotifyStrategy': {},
+        'FilterTag': {},
+        'InvocationRole': {},
+        'Qualifier': {},
+      },
+    },
+  },
+  insertText: MNSTOPIC_TRIGGER_INSERT_TEXT,
+};
+
+const tableStoreTopicTriggerSchema = {
+  properties: {
+    Properties: {
+      properties: {
+        'InstanceName': {},
+        'TableName': {},
+        'InvocationRole': {},
+        'Qualifier': {},
+      },
+    },
+  },
+  insertText: TABLESTORE_TRIGGER_INSERT_TEXT,
+};
+
+const cdnTopicTriggerSchema = {
+  properties: {
+    Properties: {
+      properties: {
+        'EventName': {},
+        'EventVersion': {},
+        'Notes': {},
+        'Filter': {},
+        'InvocationRole': {},
+        'Qualifier': {},
+      },
+    },
+  },
+  insertText: CDN_TRIGGER_INSERT_TEXT,
+};
+
+const eventsSchema = {
+  label: 'Events',
+  properties: {
+    [ALIYUN_SERVERLESS_TRIGGES_TIMERR_TYPE]: timerTriggerSchema,
+    [ALIYUN_SERVERLESS_TRIGGERS_HTTP_TYPE]: httpTriggerSchema,
+    [ALIYUN_SERVERLESS_TRIGGERS_LOG_TYPE]: logTriggerSchema,
+    [ALIYUN_SERVERLESS_TRIGGERS_OSS_TYPE]: ossTriggerSchema,
+    [ALIYUN_SERVERLESS_TRIGGERS_RDS_TYPE]: rdsTriggerSchema,
+    [ALIYUN_SERVERLESS_TRIGGERS_MNSTOPIC_TYPE]: mnsTopicTriggerSchema,
+    [ALIYUN_SERVERLESS_TRIGGERS_TABLESTORE_TYPE]: tableStoreTopicTriggerSchema,
+    [ALIYUN_SERVERLESS_TRIGGERS_CDN_TYPE]: cdnTopicTriggerSchema,
+  },
+  insertText: EVENTS_INSERT_TEXT,
+  triggerSuggest: true,
+};
+
 const functionSchema = {
   label: 'Function',
   properties: {
-    Events: {},
+    Events: eventsSchema,
     Properties: {
       properties: {
         'Handler': {},
