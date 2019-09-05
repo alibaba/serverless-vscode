@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import * as path from 'path';
 import * as output from '../utils/output';
 import { isDirectory, isNotEmpty } from '../utils/file';
-import { serverlessCommands } from '../utils/constants';
+import { serverlessCommands, serverlessConfigs } from '../utils/constants';
 import { recordPageView } from '../utils/visitor';
 import { getFunctionComputeOutputChannel } from '../utils/channel';
 import { FunctionComputeService } from '../services/FunctionComputeService';
@@ -28,7 +28,10 @@ async function process(serviceName: string) {
   const channel = getFunctionComputeOutputChannel();
   channel.clear();
   channel.show();
-  const existFunctions = await existLocalFunctionFiles(serviceName);
+
+  let importPath = <string>vscode.workspace.getConfiguration().get(serverlessConfigs.ALIYUN_FC_IMPORT_BASE_PATH);
+  importPath = path.resolve(cwd as string, importPath || '.');
+  const existFunctions = await existLocalFunctionFiles(serviceName, importPath);
   if (existFunctions.length > 0) {
     const choice = await vscode.window.showInformationMessage('These function already exists: '
       + existFunctions.join(',')
@@ -39,14 +42,13 @@ async function process(serviceName: string) {
   }
   const { importService } = require('@alicloud/fun/lib/import/service.js');
   await output.output(() =>
-    importService(serviceName, cwd).catch((ex: any) => { output.error(ex.message) })
+    importService(serviceName, importPath).catch((ex: any) => { output.error(ex.message) })
   );
   vscode.commands.executeCommand(serverlessCommands.REFRESH_LOCAL_RESOURCE.id);
 }
 
-async function existLocalFunctionFiles(serviceName: string): Promise<string[]> {
-  const rootPath = <string>cwd;
-  const serviceDirPath = path.join(rootPath, serviceName);
+async function existLocalFunctionFiles(serviceName: string, importPath: string): Promise<string[]> {
+  const serviceDirPath = path.join(importPath, serviceName);
   const existFunctions: string[] = [];
   if (isDirectory(serviceDirPath)) {
     const functionList = await functionComputeService.listAllRemoteFunctionInService(serviceName);

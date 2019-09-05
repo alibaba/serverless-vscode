@@ -68,6 +68,11 @@
           "type": "boolean",
           "description": "Tips for enable reference lib that are provided by the runtime",
           "default": true
+        },
+        "aliyun.fc.import.base.path": {
+          "type": "string",
+          "description": "The root directory of the imported resources relative to the workspace",
+          "default": "./"
         }
       }
     },
