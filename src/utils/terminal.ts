@@ -41,10 +41,7 @@ function isExistFunctionComputeWorkerTerminal(): vscode.Terminal | null {
 
 function createFunctionComputeTerminal(cwd?: string): vscode.Terminal {
   const extBinPath = path.resolve(os.homedir(), '.aliyun-serverless', 'bin');
-  let binPath = extBinPath;
-  if (os.platform() === 'win32') {
-    binPath = `${process.env.PATH};${binPath}`;
-  }
+  const binPath = process.env.PATH + path.delimiter + extBinPath;
   return vscode.window.createTerminal({
     name: FUNCTION_COMPUTE_TERMINAL,
     cwd,
