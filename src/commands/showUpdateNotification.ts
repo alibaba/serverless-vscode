@@ -4,8 +4,9 @@ import * as os from 'os';
 import * as fs from 'fs';
 import * as util from 'util';
 import * as open from 'open';
+import { ext } from '../extensionVariables';
 import { isPathExists, isDirectory, createFile } from '../utils/file';
-import { serverlessCommands, ALIYUN_SERVERLESS_VERSION, ALIYUN_SERVERLESS_CHANGELOG_URL } from '../utils/constants';
+import { serverlessCommands, ALIYUN_SERVERLESS_CHANGELOG_URL } from '../utils/constants';
 import { recordPageView } from '../utils/visitor';
 
 const readFile = util.promisify(fs.readFile);
@@ -22,9 +23,10 @@ export function showUpdateNotification(context: vscode.ExtensionContext) {
 async function process(context: vscode.ExtensionContext) {
   let showNotification = true;
   const versionFilePath = path.join(os.homedir(), '.aliyun-serverless', 'VERSION');
+  const extensionVersion = getExtensionVersion();
   if (isPathExists(versionFilePath) && !isDirectory(versionFilePath)) {
     const version = await readFile(versionFilePath, 'utf8').catch((ex) => vscode.window.showErrorMessage(ex.message));
-    if (version === ALIYUN_SERVERLESS_VERSION) {
+    if (version === extensionVersion) {
       showNotification = false;
     }
   }
@@ -37,7 +39,7 @@ async function process(context: vscode.ExtensionContext) {
       (progress) => {
         progress.report({increment: 100});
         return vscode.window.showInformationMessage(
-          `Aliyun Serverless has been updated to ${ALIYUN_SERVERLESS_VERSION} -- check out what's new`,
+          `Aliyun Serverless has been updated to ${extensionVersion} -- check out what's new`,
           'Release Notes',
         ).then(item => {
           if (item === 'Release Notes') {
@@ -47,7 +49,12 @@ async function process(context: vscode.ExtensionContext) {
       }
     );
     if (isPathExists(versionFilePath) || createFile(versionFilePath)) {
-      writeFile(versionFilePath, ALIYUN_SERVERLESS_VERSION).catch((ex) => vscode.window.showErrorMessage(ex.message));
+      writeFile(versionFilePath, extensionVersion).catch((ex) => vscode.window.showErrorMessage(ex.message));
     }
   }
+}
+
+function getExtensionVersion(): string {
+  const packageFilePath = path.resolve(ext.context.extensionPath, 'package.json');
+  return require(packageFilePath).version;
 }
