@@ -2,6 +2,27 @@
 
 所有对 "Aliyun Serverless" 插件的更改都将记录在这个文件中。
 
+## 1.8.0 - 2019-09-06
+### Added
+- 提供模版文件 template.yml 内触发器配置信息的智能提示
+  - 支持模版文件 template.yml 内触发器属性的自动补全
+  - 支持模版文件 template.yml 内触发器配置信息的校验
+  - 支持模版文件 template.yml 内触发器配置的上下文帮助
+
+![tpl-event](https://github.com/alibaba/serverless-vscode/blob/master/media/changelog/v1.8.0/tpl-event.gif?raw=true)
+
+- 支持本地启动函数沙箱环境。在本地资源面板中，右击函数名选择启动沙箱环境，即可在沙箱环境中安装依赖或进行配置。
+
+![fun-sbox](https://github.com/alibaba/serverless-vscode/blob/master/media/changelog/v1.8.0/fun-sbox.gif?raw=true)
+
+- 支持配置云端服务与函数导入的根目录，通过在 VSCode 中配置 `aliyun.fc.import.base.path` 即可修改导入云端服务与函数时的根目录。
+
+- 将内置 fun 加入终端 `PATH` 中。在 VSCode `Function Compute` 终端中，可以通过输入 `fun.sh` 或 `fun.exe` 使用 fun。
+
+### Other
+- 优化插件激活时机
+- 更新本地资源面板的右键菜单排序
+
 ## 1.7.0 - 2019-08-29
 ### Added
 - 支持引用 nodejs、python runtime 的内置模块。通过插件创建函数后，会弹出模块引用向导。完成向导后，可以在编辑器中引用 runtime 的内置模块以及获得相关智能提示。
