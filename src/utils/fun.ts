@@ -84,6 +84,7 @@ class PosixFunExecutorGenerator extends FunExecutorGenerator {
 }
 
 class WindowsFunExecutorGenerator extends FunExecutorGenerator {
+  FUN_VERSION = '3.0.0-beta.0';
   getExecuteFileName(): string {
     return 'fun.exe';
   }
@@ -92,7 +93,7 @@ class WindowsFunExecutorGenerator extends FunExecutorGenerator {
     const funPath = this.getFunPath();
     try {
       const version = await cpUtils.executeCommand(undefined, undefined, `${funPath}`, '--version');
-      return version.trim() !== getFunVersion();
+      return version.trim() !== this.FUN_VERSION;
     } catch (ex) {
       return true;
     }
@@ -105,7 +106,7 @@ class WindowsFunExecutorGenerator extends FunExecutorGenerator {
         throw new Error(`Create ${path.dirname(funPath)} fail`)
       }
     }
-    const funFileName = `fun-v${getFunVersion()}-win-${process.arch === 'x64' ? 'x64' : 'x86'}.exe`;
+    const funFileName = `fun-v${this.FUN_VERSION}-win-${process.arch === 'x64' ? 'x64' : 'x86'}.exe`;
     await new Promise((resolve, reject) => {
       download(`https://gosspublic.alicdn.com/fun/${funFileName}.zip`)
         .pipe(unzipper.Parse())
