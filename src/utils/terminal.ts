@@ -1,4 +1,6 @@
-import * as vscode from 'vscode'
+import * as vscode from 'vscode';
+import * as os from 'os';
+import * as path from 'path';
 
 export function getFunctionComputeTerminal(cwd?: string): vscode.Terminal {
   const terminal = isExistFunctionComputeTerminal();
@@ -38,9 +40,13 @@ function isExistFunctionComputeWorkerTerminal(): vscode.Terminal | null {
 }
 
 function createFunctionComputeTerminal(cwd?: string): vscode.Terminal {
+  const extBinPath = path.resolve(os.homedir(), '.aliyun-serverless', 'bin');
   return vscode.window.createTerminal({
     name: FUNCTION_COMPUTE_TERMINAL,
     cwd,
+    env: {
+      'PATH': extBinPath,
+    },
   });
 }
 
