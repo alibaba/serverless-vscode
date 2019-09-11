@@ -123,6 +123,26 @@ export class FunService {
     })
   }
 
+  remoteInvokeWithEventFilePath(serviceName: string, functionName: string, eventFilePath: string) {
+    const terminal =  terminalService.getFunctionComputeTerminal(path.dirname(this.templatePath));
+    getFunPath().then(funPath => {
+      const command =
+        `${funPath} invoke ${serviceName}/${functionName} -f ${this.escapeSpace(eventFilePath)}`;
+      terminal.sendText(command);
+      terminal.show();
+    })
+  }
+
+  remoteInvokeWithStdin(serviceName: string, functionName: string) {
+    const terminal =  terminalService.getFunctionComputeTerminal(path.dirname(this.templatePath));
+    getFunPath().then(funPath => {
+      const command =
+        `${funPath} invoke ${serviceName}/${functionName} -s`;
+      terminal.sendText(command);
+      terminal.show();
+    })
+  }
+
   private validateInitRumtime(runtime: string): boolean {
     const runtimes = ['nodejs8', 'nodejs6', 'python3', 'python2.7', 'java8', 'php7.2'];
     return runtimes.includes(runtime);
