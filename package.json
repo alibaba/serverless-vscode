@@ -46,6 +46,25 @@
         "editor.quickSuggestions": true
       }
     },
+    "languages": [
+      {
+        "id": "funfile",
+        "filenames": [
+          "Funfile"
+        ],
+        "aliases": [
+          "Funfile"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "funfile",
+        "scopeName": "source.funfile",
+        "path": "./syntaxes/funfile.tmLanguage.json"
+      }
+    ],
     "configuration": {
       "type": "object",
       "title": "Aliyun Serverless Plugin Configuration",

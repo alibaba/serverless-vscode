@@ -1,0 +1,90 @@
+{
+	"name": "Funfile",
+	"scopeName": "source.funfile",
+	"patterns": [
+		{
+			"captures": {
+				"1": {
+					"name": "keyword.other.special-method.funfile"
+				}
+			},
+			"match": "^\\s*\\b(?i:(RUNTIME))\\b.*?\\b"
+		},
+		{
+			"captures": {
+				"1": {
+					"name": "keyword.other.special-method.funfile"
+        },
+        "2": {
+					"name": "keyword.control.funfile"
+				}
+			},
+			"match": "^\\s*(?i:(ARG|COPY|RUN|WORKDIR))\\b.*?\\b(?i:(fun-install))\\b"
+    },
+    {
+			"captures": {
+				"1": {
+					"name": "keyword.other.special-method.funfile"
+        }
+			},
+			"match": "^\\s*(?i:(ARG|COPY|RUN|WORKDIR))\\b.*?\\b"
+    },
+		{
+			"begin": "\"",
+			"beginCaptures": {
+				"1": {
+					"name": "punctuation.definition.string.begin.funfile"
+				}
+			},
+			"end": "\"",
+			"endCaptures": {
+				"1": {
+					"name": "punctuation.definition.string.end.funfile"
+				}
+			},
+			"name": "string.quoted.double.funfile",
+			"patterns": [
+				{
+					"match": "\\\\.",
+					"name": "constant.character.escaped.funfile"
+				}
+			]
+		},
+		{
+			"begin": "'",
+			"beginCaptures": {
+				"1": {
+					"name": "punctuation.definition.string.begin.funfile"
+				}
+			},
+			"end": "'",
+			"endCaptures": {
+				"1": {
+					"name": "punctuation.definition.string.end.funfile"
+				}
+			},
+			"name": "string.quoted.single.funfile",
+			"patterns": [
+				{
+					"match": "\\\\.",
+					"name": "constant.character.escaped.funfile"
+				}
+			]
+		},
+		{
+			"captures": {
+				"1": {
+					"name": "punctuation.whitespace.comment.leading.funfile"
+				},
+				"2": {
+					"name": "comment.line.number-sign.funfile"
+				},
+				"3": {
+					"name": "punctuation.definition.comment.funfile"
+				}
+			},
+			"comment": "comment.line",
+			"match": "^(\\s*)((#).*$\\n?)"
+		}
+	]
+}
