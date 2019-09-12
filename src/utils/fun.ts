@@ -84,7 +84,7 @@ class PosixFunExecutorGenerator extends FunExecutorGenerator {
 }
 
 class WindowsFunExecutorGenerator extends FunExecutorGenerator {
-  FUN_VERSION = '3.0.0-beta.0';
+  FUN_VERSION = '3.0.0-beta.7';
   getExecuteFileName(): string {
     return 'fun.exe';
   }

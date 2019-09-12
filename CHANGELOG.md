@@ -2,6 +2,20 @@
 
 所有对 "Aliyun Serverless" 插件的更改都将记录在这个文件中。
 
+## 1.9.0 - 2019-09-12
+### Added
+- 优化 HTTP 触发器调试，调试进程可复用以及支持修改 HTTP 调用参数。指定调试带有 HTTP 触发器的某函数后，会在输出面板提示访问链接，可在浏览器或 Postman 中配置访问参数并进行调试，一次会话结束后可以再次发起调用进行下一次调试。
+
+![http-trigger](https://github.com/alibaba/serverless-vscode/blob/master/media/changelog/v1.9.0/http-trigger.gif?raw=true)
+
+- 远端调用功能优化，替换为 Fun Invoke。
+- Funfile 文件提供语法高亮以及符号自动补全。
+
+![funfile](https://github.com/alibaba/serverless-vscode/blob/master/media/changelog/v1.9.0/funfile.gif?raw=true)
+
+### Other
+- 修复 HTTP 触发器无法调试的 Issue。
+
 ## 1.8.3 - 2019-09-06
 ### Added
 - 提供模版文件 template.yml 内触发器配置信息的智能提示
