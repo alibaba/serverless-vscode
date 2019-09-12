@@ -72,13 +72,6 @@ export class FunService {
     getFunPath().then(funPath => {
       const command = `${funPath} local start`;
       terminal.sendText(command);
-
-      setTimeout(() => {
-        (async () => {
-          await open(`http://localhost:8000/2016-08-15/proxy/${serviceName}/${functionName}/`)
-        })()
-      }, 2000);
-
       terminal.show();
     })
   }
@@ -86,15 +79,8 @@ export class FunService {
   localStartDebug(serviceName: string, functionName: string, debugPort: string): vscode.Terminal {
     const terminal = terminalService.getFunctionComputeTerminal(path.dirname(this.templatePath));
     getFunPath().then(funPath => {
-      const command = `${funPath} local start -d ${debugPort}`;
+      const command = `${funPath} local start ${serviceName}/${functionName} -d ${debugPort}`;
       terminal.sendText(command);
-
-      setTimeout(() => {
-        (async () => {
-          await open(`http://localhost:8000/2016-08-15/proxy/${serviceName}/${functionName}/`)
-        })()
-      }, 2000);
-
       terminal.show();
     })
 

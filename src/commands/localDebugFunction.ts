@@ -113,7 +113,9 @@ async function process(serviceName: string, functionName: string, templatePath: 
           }, 3000);
         })
       }
-      vscode.debug.startDebugging(undefined, configuration);
+      vscode.debug.startDebugging(undefined, configuration).then(() => {
+        terminal.show();
+      });
     } catch (ex) {
       // 用户在初次下载镜像的时候关闭了 Terminal
     }
