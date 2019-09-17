@@ -95,6 +95,18 @@ export namespace serverlessCommands {
     id: 'fc.extension.show.remote.triggerInfo',
     title: 'Show Remote Trigger Info',
   };
+  export const SHOW_LOCAL_INVOKE_PANEL = {
+    id: 'fc.extension.show.local.invoke.panel',
+    title: 'Show Local Invoke Panel',
+  };
+  export const CREATE_EVENT_FILE = {
+    id: 'fc.extension.create.event.file',
+    title: 'Create Event File',
+  };
+  export const FOCUS_OPEN_EDITORS_VIEW = {
+    id: 'workbench.files.action.focusOpenEditorsView',
+    title: 'Focus Open Editors View',
+  }
   export const CLEAR_REMOTE_TRIGGER_INFO = {
     id: 'fc.extension.clear.remote.triggerInfo',
     title: 'Clear Remote Trigger Info',

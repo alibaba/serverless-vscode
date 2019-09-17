@@ -10,6 +10,7 @@ import { SeverlessLensInvokeItem } from './ServerlessLensInvokeItem';
 import { SeverlessLensDebugItem } from './ServerlessLensDebugItem';
 import { FunctionResource } from '../models/resource';
 import { ServerlessLensConfigItem } from './ServerlessLensConfigItem';
+import { FunctionComputeLensLocalInvokePanelItem } from './FunctionComputeLensLocalInvokePanelItem';
 
 const findFile = util.promisify(glob);
 
@@ -118,22 +119,35 @@ export class ServerlessLensProvider implements vscode.CodeLensProvider {
     const filePath = document.uri.fsPath;
     const functionInfo = await functionInfoDict.lookup(filePath);
     if (functionInfo) {
+      let hasHttpTrigger = false;
+      let { functionResource } = functionInfo;
+      if (functionResource.Events) {
+        Object.entries(functionResource.Events).forEach(([name, resource]) => {
+          if (resource && (<any>resource).Type === 'HTTP') {
+            hasHttpTrigger = true;
+          }
+        })
+      }
       const templateService = new TemplateService(functionInfo.templatePath);
       const handlerFunctionName = templateService.getHandlerFunctionNameFromFunctionInfo(functionInfo.functionResource);
       const documentRange = this.getCodeLensRange(document, handlerFunctionName);
-      return <vscode.CodeLens[]>[
+      const result = <vscode.CodeLens[]>[
         this.createServerlessLensInvokeItem(
           documentRange, functionInfo.serviceName, functionInfo.functionName, functionInfo.templatePath),
         this.createServerlessLensDebugItem(
           documentRange, functionInfo.serviceName, functionInfo.functionName, functionInfo.templatePath),
-        this.createServerlessLensConfigItem(
-          documentRange, functionInfo.serviceName,
-          functionInfo.functionName, functionInfo.templatePath,
-          functionInfo.functionResource.Properties.CodeUri,
-        ),
       ]
+      if (!hasHttpTrigger) {
+        result.push(
+          this.createLocalInvokePanelItem(
+            documentRange, functionInfo.serviceName,
+            functionInfo.functionName, functionInfo.templatePath,
+            functionInfo.functionResource.Properties.CodeUri,
+          )
+        );
+      }
+      return result;
     }
-    return <vscode.CodeLens[]>[];
   }
 
   createServerlessLensInvokeItem(
@@ -174,6 +188,19 @@ export class ServerlessLensProvider implements vscode.CodeLensProvider {
     : ServerlessLensConfigItem {
     return new ServerlessLensConfigItem(
       documentRange, templatePath, serviceName, functionName, codeUri
+    );
+  }
+
+  createLocalInvokePanelItem(
+    documentRange:vscode.Range,
+    serviceName: string,
+    functionName: string,
+    templatePath: string,
+    codeUri: string,
+  )
+    : FunctionComputeLensLocalInvokePanelItem {
+    return new FunctionComputeLensLocalInvokePanelItem(
+      documentRange, serviceName, functionName, templatePath, codeUri,
     );
   }
 

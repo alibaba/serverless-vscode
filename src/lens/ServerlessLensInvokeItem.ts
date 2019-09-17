@@ -3,7 +3,7 @@ import { serverlessCommands } from '../utils/constants';
 export class SeverlessLensInvokeItem extends vscode.CodeLens {
   constructor(commandRange: vscode.Range, ...item: any[]) {
     super(commandRange, {
-      title: 'FC: Local Run',
+      title: 'Local Run',
       command: serverlessCommands.LOCAL_RUN.id,
       arguments: item,
     })
