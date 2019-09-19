@@ -9,7 +9,9 @@ import { JSONSchemaService } from '../language-service/services/jsonSchemaServic
 import { ValidationResult, SchemaCollector } from '../language-service/parser/jsonParser';
 import { PropertyASTNode } from '../parser/PropertyASTNode';
 import { JSONSchema } from '../language-service/jsonSchema';
-
+import * as cronParser from 'cron-parser';
+const cronstrue = require('cronstrue/i18n');
+const jstz = require('jstimezonedetect')
 
 export class TemplateHoverProvider implements vscode.HoverProvider {
   provideHover(
@@ -47,12 +49,19 @@ export class TemplateHoverProvider implements vscode.HoverProvider {
     const matchingSchemas = new SchemaCollector(undefined, undefined);
     let schema: JSONSchema | undefined;
     docRoot.validate(resolvedSchema.schema, validationResult, matchingSchemas);
+    let isCron: boolean = false;
     matchingSchemas.schemas.forEach(applicableSchema => {
       const parentNode = applicableSchema.node.parent;
       if (!parentNode || parentNode.type !== 'property') {
         return;
       }
       const propertyNode = parentNode as PropertyASTNode;
+      if (propertyNode.key.value === 'CronExpression'
+        && propertyNode.value && propertyNode.value.contains(document.offsetAt(position))
+      ) {
+        isCron = true;
+        return;
+      }
       if (!propertyNode.key.contains(document.offsetAt(position))) {
         return;
       }
@@ -60,13 +69,23 @@ export class TemplateHoverProvider implements vscode.HoverProvider {
         schema = applicableSchema.schema;
       }
     });
-    if (!schema) {
-      return;
-    }
     const hoverRange = new vscode.Range(
       document.positionAt(node.start),
       document.positionAt(node.end),
     );
+    if (isCron) {
+      const readableDescription = getCronReadableDesription(node.getValue());
+      if (readableDescription) {
+        return new vscode.Hover(
+          readableDescription,
+          hoverRange,
+        )
+      }
+      return;
+    }
+    if (!schema) {
+      return;
+    }
     const markdown = getSchemaDoc(schema);
     if (markdown) {
       return new vscode.Hover(
@@ -113,4 +132,32 @@ function getLocalDoc(schema: JSONSchema): string {
     return (language && schema.document[language]) || schema.document['default'];
   }
   return ''
+}
+
+function getCronReadableDesription(cronStr: string): string[] | undefined {
+  recordPageView('/getCronReadableDesription');
+  let cron: any | undefined;
+  try {
+    cron = cronParser.parseExpression(cronStr, { utc: true });
+  } catch (ex) {  // 此处是故意 ignore。只有当用户表达式书写有问题时会 throw error
+    return;
+  }
+  let readableDescription: string | undefined;
+  let sysLocale = osLocale.sync() || 'en';
+  const timeZone = jstz.determine().name() || 'Asia/Shanghai';
+  readableDescription = cronstrue.toString(cronStr, { locale: sysLocale.replace('-', '_') });
+  const prevTime = new Date(cron.prev().toISOString());
+  cron.reset();
+  const nextTime = new Date(cron.next().toISOString());
+  const result = [
+    '__CronExpression Description(UTC)__\n',
+    `\t${readableDescription}\n`,
+    '__Last execution time__\n',
+    `\tUTC: ${prevTime.toLocaleString(sysLocale, { timeZone: 'UTC' })}\n`,
+    `\t${timeZone}: ${prevTime.toLocaleString(sysLocale, { timeZone: timeZone })}\n`,
+    '__Next execution time__\n',
+    `\tUTC: ${nextTime.toLocaleString(sysLocale, { timeZone: 'UTC' })}\n`,
+    `\t${timeZone}: ${nextTime.toLocaleString(sysLocale, { timeZone: timeZone })}`
+  ];
+  return result;
 }
