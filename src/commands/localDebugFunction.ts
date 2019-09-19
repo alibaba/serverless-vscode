@@ -15,13 +15,13 @@ const debugPortSet = new Set();
 
 export function localDebugFunction(context: vscode.ExtensionContext) {
   context.subscriptions.push(vscode.commands.registerCommand(serverlessCommands.LOCAL_DEBUG.id,
-    async (node: Resource) => {
+    async (node: Resource, eventFilePath: string | undefined) => {
       recordPageView('/localDebug');
       if (node.resourceType !== ResourceType.Function) {
         return;
       }
       const funcRes = node as FunctionResource;
-      await process(funcRes.serviceName, funcRes.functionName, funcRes.templatePath as string)
+      await process(funcRes.serviceName, funcRes.functionName, funcRes.templatePath as string, eventFilePath)
         .catch(ex => vscode.window.showErrorMessage(ex.message));
     })
   );
@@ -33,7 +33,10 @@ export function localDebugFunction(context: vscode.ExtensionContext) {
   });
 }
 
-async function process(serviceName: string, functionName: string, templatePath: string) {
+async function process(
+  serviceName: string, functionName: string,
+  templatePath: string, eventFilePath: string | undefined,
+) {
   if (!ext.cwd) {
     vscode.window.showErrorMessage('Please open a workspace');
     return;
@@ -67,7 +70,6 @@ async function process(serviceName: string, functionName: string, templatePath: 
   } else {
     configuration = filterConfigurations[0];
   }
-  let eventFilePath = '';
   let hasHttpTrigger = false;
   if (functionInfo.Events) {
     Object.entries(functionInfo.Events).forEach(([name, resource]) => {
@@ -78,7 +80,7 @@ async function process(serviceName: string, functionName: string, templatePath: 
   }
   if (!hasHttpTrigger) {
     // 普通的函数，读取 event 文件
-    eventFilePath = await getOrInitEventConfig(
+    eventFilePath = eventFilePath || await getOrInitEventConfig(
       templatePath,
       serviceName,
       functionName,
@@ -101,7 +103,7 @@ async function process(serviceName: string, functionName: string, templatePath: 
   if (hasHttpTrigger) {
     terminal = funService.localStartDebug(serviceName, functionName, configuration.port);
   } else {
-    terminal = funService.localInvokeDebug(serviceName, functionName, configuration.port, eventFilePath);
+    terminal = funService.localInvokeDebug(serviceName, functionName, configuration.port, eventFilePath as string);
   }
   if (rt.isNodejs(runtime) || rt.isPython(runtime)) {
     try {

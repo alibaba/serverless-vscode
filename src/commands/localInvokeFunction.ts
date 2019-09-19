@@ -10,19 +10,22 @@ import { isPathExists, createEventFile } from '../utils/file';
 
 export function localInvokeFunction(context: vscode.ExtensionContext) {
   context.subscriptions.push(vscode.commands.registerCommand(serverlessCommands.LOCAL_RUN.id,
-    async (node: Resource) => {
+    async (node: Resource, eventFilePath: string | undefined) => {
       recordPageView('/localInvoke');
       if (node.resourceType !== ResourceType.Function) {
         return;
       }
       const funcRes = node as FunctionResource;
-      await process(funcRes.serviceName, funcRes.functionName, funcRes.templatePath as string)
+      await process(funcRes.serviceName, funcRes.functionName, funcRes.templatePath as string, eventFilePath)
         .catch(ex => vscode.window.showErrorMessage(ex.message));
     })
   );
 }
 
-async function process(serviceName: string, functionName: string, templatePath: string) {
+async function process(
+  serviceName: string, functionName: string,
+  templatePath: string, eventFilePath: string | undefined,
+) {
   if (!ext.cwd) {
     vscode.window.showErrorMessage('Please open a workspace');
     return;
@@ -30,7 +33,6 @@ async function process(serviceName: string, functionName: string, templatePath: 
 
   const templateService = new TemplateService(templatePath);
   const functionInfo = await templateService.getFunction(serviceName, functionName);
-  let eventFilePath = '';
   let hasHttpTrigger = false;
   if (functionInfo.Events) {
     Object.entries(functionInfo.Events).forEach(([name, resource]) => {
@@ -41,7 +43,7 @@ async function process(serviceName: string, functionName: string, templatePath: 
   }
   if (!hasHttpTrigger) {
     // 普通的函数，读取 event 文件
-    eventFilePath = await getOrInitEventConfig(
+    eventFilePath = eventFilePath || await getOrInitEventConfig(
       templatePath,
       serviceName,
       functionName,
@@ -59,6 +61,6 @@ async function process(serviceName: string, functionName: string, templatePath: 
   if (hasHttpTrigger) {
     funService.localStart(serviceName, functionName);
   } else {
-    funService.localInvoke(serviceName, functionName, eventFilePath);
+    funService.localInvoke(serviceName, functionName, eventFilePath as string);
   }
 }

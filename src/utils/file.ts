@@ -88,7 +88,7 @@ export function createJsonFile(p: string): boolean {
 export function createEventFile(eventFilePath: string): boolean {
   try {
     fs.writeFileSync(eventFilePath, `{
-"key": "value"
+  "key": "value"
 }`);
   } catch(err) {
     return false;

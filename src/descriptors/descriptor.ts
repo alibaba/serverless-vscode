@@ -17,3 +17,10 @@ export interface TriggerDescriptor extends ResourceDescriptor {
   triggerName: string;
   triggerType: string;
 }
+
+export interface InvokeDescriptor extends ResourceDescriptor {
+  templatePath: string;
+  serviceName: string;
+  functionName: string;
+  codeUri: string;
+}

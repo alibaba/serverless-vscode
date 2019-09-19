@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+  <html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <base href="${baseHref}/">
+      <link rel="stylesheet" type="text/css" href="./style.css">
+      <title>Function Run/Debug Panel</title>
+  </head>
+  <body>
+    <div id="root">
+      <div class="app">
+        <div>
+          <button class="btn btn-second" style="float: right; margin-right: 8px;" onclick="createEventFile()">新增</button>
+          <select id="eventSelect" class="select">
+          </select>
+          <span style="float: right; font-size: 14px; position: relative; top: 2px;">事件：</span>
+          <button class="btn btn-primary" onclick="localInvoke()">运行</button>
+          <button class="btn btn-primary" onclick="localDebug()">调试</button>
+        </div>
+        <div>
+          <div id="eventContent"></div>
+        </div>
+      </div>
+    </div>
+    <script src="../../monaco-editor/min/vs/loader.js"></script>
+    <script>
+      const eventSelect = document.getElementById("eventSelect");
+      const eventContent = document.getElementById("eventContent");
+      require.config({ paths: { 'vs': '../../monaco-editor/min/vs' }});
+      require(['vs/editor/editor.main'], function() {
+        var editor = monaco.editor.create(eventContent, {
+            value: '',
+            language: 'json',
+            theme: 'vs-dark',
+        });
+        editor.getModel().onDidChangeContent((event) => {
+            updateEventContent(eventSelect.value, editor.getValue());
+        });
+        window.addEventListener('message', event => {
+          const message = event.data;
+          switch (message.command) {
+            case 'setEventData': {
+              editor.setValue(message.data);
+            }
+          }
+        });
+      });
+    </script>
+    <script>
+      window.addEventListener('message', event => {
+        const message = event.data;
+        switch (message.command) {
+          case 'updateEventFileList': {
+            eventSelect.innerHTML = "";
+            const eventFileList = message.data.files;
+            for (const eventFile of eventFileList) {
+              const opt = document.createElement('option');
+              opt.value = eventFile;
+              opt.innerHTML = eventFile;
+              eventSelect.appendChild(opt);
+            }
+            const selected = message.data.selected || eventFileList[0];
+            eventSelect.value = selected;
+            getEventData(selected);
+          }
+        }
+      });
+      eventSelect.onchange = () => {
+        getEventData(eventSelect.value);
+      }
+    </script>
+    <script>
+      const vscode = acquireVsCodeApi();
+      function getEventData(eventFile) {
+        vscode.postMessage({
+          command: 'getEventData',
+          data: eventFile,
+        });
+      }
+      function localInvoke() {
+        vscode.postMessage({
+          command: 'localInvoke',
+          data: eventSelect.value,
+        });
+      }
+      function localDebug() {
+        vscode.postMessage({
+          command: 'localDebug',
+          data: eventSelect.value,
+        });
+      }
+      function createEventFile() {
+        vscode.postMessage({
+          command: 'createEventFile',
+          data: eventSelect.value,
+        });
+      }
+      function updateEventContent(eventFile, eventContent) {
+        vscode.postMessage({
+          command: 'updateEventContent',
+          data: {
+            eventFile,
+            eventContent,
+          }
+        })
+      }
+    </script>
+  </body>
+</html>
