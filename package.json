@@ -108,15 +108,18 @@
       },
       {
         "command": "fc.extension.bind.account",
-        "title": "Bind New Account"
+        "title": "Bind New Account",
+        "category": "ALIYUN"
       },
       {
         "command": "fc.extension.switch.region",
-        "title": "Switch Region"
+        "title": "Switch Region",
+        "category": "ALIYUN"
       },
       {
         "command": "fc.extension.switch.account",
-        "title": "Switch Account"
+        "title": "Switch Account",
+        "category": "ALIYUN"
       },
       {
         "command": "fc.extension.function.create",
@@ -232,19 +235,23 @@
       },
       {
         "command": "fc.extension.view.quickstart",
-        "title": "View Quick Start"
+        "title": "View Quick Start",
+        "category": "ALIYUN"
       },
       {
         "command": "fc.extension.view.documentation",
-        "title": "View Documentation"
+        "title": "View Documentation",
+        "category": "ALIYUN"
       },
       {
         "command": "fc.extension.view.sourceOnGithub",
-        "title": "View Source on Github"
+        "title": "View Source on Github",
+        "category": "ALIYUN"
       },
       {
         "command": "fc.extension.report.issue",
-        "title": "Report an Issue"
+        "title": "Report an Issue",
+        "category": "ALIYUN"
       },
       {
         "command": "fc.extension.install.package",
@@ -252,7 +259,7 @@
       },
       {
         "command": "fc.extension.start.local.sandbox",
-        "title": "Start Local Sandbox"
+        "title": "Start Sandbox"
       }
     ],
     "viewsContainers": {
@@ -348,17 +355,17 @@
         {
           "command": "fc.extension.deploy.function",
           "when": "view == fcLocalResource && viewItem == function",
-          "group": "2_remote@1"
+          "group": "3_remote@1"
         },
         {
           "command": "fc.extension.install.package",
           "when": "view == fcLocalResource && viewItem == function",
-          "group": "3_local@2"
+          "group": "2_local@2"
         },
         {
           "command": "fc.extension.start.local.sandbox",
           "when": "view == fcLocalResource && viewItem == function",
-          "group": "3_local@3"
+          "group": "2_local@3"
         },
         {
           "command": "fc.extension.nas.sync",
@@ -424,7 +431,7 @@
         {
           "command": "fc.extension.localResource.gotoFunction",
           "when": "view == fcLocalResource && viewItem == function",
-          "group": "3_local@1"
+          "group": "2_local@1"
         },
         {
           "command": "fc.extension.remoteResource.remote.invoke",
@@ -433,7 +440,8 @@
         },
         {
           "command": "fc.extension.remoteResource.remote.invoke",
-          "when": "view == fcRemoteResource && viewItem == function"
+          "when": "view == fcRemoteResource && viewItem == function",
+          "group": "1_invoke@1"
         },
         {
           "command": "fc.extension.service.import",
@@ -451,7 +459,8 @@
         },
         {
           "command": "fc.extension.function.import",
-          "when": "view == fcRemoteResource && viewItem == function"
+          "when": "view == fcRemoteResource && viewItem == function",
+          "group": "2_import@1"
         }
       ],
       "commandPalette": [
