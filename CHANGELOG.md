@@ -2,6 +2,20 @@
 
 所有对 "Aliyun Serverless" 插件的更改都将记录在这个文件中。
 
+## 1.10.0 - 2019-09-20
+### Added
+- 新增函数运行调试面板。插件将会根据用户设定的函数入口文件，在 Event Trigger 函数入口方法名上显示 Invoke Panel，用户点击后将会跳转至函数运行调试面板。用户可在运行调试面板中新增编辑事件、运行调试函数。
+
+![invokePanel](https://github.com/alibaba/serverless-vscode/blob/zechen/v1.10.0/media/changelog/v1.10.0/invokePanel.gif?raw=true)
+
+- 模版文件 template.yml 内提供 Cron 表达式的可读性翻译，并显示该表达式所表示的上一次以及下一次的调用时间(UTC 时间以及本地时间)。用户将鼠标悬浮在模版文件定时触发器的 CronExpression 配置即可看到相关信息。
+
+![cronExpression](https://github.com/alibaba/serverless-vscode/blob/zechen/v1.10.0/media/changelog/v1.10.0/cronExpression.png?raw=true)
+
+### Other
+- 优化命令顺序以及新增命令注册。
+- 修复 win 下 fun 路径带有空格无法调用的 issue。
+
 ## 1.9.0 - 2019-09-12
 ### Added
 - 优化 HTTP 触发器调试，调试进程可复用以及支持修改 HTTP 调用参数。指定调试带有 HTTP 触发器的某函数后，会在输出面板提示访问链接，可在浏览器或 Postman 中配置访问参数并进行调试，一次会话结束后可以再次发起调用进行下一次调试。
