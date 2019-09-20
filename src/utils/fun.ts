@@ -84,7 +84,7 @@ class PosixFunExecutorGenerator extends FunExecutorGenerator {
 }
 
 class WindowsFunExecutorGenerator extends FunExecutorGenerator {
-  FUN_VERSION = '3.0.0-beta.7';
+  FUN_VERSION = '3.0.0-beta.8';
   getExecuteFileName(): string {
     return 'fun.exe';
   }
@@ -134,9 +134,9 @@ class WindowsFunExecutorGenerator extends FunExecutorGenerator {
   getPlatformFunPath(): string {
     const terminal = vscode.workspace.getConfiguration().get('terminal.integrated.shell.windows') as string;
     if (terminal && terminal.indexOf('cmd') > -1) {
-      return path.win32.join('%USERPROFILE%', '.aliyun-serverless', 'bin', 'fun.exe');
+      return `"${path.win32.join('%USERPROFILE%', '.aliyun-serverless', 'bin', 'fun.exe')}"`;
     }
-    return path.posix.join('~', '.aliyun-serverless', 'bin', 'fun.exe');
+    return `& "${path.posix.join('~', '.aliyun-serverless', 'bin', 'fun.exe')}"`;
   }
 }
 
