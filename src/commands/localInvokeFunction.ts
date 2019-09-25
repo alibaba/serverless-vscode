@@ -10,13 +10,19 @@ import { isPathExists, createEventFile } from '../utils/file';
 
 export function localInvokeFunction(context: vscode.ExtensionContext) {
   context.subscriptions.push(vscode.commands.registerCommand(serverlessCommands.LOCAL_RUN.id,
-    async (node: Resource, eventFilePath: string | undefined) => {
+    async (node: Resource, eventFilePath: string | undefined, reuse: boolean = false) => {
       recordPageView('/localInvoke');
       if (node.resourceType !== ResourceType.Function) {
         return;
       }
       const funcRes = node as FunctionResource;
-      await process(funcRes.serviceName, funcRes.functionName, funcRes.templatePath as string, eventFilePath)
+      await process(
+        funcRes.serviceName,
+        funcRes.functionName,
+        funcRes.templatePath as string,
+        eventFilePath,
+        reuse,
+      )
         .catch(ex => vscode.window.showErrorMessage(ex.message));
     })
   );
@@ -25,6 +31,7 @@ export function localInvokeFunction(context: vscode.ExtensionContext) {
 async function process(
   serviceName: string, functionName: string,
   templatePath: string, eventFilePath: string | undefined,
+  reuse: boolean,
 ) {
   if (!ext.cwd) {
     vscode.window.showErrorMessage('Please open a workspace');
@@ -59,8 +66,8 @@ async function process(
   // 启动 fun local
   const funService = new FunService(templatePath);
   if (hasHttpTrigger) {
-    funService.localStart(serviceName, functionName);
+    funService.localStart();
   } else {
-    funService.localInvoke(serviceName, functionName, eventFilePath as string);
+    funService.localInvoke(serviceName, functionName, eventFilePath as string, reuse);
   }
 }

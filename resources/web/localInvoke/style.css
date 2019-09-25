@@ -7,7 +7,7 @@ body, div, ul {
 
 button {
   border: none;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .breadcrumb {
@@ -15,7 +15,7 @@ button {
   top: 0;
   padding: 10px 10px;
   z-index: 10;
-  font-size: 12px;
+  font-size: 10px;
   font-weight: bold;
   margin-bottom: 12px;
 }
@@ -61,7 +61,7 @@ button {
   border: 1px solid rgba(115, 118, 128, 0.5);
   padding: 8px 30px 8px 10px;
   width: 200px;
-  font-size: 14px;
+  font-size: 12px;
   float: right;
   position: relative;
   bottom: 4px;
@@ -72,18 +72,41 @@ button {
   height: 500px;
 }
 
+.info-title {
+  font-weight: 700;
+  margin-bottom: 18px;
+  font-size: 20px;
+  margin-left: 8px;
+}
+
+.info-tip {
+  margin-bottom: 18px;
+  margin-left: 8px;
+}
+
 .btn {
-  padding: 0 19px;
+  padding: 0 12px;
   height: 28px;
-  line-height: 28px;
+  line-height: 14px;
   cursor: pointer;
-  border-radius: 2px;
   margin-left: 8px;
 }
 
 .btn.btn-primary {
   background-color: #007acc;
   outline: 1px solid #007acc;
+  color: #fff;
+}
+
+.btn.btn-primary-green {
+  background-color: #317534;
+  outline: 1px solid #317534;
+  color: #fff;
+}
+
+.btn.btn-primary-red {
+  background-color: #ed6156;
+  outline: 1px solid #ed6156;
   color: #fff;
 }
 
@@ -97,4 +120,17 @@ button {
   background-color: #ffffff;
   outline: 1px solid #212121;
   color: #212121;
+}
+
+.vscode-dark .disabled {
+  background-color: #393939 !important;
+  outline: 1px solid #393939 !important;
+  color: #979797 !important;
+  cursor: no-drop;
+}
+
+.vscode-light .disabled {
+  background-color: #ababab !important;
+  outline: 1px solid #ababab !important;
+  cursor: no-drop;
 }

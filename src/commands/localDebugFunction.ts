@@ -15,13 +15,18 @@ const debugPortSet = new Set();
 
 export function localDebugFunction(context: vscode.ExtensionContext) {
   context.subscriptions.push(vscode.commands.registerCommand(serverlessCommands.LOCAL_DEBUG.id,
-    async (node: Resource, eventFilePath: string | undefined) => {
+    async (node: Resource, eventFilePath: string | undefined, reuse: boolean = false, debugPort?: string) => {
       recordPageView('/localDebug');
       if (node.resourceType !== ResourceType.Function) {
         return;
       }
       const funcRes = node as FunctionResource;
-      await process(funcRes.serviceName, funcRes.functionName, funcRes.templatePath as string, eventFilePath)
+      await process(
+        funcRes.serviceName, funcRes.functionName,
+        funcRes.templatePath as string, eventFilePath,
+        reuse,
+        debugPort,
+      )
         .catch(ex => vscode.window.showErrorMessage(ex.message));
     })
   );
@@ -36,6 +41,7 @@ export function localDebugFunction(context: vscode.ExtensionContext) {
 async function process(
   serviceName: string, functionName: string,
   templatePath: string, eventFilePath: string | undefined,
+  reuse: boolean, debugPort?: string,
 ) {
   if (!ext.cwd) {
     vscode.window.showErrorMessage('Please open a workspace');
@@ -95,15 +101,24 @@ async function process(
   }
   // 启动 fun local
   const funService = new FunService(templatePath);
-
+  configuration.port = debugPort || configuration.port;
   if (rt.isPhp(runtime)) {
+    if (debugPort && debugPortSet.has(debugPort)
+    ) {
+      return;
+    }
     vscode.debug.startDebugging(undefined, configuration);
   }
   let terminal: vscode.Terminal;
   if (hasHttpTrigger) {
     terminal = funService.localStartDebug(serviceName, functionName, configuration.port);
   } else {
-    terminal = funService.localInvokeDebug(serviceName, functionName, configuration.port, eventFilePath as string);
+    terminal = funService.localInvokeDebug(
+      serviceName, functionName, configuration.port, eventFilePath as string, reuse
+    );
+  }
+  if (debugPort && debugPortSet.has(debugPort)) {
+    return;
   }
   if (rt.isNodejs(runtime) || rt.isPython(runtime)) {
     try {
@@ -158,7 +173,7 @@ function getConfigurationName(serviceName: string, functionName: string) {
 }
 
 function getDebugPort(): number {
-  let port = 3000;
+  let port = 3000 + Math.floor(Math.random() * 100);
   while (debugPortSet.has(port)) {
     port = 3000 + Math.floor(Math.random() * 100);
   }
