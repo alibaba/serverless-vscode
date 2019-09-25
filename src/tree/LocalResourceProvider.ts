@@ -47,14 +47,16 @@ export class LocalResourceProvider implements vscode.TreeDataProvider<Resource> 
       return Promise.resolve([]);
     }
 
-    const files = await findFile('**/template.{yml,yaml}', {
-      cwd: this.workspaceRoot,
-    })
-    if (!files || !files.length) {
-      return [];
-    }
-
     if (!element) {
+      const files = await findFile('**/template.{yml,yaml}', {
+        cwd: this.workspaceRoot,
+        ignore: [
+          'node_modules/**/template.{yml,yaml}',
+        ],
+      })
+      if (!files || !files.length) {
+        return [];
+      }
       if (files.length === 1) {
         return [
           new TemplateResource(
