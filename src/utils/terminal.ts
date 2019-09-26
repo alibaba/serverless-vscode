@@ -2,55 +2,59 @@ import * as vscode from 'vscode';
 import * as os from 'os';
 import * as path from 'path';
 
-export function getFunctionComputeTerminal(cwd?: string): vscode.Terminal {
-  const terminal = isExistFunctionComputeTerminal();
-  if (terminal) {
-    terminal.dispose();
-  }
-  return createFunctionComputeTerminal(cwd);
-}
+const END_OF_TEXT = '\x03';
 
-export function getFunctionComputeWorkderTerminal(): vscode.Terminal {
-  const terminal = isExistFunctionComputeWorkerTerminal();
+export function getFunctionComputeTerminal(cwd?: string, terminalName?: string): vscode.Terminal {
+  const name = terminalName || FUNCTION_COMPUTE_TERMINAL;
+  const terminal = isExistFunctionComputeTerminal(name);
   if (terminal) {
+    terminal.sendText(END_OF_TEXT);
+    if (cwd) {
+      terminal.sendText(generateChangeDirectoryCmd(cwd));
+    }
     return terminal;
   }
-  return createFunctionComputeWorkerTerminal();
+  return createFunctionComputeTerminal(cwd, name);
 }
 
-const FUNCTION_COMPUTE_TERMINAL = 'Function Compute#1';
-const FUNCTION_COMPUTE_WORKER_TERMINAL = 'Function Compute#2';
+export function abortTask(terminalName: string): vscode.Terminal | undefined {
+  const terminal = isExistFunctionComputeTerminal(terminalName);
+  if (terminal) {
+    terminal.sendText(END_OF_TEXT);
+    return terminal;
+  }
+}
 
-function isExistFunctionComputeTerminal(): vscode.Terminal | null {
+export const FUNCTION_COMPUTE_TERMINAL = 'Function Compute#1';
+export const FUNCTION_COMPUTE_WORKER_TERMINAL = 'Function Compute#2';
+
+function isExistFunctionComputeTerminal(name: string): vscode.Terminal | null {
   let terminals = vscode.window.terminals;
-  terminals = terminals.filter(terminal => terminal.name === FUNCTION_COMPUTE_TERMINAL)
+  terminals = terminals.filter(terminal => terminal.name === name)
   if (terminals && terminals.length > 0) {
     return terminals[0];
   }
   return null;
 }
 
-function isExistFunctionComputeWorkerTerminal(): vscode.Terminal | null {
-  let terminals = vscode.window.terminals;
-  terminals = terminals.filter(terminal => terminal.name === FUNCTION_COMPUTE_WORKER_TERMINAL)
-  if (terminals && terminals.length > 0) {
-    return terminals[0];
+function generateChangeDirectoryCmd(cwd: string) {
+  if (os.platform() === 'win32') {
+    const terminal = vscode.workspace.getConfiguration().get('terminal.integrated.shell.windows') as string;
+    if (terminal && terminal.indexOf('cmd') > -1) {
+      return `cd /d "${cwd}"`;
+    }
   }
-  return null;
+  return `cd "${cwd}"`;
 }
 
-function createFunctionComputeTerminal(cwd?: string): vscode.Terminal {
+function createFunctionComputeTerminal(cwd?: string, terminalName?: string): vscode.Terminal {
   const extBinPath = path.resolve(os.homedir(), '.aliyun-serverless', 'bin');
   const binPath = process.env.PATH + path.delimiter + extBinPath;
   return vscode.window.createTerminal({
-    name: FUNCTION_COMPUTE_TERMINAL,
+    name: terminalName || FUNCTION_COMPUTE_TERMINAL,
     cwd,
     env: {
       'PATH': binPath,
     },
   });
-}
-
-function createFunctionComputeWorkerTerminal(): vscode.Terminal {
-  return vscode.window.createTerminal(FUNCTION_COMPUTE_WORKER_TERMINAL);
 }

@@ -3,19 +3,37 @@ import * as path from 'path';
 import * as fs from 'fs';
 import * as util from 'util';
 import * as glob from 'glob';
-import { InvokeDescriptor } from '../descriptors/descriptor';
+import * as terminalService from '../utils/terminal';
+import { InvokeDescriptor, FunctionDescriptor } from '../descriptors/descriptor';
 import { AbstractInfoPanelCreator } from './AbstractInfoPanelCreator';
 import { isDirectory, isPathExists, createEventFile } from '../utils/file';
-import { FunService } from '../services/FunService';
 import { serverlessCommands } from '../utils/constants';
 import { FunctionResource } from '../models/resource';
+import { localStartChangeEventEmitter } from '../models/events';
 
 const findFile = util.promisify(glob);
 export class LocalInvokePanelCreator extends AbstractInfoPanelCreator<InvokeDescriptor> {
   viewType = 'localInvoke';
 
+  private onLocalStartChange: vscode.Event<FunctionDescriptor>;
+
   public constructor(extensionPath: string) {
     super(extensionPath);
+    this.onLocalStartChange = localStartChangeEventEmitter.event;
+  }
+
+  public create(descriptor: InvokeDescriptor): vscode.WebviewPanel {
+    const panel = super.create(descriptor);
+    const disposable = this.onLocalStartChange((e: FunctionDescriptor) => {
+      if (e.serviceName !== descriptor.serviceName || e.functionName !== descriptor.functionName) {
+        this.updateRunningState(panel, 'STOPPED');
+      }
+    });
+    panel.onDidDispose(() => {
+      disposable.dispose();
+      sendEndOfTextToWorkTerminal();
+    });
+    return panel;
   }
 
   public getPanelTitle(descriptor: InvokeDescriptor): string {
@@ -48,6 +66,18 @@ export class LocalInvokePanelCreator extends AbstractInfoPanelCreator<InvokeDesc
         });
         return;
       }
+      case 'updateEventFileList': {
+        this.getEventFiles(descriptor.templatePath, descriptor.codeUri)
+          .then((files) => {
+            panel.webview.postMessage({
+              command: 'updateEventFileList',
+              data: {
+                files,
+              },
+            });
+          });
+        return;
+      }
       case 'updateEventContent': {
         const eventFilePath = path.join(eventFileDir, message.data.eventFile);
         fs.writeFileSync(eventFilePath, message.data.eventContent);
@@ -73,7 +103,7 @@ export class LocalInvokePanelCreator extends AbstractInfoPanelCreator<InvokeDesc
         );
         return;
       }
-      case 'localInvoke': {
+      case 'localRun': {
         const eventFilePath = path.join(eventFileDir, message.data);
         vscode.commands.executeCommand(
           serverlessCommands.LOCAL_RUN.id,
@@ -85,11 +115,13 @@ export class LocalInvokePanelCreator extends AbstractInfoPanelCreator<InvokeDesc
             descriptor.templatePath,
           ),
           eventFilePath,
+          true,
         );
         return;
       }
       case 'localDebug': {
-        const eventFilePath = path.join(eventFileDir, message.data);
+        const { eventFile, debugPort } = message.data;
+        const eventFilePath = path.join(eventFileDir, eventFile);
         vscode.commands.executeCommand(
           serverlessCommands.LOCAL_DEBUG.id,
           new FunctionResource(
@@ -100,18 +132,70 @@ export class LocalInvokePanelCreator extends AbstractInfoPanelCreator<InvokeDesc
             descriptor.templatePath,
           ),
           eventFilePath,
+          true,
+          debugPort,
         );
+        return;
+      }
+      case 'start': {
+        const { data: { debugMode = false } = {} } = message;
+        vscode.commands.executeCommand(
+          serverlessCommands.LOCAL_START.id,
+          new FunctionResource(
+            descriptor.serviceName,
+            descriptor.functionName,
+            undefined,
+            undefined,
+            descriptor.templatePath,
+          ),
+          debugMode ? true : false,
+          debugMode ? (debugPort: string) => {
+            this.updateDebugPort(panel, debugPort);
+          } : undefined,
+        );
+        this.updateRunningState(panel, debugMode ? 'DEBUGGING' : 'RUNNING');
+        localStartChangeEventEmitter.fire({
+          serviceName: descriptor.serviceName,
+          functionName: descriptor.functionName,
+        });
+        return;
+      }
+      case 'stop': {
+        const terminal = sendEndOfTextToWorkTerminal();
+        if (terminal) {
+          terminal.show();
+        }
+        this.updateRunningState(panel, 'STOPPED');
+        return;
       }
     }
   }
 
+  private updateDebugPort(panel: vscode.WebviewPanel, debugPort: string) {
+    if (panel && panel.webview) {
+      panel.webview.postMessage({
+        command: 'updateDebugPort',
+        data: debugPort,
+      });
+    }
+  }
+
+  private updateRunningState(panel: vscode.WebviewPanel, state: string) {
+    if (panel && panel.webview) {
+      panel.webview.postMessage({
+        command: 'updateRunningState',
+        data: state,
+      });
+    }
+  }
+
   protected async update(panel: vscode.WebviewPanel, descriptor: InvokeDescriptor) {
-    const files = await this.getEventFiles(descriptor.templatePath, descriptor.codeUri);
     panel.webview.postMessage({
-      command: 'updateEventFileList',
+      command: 'initFunctionInfo',
       data: {
-        files,
-      },
+        serviceName: descriptor.serviceName,
+        functionName: descriptor.functionName,
+      }
     });
   }
 
@@ -130,4 +214,9 @@ export class LocalInvokePanelCreator extends AbstractInfoPanelCreator<InvokeDesc
     })
     return files;
   }
+}
+
+function sendEndOfTextToWorkTerminal() {
+  const terminal = terminalService.abortTask(terminalService.FUNCTION_COMPUTE_WORKER_TERMINAL);
+  return terminal;
 }

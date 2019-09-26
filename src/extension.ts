@@ -50,6 +50,7 @@ import { installPackage } from './commands/installPackage';
 import { startLocalSandbox } from './commands/startLocalSandbox';
 import { showLocalInvokePanel } from './commands/showLocalInvokePanel';
 import { createEventFile } from './commands/createEventFile';
+import { localStartFunction } from './commands/localStartFunction';
 
 export function activate(context: vscode.ExtensionContext) {
   recordPageView('/');
@@ -110,6 +111,7 @@ export function activate(context: vscode.ExtensionContext) {
   startLocalSandbox(context);
   showLocalInvokePanel(context);
   createEventFile(context);
+  localStartFunction(context);
 
   vscode.commands.executeCommand(serverlessCommands.SHOW_REGION_STATUS.id);
   vscode.commands.executeCommand(serverlessCommands.SHOW_UPDATE_NOTIFICATION.id);

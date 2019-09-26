@@ -2,8 +2,7 @@ import * as vscode from 'vscode';
 import * as os from 'os';
 import * as path from 'path';
 import * as terminalService from '../utils/terminal';
-import * as open from 'open';
-import { getFunPath } from '../utils/fun';
+import { getFunBin } from '../utils/fun';
 import { isDirectory } from '../utils/file';
 
 export class FunService {
@@ -16,8 +15,8 @@ export class FunService {
     if (!this.validateInitRumtime(runtime)) {
       vscode.window.showErrorMessage(`${runtime} is not valid runtime`);
     }
-    getFunPath().then(funPath => {
-      const command = `${funPath} init helloworld-${runtime}`;
+    getFunBin().then(funBin => {
+      const command = `${funBin} init helloworld-${runtime}`;
       terminal.sendText(command);
       terminal.show();
     })
@@ -25,11 +24,11 @@ export class FunService {
 
   deploy(serviceName?: string, functionName? :string) {
     const terminal = terminalService.getFunctionComputeTerminal(path.dirname(this.templatePath));
-    getFunPath().then(funPath => {
+    getFunBin().then(funBin => {
       const command = functionName ?
-        `${funPath} deploy ${serviceName}/${functionName} -t ${this.templatePath}` :
-        serviceName ? `${funPath} deploy ${serviceName} -t ${this.templatePath}` :
-          `${funPath} deploy -t ${this.templatePath}`;
+        `${funBin} deploy ${serviceName}/${functionName} -t ${this.templatePath}` :
+        serviceName ? `${funBin} deploy ${serviceName} -t ${this.templatePath}` :
+          `${funBin} deploy -t ${this.templatePath}`;
       terminal.sendText(command);
       terminal.show();
     })
@@ -37,49 +36,58 @@ export class FunService {
 
   syncNas(serviceName: string, mountDir: string) {
     const terminal =  terminalService.getFunctionComputeTerminal(path.dirname(this.templatePath));
-    getFunPath().then(funPath => {
-      const command = `${funPath} nas sync -s ${serviceName} -m ${mountDir}`;
+    getFunBin().then(funBin => {
+      const command = `${funBin} nas sync -s ${serviceName} -m ${mountDir}`;
       terminal.sendText(command);
       terminal.show();
     });
   }
 
-  localInvoke(serviceName: string, functionName: string, eventFilePath: string) {
+  localInvoke(serviceName: string, functionName: string, eventFilePath: string, reuse: boolean) {
     const terminal =  terminalService.getFunctionComputeTerminal(path.dirname(this.templatePath));
-    getFunPath().then(funPath => {
+    getFunBin().then(funBin => {
       const command =
-        `${funPath} local invoke ${serviceName}/${functionName} -e ${this.escapeSpace(eventFilePath)}`;
+        `${funBin} local invoke ${serviceName}/${functionName} -e ${this.escapeSpace(eventFilePath)} `
+        +
+        (reuse ? '' : '--no-reuse');
       terminal.sendText(command);
       terminal.show();
     })
   }
 
   localInvokeDebug(serviceName: string, functionName: string,
-    debugPort: string, eventFilePath: string): vscode.Terminal {
+    debugPort: string, eventFilePath: string, reuse: boolean): vscode.Terminal {
     const terminal =  terminalService.getFunctionComputeTerminal(path.dirname(this.templatePath));
-    getFunPath().then(funPath => {
+    getFunBin().then(funBin => {
       /* eslint-disable max-len */
       const command =
-      `${funPath} local invoke ${serviceName}/${functionName} -d ${debugPort} -e ${this.escapeSpace(eventFilePath)}`;
+      `${funBin} local invoke ${serviceName}/${functionName} -d ${debugPort} -e ${this.escapeSpace(eventFilePath)} `
+      +
+      (reuse ? '' : '--no-reuse');
       terminal.sendText(command);
       terminal.show();
     })
     return terminal;
   }
 
-  localStart(serviceName: string, functionName: string) {
-    const terminal = terminalService.getFunctionComputeTerminal(path.dirname(this.templatePath));
-    getFunPath().then(funPath => {
-      const command = `${funPath} local start`;
+  localStart(serviceName?: string, functionName?: string, workTerminal?: vscode.Terminal) {
+    const terminal = workTerminal || terminalService.getFunctionComputeTerminal(path.dirname(this.templatePath));
+    getFunBin().then(funBin => {
+      const command = functionName ?
+        `${funBin} local start ${serviceName}/${functionName}`
+        :
+        `${funBin} local start`;
       terminal.sendText(command);
       terminal.show();
     })
   }
 
-  localStartDebug(serviceName: string, functionName: string, debugPort: string): vscode.Terminal {
-    const terminal = terminalService.getFunctionComputeTerminal(path.dirname(this.templatePath));
-    getFunPath().then(funPath => {
-      const command = `${funPath} local start ${serviceName}/${functionName} -d ${debugPort}`;
+  localStartDebug(
+    serviceName: string, functionName: string, debugPort: string, workTerminal?: vscode.Terminal
+  ): vscode.Terminal {
+    const terminal = workTerminal || terminalService.getFunctionComputeTerminal(path.dirname(this.templatePath));
+    getFunBin().then(funBin => {
+      const command = `${funBin} local start ${serviceName}/${functionName} -d ${debugPort}`;
       terminal.sendText(command);
       terminal.show();
     })
@@ -93,8 +101,8 @@ export class FunService {
       functionDirPath = path.dirname(functionDirPath);
     }
     const terminal = terminalService.getFunctionComputeTerminal(functionDirPath);
-    getFunPath().then(funPath => {
-      const command = `${funPath} install -r ${runtime} -p ${packageType} ${packageNames} --save`;
+    getFunBin().then(funBin => {
+      const command = `${funBin} install -r ${runtime} -p ${packageType} ${packageNames} --save`;
       terminal.sendText(command);
       terminal.show();
     });
@@ -102,8 +110,8 @@ export class FunService {
 
   installSbox(serviceName: string, functionName: string) {
     const terminal = terminalService.getFunctionComputeTerminal(path.dirname(this.templatePath));
-    getFunPath().then(funPath => {
-      const command = `${funPath} install sbox -f ${serviceName}/${functionName} -i`;
+    getFunBin().then(funBin => {
+      const command = `${funBin} install sbox -f ${serviceName}/${functionName} -i`;
       terminal.sendText(command);
       terminal.show();
     })
@@ -111,9 +119,9 @@ export class FunService {
 
   remoteInvokeWithEventFilePath(serviceName: string, functionName: string, eventFilePath: string) {
     const terminal =  terminalService.getFunctionComputeTerminal(path.dirname(this.templatePath));
-    getFunPath().then(funPath => {
+    getFunBin().then(funBin => {
       const command =
-        `${funPath} invoke ${serviceName}/${functionName} -f ${this.escapeSpace(eventFilePath)}`;
+        `${funBin} invoke ${serviceName}/${functionName} -f ${this.escapeSpace(eventFilePath)}`;
       terminal.sendText(command);
       terminal.show();
     })
@@ -121,9 +129,9 @@ export class FunService {
 
   remoteInvokeWithStdin(serviceName: string, functionName: string) {
     const terminal =  terminalService.getFunctionComputeTerminal(path.dirname(this.templatePath));
-    getFunPath().then(funPath => {
+    getFunBin().then(funBin => {
       const command =
-        `${funPath} invoke ${serviceName}/${functionName} -s`;
+        `${funBin} invoke ${serviceName}/${functionName} -s`;
       terminal.sendText(command);
       terminal.show();
     })

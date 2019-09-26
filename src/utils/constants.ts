@@ -55,6 +55,10 @@ export namespace serverlessCommands {
     id: 'fc.extension.localResource.local.invoke',
     title: 'Local Run',
   };
+  export const LOCAL_START = {
+    id: 'fc.extension.localResource.local.start',
+    title: 'Local Start',
+  };
   export const INSTALL_PACKAGE = {
     id: 'fc.extension.install.package',
     title: 'INSTALL PACKAGE',

@@ -11,8 +11,6 @@ export abstract class AbstractInfoPanelCreator<T extends ResourceDescriptor> imp
   protected abstract async update(panel: vscode.WebviewPanel, descriptor: T): Promise<any>;
   protected abstract getPanelTitle(descriptor: T): string;
 
-  protected disposables: vscode.Disposable[] = [];
-
   public constructor(extensionPath: string) {
     this.extensionPath = extensionPath;
   }
@@ -31,18 +29,19 @@ export abstract class AbstractInfoPanelCreator<T extends ResourceDescriptor> imp
         retainContextWhenHidden: true,
       },
     );
+    const disposables: vscode.Disposable[] = [];
     panel.webview.html = this.getHtmlForWebview(descriptor);
-    panel.onDidDispose(() => this.dispose(), null, this.disposables);
+    panel.onDidDispose(() => this.dispose(disposables), null, disposables);
     panel.webview.onDidReceiveMessage(
-      message => this.receiveMessage(message, descriptor, panel), null, this.disposables
+      message => this.receiveMessage(message, descriptor, panel), null, disposables
     );
     this.update(panel, descriptor);
     return panel;
   }
 
-  private dispose() {
-    while (this.disposables.length) {
-      const d = this.disposables.pop();
+  private dispose(disposables: vscode.Disposable[]) {
+    while (disposables.length) {
+      const d = disposables.pop();
       if (d) {
         d.dispose();
       }
