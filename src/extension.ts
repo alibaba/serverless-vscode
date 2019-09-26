@@ -51,6 +51,7 @@ import { startLocalSandbox } from './commands/startLocalSandbox';
 import { showLocalInvokePanel } from './commands/showLocalInvokePanel';
 import { createEventFile } from './commands/createEventFile';
 import { localStartFunction } from './commands/localStartFunction';
+import { copyFunction, pasteFunction } from './commands/copyPasteFunction';
 
 export function activate(context: vscode.ExtensionContext) {
   recordPageView('/');
@@ -59,7 +60,10 @@ export function activate(context: vscode.ExtensionContext) {
   ext.cwd = cwd;
 
   const localResourceProvider = new LocalResourceProvider(cwd);
-  vscode.window.registerTreeDataProvider('fcLocalResource', localResourceProvider);
+  const localResourceTreeView = vscode.window.createTreeView('fcLocalResource', {
+    treeDataProvider: localResourceProvider,
+  })
+  ext.localResourceTreeView = localResourceTreeView;
   vscode.commands.registerCommand(serverlessCommands.REFRESH_LOCAL_RESOURCE.id,
     () => localResourceProvider.refresh()
   );
@@ -112,6 +116,8 @@ export function activate(context: vscode.ExtensionContext) {
   showLocalInvokePanel(context);
   createEventFile(context);
   localStartFunction(context);
+  copyFunction(context);
+  pasteFunction(context);
 
   vscode.commands.executeCommand(serverlessCommands.SHOW_REGION_STATUS.id);
   vscode.commands.executeCommand(serverlessCommands.SHOW_UPDATE_NOTIFICATION.id);

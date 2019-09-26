@@ -25,5 +25,8 @@ async function process(templatePath: string) {
   }
 
   const document = await vscode.workspace.openTextDocument(vscode.Uri.file(templatePath));
-  await vscode.window.showTextDocument(document)
+  await vscode.window.showTextDocument(document, {
+    preserveFocus: true,
+    preview: true,
+  });
 }

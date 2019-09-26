@@ -32,5 +32,8 @@ export async function process(serviceName: string, functionName: string, templat
     return;
   }
   const document = await vscode.workspace.openTextDocument(vscode.Uri.file(localRoot));
-  await vscode.window.showTextDocument(document);
+  await vscode.window.showTextDocument(document, {
+    preserveFocus: true,
+    preview: true,
+  });
 }

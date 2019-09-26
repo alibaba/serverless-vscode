@@ -56,7 +56,10 @@ async function process(serviceName: string, functionName: string, templatePath: 
   lineNumber = functionFound ? lineNumber : 0;
   const cursorPosition = new vscode.Position(lineNumber, 0);
   const document = await vscode.workspace.openTextDocument(vscode.Uri.file(templatePath));
-  await vscode.window.showTextDocument(document).then(editor => {
+  await vscode.window.showTextDocument(document, {
+    preserveFocus: true,
+    preview: true,
+  }).then(editor => {
     editor.selections = [new vscode.Selection(cursorPosition, cursorPosition)];
     editor.revealRange(new vscode.Range(cursorPosition, new vscode.Position(lineNumber + 10, 0)));
     if (functionFound) {
