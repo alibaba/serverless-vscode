@@ -260,6 +260,28 @@
       {
         "command": "fc.extension.start.local.sandbox",
         "title": "Start Sandbox"
+      },
+      {
+        "command": "fc.extension.localResource.copy.function",
+        "title": "Copy"
+      },
+      {
+        "command": "fc.extension.localResource.paste.function",
+        "title": "Paste"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "fc.extension.localResource.copy.function",
+        "key": "ctrl+c",
+        "mac": "cmd+c",
+        "when": "focusedView == fcLocalResource"
+      },
+      {
+        "command": "fc.extension.localResource.paste.function",
+        "key": "ctrl+v",
+        "mac": "cmd+v",
+        "when": "focusedView == fcLocalResource"
       }
     ],
     "viewsContainers": {
@@ -350,7 +372,8 @@
         },
         {
           "command": "fc.extension.deploy.service",
-          "when": "view == fcLocalResource && viewItem == service"
+          "when": "view == fcLocalResource && viewItem == service",
+          "group": "2_remote@1"
         },
         {
           "command": "fc.extension.deploy.function",
@@ -366,6 +389,16 @@
           "command": "fc.extension.start.local.sandbox",
           "when": "view == fcLocalResource && viewItem == function",
           "group": "2_local@3"
+        },
+        {
+          "command": "fc.extension.localResource.copy.function",
+          "when": "view == fcLocalResource && viewItem == function",
+          "group": "4_operate@1"
+        },
+        {
+          "command": "fc.extension.localResource.paste.function",
+          "when": "view == fcLocalResource && viewItem == service",
+          "group": "3_operate@1"
         },
         {
           "command": "fc.extension.nas.sync",
@@ -392,7 +425,8 @@
         },
         {
           "command": "fc.extension.function.create",
-          "when": "view == fcLocalResource && viewItem == service"
+          "when": "view == fcLocalResource && viewItem == service",
+          "group": "1_local@1"
         },
         {
           "command": "fc.extension.function.create",
@@ -515,6 +549,14 @@
         {
           "command": "fc.extension.start.local.sandbox",
           "when": "never"
+        },
+        {
+          "command": "fc.extension.localResource.copy.function",
+          "when": "never"
+        },
+        {
+          "command": "fc.extension.localResource.paste.function",
+          "when": "never"
         }
       ]
     }
@@ -546,7 +588,7 @@
   },
   "dependencies": {
     "@alicloud/fc2": "^2.1.0",
-    "@alicloud/fun": "3.0.1",
+    "@alicloud/fun": "3.0.2",
     "@types/js-yaml": "^3.12.1",
     "@typescript-eslint/eslint-plugin": "^1.11.0",
     "@typescript-eslint/parser": "^1.11.0",

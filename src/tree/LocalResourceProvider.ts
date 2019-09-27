@@ -41,6 +41,10 @@ export class LocalResourceProvider implements vscode.TreeDataProvider<Resource> 
     return element;
   }
 
+  async getParent(element: Resource): Promise<Resource | undefined> {
+    return;
+  }
+
   async getChildren(element?: Resource): Promise<Resource[]> {
     if (!this.workspaceRoot) {
       vscode.window.showInformationMessage('No template.yml in empty workspace');

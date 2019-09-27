@@ -59,6 +59,14 @@ export namespace serverlessCommands {
     id: 'fc.extension.localResource.local.start',
     title: 'Local Start',
   };
+  export const COPY_FUNCTION = {
+    id: 'fc.extension.localResource.copy.function',
+    title: 'Copy',
+  };
+  export const PASTE_FUNCTION = {
+    id: 'fc.extension.localResource.paste.function',
+    title: 'Paste',
+  };
   export const INSTALL_PACKAGE = {
     id: 'fc.extension.install.package',
     title: 'INSTALL PACKAGE',

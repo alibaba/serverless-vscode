@@ -29,5 +29,8 @@ async function process(
   await getOrInitEventConfig(templatePath, serviceName, functionName, codeUri);
   const configFilePath = getConfigFilePath();
   const document = await vscode.workspace.openTextDocument(vscode.Uri.file(configFilePath));
-  await vscode.window.showTextDocument(document);
+  await vscode.window.showTextDocument(document, {
+    preserveFocus: true,
+    preview: true,
+  });
 }
