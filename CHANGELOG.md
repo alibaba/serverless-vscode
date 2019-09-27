@@ -2,6 +2,20 @@
 
 所有对 "Aliyun Serverless" 插件的更改都将记录在这个文件中。
 
+## 1.11.0 - 2019-09-27
+### Added
+- 函数运行调试面板支持启动长驻型函数。用户可在函数运行调试面板中启动运行或启动调试，启动后通过单击面板中的 "调用" 按钮，可以触发单次的运行或调试。每次点击 "调用" 按钮，Handler 函数都将被执行，Initializer 函数在启动后只会被初始化执行一次。
+
+![invokePanel](https://github.com/alibaba/serverless-vscode/blob/master/media/changelog/v1.11.0/invokePanel.gif?raw=true)
+
+- 本地资源树支持拷贝函数。在本地资源面板中，单击函数名后右键函数名选择复制或按 `ctrl/⌘ c`，再右键服务名选择黏贴或单击服务名后按 `ctrl/⌘ v`，即可将指定函数在模版文件 template.yml 中的相关描述定义拷贝到指定服务下。
+
+![copy-paste](https://github.com/alibaba/serverless-vscode/blob/master/media/changelog/v1.11.0/copy-paste.gif?raw=true)
+
+### Other
+- 优化本地资源树的加载，提高资源树展开的加载速度。
+- 优化 fun 命令调用方式。避免多次调试 HTTP Trigger 时，出现调试端口被占用的情况。
+
 ## 1.10.0 - 2019-09-20
 ### Added
 - 新增函数运行调试面板。插件将会根据用户设定的函数入口文件，在 Event Trigger 函数入口方法名上显示 Invoke Panel，用户点击后将会跳转至函数运行调试面板。用户可在运行调试面板中新增编辑事件、运行调试函数。

@@ -16,9 +16,9 @@ let copyFuncInfo: {
 export function copyFunction(context: vscode.ExtensionContext) {
   context.subscriptions.push(vscode.commands.registerCommand(
     serverlessCommands.COPY_FUNCTION.id,
-    async () => {
+    async (resource?: Resource) => {
       recordPageView('/copyFunction');
-      const node = ext.localResourceTreeView && ext.localResourceTreeView.selection[0];
+      const node = resource ? resource : ext.localResourceTreeView && ext.localResourceTreeView.selection[0];
       if (!node || node.resourceType !== ResourceType.Function) {
         return;
       }
@@ -54,9 +54,9 @@ async function processCopy(
 export function pasteFunction(context: vscode.ExtensionContext) {
   context.subscriptions.push(vscode.commands.registerCommand(
     serverlessCommands.PASTE_FUNCTION.id,
-    async () => {
+    async (resource?: Resource) => {
       recordPageView('/pasteFunction');
-      const node = ext.localResourceTreeView && ext.localResourceTreeView.selection[0];
+      const node = resource ? resource : ext.localResourceTreeView && ext.localResourceTreeView.selection[0];
       if (!node || node.resourceType !== ResourceType.Service) {
         return;
       }
