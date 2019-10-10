@@ -49,6 +49,7 @@ import {
   MNSTOPIC_TRIGGER_INSERT_TEXT,
   TABLESTORE_TRIGGER_INSERT_TEXT,
   CDN_TRIGGER_INSERT_TEXT,
+  MEMORYSIZE_INSERT_TEXT,
 } from './constants';
 
 // TODO: schema 的进一步定义
@@ -204,7 +205,9 @@ const functionSchema = {
         'CodeUri': {},
         'Initializer': {},
         'Description': {},
-        'MemorySize': {},
+        'MemorySize': {
+          insertText: MEMORYSIZE_INSERT_TEXT,
+        },
         'Timeout': {},
         'InitializationTimeout': {},
         'EnvironmentVariables': {},
