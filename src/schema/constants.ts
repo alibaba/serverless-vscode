@@ -129,6 +129,18 @@ export const RESOURCES_INSERT_TEXT =
 export const EVENTS_INSERT_TEXT =
   "Events:\n" +
   "  "
+export const SUPPORTED_MEMORYSIZES = [
+  128, 192, 256, 320, 384, 448, 512, 576, 640, 704,
+  768, 832, 896, 960, 1024, 1088, 1152, 1216, 1280,
+  1344, 1408, 1472, 1536, 1600, 1664, 1728, 1792,
+  1856, 1920, 1984, 2048, 2112, 2176, 2240, 2304,
+  2368, 2432, 2496, 2560, 2624, 2688, 2752, 2816,
+  2880, 2944, 3008, 3072,
+];
+export const MEMORYSIZE_INSERT_TEXT =
+  "MemorySize: ${1|" +
+  SUPPORTED_MEMORYSIZES.join(",") +
+  "|}"
 export const TIMER_TRIGGER_INSERT_TEXT =
   "${1:timeTrigger}:\n" +
   "  Type: Timer\n" +
