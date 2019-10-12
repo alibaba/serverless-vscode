@@ -135,6 +135,10 @@ export namespace serverlessCommands {
     id: 'fc.extension.switch.region',
     title: 'Switch Region',
   };
+  export const SWITCH_EVENT_FILE = {
+    id: 'fc.extension.switch.event.file',
+    title: 'Switch Event File',
+  };
   export const SWITCH_REGION_OR_ACCOUNT = {
     id: 'fc.extension.switch.regionOrAccount',
     title: 'Switch Region Or Account',

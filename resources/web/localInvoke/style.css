@@ -69,7 +69,7 @@ button {
 
 #eventContent {
   margin-top: 20px;
-  height: 500px;
+  height: 300px;
 }
 
 .info-title {
@@ -133,4 +133,8 @@ button {
   background-color: #ababab !important;
   outline: 1px solid #ababab !important;
   cursor: no-drop;
+}
+
+.hidden {
+  display: none;
 }

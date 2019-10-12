@@ -4,6 +4,8 @@ import * as fs from 'fs';
 import * as util from 'util';
 import * as glob from 'glob';
 import * as terminalService from '../utils/terminal';
+import { ext } from '../extensionVariables';
+import { getOrInitEventConfig } from '../utils/localConfig';
 import { InvokeDescriptor, FunctionDescriptor } from '../descriptors/descriptor';
 import { AbstractInfoPanelCreator } from './AbstractInfoPanelCreator';
 import { isDirectory, isPathExists, createEventFile } from '../utils/file';
@@ -63,6 +65,39 @@ export class LocalInvokePanelCreator extends AbstractInfoPanelCreator<InvokeDesc
         panel.webview.postMessage({
           command: 'setEventData',
           data: eventData,
+        });
+        return;
+      }
+      case 'isDefaultEventFile': {
+        const eventFilePath = path.join(eventFileDir, message.data);
+        getOrInitEventConfig(
+          descriptor.templatePath,
+          descriptor.serviceName,
+          descriptor.functionName,
+          descriptor.codeUri,
+        ).then(defaultEventFilePath => {
+          panel.webview.postMessage({
+            command: 'isDefaultEventFile',
+            data: defaultEventFilePath === eventFilePath,
+          });
+        });
+        return;
+      }
+      case 'switchEventFile': {
+        const eventFilePath = path.join(eventFileDir, message.data);
+        vscode.commands.executeCommand(
+          serverlessCommands.SWITCH_EVENT_FILE.id,
+          descriptor.templatePath,
+          descriptor.serviceName,
+          descriptor.functionName,
+          descriptor.codeUri,
+          path.relative(
+            ext.cwd as string, eventFilePath,
+          ),
+        );
+        panel.webview.postMessage({
+          command: 'isDefaultEventFile',
+          data: true,
         });
         return;
       }
