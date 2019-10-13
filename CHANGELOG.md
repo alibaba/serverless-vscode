@@ -2,6 +2,21 @@
 
 所有对 "Aliyun Serverless" 插件的更改都将记录在这个文件中。
 
+## 1.12.0 - 2019-10-13
+### Added
+- Funfile 文件提供关键字补全以及 fun-install 子命令补全。在 Funfile 文件中输入关键字子串，自动补全会依据输入内容给出精准的提示选项。
+
+![funfile-completion](https://github.com/alibaba/serverless-vscode/blob/master/media/changelog/v1.12.0/funfile-completion.gif?raw=true)
+
+- 模版文件 template.yml 自动补全优化。模版文件 template.yml 提供 MemorySize 可选值自动补全列表。
+
+![memorySize-tip](https://github.com/alibaba/serverless-vscode/blob/master/media/changelog/v1.12.0/memorySize-tip.gif?raw=true)
+
+- 函数运行调试面板支持配置 Quick Run/Debug 默认事件文件。在函数运行调试面板中，选择相应事件文件并单击 `设为 Quick Run/Debug 默认事件文件`，即可进行相关配置。
+
+### Other
+- README 更新优化。
+
 ## 1.11.0 - 2019-09-27
 ### Added
 - 函数运行调试面板支持启动长驻型函数。用户可在函数运行调试面板中启动运行或启动调试，启动后通过单击面板中的 "调用" 按钮，可以触发单次的运行或调试。每次点击 "调用" 按钮，Handler 函数都将被执行，Initializer 函数在启动后只会被初始化执行一次。
