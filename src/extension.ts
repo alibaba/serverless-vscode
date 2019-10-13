@@ -53,6 +53,7 @@ import { showLocalInvokePanel } from './commands/showLocalInvokePanel';
 import { createEventFile } from './commands/createEventFile';
 import { localStartFunction } from './commands/localStartFunction';
 import { copyFunction, pasteFunction } from './commands/copyPasteFunction';
+import { switchEventFile } from './commands/switchEventFile';
 
 export function activate(context: vscode.ExtensionContext) {
   recordPageView('/');
@@ -119,6 +120,7 @@ export function activate(context: vscode.ExtensionContext) {
   localStartFunction(context);
   copyFunction(context);
   pasteFunction(context);
+  switchEventFile(context);
 
   vscode.commands.executeCommand(serverlessCommands.SHOW_REGION_STATUS.id);
   vscode.commands.executeCommand(serverlessCommands.SHOW_UPDATE_NOTIFICATION.id);

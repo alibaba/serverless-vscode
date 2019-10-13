@@ -40,6 +40,11 @@
         <div>
           <div id="eventContent"></div>
         </div>
+        <div>
+          <a id="switchEventFile" style="cursor: pointer;" class="hidden" onclick="switchEventFile()">
+            设为 Quick Run/Debug 默认事件文件
+          </a>
+        </div>
       </div>
     </div>
     <script src="../../monaco-editor/min/vs/loader.js"></script>
@@ -51,6 +56,7 @@
       const invokeBtn = document.getElementById('invokeBtn');
       const eventSelect = document.getElementById('eventSelect');
       const eventContent = document.getElementById('eventContent');
+      const switchEventFileBtn = document.getElementById('switchEventFile');
       let debugPort = '';
       require.config({ paths: { 'vs': '../../monaco-editor/min/vs' }});
       require(['vs/editor/editor.main'], function() {
@@ -69,6 +75,14 @@
               editor.setValue(message.data);
               break;
             }
+            case 'isDefaultEventFile': {
+              if (message.data) {
+                switchEventFileBtn.classList.add('hidden');
+              } else {
+                switchEventFileBtn.classList.remove('hidden');
+              }
+              break;
+            }
             case 'updateEventFileList': {
               eventSelect.innerHTML = "";
               const eventFileList = message.data.files;
@@ -81,6 +95,7 @@
               const selected = message.data.selected || eventFileList[0];
               eventSelect.value = selected;
               getEventData(selected);
+              isDefaultEventFile();
               break;
             }
           }
@@ -129,6 +144,7 @@
       });
       eventSelect.onchange = () => {
         getEventData(eventSelect.value);
+        isDefaultEventFile();
       }
     </script>
     <script>
@@ -137,6 +153,12 @@
         vscode.postMessage({
           command: 'getEventData',
           data: eventFile,
+        });
+      }
+      function isDefaultEventFile() {
+        vscode.postMessage({
+          command: 'isDefaultEventFile',
+          data: eventSelect.value,
         });
       }
       function updateEventFileList() {
@@ -162,6 +184,12 @@
       function createEventFile() {
         vscode.postMessage({
           command: 'createEventFile',
+          data: eventSelect.value,
+        });
+      }
+      function switchEventFile() {
+        vscode.postMessage({
+          command: 'switchEventFile',
           data: eventSelect.value,
         });
       }

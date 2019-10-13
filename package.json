@@ -600,7 +600,7 @@
   },
   "dependencies": {
     "@alicloud/fc2": "^2.1.0",
-    "@alicloud/fun": "3.0.2",
+    "@alicloud/fun": "3.0.6",
     "@types/js-yaml": "^3.12.1",
     "@typescript-eslint/eslint-plugin": "^1.11.0",
     "@typescript-eslint/parser": "^1.11.0",

@@ -57,6 +57,7 @@ export async function getOrInitEventConfig(
         :
         evtConfig,
     };
+    await writeFile(configFilePath, yaml.dump(invokeConfig));
   }
   const eventName = invokeConfig.templates[templateRelativePath][serviceName][functionName].event;
   if (!invokeConfig.templates[templateRelativePath][serviceName][functionName].events[eventName]
@@ -72,16 +73,37 @@ export async function getOrInitEventConfig(
       type: 'file',
       value: eventFilePath,
     }
+    await writeFile(configFilePath, yaml.dump(invokeConfig));
   }
   eventFilePath =
     invokeConfig.templates[templateRelativePath][serviceName][functionName].events[eventName].value;
   eventFilePath = path.resolve(cwd, eventFilePath);
-  await writeFile(configFilePath, yaml.dump(invokeConfig));
   return eventFilePath;
 }
 
 export function getConfigFilePath(): string {
   return path.resolve(ext.cwd as string, '.vscode', 'fc_local_invoke_config.yml');
+}
+
+export async function setEventFilePath(
+  templatePath: string,
+  serviceName: string,
+  functionName: string,
+  codeUri: string,
+  eventFilePath: string,
+): Promise<void> {
+  await getOrInitEventConfig(templatePath, serviceName, functionName, codeUri);
+  const configFilePath = getConfigFilePath();
+  const configFileContent = await readFile(configFilePath, 'utf8');
+  let invokeConfig = yaml.safeLoad(configFileContent);
+  const cwd = ext.cwd as string;
+  const templateRelativePath = path.relative(cwd, templatePath);
+  const eventName = invokeConfig.templates[templateRelativePath][serviceName][functionName].event;
+  invokeConfig.templates[templateRelativePath][serviceName][functionName].events[eventName] = {
+    type: 'file',
+    value: eventFilePath,
+  }
+  await writeFile(configFilePath, yaml.dump(invokeConfig));
 }
 
 function getDefaultEvtFilePath(templatePath: string, codeUri: string): string {
