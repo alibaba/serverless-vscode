@@ -100,6 +100,7 @@
             }
           }
         });
+        updateEventFileList();
       });
     </script>
     <script>
@@ -109,7 +110,6 @@
           case 'initFunctionInfo': {
             titleBanner.innerHTML =
               `${message.data.serviceName}/${message.data.functionName}`;
-            updateEventFileList();
             break;
           }
           case 'updateRunningState': {
