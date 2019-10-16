@@ -582,6 +582,7 @@
     "lint": "./node_modules/.bin/eslint src --ext .ts"
   },
   "devDependencies": {
+    "@types/dockerode": "^2.5.20",
     "@types/dotenv": "^6.1.1",
     "@types/download": "^6.2.4",
     "@types/glob": "^7.1.1",
@@ -606,6 +607,7 @@
     "@typescript-eslint/parser": "^1.11.0",
     "cron-parser": "^2.13.0",
     "cronstrue": "^1.83.0",
+    "dockerode": "^3.0.2",
     "dotenv": "^8.1.0",
     "download": "^7.1.0",
     "glob": "^7.1.4",
