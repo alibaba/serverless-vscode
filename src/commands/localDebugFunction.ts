@@ -2,6 +2,7 @@ import * as vscode from 'vscode';
 import * as path from 'path';
 import * as fs from 'fs';
 import * as rt from '../utils/runtime';
+import * as Docker from 'dockerode';
 import { ext } from '../extensionVariables';
 import { serverlessCommands } from '../utils/constants';
 import { isPathExists, createDirectory, createLaunchFile, createEventFile } from '../utils/file';
@@ -11,7 +12,9 @@ import { FunService } from '../services/FunService';
 import { TemplateService } from '../services/TemplateService';
 import { Resource, ResourceType, FunctionResource } from '../models/resource';
 
+const { resolveRuntimeToDockerImage } = require('@alicloud/fun/lib/docker-opts.js');
 const debugPortSet = new Set();
+const docker = new Docker();
 
 export function localDebugFunction(context: vscode.ExtensionContext) {
   context.subscriptions.push(vscode.commands.registerCommand(serverlessCommands.LOCAL_DEBUG.id,
@@ -122,19 +125,20 @@ async function process(
   }
   if (rt.isNodejs(runtime) || rt.isPython(runtime)) {
     try {
-      await untilDebuggerListening(terminal);
+      const { Properties: properties } = functionInfo;
+      await waitUntilImagePullCompleted(properties.Runtime);
       if (rt.isPython(runtime)) {
         await new Promise((resolve) => {
           setTimeout(() => {
             resolve();
-          }, 3000);
+          }, 1000);
         })
       }
       vscode.debug.startDebugging(undefined, configuration).then(() => {
         terminal.show();
       });
     } catch (ex) {
-      // 用户在初次下载镜像的时候关闭了 Terminal
+      vscode.window.showErrorMessage(ex.message);
     }
   }
 }
@@ -166,6 +170,35 @@ async function untilDebuggerListening(terminal: vscode.Terminal) {
   } finally {
     disposables.forEach(d => d.dispose());
   }
+}
+
+async function waitUntilImagePullCompleted(runtime: string) {
+  const imageName: string = await resolveRuntimeToDockerImage(runtime);
+  return new Promise((resolve, reject) => {
+    const checkImageExist = () => {
+      imageExist(imageName).then((exist) => {
+        if (exist) {
+          resolve();
+        } else {
+          setTimeout(() => {
+            checkImageExist();
+          }, 3000);
+        }
+      }).catch((ex) => {
+        reject(ex);
+      });
+    }
+    checkImageExist();
+  });
+}
+
+async function imageExist(imageName: string): Promise<boolean> {
+  const images = await docker.listImages({
+    filters: {
+      reference: [imageName]
+    }
+  });
+  return images.length > 0;
 }
 
 function getConfigurationName(serviceName: string, functionName: string) {

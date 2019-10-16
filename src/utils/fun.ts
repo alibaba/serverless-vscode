@@ -102,7 +102,7 @@ class WindowsFunExecutorGenerator extends FunExecutorGenerator {
         throw new Error(`Create ${path.dirname(funPath)} fail`)
       }
     }
-    const funFileName = `fun-v${FUN_VERSION}-win-${process.arch === 'x64' ? 'x64' : 'x86'}.exe`;
+    const funFileName = `fun-v${FUN_VERSION}-win.exe`;
     await new Promise((resolve, reject) => {
       download(`https://gosspublic.alicdn.com/fun/${funFileName}.zip`)
         .pipe(unzipper.Parse())
