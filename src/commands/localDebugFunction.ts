@@ -131,7 +131,7 @@ async function process(
         await new Promise((resolve) => {
           setTimeout(() => {
             resolve();
-          }, 1000);
+          }, 5000);
         })
       }
       vscode.debug.startDebugging(undefined, configuration).then(() => {
