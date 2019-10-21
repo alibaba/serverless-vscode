@@ -1,0 +1,494 @@
+{
+  "$id": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "definitions": {
+    "Aliyun::FunctionFlow::Step::Name": {
+      "$id": "Aliyun::FunctionFlow::Step::Name",
+      "type": "string"
+    },
+    "Aliyun::FunctionFlow::Step::Retry": {
+      "$id": "Aliyun::FunctionFlow::Step::Retry",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "intervalSeconds": {
+            "type": "integer"
+          },
+          "maxAttempts": {
+            "type": "integer"
+          },
+          "multiplier": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "errors"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "Aliyun::FunctionFlow::Step::Catch": {
+      "$id": "Aliyun::FunctionFlow::Step::Catch",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "goto": {
+            "type": "string"
+          },
+          "steps": {
+            "$ref": "#/definitions/Aliyun::FunctionFlow::Steps"
+          }
+        },
+        "required": [
+          "errors",
+          "goto"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "Aliyun::FunctionFlow::Step::TimeoutSeconds": {
+      "$id": "Aliyun::FunctionFlow::Step::TimeoutSeconds",
+      "type": "integer"
+    },
+    "Aliyun::FunctionFlow::Step::IOMappings": {
+      "$id": "Aliyun::FunctionFlow::Step::IOMappings",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "source": {
+            "type": ["number", "string", "boolean", "object", "array"]
+          },
+          "target": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "target"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "Aliyun::FunctionFlow::Step::Task": {
+      "$id": "Aliyun::FunctionFlow::Step::Task",
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["task"]
+        },
+        "name": {
+          "$ref": "#/definitions/Aliyun::FunctionFlow::Step::Name"
+        },
+        "end": {
+          "type": "boolean"
+        },
+        "resourceArn": {
+          "type": "string"
+        },
+        "retry": {
+          "$ref": "#/definitions/Aliyun::FunctionFlow::Step::Retry"
+        },
+        "catch": {
+          "$ref": "#/definitions/Aliyun::FunctionFlow::Step::Catch"
+        },
+        "timeoutSeconds": {
+          "$ref": "#/definitions/Aliyun::FunctionFlow::Step::TimeoutSeconds"
+        },
+        "inputMappings": {
+          "$ref": "#/definitions/Aliyun::FunctionFlow::Step::IOMappings"
+        },
+        "outputMappings": {
+          "$ref": "#/definitions/Aliyun::FunctionFlow::Step::IOMappings"
+        },
+        "pattern": {
+          "type": "string",
+          "enum": ["requestResponse", "waitForCallback"]
+        },
+        "serviceParams": {
+          "type": "object"
+        }
+      },
+      "required": ["type", "name", "resourceArn"],
+      "additionalProperties": false
+    },
+    "Aliyun::FunctionFlow::Step::Pass": {
+      "$id": "Aliyun::FunctionFlow::Step::Pass",
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["pass"]
+        },
+        "name": {
+          "$ref": "#/definitions/Aliyun::FunctionFlow::Step::Name"
+        },
+        "end": {
+          "type": "boolean"
+        },
+        "inputMappings": {
+          "$ref": "#/definitions/Aliyun::FunctionFlow::Step::IOMappings"
+        },
+        "outputMappings": {
+          "$ref": "#/definitions/Aliyun::FunctionFlow::Step::IOMappings"
+        }
+      },
+      "required": [
+        "type",
+        "name"
+      ],
+      "additionalProperties": false
+    },
+    "Aliyun::FunctionFlow::Step::Wait": {
+      "$id": "Aliyun::FunctionFlow::Step::Wait",
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["wait"]
+        },
+        "name": {
+          "$ref": "#/definitions/Aliyun::FunctionFlow::Step::Name"
+        },
+        "end": {
+          "type": "boolean"
+        },
+        "duration": {
+          "oneOf": [
+            { "type": "string" },
+            { "type": "integer" }
+          ]
+        },
+        "timestamp": {
+          "type": "string"
+        },
+        "inputMappings": {
+          "$ref": "#/definitions/Aliyun::FunctionFlow::Step::IOMappings"
+        },
+        "outputMappings": {
+          "$ref": "#/definitions/Aliyun::FunctionFlow::Step::IOMappings"
+        }
+      },
+      "required": [
+        "type",
+        "name"
+      ],
+      "additionalProperties": false
+    },
+    "Aliyun::FunctionFlow::Step::Succeed": {
+      "$id": "Aliyun::FunctionFlow::Step::Succeed",
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["succeed"]
+        },
+        "name": {
+          "$ref": "#/definitions/Aliyun::FunctionFlow::Step::Name"
+        },
+        "inputMappings": {
+          "$ref": "#/definitions/Aliyun::FunctionFlow::Step::IOMappings"
+        },
+        "outputMappings": {
+          "$ref": "#/definitions/Aliyun::FunctionFlow::Step::IOMappings"
+        }
+      },
+      "required": [
+        "type",
+        "name"
+      ],
+      "additionalProperties": false
+    },
+    "Aliyun::FunctionFlow::Step::Fail": {
+      "$id": "Aliyun::FunctionFlow::Step::Fail",
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["fail"]
+        },
+        "name": {
+          "$ref": "#/definitions/Aliyun::FunctionFlow::Step::Name"
+        },
+        "error": {
+          "$ref": "#/definitions/Aliyun::FunctionFlow::Step::Name"
+        },
+        "cause": {
+          "type": "string"
+        },
+        "inputMappings": {
+          "$ref": "#/definitions/Aliyun::FunctionFlow::Step::IOMappings"
+        },
+        "outputMappings": {
+          "$ref": "#/definitions/Aliyun::FunctionFlow::Step::IOMappings"
+        }
+      },
+      "required": [
+        "type",
+        "name"
+      ],
+      "additionalProperties": false
+    },
+    "Aliyun::FunctionFlow::Step::Choice": {
+      "$id": "Aliyun::FunctionFlow::Step::Choice",
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["choice"]
+        },
+        "name": {
+          "$ref": "#/definitions/Aliyun::FunctionFlow::Step::Name"
+        },
+        "end": {
+          "type": "boolean"
+        },
+        "choices": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "condition": {
+                "type": "string"
+              },
+              "steps": {
+                "$ref": "#/definitions/Aliyun::FunctionFlow::Steps"
+              },
+              "goto": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "condition"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "default": {
+          "type": "object",
+          "properties": {
+            "steps": {
+              "$ref": "#/definitions/Aliyun::FunctionFlow::Steps"
+            },
+            "goto": {
+              "type": "string"
+            }
+          }
+        },
+        "inputMappings": {
+          "$ref": "#/definitions/Aliyun::FunctionFlow::Step::IOMappings"
+        },
+        "outputMappings": {
+          "$ref": "#/definitions/Aliyun::FunctionFlow::Step::IOMappings"
+        }
+      },
+      "required": [
+        "type",
+        "name"
+      ],
+      "additionalProperties": false
+    },
+    "Aliyun::FunctionFlow::Step::Parallel": {
+      "$id": "Aliyun::FunctionFlow::Step::Parallel",
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["parallel"]
+        },
+        "name": {
+          "$ref": "#/definitions/Aliyun::FunctionFlow::Step::Name"
+        },
+        "end": {
+          "type": "boolean"
+        },
+        "branches": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "steps": {
+                "$ref": "#/definitions/Aliyun::FunctionFlow::Steps"
+              }
+            },
+            "required": [
+              "steps"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "inputMappings": {
+          "$ref": "#/definitions/Aliyun::FunctionFlow::Step::IOMappings"
+        },
+        "outputMappings": {
+          "$ref": "#/definitions/Aliyun::FunctionFlow::Step::IOMappings"
+        }
+      },
+      "required": [
+        "type",
+        "name",
+        "branches"
+      ],
+      "additionalProperties": false
+    },
+    "Aliyun::FunctionFlow::Step::Foreach": {
+      "$id": "Aliyun::FunctionFlow::Step::Foreach",
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["foreach"]
+        },
+        "name": {
+          "$ref": "#/definitions/Aliyun::FunctionFlow::Step::Name"
+        },
+        "end": {
+          "type": "boolean"
+        },
+        "iterationMapping": {
+          "type": "object",
+          "properties": {
+            "collection": {
+              "type": "string"
+            },
+            "item": {
+              "type": "string"
+            },
+            "index": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "collection",
+            "item"
+          ],
+          "additionalProperties": false
+        },
+        "steps": {
+          "$ref": "#/definitions/Aliyun::FunctionFlow::Steps"
+        },
+        "inputMappings": {
+          "$ref": "#/definitions/Aliyun::FunctionFlow::Step::IOMappings"
+        },
+        "outputMappings": {
+          "$ref": "#/definitions/Aliyun::FunctionFlow::Step::IOMappings"
+        }
+      },
+      "required": [
+        "type",
+        "name",
+        "iterationMapping",
+        "steps"
+      ],
+      "additionalProperties": false
+    },
+    "Aliyun::FunctionFlow::Step::Loop": {
+      "$id": "Aliyun::FunctionFlow::Step::Loop",
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["loop"]
+        },
+        "name": {
+          "$ref": "#/definitions/Aliyun::FunctionFlow::Step::Name"
+        },
+        "end": {
+          "type": "boolean"
+        },
+        "preCondition": {
+          "type": "string"
+        },
+        "postCondition": {
+          "type": "string"
+        },
+        "steps": {
+          "$ref": "#/definitions/Aliyun::FunctionFlow::Steps"
+        },
+        "inputMappings": {
+          "$ref": "#/definitions/Aliyun::FunctionFlow::Step::IOMappings"
+        },
+        "outputMappings": {
+          "$ref": "#/definitions/Aliyun::FunctionFlow::Step::IOMappings"
+        }
+      },
+      "required": [
+        "type",
+        "name",
+        "steps"
+      ],
+      "additionalProperties": false
+    },
+    "Aliyun::FunctionFlow::Steps": {
+      "$id": "Aliyun::FunctionFlow::Steps",
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "$ref": "#/definitions/Aliyun::FunctionFlow::Step::Task"
+          },
+          {
+            "$ref": "#/definitions/Aliyun::FunctionFlow::Step::Pass"
+          },
+          {
+            "$ref": "#/definitions/Aliyun::FunctionFlow::Step::Wait"
+          },
+          {
+            "$ref": "#/definitions/Aliyun::FunctionFlow::Step::Succeed"
+          },
+          {
+            "$ref": "#/definitions/Aliyun::FunctionFlow::Step::Fail"
+          },
+          {
+            "$ref": "#/definitions/Aliyun::FunctionFlow::Step::Choice"
+          },
+          {
+            "$ref": "#/definitions/Aliyun::FunctionFlow::Step::Parallel"
+          },
+          {
+            "$ref": "#/definitions/Aliyun::FunctionFlow::Step::Foreach"
+          },
+          {
+            "$ref": "#/definitions/Aliyun::FunctionFlow::Step::Loop"
+          }
+        ]
+      }
+    }
+  },
+  "properties": {
+    "version": {
+      "type": "string",
+      "enum": ["v1beta1"]
+    },
+    "type": {
+      "type": "string",
+      "enum": ["flow"]
+    },
+    "steps": {
+      "$ref": "#/definitions/Aliyun::FunctionFlow::Steps"
+    },
+    "timeoutSeconds": {
+      "$ref": "#/definitions/Aliyun::FunctionFlow::Step::TimeoutSeconds"
+    },
+    "inputMappings": {
+      "$ref": "#/definitions/Aliyun::FunctionFlow::Step::IOMappings"
+    },
+    "outputMappings": {
+      "$ref": "#/definitions/Aliyun::FunctionFlow::Step::IOMappings"
+    }
+  }
+}

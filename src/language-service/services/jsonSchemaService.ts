@@ -162,4 +162,20 @@ export class JSONSchemaService {
       ),
     )
   }
+
+  async getSchemaForFlow(): Promise<ResolvedSchema | void> {
+    return this.resolveSchemaContent(
+      new UnresolvedSchema(
+        require(
+          path.resolve(
+            ext.context.extensionPath,
+            'src',
+            'language-service',
+            'schema',
+            'flowSchema.json',
+          ),
+        ),
+      ),
+    );
+  }
 }
