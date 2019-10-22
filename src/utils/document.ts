@@ -3,6 +3,9 @@ import * as vscode from 'vscode';
 const rosRegExp = /"?'?ROSTemplateFormatVersion"?'?:\s*"?'?2015-09-01"?'?/
 const transformRegExp = /"?'?Transform"?'?:\s*"?'?Aliyun::Serverless-2018-04-03"?'?/
 
+const flowVersionRegExp = /"?'?version"?'?:\s*"?'?v1beta1"?'?/
+const flowTypeRegExp = /"?'?type"?'?:\s*"?'?flow"?'?/
+
 /**
  * 是否是支持的文档
  * @param textDocument
@@ -18,6 +21,14 @@ export function isSupportedDocument(document: vscode.TextDocument): boolean {
 export function isTemplateYaml(document: vscode.TextDocument): boolean {
   return document.fileName.endsWith('template.yml') || document.fileName.endsWith('template.yaml')
     || document.fileName.endsWith('template.build.yml') || document.fileName.endsWith('template.packaged.yml');
+}
+
+export function isFlowDefinitionDocument(document: vscode.TextDocument): boolean {
+  if (document.fileName.endsWith('yaml') || document.fileName.endsWith('yml')) {
+    const textDocument = document.getText();
+    return flowVersionRegExp.test(textDocument) && flowTypeRegExp.test(textDocument);
+  }
+  return false;
 }
 
 interface Output {

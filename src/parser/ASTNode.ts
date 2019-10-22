@@ -38,7 +38,7 @@ export class ASTNode {
 
   contains(offset: number, includeRightBound: boolean = false): boolean {
     return (
-      (offset >= this.start && offset < this.end) ||
+      (offset >= this.start && offset <= this.end) ||
       (includeRightBound && offset === this.end)
     )
   }

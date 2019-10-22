@@ -28,6 +28,7 @@ import { showRegionStatus } from './commands/showRegionStatus';
 import { ServerlessLensProvider } from './lens/ServerlessLensProvider';
 import { ServerlessDefinitionProvider } from './definitions/ServerlessDefinitionProvider';
 import { ServerlessCompletionProvider } from './completions/ServerlessCompletionProvider';
+import { FlowDefinitionCompletionProvider } from './completions/FlowDefinitionCompletionProvider';
 import { FunfileCompletionProvider } from './completions/FunfileCompletionProvider';
 import { ServerlessDiagnosticsProvider } from './diagnostics/ServerlessDiagnosticsProvider';
 import { RainbowDecorator } from './decorations/RainbowDecorator';
@@ -146,6 +147,11 @@ export function activate(context: vscode.ExtensionContext) {
   vscode.languages.registerCompletionItemProvider(
     { pattern: '**/Funfile' },
     new FunfileCompletionProvider(),
+  );
+
+  vscode.languages.registerCompletionItemProvider(
+    { pattern: '**/*.{yml,yaml}' },
+    new FlowDefinitionCompletionProvider(),
   );
 
   vscode.workspace.onDidChangeTextDocument((event) => {
