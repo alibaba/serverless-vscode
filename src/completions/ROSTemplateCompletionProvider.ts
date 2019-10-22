@@ -23,7 +23,7 @@ const transformCompletionItem = new vscode.CompletionItem('Transform');
 transformCompletionItem.command = triggerSuggestCmd;
 transformCompletionItem.insertText = TRANSFORM_INSERT_TEXT;
 
-export class ServerlessCompletionProvider implements vscode.CompletionItemProvider {
+export class ROSTemplateCompletionProvider implements vscode.CompletionItemProvider {
   provideCompletionItems(
     document: vscode.TextDocument,
     position: vscode.Position,

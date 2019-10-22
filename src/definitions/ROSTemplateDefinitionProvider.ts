@@ -6,7 +6,7 @@ import { getHandlerFileName } from '../utils/runtime';
 import { recordPageView } from '../utils/visitor';
 import { countLeadingSpace } from '../utils/document';
 
-export class ServerlessDefinitionProvider implements vscode.DefinitionProvider {
+export class ROSTemplateDefinitionProvider implements vscode.DefinitionProvider {
   provideDefinition(document: vscode.TextDocument, position: vscode.Position, token: vscode.CancellationToken):
   vscode.ProviderResult<vscode.Location | vscode.Location[] | vscode.LocationLink[]> {
     const cwd = vscode.workspace.rootPath;
