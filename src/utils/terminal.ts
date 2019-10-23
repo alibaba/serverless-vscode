@@ -55,6 +55,7 @@ function createFunctionComputeTerminal(cwd?: string, terminalName?: string): vsc
     cwd,
     env: {
       'PATH': binPath,
+      'FUN_DISABLE_VERSION_CHECK': '1',
     },
   });
 }
