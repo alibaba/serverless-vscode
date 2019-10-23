@@ -13,7 +13,7 @@ import * as cronParser from 'cron-parser';
 const cronstrue = require('cronstrue/i18n');
 const jstz = require('jstimezonedetect')
 
-export class TemplateHoverProvider implements vscode.HoverProvider {
+export class ROSTemplateHoverProvider implements vscode.HoverProvider {
   provideHover(
     document: vscode.TextDocument,
     position: vscode.Position,

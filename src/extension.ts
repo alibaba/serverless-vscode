@@ -26,11 +26,12 @@ import { switchRegionOrAccount } from './commands/switchRegionOrAccount';
 import { switchOrBindAccount } from './commands/switchOrBindAccount';
 import { showRegionStatus } from './commands/showRegionStatus';
 import { ServerlessLensProvider } from './lens/ServerlessLensProvider';
-import { ServerlessDefinitionProvider } from './definitions/ServerlessDefinitionProvider';
-import { ServerlessCompletionProvider } from './completions/ServerlessCompletionProvider';
+import { ROSTemplateDefinitionProvider } from './definitions/ROSTemplateDefinitionProvider';
+import { ROSTemplateCompletionProvider } from './completions/ROSTemplateCompletionProvider';
 import { FlowDefinitionCompletionProvider } from './completions/FlowDefinitionCompletionProvider';
 import { FunfileCompletionProvider } from './completions/FunfileCompletionProvider';
-import { ServerlessDiagnosticsProvider } from './diagnostics/ServerlessDiagnosticsProvider';
+import { ROSTemplateDiagnosticsProvider } from './diagnostics/ROSTemplateDiagnosticsProvider';
+import { FlowDefinitionDiagnosticsProvider } from './diagnostics/FlowDefinitionDiagnosticsProvider';
 import { RainbowDecorator } from './decorations/RainbowDecorator';
 import { LocalResourceProvider } from './tree/LocalResourceProvider';
 import { RemoteResourceProvider } from './tree/RemoteResourceExplorer';
@@ -47,7 +48,7 @@ import { showUpdateNotification } from './commands/showUpdateNotification';
 import { referRuntimeLib } from './commands/referRuntimeLib';
 import { isTemplateYaml } from './utils/document';
 import { templateChangeEventEmitter } from './models/events';
-import { TemplateHoverProvider } from './hovers/TemplateHoverProvider';
+import { ROSTemplateHoverProvider } from './hovers/ROSTemplateHoverProvider';
 import { installPackage } from './commands/installPackage';
 import { startLocalSandbox } from './commands/startLocalSandbox';
 import { showLocalInvokePanel } from './commands/showLocalInvokePanel';
@@ -132,17 +133,17 @@ export function activate(context: vscode.ExtensionContext) {
   const selector = { pattern: '**/template.{yml,yaml}' };
   vscode.languages.registerDefinitionProvider(
     selector,
-    new ServerlessDefinitionProvider()
+    new ROSTemplateDefinitionProvider()
   );
   vscode.languages.registerCompletionItemProvider(
     selector,
-    new ServerlessCompletionProvider(),
+    new ROSTemplateCompletionProvider(),
   );
   vscode.languages.registerHoverProvider(
     selector,
-    new TemplateHoverProvider(),
+    new ROSTemplateHoverProvider(),
   );
-  new ServerlessDiagnosticsProvider().startDiagnostic();
+  new ROSTemplateDiagnosticsProvider().startDiagnostic();
 
   vscode.languages.registerCompletionItemProvider(
     { pattern: '**/Funfile' },
@@ -153,6 +154,7 @@ export function activate(context: vscode.ExtensionContext) {
     { pattern: '**/*.{yml,yaml}' },
     new FlowDefinitionCompletionProvider(),
   );
+  new FlowDefinitionDiagnosticsProvider().startDiagnostic();
 
   vscode.workspace.onDidChangeTextDocument((event) => {
     const document = event.document;
