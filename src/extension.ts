@@ -49,6 +49,7 @@ import { referRuntimeLib } from './commands/referRuntimeLib';
 import { isTemplateYaml } from './utils/document';
 import { templateChangeEventEmitter } from './models/events';
 import { ROSTemplateHoverProvider } from './hovers/ROSTemplateHoverProvider';
+import { FlowDefinitionHoverProvider } from './hovers/FlowDefinitionHoverProvider';
 import { installPackage } from './commands/installPackage';
 import { startLocalSandbox } from './commands/startLocalSandbox';
 import { showLocalInvokePanel } from './commands/showLocalInvokePanel';
@@ -150,9 +151,14 @@ export function activate(context: vscode.ExtensionContext) {
     new FunfileCompletionProvider(),
   );
 
+  const flowDefinitionSelector = { pattern: '**/*.{yml,yaml}' };
   vscode.languages.registerCompletionItemProvider(
-    { pattern: '**/*.{yml,yaml}' },
+    flowDefinitionSelector,
     new FlowDefinitionCompletionProvider(),
+  );
+  vscode.languages.registerHoverProvider(
+    flowDefinitionSelector,
+    new FlowDefinitionHoverProvider(),
   );
   new FlowDefinitionDiagnosticsProvider().startDiagnostic();
 
