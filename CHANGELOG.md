@@ -2,6 +2,17 @@
 
 所有对 "Aliyun Serverless" 插件的更改都将记录在这个文件中。
 
+## 1.13.0 - 2019-10-23
+### Added
+1. Function Flow 流程定义文件提供语法智能提示。支持流程定义文件内属性的自动补全、信息校验和上下文帮助。
+2. Function Flow 流程定义文件提供层级色彩。在流程定义文件中会根据设定的缩进大小进行彩虹色渲染。
+
+![language-suggestion](https://github.com/alibaba/serverless-vscode/blob/master/media/changelog/v1.13.0/language-suggestion.gif?raw=true)
+
+### Other
+1. 修复函数运行调试面板有时打开不加载事件文件列表.
+2. 屏蔽内置 Fun 的版本自动检测。
+
 ## 1.12.3 - 2019-10-16
 ### Other
 1. 适配 1.39 及以上版本的 VSCode。
