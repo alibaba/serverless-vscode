@@ -4,10 +4,11 @@ import * as fs from 'fs';
 import * as rt from '../utils/runtime';
 import * as Docker from 'dockerode';
 import { ext } from '../extensionVariables';
-import { serverlessCommands } from '../utils/constants';
+import { serverlessCommands, serverlessConfigs } from '../utils/constants';
 import { isPathExists, createDirectory, createLaunchFile, createEventFile } from '../utils/file';
 import { recordPageView } from '../utils/visitor';
 import { getOrInitEventConfig } from '../utils/localConfig';
+import { cpUtils } from '../utils/cpUtils';
 import { FunService } from '../services/FunService';
 import { TemplateService } from '../services/TemplateService';
 import { Resource, ResourceType, FunctionResource } from '../models/resource';
@@ -15,6 +16,11 @@ import { Resource, ResourceType, FunctionResource } from '../models/resource';
 const { resolveRuntimeToDockerImage } = require('@alicloud/fun/lib/docker-opts.js');
 const debugPortSet = new Set();
 const docker = new Docker();
+
+const EXTENSION_PYTHON_DEBUG = 'ms-python.python';
+const EXTENSION_PHP_DEBUG = 'felixfbecker.php-debug';
+let autoCheckPythonDebugger = true;
+let autoCheckPhpDebugger = true;
 
 export function localDebugFunction(context: vscode.ExtensionContext) {
   context.subscriptions.push(vscode.commands.registerCommand(serverlessCommands.LOCAL_DEBUG.id,
@@ -61,6 +67,35 @@ async function process(
   if (!rt.isSupportedRuntime(runtime)) {
     vscode.window.showInformationMessage(`${runtime} debug will be support soon.`);
     return;
+  }
+  if (!rt.isNodejs(runtime)) {
+    const autoCheck = rt.isPython(runtime) ? autoCheckPythonDebugger : rt.isPhp(runtime) && autoCheckPhpDebugger;
+    if (autoCheck) {
+      try {
+        const installExtensions = await cpUtils.executeCommand(undefined, undefined, 'code', '--list-extensions');
+        const searchExtension = rt.isPython(runtime) ? EXTENSION_PYTHON_DEBUG : EXTENSION_PHP_DEBUG;
+        if (!installExtensions.includes(searchExtension)) {
+          vscode.window.showInformationMessage(
+            `Extension ${searchExtension} should be installed to enable local debug ${runtime} runtime`,
+            'OK',
+          );
+          vscode.commands.executeCommand(
+            'workbench.extensions.action.showExtensionsWithIds', [searchExtension]
+          );
+          return;
+        } else {
+          if (rt.isPython(runtime)) {
+            autoCheckPythonDebugger = false;
+          }
+          if (rt.isPhp(runtime)) {
+            autoCheckPhpDebugger = false;
+          }
+        }
+      } catch (ex) {
+        vscode.window.showErrorMessage(ex.message);
+        return;
+      }
+    }
   }
   // 尝试从 launch.json 读取配置
   const configurationName = getConfigurationName(serviceName, functionName);
