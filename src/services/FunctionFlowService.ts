@@ -15,6 +15,17 @@ export class FunctionFlowService extends BaseService {
     }
   }
 
+  async describeFlow(flowName: string) {
+    const client = this.newFnFClient();
+    try {
+      return await client.describeFlow({
+        Name: flowName,
+      });
+    } catch (ex) {
+      output.error(ex.message);
+    }
+  }
+
   async createFlow(flowName: string, description: string, definition: string) {
     const client = this.newFnFClient();
     await client.createFlow({
