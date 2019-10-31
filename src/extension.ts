@@ -57,6 +57,9 @@ import { createEventFile } from './commands/createEventFile';
 import { localStartFunction } from './commands/localStartFunction';
 import { copyFunction, pasteFunction } from './commands/copyPasteFunction';
 import { switchEventFile } from './commands/switchEventFile';
+import { FnFRemoteResourceProvider } from './tree/fnf/FnFRemoteResourceProvider';
+import { createRemoteFlow } from './commands/fnf/createRemoteFlow';
+import { gotoFnFConsole } from './commands/fnf/gotoFnFConsole';
 
 export function activate(context: vscode.ExtensionContext) {
   recordPageView('/');
@@ -77,6 +80,12 @@ export function activate(context: vscode.ExtensionContext) {
   vscode.window.registerTreeDataProvider('fcRemoteResource', remoteResourceProvider);
   vscode.commands.registerCommand(serverlessCommands.REFRESH_REMOTE_RESOURCE.id,
     () => remoteResourceProvider.refresh()
+  );
+
+  const fnfRemoteResourceProvider = new FnFRemoteResourceProvider();
+  vscode.window.registerTreeDataProvider('fnfRemoteResource', fnfRemoteResourceProvider);
+  vscode.commands.registerCommand(serverlessCommands.FNF_REFRESH_REMOTE_RESOURCE.id,
+    () => fnfRemoteResourceProvider.refresh()
   );
 
   initProject(context); // init project
@@ -124,6 +133,8 @@ export function activate(context: vscode.ExtensionContext) {
   copyFunction(context);
   pasteFunction(context);
   switchEventFile(context);
+  createRemoteFlow(context);
+  gotoFnFConsole(context);
 
   vscode.commands.executeCommand(serverlessCommands.SHOW_REGION_STATUS.id);
   vscode.commands.executeCommand(serverlessCommands.SHOW_UPDATE_NOTIFICATION.id);

@@ -7,6 +7,8 @@ export enum ResourceType {
   Function = 1,
   Trigger = 2,
   Nas = 3,
+  Flow = 10,
+  Execution = 11,
   Template = 98,
   Command = 99,
 }
@@ -171,5 +173,50 @@ export class TriggerResource extends Resource {
       dark: path.resolve(__dirname, '..', '..', 'media', 'dark', triggerType + '.svg'),
     }
     this.contextValue = 'trigger';
+  }
+}
+
+export class FlowResource extends Resource {
+  flowName: string;
+  constructor(
+    flowName: string,
+    command?: vscode.Command,
+  ) {
+    super(
+      flowName,
+      ResourceType.Flow,
+      vscode.TreeItemCollapsibleState.Collapsed,
+      command,
+    );
+    this.flowName = flowName;
+    this.iconPath = {
+      light: path.resolve(__dirname, '..', '..', 'media', 'light', 'flow.svg'),
+      dark: path.resolve(__dirname, '..', '..', 'media', 'dark', 'flow.svg'),
+    }
+    this.contextValue = 'flow';
+  }
+}
+
+export class ExecutionResource extends Resource {
+  flowName: string;
+  executionName: string;
+  constructor(
+    flowName: string,
+    executionName: string,
+    command?: vscode.Command,
+  ) {
+    super(
+      executionName,
+      ResourceType.Flow,
+      vscode.TreeItemCollapsibleState.None,
+      command,
+    );
+    this.flowName = flowName;
+    this.executionName = executionName;
+    this.iconPath = {
+      light: path.resolve(__dirname, '..', '..', 'media', 'light', 'execution.svg'),
+      dark: path.resolve(__dirname, '..', '..', 'media', 'dark', 'execution.svg'),
+    }
+    this.contextValue = 'execution';
   }
 }

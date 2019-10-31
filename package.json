@@ -98,6 +98,10 @@
           "type": "string",
           "description": "The root directory of the imported resources relative to the workspace",
           "default": "./"
+        },
+        "aliyun.fnf.remoteResource.enable": {
+          "type": "boolean",
+          "default": true
         }
       }
     },
@@ -268,6 +272,18 @@
       {
         "command": "fc.extension.localResource.paste.function",
         "title": "Paste"
+      },
+      {
+        "command": "fnf.extension.remoteResource.refresh",
+        "title": "Refresh",
+        "icon": {
+          "light": "media/light/refresh.svg",
+          "dark": "media/dark/refresh.svg"
+        }
+      },
+      {
+        "command": "fnf.extension.create.remote.flow",
+        "title": "Deploy Flow"
       }
     ],
     "keybindings": [
@@ -302,6 +318,11 @@
           "id": "fc-vscode-plugin",
           "icon": "media/fc.svg",
           "title": "ALIYUN: FUNCTION COMPUTE"
+        },
+        {
+          "id": "fnf-vscode-plugin",
+          "icon": "media/fnf.svg",
+          "title": "ALIYUN: FUNCTION FLOW"
         }
       ]
     },
@@ -315,9 +336,26 @@
           "id": "fcRemoteResource",
           "name": "Remote Resources"
         }
+      ],
+      "fnf-vscode-plugin": [
+        {
+          "id": "fnfRemoteResource",
+          "name": "Remote Resources",
+          "when": "config.aliyun.fnf.remoteResource.enable"
+        }
       ]
     },
     "menus": {
+      "explorer/context": [
+        {
+          "command": "fnf.extension.create.remote.flow",
+          "when": "resourceExtname == .yml"
+        },
+        {
+          "command": "fnf.extension.create.remote.flow",
+          "when": "resourceExtname == .yaml"
+        }
+      ],
       "view/title": [
         {
           "command": "fc.extension.localResource.refresh",
@@ -345,6 +383,18 @@
         {
           "command": "fc.extension.switch.region",
           "when": "view == fcRemoteResource"
+        },
+        {
+          "command": "fc.extension.bind.account",
+          "when": "view == fnfRemoteResource"
+        },
+        {
+          "command": "fc.extension.switch.account",
+          "when": "view == fnfRemoteResource"
+        },
+        {
+          "command": "fc.extension.switch.region",
+          "when": "view == fnfRemoteResource"
         },
         {
           "command": "fc.extension.function.create",
@@ -375,6 +425,11 @@
           "command": "fc.extension.report.issue",
           "when": "view == fcLocalResource",
           "group": "2_documentation@3"
+        },
+        {
+          "command": "fnf.extension.remoteResource.refresh",
+          "when": "view == fnfRemoteResource",
+          "group": "navigation"
         }
       ],
       "view/item/context": [
@@ -569,6 +624,10 @@
         {
           "command": "fc.extension.localResource.paste.function",
           "when": "never"
+        },
+        {
+          "command": "fnf.extension.remoteResource.refresh",
+          "when": "never"
         }
       ]
     }
@@ -602,6 +661,7 @@
   },
   "dependencies": {
     "@alicloud/fc2": "^2.1.0",
+    "@alicloud/fnf-2019-03-15": "^1.1.0",
     "@alicloud/fun": "3.0.8",
     "@types/js-yaml": "^3.12.1",
     "@typescript-eslint/eslint-plugin": "^1.11.0",

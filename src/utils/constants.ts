@@ -195,6 +195,22 @@ export namespace serverlessCommands {
     id: 'editor.action.triggerSuggest',
     title: 'Trigger Suggest',
   };
+  export const FNF_GOTO_CONSOLE = {
+    id: 'fnf.extension.goto.console',
+    title: 'Goto Function Flow Console',
+  }
+  export const FNF_REFRESH_REMOTE_RESOURCE = {
+    id: 'fnf.extension.remoteResource.refresh',
+    title: 'Refresh Remote Resource',
+  };
+  export const FNF_CREATE_REMOTE_FLOW = {
+    id: 'fnf.extension.create.remote.flow',
+    title: 'Deploy Flow',
+  };
+  export const VIEW_SHOW_ALIYUN_FUNCTION_FLOW = {
+    id: 'workbench.view.extension.fnf-vscode-plugin',
+    title: 'View: Show ALIYUN: FUNCTION FLOW',
+  };
 }
 
 export namespace serverlessConfigs {
@@ -234,6 +250,7 @@ export const ALIYUN_SERVERLESS_FUNCTION_TYPE = 'Aliyun::Serverless::Function';
 
 
 export const ALIYUN_SERVERLESS_CHANGELOG_URL = 'https://github.com/alibaba/serverless-vscode/blob/master/CHANGELOG.md';
+export const ALIYUN_FUNCTION_FLOW_CONSOLE_URL = 'https://fnf.console.aliyun.com/';
 
 export const ALIYUN_SERVERLESS_CUSTOMDOMAIN_TYPE = 'Aliyun::Serverless::CustomDomain';
 export const ALIYUN_SERVERLESS_API_TYPE = 'Aliyun::Serverless::Api';

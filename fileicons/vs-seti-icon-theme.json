@@ -22,11 +22,17 @@
     }
   ],
   "iconDefinitions": {
-    "ros_template_file_light": {
+    "_ros_template_file_light": {
       "iconPath": "../media/light/ros.svg"
     },
     "_ros_template_file_dark": {
       "iconPath": "../media/dark/ros.svg"
+    },
+    "_fnf_flow_file_light": {
+      "iconPath": "../media/light/fnf.svg"
+    },
+    "_fnf_flow_file_dark": {
+      "iconPath": "../media/dark/fnf.svg"
     },
     "_R_light": {
       "fontCharacter": "\\E001",
@@ -1557,7 +1563,9 @@
     "htaccess": "_config",
     "key": "_lock",
     "cert": "_lock",
-    "ds_store": "_ignored"
+    "ds_store": "_ignored",
+    "flow.yml": "_fnf_flow_file_dark",
+    "flow.yaml": "_fnf_flow_file_dark"
   },
   "fileNames": {
     "mix": "_hex",
@@ -1873,7 +1881,9 @@
       "htaccess": "_config_light",
       "key": "_lock_light",
       "cert": "_lock_light",
-      "ds_store": "_ignored_light"
+      "ds_store": "_ignored_light",
+      "flow.yml": "_fnf_flow_file_light",
+      "flow.yaml": "_fnf_flow_file_light"
     },
     "languageIds": {
       "bat": "_windows_light",
