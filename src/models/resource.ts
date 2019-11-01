@@ -9,8 +9,10 @@ export enum ResourceType {
   Nas = 3,
   Flow = 10,
   Execution = 11,
+  FlowDefinition = 12,
   Template = 98,
   Command = 99,
+  Directory = 100,
 }
 
 export class Resource extends vscode.TreeItem {
@@ -218,5 +220,91 @@ export class ExecutionResource extends Resource {
       dark: path.resolve(__dirname, '..', '..', 'media', 'dark', 'execution.svg'),
     }
     this.contextValue = 'execution';
+  }
+}
+
+export class AggregationResource extends Resource {
+  labelName: string;
+  constructor (
+    labelName: string,
+    command?: vscode.Command,
+  ) {
+    super(
+      labelName,
+      ResourceType.Directory,
+      vscode.TreeItemCollapsibleState.Collapsed,
+      command,
+    );
+    this.labelName = labelName;
+    this.contextValue = 'directory';
+  }
+}
+
+export class FlowDirectoryResource extends AggregationResource {
+  flowName: string;
+  constructor (
+    flowName: string,
+    labelName: string,
+    command?: vscode.Command,
+  ) {
+    super(
+      labelName,
+      command,
+    );
+    this.flowName = flowName;
+  }
+}
+
+export class FlowDefDirectoryResource extends FlowDirectoryResource {
+  constructor (
+    flowName: string,
+    command?: vscode.Command,
+  ) {
+    super(
+      flowName,
+      'Definition',
+      command,
+    );
+  }
+}
+
+export class FlowExecDirectoryResource extends FlowDirectoryResource {
+  constructor (
+    flowName: string,
+    command?: vscode.Command,
+  ) {
+    super(
+      flowName,
+      'Executions',
+      command,
+    );
+  }
+}
+
+export class FlowStepResource extends Resource {
+  flowName: string;
+  stepName: string;
+  type: string;
+  definition: any;
+  constructor (
+    flowName: string,
+    stepName: string,
+    type: string,
+    definition?: any,
+    collapsibleState?: vscode.TreeItemCollapsibleState,
+  ) {
+    super (
+      stepName,
+      ResourceType.FlowDefinition,
+      collapsibleState || vscode.TreeItemCollapsibleState.None,
+    );
+    this.flowName = flowName;
+    this.stepName = stepName;
+    this.type = type;
+    this.definition = definition;
+    this.iconPath = {
+      light: path.resolve(__dirname, '..', '..', 'media', 'light', `${this.type}.svg`),
+      dark: path.resolve(__dirname, '..', '..', 'media', 'dark', `${this.type}.svg`),
+    }
   }
 }
