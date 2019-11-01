@@ -2,6 +2,23 @@
 
 所有对 "Aliyun Serverless" 插件的更改都将记录在这个文件中。
 
+## 1.14.0 - 2019-11-01
+### Added
+1. 支持部署 Function Flow 流程。
+   - 在 Explorer 面板中，右键流程文件选择 `Deploy Flow`，根据向导输入流程名称、流程描述，即可将流程部署至云端。
+   - 部署成功后，插件将会自动切换到 Function Flow 视图并刷新远端资源树。
+2. 提供 Function Flow 远端资源面板。
+   - 未存在流程时提供跳转到函数工作流控制台的方式。
+   - 点击流程名称可查看该流程的 Execution 列表以及以树形结构呈现的 Definition。
+3. 为 Flow 定义文件提供自定义图标。在插件管理中点击 Aliyun Serverless 插件，在插件信息中左击 'Set File Icon Theme'，选择 Aliyun Serverless 主题即可获得 `*.flow.yml` 文件的自定义图标。
+
+![](https://github.com/alibaba/serverless-vscode/blob/master/media/changelog/v1.14.0/changelog.gif?raw=true)
+
+4. 提供 Debugger 插件自动检测。在调试本地 Python 以及 Php 函数时，插件将会检测相应的 Debugger 插件并提示安装。
+
+### Other
+1. 修复 fun install 功能在插件端无法使用的 Issue。
+
 ## 1.13.0 - 2019-10-23
 ### Added
 1. Function Flow 流程定义文件提供语法智能提示。支持流程定义文件内属性的自动补全、信息校验和上下文帮助。
