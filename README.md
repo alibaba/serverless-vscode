@@ -1,5 +1,5 @@
 # Aliyun Serverless VSCode Extension
-[![Version](https://vsmarketplacebadge.apphb.com/version/aliyun.aliyun-serverless.svg)](https://marketplace.visualstudio.com/items?itemName=aliyun.aliyun-serverless) ![Downloads](https://vsmarketplacebadge.apphb.com/downloads-short/aliyun.aliyun-serverless.svg)
+[![Version](https://vsmarketplacebadge.apphb.com/version/aliyun.aliyun-serverless.svg)](https://marketplace.visualstudio.com/items?itemName=aliyun.aliyun-serverless) [![Downloads](https://vsmarketplacebadge.apphb.com/downloads/aliyun.aliyun-serverless.svg)](https://marketplace.visualstudio.com/items?itemName=aliyun.aliyun-serverless) [![Installs](https://vsmarketplacebadge.apphb.com/installs/aliyun.aliyun-serverless.svg)](https://marketplace.visualstudio.com/items?itemName=aliyun.aliyun-serverless)
 
 Aliyun Serverless VSCode Extension 是阿里云 Serverless 产品 [函数计算 Function Compute](https://www.aliyun.com/product/fc) 的 VSCode 插件，该插件结合了[函数计算 Fun 工具](https://github.com/aliyun/fun)以及[函数计算 SDK](https://help.aliyun.com/document_detail/53277.html) ，是一款 VSCode 图形化开发调试函数计算以及操作函数计算资源的工具。
 
