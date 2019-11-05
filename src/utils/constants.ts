@@ -87,6 +87,14 @@ export namespace serverlessCommands {
     id: 'fc.extension.show.region.status',
     title: 'Show Region Status',
   };
+  export const SHOW_REMOTE_FLOW_INFO = {
+    id: 'fnf.extension.show.remote.flowInfo',
+    title: 'Show Remote Function Info',
+  };
+  export const CLEAR_REMOTE_FLOW_INFO = {
+    id: 'fnf.extension.clear.remote.flowInfo',
+    title: 'Clear Remote Function Info',
+  };
   export const SHOW_REMOTE_FUNCTION_INFO = {
     id: 'fc.extension.show.remote.functionInfo',
     title: 'Show Remote Function Info',
