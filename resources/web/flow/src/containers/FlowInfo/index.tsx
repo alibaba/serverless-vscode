@@ -2,6 +2,10 @@ import React from 'react';
 import { getInstance } from '../../services/service';
 import MonacoEditor from 'react-monaco-editor';
 import 'monaco-editor/esm/vs/basic-languages/yaml/yaml.contribution';
+import Tab from '@material-ui/core/Tab';
+import Tabs from '../../components/Tabs';
+import TabPanel from '../../components/TabPanel';
+import { ExecutionList } from '../ExecutionList';
 
 export class FlowInfo extends React.Component {
 
@@ -11,6 +15,7 @@ export class FlowInfo extends React.Component {
     roleArn: '',
     createdTime: '',
     definition: '',
+    tabValue: 0,
   }
 
   componentDidMount() {
@@ -34,6 +39,13 @@ export class FlowInfo extends React.Component {
   }
 
   render() {
+    const { tabValue } = this.state;
+    const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
+      this.setState({
+        tabValue: newValue,
+      });
+    };
+
     return (
       <div className="root">
         <div className="app">
@@ -64,20 +76,34 @@ export class FlowInfo extends React.Component {
               </ul>
             </div>
           </div>
-          <div className="container" style={{ height: '70vh' }}>
-            {
-              this.state.definition ?
-                <MonacoEditor
-                  theme="vs-dark"
-                  language="yaml"
-                  options={{
-                    readOnly: true,
-                    value: this.state.definition,
-                  }}
-                />
-                :
-                null
-            }
+          <div>
+            <Tabs
+              value={tabValue}
+              onChange={handleChange}
+            >
+              <Tab label="定义" />
+              <Tab label="执行" />
+            </Tabs>
+            <TabPanel value={tabValue} index={0}>
+              <div className="container" style={{ height: '60vh', width: '100%' }}>
+                {
+                  this.state.definition ?
+                    <MonacoEditor
+                      theme="vs-dark"
+                      language="yaml"
+                      options={{
+                        readOnly: true,
+                        value: this.state.definition,
+                      }}
+                    />
+                    :
+                    null
+                }
+              </div>
+            </TabPanel>
+            <TabPanel value={tabValue} index={1}>
+              <ExecutionList />
+            </TabPanel>
           </div>
         </div>
       </div>

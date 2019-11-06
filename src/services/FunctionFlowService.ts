@@ -94,4 +94,21 @@ export class FunctionFlowService extends BaseService {
     } while (result.Executions && result.NextToken);
     return executions;
   }
+
+  async listExecutions(flowName: string, nextToken: string): Promise<any> {
+    const client = this.newFnFClient();
+    if (!client) {
+      return;
+    }
+    if (nextToken) {
+      return await client.listExecutions({
+        NextToken: nextToken,
+        FlowName: flowName,
+      });
+    } else {
+      return await client.listExecutions({
+        FlowName: flowName,
+      });
+    }
+  }
 }

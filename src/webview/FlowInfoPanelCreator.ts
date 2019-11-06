@@ -61,6 +61,14 @@ export class FlowInfoPanelCreator extends AbstractInfoPanelCreator<FlowDescripto
         });
         return;
       }
+      case 'listExecutions': {
+        this.functionflowService.listExecutions(descriptor.flowName, message.nextToken).then(executions => {
+          panel.webview.postMessage({
+            id: message.id,
+            data: executions,
+          });
+        })
+      }
     }
   }
 
