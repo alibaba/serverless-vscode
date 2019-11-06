@@ -60,6 +60,7 @@ import { switchEventFile } from './commands/switchEventFile';
 import { FnFRemoteResourceProvider } from './tree/fnf/FnFRemoteResourceProvider';
 import { createRemoteFlow } from './commands/fnf/createRemoteFlow';
 import { gotoFnFConsole } from './commands/fnf/gotoFnFConsole';
+import { showRemoteFlowInfo, clearRemoteFlowInfo } from './commands/fnf/showRemoteFlowInfo';
 
 export function activate(context: vscode.ExtensionContext) {
   recordPageView('/');
@@ -135,6 +136,8 @@ export function activate(context: vscode.ExtensionContext) {
   switchEventFile(context);
   createRemoteFlow(context);
   gotoFnFConsole(context);
+  showRemoteFlowInfo(context);
+  clearRemoteFlowInfo(context);
 
   vscode.commands.executeCommand(serverlessCommands.SHOW_REGION_STATUS.id);
   vscode.commands.executeCommand(serverlessCommands.SHOW_UPDATE_NOTIFICATION.id);

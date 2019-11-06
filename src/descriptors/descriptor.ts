@@ -24,3 +24,7 @@ export interface InvokeDescriptor extends ResourceDescriptor {
   functionName: string;
   codeUri: string;
 }
+
+export interface FlowDescriptor extends ResourceDescriptor {
+  flowName: string;
+}

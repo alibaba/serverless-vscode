@@ -71,6 +71,11 @@ export class FnFRemoteResourceProvider implements vscode.TreeDataProvider<vscode
     const result = flows.map((flow: any) => (
       new FlowResource(
         flow.Name,
+        {
+          command: serverlessCommands.SHOW_REMOTE_FLOW_INFO.id,
+          title: serverlessCommands.SHOW_REMOTE_FLOW_INFO.title,
+          arguments: [flow.Name],
+        }
       )
     ));
     if (result.length === 0) {
