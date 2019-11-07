@@ -12,6 +12,7 @@
     "monaco-editor": "^0.18.1",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
+    "react-json-view": "^1.19.1",
     "react-monaco-editor": "^0.32.1",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.2.0",

@@ -128,4 +128,34 @@ export class FunctionFlowService extends BaseService {
     }
     return await client.startExecution(param);
   }
+
+  async describeExecution(flowName: string, executionName: string) {
+    const client = this.newFnFClient();
+    if (!client) {
+      return;
+    }
+    return await client.describeExecution({
+      FlowName: flowName,
+      ExecutionName: executionName,
+    });
+  }
+
+  async getExecutionHistory(flowName: string, executionName: string, nextToken: string) {
+    const client = this.newFnFClient();
+    if (!client) {
+      return;
+    }
+    if (nextToken) {
+      return await client.getExecutionHistory({
+        NextToken: nextToken,
+        FlowName: flowName,
+        ExecutionName: executionName,
+      });
+    } else {
+      return await client.getExecutionHistory({
+        FlowName: flowName,
+        ExecutionName: executionName,
+      });
+    }
+  }
 }

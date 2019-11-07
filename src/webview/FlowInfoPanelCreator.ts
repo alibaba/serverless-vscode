@@ -69,6 +69,16 @@ export class FlowInfoPanelCreator extends AbstractInfoPanelCreator<FlowDescripto
         this.startExecution(message, descriptor, panel);
         return;
       }
+      case 'describeExecution': {
+        recordPageView('/showRemoteFlowInfo/describeExecution');
+        this.describeExecution(message, descriptor, panel);
+        return;
+      }
+      case 'getExecutionHistory': {
+        recordPageView('/showRemoteFlowInfo/getExecutionHistory');
+        this.getExecutionHistory(message, descriptor, panel);
+        return;
+      }
     }
   }
 
@@ -106,6 +116,26 @@ export class FlowInfoPanelCreator extends AbstractInfoPanelCreator<FlowDescripto
         },
       });
     }
+  }
+
+  public async describeExecution(message: any, descriptor: FlowDescriptor, panel: vscode.WebviewPanel) {
+    const executionInfo = await this.functionflowService.describeExecution(descriptor.flowName, message.executionName);
+    panel.webview.postMessage({
+      id: message.id,
+      data: executionInfo,
+    });
+  }
+
+  public async getExecutionHistory(message: any, descriptor: FlowDescriptor, panel: vscode.WebviewPanel) {
+    const executionHistory = await this.functionflowService.getExecutionHistory(
+      descriptor.flowName,
+      message.executionName,
+      message.nextToken,
+    );
+    panel.webview.postMessage({
+      id: message.id,
+      data: executionHistory,
+    });
   }
 
   protected async update(panel: vscode.WebviewPanel, descriptor: FlowDescriptor) {

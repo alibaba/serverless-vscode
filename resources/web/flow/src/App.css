@@ -63,3 +63,7 @@ ol, ul {
   display: inline-block;
   margin-right: 10px;
 }
+
+.MuiTypography-colorPrimary {
+  color: inherit !important;
+}

@@ -13,6 +13,7 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import Refresh from '@material-ui/icons/Refresh';
 import Button from '@material-ui/core/Button';
+import Link from '@material-ui/core/Link';
 import { ExecutionStart } from '../ExecutionStart';
 
 function sliceExecution(executions: any[], pageNumber: number, pageSize: number): any[]{
@@ -107,6 +108,10 @@ export class ExecutionList extends React.Component<ExecutionListProps> {
     }
   }
 
+  redirectToExecutionInfo = (executionName: string) => {
+    this.props.history.push(`/executions/item/${executionName}`);
+  }
+
   onRefresh(url: string, isReload: boolean) {
     this.props.history.push(url);
     if (isReload) {
@@ -148,7 +153,13 @@ export class ExecutionList extends React.Component<ExecutionListProps> {
                 () => this.onRefresh('/', false)
               }
               onSuccess={
-                () => this.onRefresh('/', true)
+                (executionName: string) => {
+                  if (executionName) {
+                    this.onRefresh(`/executions/item/${executionName}`, false);
+                  } else {
+                    this.onRefresh('/', true);
+                  }
+                }
               }
             />
         </Route>
@@ -165,7 +176,12 @@ export class ExecutionList extends React.Component<ExecutionListProps> {
             {this.state.dataSource.map((row: any) => (
               <TableRow>
                 <TableCell>
-                  {row.Name}
+                  <Link
+                    underline="always"
+                    style={{ cursor: "pointer" }}
+                    onClick={() => this.redirectToExecutionInfo(row.Name)}>
+                    {row.Name}
+                  </Link>
                 </TableCell>
                 <TableCell>{row.Status}</TableCell>
                 <TableCell>{new Date(row.StartedTime).toLocaleString()}</TableCell>
