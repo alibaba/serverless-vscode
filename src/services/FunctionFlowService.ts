@@ -111,4 +111,21 @@ export class FunctionFlowService extends BaseService {
       });
     }
   }
+
+  async startExecution(flowName: string, input: string | undefined, executionName: string | undefined) {
+    const client = this.newFnFClient();
+    if (!client) {
+      return;
+    }
+    const param: any = {
+      FlowName: flowName,
+    }
+    if (input) {
+      param.Input = input;
+    }
+    if (executionName) {
+      param.ExecutionName = executionName;
+    }
+    return await client.startExecution(param);
+  }
 }

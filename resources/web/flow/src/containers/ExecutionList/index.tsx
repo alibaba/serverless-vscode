@@ -1,4 +1,7 @@
-import React from 'react';
+import React, { Fragment } from 'react';
+import { ExecutionListProps } from '../../props.d';
+import { getInstance } from '../../services/service';
+import { Route } from 'react-router-dom';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '../../components/TableCell';
@@ -8,7 +11,9 @@ import TableFooter from '@material-ui/core/TableFooter';
 import IconButton from '../../components/IconButton';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
-import { getInstance } from '../../services/service';
+import Refresh from '@material-ui/icons/Refresh';
+import Button from '@material-ui/core/Button';
+import { ExecutionStart } from '../ExecutionStart';
 
 function sliceExecution(executions: any[], pageNumber: number, pageSize: number): any[]{
   return executions.slice(
@@ -20,14 +25,18 @@ function checkHasNext(executions: any[], pageNumber: number, pageSize: number, n
   return executions.length <= pageSize * pageNumber && !nextToken;
 }
 
-export class ExecutionList extends React.Component {
-  state = {
+export class ExecutionList extends React.Component<ExecutionListProps> {
+  defaultState = {
     executions: [],
     dataSource: [],
     pageSize: 10,
     pageNumber: 1,
     nextToken: '',
     nextBtnDisabled: true,
+  }
+
+  state = {
+    ...this.defaultState,
   }
 
   service = getInstance();
@@ -39,15 +48,21 @@ export class ExecutionList extends React.Component {
   }
 
   componentDidMount() {
+    this.initExecutions();
+  }
+
+  initExecutions() {
     this.service.request({ command: 'listExecutions' }).then((data) => {
       const { Executions: executions, NextToken: nextToken } = data;
       if (executions && executions.length) {
         this.setState({
           executions,
-          dataSource: sliceExecution(executions, this.state.pageNumber, this.state.pageSize),
+          dataSource: sliceExecution(executions, this.defaultState.pageNumber, this.defaultState.pageSize),
+          pageSize: this.defaultState.pageSize,
+          pageNumber: this.defaultState.pageNumber,
           nextToken,
-          nextBtnDisabled: checkHasNext(executions, this.state.pageNumber, this.state.pageSize, nextToken),
-        })
+          nextBtnDisabled: checkHasNext(executions, this.defaultState.pageNumber, this.defaultState.pageSize, nextToken),
+        });
       }
     });
   }
@@ -92,53 +107,97 @@ export class ExecutionList extends React.Component {
     }
   }
 
+  onRefresh(url: string, isReload: boolean) {
+    this.props.history.push(url);
+    if (isReload) {
+      this.setState({
+        ...this.defaultState,
+      });
+      this.initExecutions();
+    }
+  }
+
   render () {
     return (
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>执行名称</TableCell>
-            <TableCell>状态</TableCell>
-            <TableCell>创建时间</TableCell>
-            <TableCell>结束时间</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {this.state.dataSource.map((row: any) => (
+      <Fragment>
+         <Button
+          variant="contained"
+          color="primary"
+          style={{
+            marginTop: '12px',
+            backgroundColor: '#007acc',
+            outline: '1px solid #007acc',
+            color: '#fff',
+            borderRadius: '0',
+          }}
+          size="small"
+          onClick={() => { this.props.history.push('/executions/start') }}
+        >
+          开始执行
+        </Button>
+        <IconButton
+          style={{ float: "right" }}
+          onClick={() => { this.initExecutions(); }}
+        >
+          <Refresh />
+        </IconButton>
+        <Route path="/executions/start">
+            <ExecutionStart
+              flowName={this.props.flowName}
+              onClose={
+                () => this.onRefresh('/', false)
+              }
+              onSuccess={
+                () => this.onRefresh('/', true)
+              }
+            />
+        </Route>
+        <Table>
+          <TableHead>
             <TableRow>
-              <TableCell>
-                {row.Name}
-              </TableCell>
-              <TableCell>{row.Status}</TableCell>
-              <TableCell>{new Date(row.StartedTime).toLocaleString()}</TableCell>
-              <TableCell>{new Date(row.StoppedTime).toLocaleString()}</TableCell>
+              <TableCell>执行名称</TableCell>
+              <TableCell>状态</TableCell>
+              <TableCell>创建时间</TableCell>
+              <TableCell>结束时间</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-        <TableFooter>
-          <TableRow>
-            <TableCell size="small" padding="none" style={{ border: '0' }}>
-              <div>
-                <IconButton
-                  aria-label="previous page"
-                  disabled={this.state.pageNumber === 1}
-                  onClick={this.handleBackBtnClick}
-                >
-                  <KeyboardArrowLeft />
-                </IconButton>
-                {this.state.pageNumber}
-                <IconButton
-                  aria-label="next page"
-                  disabled={this.state.nextBtnDisabled}
-                  onClick={this.handleNextBtnClick}
-                >
-                  <KeyboardArrowRight />
-                </IconButton>
-              </div>
-            </TableCell>
-          </TableRow>
-        </TableFooter>
-      </Table>
+          </TableHead>
+          <TableBody>
+            {this.state.dataSource.map((row: any) => (
+              <TableRow>
+                <TableCell>
+                  {row.Name}
+                </TableCell>
+                <TableCell>{row.Status}</TableCell>
+                <TableCell>{new Date(row.StartedTime).toLocaleString()}</TableCell>
+                <TableCell>{new Date(row.StoppedTime).toLocaleString()}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+          <TableFooter>
+            <TableRow>
+              <TableCell size="small" padding="none" style={{ border: '0' }}>
+                <div>
+                  <IconButton
+                    aria-label="previous page"
+                    disabled={this.state.pageNumber === 1}
+                    onClick={this.handleBackBtnClick}
+                  >
+                    <KeyboardArrowLeft />
+                  </IconButton>
+                  {this.state.pageNumber}
+                  <IconButton
+                    aria-label="next page"
+                    disabled={this.state.nextBtnDisabled}
+                    onClick={this.handleNextBtnClick}
+                  >
+                    <KeyboardArrowRight />
+                  </IconButton>
+                </div>
+              </TableCell>
+            </TableRow>
+          </TableFooter>
+        </Table>
+      </Fragment>
     )
   }
 }

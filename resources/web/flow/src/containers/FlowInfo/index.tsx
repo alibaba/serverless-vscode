@@ -1,4 +1,5 @@
 import React from 'react';
+import { FlowInfoProps } from '../../props.d';
 import { getInstance } from '../../services/service';
 import MonacoEditor from 'react-monaco-editor';
 import 'monaco-editor/esm/vs/basic-languages/yaml/yaml.contribution';
@@ -7,7 +8,7 @@ import Tabs from '../../components/Tabs';
 import TabPanel from '../../components/TabPanel';
 import { ExecutionList } from '../ExecutionList';
 
-export class FlowInfo extends React.Component {
+export class FlowInfo extends React.Component<FlowInfoProps> {
 
   state = {
     flowName: '',
@@ -45,7 +46,6 @@ export class FlowInfo extends React.Component {
         tabValue: newValue,
       });
     };
-
     return (
       <div className="root">
         <div className="app">
@@ -85,7 +85,7 @@ export class FlowInfo extends React.Component {
               <Tab label="执行" />
             </Tabs>
             <TabPanel value={tabValue} index={0}>
-              <div className="container" style={{ height: '60vh', width: '100%' }}>
+              <div className="container" style={{ height: '60vh', width: '100%', marginTop: '18px' }}>
                 {
                   this.state.definition ?
                     <MonacoEditor
@@ -102,7 +102,7 @@ export class FlowInfo extends React.Component {
               </div>
             </TabPanel>
             <TabPanel value={tabValue} index={1}>
-              <ExecutionList />
+              <ExecutionList flowName={this.state.flowName} history={this.props.history} />
             </TabPanel>
           </div>
         </div>
