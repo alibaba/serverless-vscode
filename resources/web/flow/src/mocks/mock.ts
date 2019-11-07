@@ -94,6 +94,8 @@ steps:
         },
       ],
       NextToken: 'exec2',
+    },
+    'startExecution': {
     }
   }
 }

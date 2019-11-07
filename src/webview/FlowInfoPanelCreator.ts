@@ -1,9 +1,11 @@
+/* eslint-disable max-len */
 import * as vscode from 'vscode';
 import * as path from 'path';
 import { ext } from '../extensionVariables';
 import { FlowDescriptor } from '../descriptors/descriptor';
 import { AbstractInfoPanelCreator } from './AbstractInfoPanelCreator';
 import { FunctionFlowService } from '../services/FunctionFlowService';
+import { recordPageView } from '../utils/visitor';
 
 export class FlowInfoPanelCreator extends AbstractInfoPanelCreator<FlowDescriptor> {
   viewType = 'flowInfo';
@@ -53,22 +55,56 @@ export class FlowInfoPanelCreator extends AbstractInfoPanelCreator<FlowDescripto
   protected receiveMessage(message: any, descriptor: FlowDescriptor, panel: vscode.WebviewPanel) {
     switch (message.command) {
       case 'describeFlow': {
-        this.functionflowService.describeFlow(descriptor.flowName).then(flow => {
-          panel.webview.postMessage({
-            id: message.id,
-            data: flow,
-          });
-        });
+        recordPageView('/showRemoteFlowInfo/describeFlow');
+        this.describeFlow(message, descriptor, panel);
         return;
       }
       case 'listExecutions': {
-        this.functionflowService.listExecutions(descriptor.flowName, message.nextToken).then(executions => {
-          panel.webview.postMessage({
-            id: message.id,
-            data: executions,
-          });
-        })
+        recordPageView('/showRemoteFlowInfo/listExecutions');
+        this.listExecutions(message, descriptor, panel);
+        return;
       }
+      case 'startExecution': {
+        recordPageView('/showRemoteFlowInfo/startExecution');
+        this.startExecution(message, descriptor, panel);
+        return;
+      }
+    }
+  }
+
+  public async describeFlow(message: any, descriptor: FlowDescriptor, panel: vscode.WebviewPanel) {
+    const flow = await this.functionflowService.describeFlow(descriptor.flowName);
+    panel.webview.postMessage({
+      id: message.id,
+      data: flow,
+    });
+  }
+
+  public async listExecutions(message: any, descriptor: FlowDescriptor, panel: vscode.WebviewPanel) {
+    const executions = await this.functionflowService.listExecutions(descriptor.flowName, message.nextToken);
+    panel.webview.postMessage({
+      id: message.id,
+      data: executions,
+    });
+  }
+
+  public async startExecution(message: any, descriptor: FlowDescriptor, panel: vscode.WebviewPanel) {
+    try {
+      const result = await this.functionflowService.startExecution(
+        descriptor.flowName, message.input, message.executionName
+      );
+      panel.webview.postMessage({
+        id: message.id,
+        data: result,
+      });
+    } catch(ex) {
+      panel.webview.postMessage({
+        id: message.id,
+        data: {
+          code: ex.code,
+          message: ex.message,
+        },
+      });
     }
   }
 
