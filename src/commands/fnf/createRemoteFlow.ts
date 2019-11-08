@@ -35,7 +35,25 @@ async function processCommand(uri: vscode.Uri) {
 
   const flowDefinition = fs.readFileSync(uri.fsPath, 'utf8');
   const functionFlowService = new FunctionFlowService();
-  await functionFlowService.createFlow(state.flowName, state.description, flowDefinition);
+  let existFlow = false;
+  try {
+    await functionFlowService.describeFlow(state.flowName);
+    existFlow = true;
+  } catch(ex) {
+  }
+  if (existFlow) {
+    const choice = await vscode.window.showInformationMessage(
+      `${state.flowName} already exists. Do you want to continue updating?`,
+      'Continue',
+      'Cancel',
+    )
+    if (choice !== 'Continue') {
+      return;
+    }
+    await functionFlowService.updateFlow(state.flowName, state.description, flowDefinition);
+  } else {
+    await functionFlowService.createFlow(state.flowName, state.description, flowDefinition);
+  }
   vscode.commands.executeCommand(serverlessCommands.FNF_REFRESH_REMOTE_RESOURCE.id);
   vscode.commands.executeCommand(serverlessCommands.VIEW_SHOW_ALIYUN_FUNCTION_FLOW.id);
 }

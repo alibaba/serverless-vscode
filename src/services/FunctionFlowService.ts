@@ -17,13 +17,9 @@ export class FunctionFlowService extends BaseService {
 
   async describeFlow(flowName: string) {
     const client = this.newFnFClient();
-    try {
-      return await client.describeFlow({
-        Name: flowName,
-      });
-    } catch (ex) {
-      output.error(ex.message);
-    }
+    return await client.describeFlow({
+      Name: flowName,
+    });
   }
 
   async createFlow(flowName: string, description: string, definition: string) {
@@ -34,6 +30,20 @@ export class FunctionFlowService extends BaseService {
       Description: description,
       Definition: definition,
     });
+  }
+
+  async updateFlow(flowName: string, description: string | undefined, definition: string | undefined) {
+    const client = this.newFnFClient();
+    const param: any = {
+      Name: flowName,
+    }
+    if (description) {
+      param.Description = description;
+    }
+    if (definition) {
+      param.Definition = definition;
+    }
+    await client.updateFlow(param);
   }
 
   async listAllRemoteFlows(): Promise<any[]> {
