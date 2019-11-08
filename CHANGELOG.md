@@ -2,6 +2,27 @@
 
 所有对 "Aliyun Serverless" 插件的更改都将记录在这个文件中。
 
+## 1.15.0 - 2019-11-08
+### Added
+1. 支持更新部署云端 Function Flow 流程。
+   - 在 Explorer 面板中，右键流程文件选择 `Deploy Flow`，根据向导输入流程名称等信息。
+   - 若输入的流程名称在远端已存在，插件将会弹出是否继续更新的提示框，点击确认后将会进行更新。
+
+![](https://github.com/alibaba/serverless-vscode/blob/master/media/changelog/v1.15.0/updateFlow.gif?raw=true)
+
+2. 提供 Function Flow 云端资源信息面板。在云端资源列表中单击流程名称可访问相应的资源信息面板。
+   - 提供流程基本信息与流程定义。
+   - 提供关于该流程的执行列表信息。
+   - 提供执行基本信息与执行事件历史列表。(单击执行列表中的执行名称即可访问相关信息)
+
+![](https://github.com/alibaba/serverless-vscode/blob/master/media/changelog/v1.15.0/flow-info.gif?raw=true)
+
+3. 支持在 Function Flow 云端资源信息面板中启动新执行。
+   - 在云端资源信息面板中单击 "开始执行"，输入本次执行的名称与输入，单击 "启动执行"。
+   - 新执行启动成功后，云端资源信息面板将自动跳转至执行基本信息与执行事件历史列表。
+
+![](https://github.com/alibaba/serverless-vscode/blob/master/media/changelog/v1.15.0/startExec.gif?raw=true)
+
 ## 1.14.0 - 2019-11-01
 ### Added
 1. 支持部署 Function Flow 流程。
