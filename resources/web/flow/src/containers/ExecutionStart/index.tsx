@@ -40,14 +40,14 @@ export class ExecutionStart extends React.Component<ExecutionStartProps> {
       input: executionInput,
       executionName,
     })
-    const { code, message } = data;
+    const { code, message, Name: name } = data;
     if (code || message) {
       this.handleErrorMessageOpen(`${code || 'Error'}: ${message}`);
     } else {
       this.setState({
         visible: false,
       });
-      this.props.onSuccess();
+      this.props.onSuccess(name);
     }
   }
 

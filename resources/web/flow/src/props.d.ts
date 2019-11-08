@@ -14,5 +14,5 @@ export interface ExecutionListProps extends HistoryProps {
 export interface ExecutionStartProps {
   flowName: string;
   onClose: () => void;
-  onSuccess: () => void;
+  onSuccess: (executionName: string) => void;
 }

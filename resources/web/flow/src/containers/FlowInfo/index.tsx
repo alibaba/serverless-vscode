@@ -81,10 +81,18 @@ export class FlowInfo extends React.Component<FlowInfoProps> {
               value={tabValue}
               onChange={handleChange}
             >
-              <Tab label="定义" />
               <Tab label="执行" />
+              <Tab label="定义" />
             </Tabs>
             <TabPanel value={tabValue} index={0}>
+              {
+                this.state.flowName ?
+                  <ExecutionList flowName={this.state.flowName} history={this.props.history} />
+                  :
+                  null
+              }
+            </TabPanel>
+            <TabPanel value={tabValue} index={1}>
               <div className="container" style={{ height: '60vh', width: '100%', marginTop: '18px' }}>
                 {
                   this.state.definition ?
@@ -100,9 +108,6 @@ export class FlowInfo extends React.Component<FlowInfoProps> {
                     null
                 }
               </div>
-            </TabPanel>
-            <TabPanel value={tabValue} index={1}>
-              <ExecutionList flowName={this.state.flowName} history={this.props.history} />
             </TabPanel>
           </div>
         </div>

@@ -96,6 +96,26 @@ steps:
       NextToken: 'exec2',
     },
     'startExecution': {
+    },
+    'describeExecution': {
+      FlowName: 'flow',
+      Input: '{"key":"value"}',
+      Name: 'exec',
+      Output: '{}',
+      StartedTime: '2019-01-01T01:01:01.001Z',
+      Status: 'Succeeded',
+      StoppedTime: '2019-01-01T01:01:01.001Z',
+    },
+    'getExecutionHistory': {
+      Events: [
+        {
+          EventId: 1,
+          Type: 'ExecutionStarted',
+          StepName: 'passStep',
+          Time: '2019-01-01T01:01:01.001Z',
+          EventDetail: '{}',
+        }
+      ],
     }
   }
 }
