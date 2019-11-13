@@ -1,28 +1,54 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   MemoryRouter,
   Switch,
   Route,
  } from 'react-router-dom';
+ import { getInstance } from './services/service';
 import { FlowInfo } from './containers/FlowInfo';
+import { FlowDefinition } from './containers/FlowDefinition';
 import { ExecutionInfo } from './containers/ExecutionInfo';
 
 import './App.css';
 
 const App: React.FC = () => {
+  const service = getInstance();
+  const [initialEntry, setInitialEntry] = useState('');
+  useEffect(() => {
+    describeInitialEntry();
+  }, []);
+  const describeInitialEntry = async () => {
+    const data = await service.request({
+      command: 'describeInitialEntry',
+    });
+    const { entry = '/' } = data;
+    if (entry === 'definition') {
+      setInitialEntry('/definition');
+    } else {
+      setInitialEntry('/');
+    }
+  }
   return (
-    <MemoryRouter>
-      <div>
-        <Switch>
-          <Route path="/executions/item/:executionName">
-            <ExecutionInfo />
-          </Route>
-          <Route path="/" render={(props) => {
-            return <FlowInfo history={props.history}/>
-          }} />
-        </Switch>
-      </div>
-    </MemoryRouter>
+    initialEntry ?
+      <MemoryRouter initialEntries={[initialEntry]}>
+        <div>
+          <Switch>
+            <Route path="/executions/item/:executionName">
+              <ExecutionInfo />
+            </Route>
+            <Route path="/definition">
+              <div>
+                <FlowDefinition />
+              </div>
+            </Route>
+            <Route path="/" render={(props) => {
+              return <FlowInfo history={props.history}/>
+            }} />
+          </Switch>
+        </div>
+      </MemoryRouter>
+      :
+      null
   );
 }
 

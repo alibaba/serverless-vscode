@@ -3,10 +3,12 @@ import { IInfoPanelCreator } from './IInfoPanelCreator';
 import { ResourceDescriptor } from '../descriptors/descriptor';
 export class PanelManager<T extends ResourceDescriptor> {
   private panelMap: Map<string, vscode.WebviewPanel>;
+  private column?: vscode.ViewColumn;
   public panelCreator: IInfoPanelCreator<T>;
-  constructor(panelCreator: IInfoPanelCreator<T>) {
+  constructor(panelCreator: IInfoPanelCreator<T>, column?: vscode.ViewColumn) {
     this.panelMap = new Map<string, vscode.WebviewPanel>();
     this.panelCreator = panelCreator;
+    this.column = column;
   }
   public static showPanel(panel: vscode.WebviewPanel) {
     const column = vscode.window.activeTextEditor
@@ -17,7 +19,7 @@ export class PanelManager<T extends ResourceDescriptor> {
   public getOrCreatePanel(panelTitle: string, descriptor: T): vscode.WebviewPanel {
     let panel = this.getPanel(panelTitle);
     if (!panel) {
-      panel = this.panelCreator.create(descriptor);
+      panel = this.panelCreator.create(descriptor, this.column);
       this.addPanel(panel);
     }
     return panel;
@@ -36,5 +38,11 @@ export class PanelManager<T extends ResourceDescriptor> {
   }
   public clear() {
     this.panelMap.clear();
+  }
+  public showPanel(panel: vscode.WebviewPanel) {
+    const column = this.column || (vscode.window.activeTextEditor
+      ? vscode.window.activeTextEditor.viewColumn
+      : undefined);
+    panel.reveal(column);
   }
 }

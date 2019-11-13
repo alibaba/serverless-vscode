@@ -1,13 +1,11 @@
 /* eslint-disable max-len */
 import * as vscode from 'vscode';
-import * as path from 'path';
-import { ext } from '../extensionVariables';
 import { FlowDescriptor } from '../descriptors/descriptor';
-import { AbstractInfoPanelCreator } from './AbstractInfoPanelCreator';
+import { AbstractFlowPanelCreator } from './AbstractFlowPanelCreator';
 import { FunctionFlowService } from '../services/FunctionFlowService';
 import { recordPageView } from '../utils/visitor';
 
-export class FlowInfoPanelCreator extends AbstractInfoPanelCreator<FlowDescriptor> {
+export class FlowInfoPanelCreator extends AbstractFlowPanelCreator<FlowDescriptor> {
   viewType = 'flowInfo';
   functionflowService: FunctionFlowService = new FunctionFlowService();
 
@@ -19,41 +17,12 @@ export class FlowInfoPanelCreator extends AbstractInfoPanelCreator<FlowDescripto
     return `${descriptor.flowName}`;
   }
 
-  protected getHtmlForWebview(): string {
-    const manifest = require(
-      path.join(ext.context.extensionPath, 'resources', 'web', 'flow', 'build', 'asset-manifest.json')
-    );
-    const mainScript = manifest.files['main.js'];
-    const mainStyle = manifest.files['main.css'];
-    const scriptPathOnDisk = vscode.Uri.file(
-      path.join(ext.context.extensionPath, 'resources', 'web', 'flow', 'build', mainScript)
-    );
-    const scriptUri = scriptPathOnDisk.with({ scheme: 'vscode-resource' });
-    const stylePathOnDisk = vscode.Uri.file(
-      path.join(ext.context.extensionPath, 'resources', 'web', 'flow', 'build', mainStyle)
-    );
-    const styleUri = stylePathOnDisk.with({ scheme: 'vscode-resource' });
-    return `<!DOCTYPE html>
-      <html lang="en">
-      <head>
-        <meta charset="utf-8">
-        <title>React App</title>
-        <link rel="stylesheet" type="text/css" href="${styleUri}">
-        <base href="${vscode.Uri.file(
-    path.join(ext.context.extensionPath, 'resources', 'web', 'flow', 'build')).with({ scheme: 'vscode-resource' })}/">
-      </head>
-
-      <body>
-        <noscript>You need to enable JavaScript to run this app.</noscript>
-        <div id="root"></div>
-
-        <script src="${scriptUri}"></script>
-      </body>
-      </html>`;
-  }
-
   protected receiveMessage(message: any, descriptor: FlowDescriptor, panel: vscode.WebviewPanel) {
     switch (message.command) {
+      case 'describeInitialEntry': {
+        this.describeInitialEntry(message, descriptor, panel);
+        return;
+      }
       case 'describeFlow': {
         recordPageView('/showRemoteFlowInfo/describeFlow');
         this.describeFlow(message, descriptor, panel);
@@ -80,6 +49,14 @@ export class FlowInfoPanelCreator extends AbstractInfoPanelCreator<FlowDescripto
         return;
       }
     }
+  }
+  public describeInitialEntry(message: any, descriptor: FlowDescriptor, panel: vscode.WebviewPanel) {
+    panel.webview.postMessage({
+      id: message.id,
+      data: {
+        entry: '/',
+      },
+    });
   }
 
   public async describeFlow(message: any, descriptor: FlowDescriptor, panel: vscode.WebviewPanel) {

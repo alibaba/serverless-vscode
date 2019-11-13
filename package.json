@@ -284,6 +284,14 @@
       {
         "command": "fnf.extension.create.remote.flow",
         "title": "Deploy Flow"
+      },
+      {
+        "command": "fnf.extension.show.definition.graph",
+        "title": "Function Flow: Show Graph",
+        "icon": {
+          "light": "media/fnf.svg",
+          "dark": "media/fnf.svg"
+        }
       }
     ],
     "keybindings": [
@@ -354,6 +362,13 @@
         {
           "command": "fnf.extension.create.remote.flow",
           "when": "resourceExtname == .yaml"
+        }
+      ],
+      "editor/title": [
+        {
+          "command": "fnf.extension.show.definition.graph",
+          "when": "resourceExtname == .yml",
+          "group": "navigation"
         }
       ],
       "view/title": [

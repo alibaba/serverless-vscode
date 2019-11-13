@@ -16,10 +16,10 @@ export abstract class AbstractInfoPanelCreator<T extends ResourceDescriptor> imp
   }
 
 
-  public create(descriptor: T): vscode.WebviewPanel {
-    const column = vscode.window.activeTextEditor
+  public create(descriptor: T, viewColumn?: vscode.ViewColumn): vscode.WebviewPanel {
+    const column = viewColumn || (vscode.window.activeTextEditor
       ? vscode.window.activeTextEditor.viewColumn
-      : undefined;
+      : undefined);
     const panel = vscode.window.createWebviewPanel(
       this.viewType,
       this.getPanelTitle(descriptor),
