@@ -1,6 +1,7 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { useParams } from 'react-router-dom';
 import { getInstance } from '../../services/service';
+import ReactJson from '../../components/ReactJson';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '../../components/TableCell';
@@ -35,6 +36,7 @@ export const ExecutionHistory = () => {
   const [pageSize, setPageSize] = useState<number>(DEFAULT_PAGE_SIZE);
   const [pageNumber, setPageNumber] = useState<number>(DEFAULT_PAGE_NUMBER);
   const [nextBtnDisabled, setNextBtnDisabled] = useState<boolean>(true);
+  const [expandedArray, setexpandedArray] = useState<number[]>([]);
 
   useEffect(() => { initExecutions() }, []);
 
@@ -88,6 +90,17 @@ export const ExecutionHistory = () => {
     }
   }
 
+  const handleRowClick = (rowNumber: number) => {
+    let newExpandedArray = [...expandedArray];
+    const index = expandedArray.indexOf(rowNumber);
+    if (index !== -1) {
+      newExpandedArray.splice(index, 1);
+    } else {
+      newExpandedArray.push(rowNumber);
+    }
+    setexpandedArray(newExpandedArray);
+  }
+
   return (
     <Fragment>
       <IconButton
@@ -106,13 +119,27 @@ export const ExecutionHistory = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {dataSource.map((row: any) => (
-            <TableRow>
-              <TableCell>{row.EventId}</TableCell>
-              <TableCell>{row.Type}</TableCell>
-              <TableCell>{row.StepName}</TableCell>
-              <TableCell>{new Date(row.Time).toLocaleString()}</TableCell>
-            </TableRow>
+          {dataSource.map((row: any, index: number) => (
+            <Fragment>
+              <TableRow onClick={() => handleRowClick(index)}>
+                <TableCell>{row.EventId}</TableCell>
+                <TableCell>{row.Type}</TableCell>
+                <TableCell>{row.StepName}</TableCell>
+                <TableCell>{new Date(row.Time).toLocaleString()}</TableCell>
+              </TableRow>
+              {
+                expandedArray.includes(index) ?
+                <TableRow>
+                  <TableCell colSpan={4}>
+                    <ReactJson
+                      jsonStr={row.EventDetail}
+                    />
+                  </TableCell>
+                </TableRow>
+                :
+                null
+              }
+            </Fragment>
           ))}
         </TableBody>
         <TableFooter>

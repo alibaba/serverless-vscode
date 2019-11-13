@@ -157,7 +157,7 @@ steps:
           Type: 'ExecutionStarted',
           StepName: 'passStep',
           Time: '2019-01-01T01:01:01.001Z',
-          EventDetail: '{}',
+          EventDetail: '{"input":{"key":"hello world"}}',
         }
       ],
     },
