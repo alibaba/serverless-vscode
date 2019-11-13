@@ -119,6 +119,10 @@ export namespace serverlessCommands {
     id: 'fc.extension.show.local.invoke.panel',
     title: 'Show Local Invoke Panel',
   };
+  export const FNF_SHOW_DEFINITION_GRAPH = {
+    id: 'fnf.extension.show.definition.graph',
+    title: 'Function Flow: Show Graph',
+  };
   export const CREATE_EVENT_FILE = {
     id: 'fc.extension.create.event.file',
     title: 'Create Event File',
