@@ -23,6 +23,7 @@
   "activationEvents": [
     "onView:fcLocalResource",
     "onView:fcRemoteResource",
+    "onCommand:fnf.extension.show.definition.graph" ,
     "onCommand:fc.extension.deploy",
     "onCommand:fc.extension.project.init",
     "onCommand:fc.extension.bind.account",
@@ -642,6 +643,10 @@
         },
         {
           "command": "fnf.extension.remoteResource.refresh",
+          "when": "never"
+        },
+        {
+          "command": "fnf.extension.show.definition.graph",
           "when": "never"
         }
       ]

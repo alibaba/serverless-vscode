@@ -1,12 +1,11 @@
 import React from 'react';
 import { FlowInfoProps } from '../../props.d';
 import { getInstance } from '../../services/service';
-import MonacoEditor from 'react-monaco-editor';
-import 'monaco-editor/esm/vs/basic-languages/yaml/yaml.contribution';
 import Tab from '@material-ui/core/Tab';
 import Tabs from '../../components/Tabs';
 import TabPanel from '../../components/TabPanel';
 import { ExecutionList } from '../ExecutionList';
+import { FlowDefinitionGraph } from '../FlowDefinitionGraph';
 
 export class FlowInfo extends React.Component<FlowInfoProps> {
 
@@ -93,21 +92,7 @@ export class FlowInfo extends React.Component<FlowInfoProps> {
               }
             </TabPanel>
             <TabPanel value={tabValue} index={1}>
-              <div className="container" style={{ height: '60vh', width: '100%', marginTop: '18px' }}>
-                {
-                  this.state.definition ?
-                    <MonacoEditor
-                      theme="vs-dark"
-                      language="yaml"
-                      options={{
-                        readOnly: true,
-                        value: this.state.definition,
-                      }}
-                    />
-                    :
-                    null
-                }
-              </div>
+              <FlowDefinitionGraph definition={this.state.definition} />
             </TabPanel>
           </div>
         </div>
