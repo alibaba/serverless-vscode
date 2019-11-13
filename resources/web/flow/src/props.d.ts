@@ -16,3 +16,7 @@ export interface ExecutionStartProps {
   onClose: () => void;
   onSuccess: (executionName: string) => void;
 }
+
+export interface DefinitionGraphProps {
+  definition: string;
+}

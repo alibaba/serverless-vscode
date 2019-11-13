@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { getInstance } from '../../services/service';
-import MonacoEditor from 'react-monaco-editor';
-import 'monaco-editor/esm/vs/basic-languages/yaml/yaml.contribution';
 import IconButton from '../../components/IconButton';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import Tab from '@material-ui/core/Tab';
@@ -11,6 +9,7 @@ import TabPanel from '../../components/TabPanel';
 import Grid from '@material-ui/core/Grid';
 import ReactJson from 'react-json-view';
 import { ExecutionHistory } from '../ExecutionHistory';
+import { FlowDefinitionGraph } from '../FlowDefinitionGraph';
 
 export const ExecutionInfo = () => {
   const { executionName } = useParams();
@@ -155,21 +154,7 @@ export const ExecutionInfo = () => {
             </Grid>
           </TabPanel>
           <TabPanel value={tabValue} index={2}>
-            <div className="container" style={{ height: '60vh', width: '100%', marginTop: '18px' }}>
-              {
-                executionInfo.flowDefinition ?
-                  <MonacoEditor
-                    theme="vs-dark"
-                    language="yaml"
-                    options={{
-                      readOnly: true,
-                      value: executionInfo.flowDefinition,
-                    }}
-                  />
-                  :
-                  null
-              }
-            </div>
+            <FlowDefinitionGraph definition={executionInfo.flowDefinition} />
           </TabPanel>
         </div>
       </div>
