@@ -10,23 +10,26 @@ import { getOrInitEventConfig } from '../utils/localConfig';
 
 export function remoteInvokeFunction(context: vscode.ExtensionContext) {
   context.subscriptions.push(vscode.commands.registerCommand(serverlessCommands.REMOTE_INVOKE.id,
-    async (node: Resource) => {
+    async (node: Resource, eventFilePath: string | undefined) => {
       recordPageView('/remoteInvoke');
       if (node.resourceType !== ResourceType.Function) {
         return;
       }
       const funcRes = node as FunctionResource;
-      await process(funcRes.serviceName, funcRes.functionName);
+      await process(funcRes.serviceName, funcRes.functionName, eventFilePath);
     })
   );
 }
 
-async function process(serviceName: string, functionName: string) {
+async function process(
+  serviceName: string,
+  functionName: string,
+  eventFilePath: string | undefined,
+) {
   let cwd = vscode.workspace.rootPath;
-  let eventFilePath: string = '';
   if (cwd) {
     // 获取 event 文件
-    eventFilePath = await getOrInitEventConfig(
+    eventFilePath = eventFilePath || await getOrInitEventConfig(
       path.resolve(cwd, 'template.yml'),
       serviceName,
       functionName,
@@ -41,7 +44,7 @@ async function process(serviceName: string, functionName: string) {
   }
   const funService = new FunService(cwd || os.homedir());
   if (cwd) {
-    funService.remoteInvokeWithEventFilePath(serviceName, functionName, eventFilePath);
+    funService.remoteInvokeWithEventFilePath(serviceName, functionName, eventFilePath as string);
   } else {
     funService.remoteInvokeWithStdin(serviceName, functionName);
   }

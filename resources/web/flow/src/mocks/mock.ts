@@ -165,7 +165,30 @@ steps:
       Definition: flowDefinition,
     },
     'describeInitialEntry': {
-      entry: '/'
-    }
+      entry: '/fc/services/item/demo/functions/item/func01'
+    },
+    'fc/getFunction': {
+      serviceName: 'demo',
+      functionName: 'func01',
+      regionId: 'cn-shanghai',
+      description: 'xxxxxx',
+      handler: 'index.handler',
+      runtime: 'nodejs6',
+      timeout: '1000',
+      memorySize: '128',
+    },
+    'vs/getWorkspaceState': {
+      opened: true,
+    },
+    'fc/getEventFileList': {
+      fileList: ['event01.evt', 'event02.evt'],
+      defaultFile: 'event02.evt',
+    },
+    'fc/getEventContent': {
+      content: `{
+  hello: 'world',
+}`,
+    },
+    'fc/updateEventContent': {},
   }
 }

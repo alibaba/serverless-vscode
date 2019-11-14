@@ -4,10 +4,11 @@ import {
   Switch,
   Route,
  } from 'react-router-dom';
- import { getInstance } from './services/service';
+import { getInstance } from './services/service';
 import { FlowInfo } from './containers/FlowInfo';
 import { FlowDefinition } from './containers/FlowDefinition';
 import { ExecutionInfo } from './containers/ExecutionInfo';
+import { FCRouter } from './routes/fc';
 
 import './App.css';
 
@@ -22,17 +23,16 @@ const App: React.FC = () => {
       command: 'describeInitialEntry',
     });
     const { entry = '/' } = data;
-    if (entry === 'definition') {
-      setInitialEntry('/definition');
-    } else {
-      setInitialEntry('/');
-    }
+    setInitialEntry(entry);
   }
   return (
     initialEntry ?
       <MemoryRouter initialEntries={[initialEntry]}>
         <div>
           <Switch>
+            <Route path="/fc">
+              <FCRouter />
+            </Route>
             <Route path="/executions/item/:executionName">
               <ExecutionInfo />
             </Route>
