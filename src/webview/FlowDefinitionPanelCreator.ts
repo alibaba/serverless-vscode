@@ -32,7 +32,7 @@ export class FlowDefinitionPanelCreator extends AbstractFlowPanelCreator<vscode.
     panel.webview.postMessage({
       id: message.id,
       data: {
-        entry: 'definition',
+        entry: '/definition',
       },
     });
   }
