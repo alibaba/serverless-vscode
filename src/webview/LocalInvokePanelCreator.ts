@@ -5,10 +5,10 @@ import * as util from 'util';
 import * as glob from 'glob';
 import * as terminalService from '../utils/terminal';
 import { ext } from '../extensionVariables';
-import { getOrInitEventConfig } from '../utils/localConfig';
+import { getOrInitEventConfig, getEvtFileDirPath } from '../utils/localConfig';
 import { InvokeDescriptor, FunctionDescriptor } from '../descriptors/descriptor';
 import { AbstractInfoPanelCreator } from './AbstractInfoPanelCreator';
-import { isDirectory, isPathExists, createEventFile } from '../utils/file';
+import { isPathExists, createEventFile, createDirectory } from '../utils/file';
 import { serverlessCommands } from '../utils/constants';
 import { FunctionResource } from '../models/resource';
 import { localStartChangeEventEmitter } from '../models/events';
@@ -54,9 +54,9 @@ export class LocalInvokePanelCreator extends AbstractInfoPanelCreator<InvokeDesc
   }
 
   protected receiveMessage(message: any, descriptor: InvokeDescriptor, panel: vscode.WebviewPanel) {
-    let eventFileDir = path.resolve(path.dirname(descriptor.templatePath), descriptor.codeUri);
-    if (!isDirectory(eventFileDir)) {
-      eventFileDir = path.dirname(eventFileDir);
+    let eventFileDir = getEvtFileDirPath(descriptor.templatePath, descriptor.codeUri);
+    if (!isPathExists(eventFileDir) && !createDirectory(eventFileDir)) {
+      vscode.window.showErrorMessage(`Fail to create ${eventFileDir}.`);
     }
     switch (message.command) {
       case 'getEventData': {
@@ -92,7 +92,8 @@ export class LocalInvokePanelCreator extends AbstractInfoPanelCreator<InvokeDesc
           descriptor.functionName,
           descriptor.codeUri,
           path.relative(
-            ext.cwd as string, eventFilePath,
+            path.resolve(ext.cwd as string, '.vscode'),
+            eventFilePath,
           ),
         );
         panel.webview.postMessage({
@@ -235,15 +236,15 @@ export class LocalInvokePanelCreator extends AbstractInfoPanelCreator<InvokeDesc
   }
 
   private async getEventFiles(templatePath: string, codeUri: string) {
+    const eventFileDir = getEvtFileDirPath(templatePath, codeUri);
     const eventFilePath = path.resolve(
-      path.dirname(templatePath), codeUri, 'event.evt'
+      eventFileDir, 'event.evt'
     );
     if (!isPathExists(eventFilePath)) {
       if (!createEventFile(eventFilePath)) {
         throw new Error(`Create ${eventFilePath} event file failed`);
       }
     }
-    let eventFileDir = path.dirname(eventFilePath);
     const files = await findFile('*.evt', {
       cwd: eventFileDir,
     })

@@ -43,67 +43,33 @@ export function createDirectory(p: string): boolean {
   }
 }
 
-export function createFile(p: string): boolean {
-  try {
-    if (isPathExists(p)) {
+const createFileRecursively = (content: string): (filePath: string) => boolean => {
+  return (filePath: string): boolean => {
+    if (isPathExists(filePath)) {
       return false;
     }
-    if (isPathExists(dirname(p))) {
-      fs.writeFileSync(p, '');
-      return true;
-    }
-    if (!createDirectory(dirname(p))) {
+    if (!isPathExists(dirname(filePath)) && !createDirectory(dirname(filePath))) {
       return false;
     }
-    fs.writeFileSync(p, '');
+    try {
+      fs.writeFileSync(filePath, content);
+    } catch (err) {
+      return false;
+    }
     return true;
-  } catch (err) {
-    return false;
   }
 }
 
-export function createJsonFile(p: string): boolean {
-  try {
-    if (isPathExists(p)) {
-      return false;
-    }
-    if (isPathExists(dirname(p))) {
-      fs.writeFileSync(p, `{
+export const createFile = createFileRecursively('');
 
+export const createJsonFile = createFileRecursively(`{
 }`);
-      return true;
-    }
-    if (!createDirectory(dirname(p))) {
-      return false;
-    }
-    fs.writeFileSync(p, `{
 
-}`);
-    return true;
-  } catch (err) {
-    return false;
-  }
-}
-
-export function createEventFile(eventFilePath: string): boolean {
-  try {
-    fs.writeFileSync(eventFilePath, `{
+export const createEventFile = createFileRecursively(`{
   "key": "value"
 }`);
-  } catch(err) {
-    return false;
-  }
-  return true;
-}
 
-export function createLaunchFile(launchFilePath: string): boolean {
-  try {
-    fs.writeFileSync(launchFilePath, `{
-"version": "0.2.0",
-"configurations": []
+export const createLaunchFile = createFileRecursively(`{
+  "version": "0.2.0",
+  "configurations": []
 }`);
-  } catch(err) {
-    return false;
-  }
-  return true;
-}

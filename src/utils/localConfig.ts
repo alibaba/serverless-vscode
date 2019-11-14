@@ -77,7 +77,7 @@ export async function getOrInitEventConfig(
   }
   eventFilePath =
     invokeConfig.templates[templateRelativePath][serviceName][functionName].events[eventName].value;
-  eventFilePath = path.resolve(cwd, eventFilePath);
+  eventFilePath = path.resolve(cwd, '.vscode', eventFilePath);
   return eventFilePath;
 }
 
@@ -108,9 +108,14 @@ export async function setEventFilePath(
 
 function getDefaultEvtFilePath(templatePath: string, codeUri: string): string {
   let eventFileDir = path.resolve(path.dirname(templatePath), codeUri);
-  if (!isDirectory(eventFileDir)) {
+  if (isPathExists(eventFileDir) && !isDirectory(eventFileDir)) {
     eventFileDir = path.dirname(eventFileDir);
   }
   eventFileDir = path.relative(ext.cwd as string, eventFileDir);
   return path.join(eventFileDir, 'event.evt');
+}
+
+export function getEvtFileDirPath(templatePath: string, codeUri: string): string {
+  const eventFilePath = getDefaultEvtFilePath(templatePath, codeUri);
+  return path.resolve(ext.cwd as string, '.vscode', path.dirname(eventFilePath));
 }

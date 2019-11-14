@@ -62,13 +62,8 @@ async function process(
     return;
   }
 
-  let targetEventPath = path.resolve(path.dirname(templatePath), codeUri);
-  if (!isDirectory(targetEventPath)) {
-    targetEventPath = path.dirname(targetEventPath);
-  }
-
   const fileName = `${state.templateName}.evt`;
-  targetEventPath = path.join(targetEventPath, fileName);
+  let targetEventPath = path.resolve(path.dirname(srcEventFilePath), fileName);
 
   if (isPathExists(targetEventPath)) {
     throw new Error(`${targetEventPath} already exist`);
