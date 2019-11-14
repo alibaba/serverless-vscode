@@ -7,7 +7,7 @@ import Tab from '@material-ui/core/Tab';
 import Tabs from '../../components/Tabs';
 import TabPanel from '../../components/TabPanel';
 import Grid from '@material-ui/core/Grid';
-import ReactJson from 'react-json-view';
+import ReactJson from '../../components/ReactJson';
 import { ExecutionHistory } from '../ExecutionHistory';
 import { FlowDefinitionGraph } from '../FlowDefinitionGraph';
 
@@ -130,24 +130,12 @@ export const ExecutionInfo = () => {
               <Grid container item xs={12} spacing={0}>
                 <Grid item xs={6}>
                   <ReactJson
-                    src={executionInfo.input ? JSON.parse(executionInfo.input) : {}}
-                    theme="solarized"
-                    displayDataTypes={false}
-                    style={{
-                      padding: '18px 0px',
-                      backgroundColor: 'inherit',
-                    }}
+                    jsonStr={executionInfo.input}
                   />
                 </Grid>
                 <Grid item xs={6}>
                   <ReactJson
-                    src={executionInfo.output ? JSON.parse(executionInfo.output) : {}}
-                    theme="solarized"
-                    displayDataTypes={false}
-                    style={{
-                      padding: '18px 0px',
-                      backgroundColor: 'inherit',
-                    }}
+                    jsonStr={executionInfo.output}
                   />
                 </Grid>
               </Grid>
