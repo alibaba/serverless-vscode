@@ -4,7 +4,7 @@
   "publisher": "aliyun",
   "icon": "media/aliyun-serverless-extension.png",
   "description": "Aliyun Function Compute extension. Lets you develop your serverless application of Aliyun within VSCode.",
-  "version": "1.15.0",
+  "version": "1.16.0",
   "engines": {
     "vscode": "^1.31.0"
   },
@@ -23,7 +23,8 @@
   "activationEvents": [
     "onView:fcLocalResource",
     "onView:fcRemoteResource",
-    "onCommand:fnf.extension.show.definition.graph" ,
+    "onView:fnfRemoteResource",
+    "onCommand:fnf.extension.show.definition.graph",
     "onCommand:fc.extension.deploy",
     "onCommand:fc.extension.project.init",
     "onCommand:fc.extension.bind.account",

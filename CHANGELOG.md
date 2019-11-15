@@ -2,6 +2,28 @@
 
 所有对 "Aliyun Serverless" 插件的更改都将记录在这个文件中。
 
+## 1.16.0 - 2019-11-15
+### Added
+1. 支持本地 Function Flow 定义文件的可视化展示。
+   - 在本地 Flow 定义文件中点击右上角的 Function Flow 图标，将会在新面板中呈现流程的可视化展示。
+   - 修改 Flow 定义文件内容，点击面板中的刷新按钮，可看到定义更新后的可视化。
+
+![](https://github.com/alibaba/serverless-vscode/blob/master/media/changelog/v1.16.0/localGraph.gif?raw=true)  
+
+2. Function Flow 云端资源信息面板增强。
+   - 提供流程与执行基本信息中有关于流程定义的可视化展示。
+   - 执行事件历史列表提供执行步骤详情。(单击执行事件列表中的某一行即可看到对应的执行步骤详情)
+
+![](https://github.com/alibaba/serverless-vscode/blob/master/media/changelog/v1.16.0/remoteGraph.gif?raw=true)  
+
+3. 本地调用使用的 Event 文件归结到 .vscode 目录下，避免 Event 测试文件被提交到函数代码目录。远端调用复用本地调用配置。
+4. 提供远端调用面板，在云端资源列表中单击函数名称可访问相应的调用面板。
+   - 未打开工作目录时提供默认调用行为。
+   - 提供 Event 文件列表，列表项以及文件内容与本地配置同步。
+   - 支持修改 Event 内容发起调用，修改后的内容将自动同步到本地事件文件中。
+
+![](https://github.com/alibaba/serverless-vscode/blob/master/media/changelog/v1.16.0/remoteInvoke.gif?raw=true)  
+
 ## 1.15.0 - 2019-11-08
 ### Added
 1. 支持更新部署云端 Function Flow 流程。
