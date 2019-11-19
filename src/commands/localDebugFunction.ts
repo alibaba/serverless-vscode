@@ -162,13 +162,7 @@ async function process(
     try {
       const { Properties: properties } = functionInfo;
       await waitUntilImagePullCompleted(properties.Runtime);
-      if (rt.isPython(runtime)) {
-        await new Promise((resolve) => {
-          setTimeout(() => {
-            resolve();
-          }, 5000);
-        })
-      }
+      await waitUntilContainerStarted(properties.Runtime, configuration.port);
       vscode.debug.startDebugging(undefined, configuration).then(() => {
         terminal.show();
       });
@@ -225,6 +219,36 @@ async function waitUntilImagePullCompleted(runtime: string) {
     }
     checkImageExist();
   });
+}
+
+async function waitUntilContainerStarted(runtime: string, port: number) {
+  const imageName: string = await resolveRuntimeToDockerImage(runtime);
+  return new Promise((resolve, reject) => {
+    const checkContainerStarted = () => {
+      containerStarted(imageName, port)
+        .then((started) => {
+          if (started) {
+            resolve();
+          } else {
+            setTimeout(() => {
+              checkContainerStarted();
+            }, 3000);
+          }
+        })
+        .catch(reject);
+    }
+    checkContainerStarted();
+  });
+}
+
+async function containerStarted(imageName: string, port: number): Promise<boolean> {
+  const containers = await docker.listContainers({
+    filters: {
+      ancestor: [imageName],
+      expose: [port.toString()],
+    }
+  });
+  return containers.length > 0;
 }
 
 async function imageExist(imageName: string): Promise<boolean> {
