@@ -1,8 +1,9 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
 import * as output from '../utils/output';
+import * as os from 'os';
 import { isDirectory, isNotEmpty } from '../utils/file';
-import { serverlessCommands, serverlessConfigs } from '../utils/constants';
+import { serverlessCommands } from '../utils/constants';
 import { recordPageView } from '../utils/visitor';
 import { getFunctionComputeOutputChannel } from '../utils/channel';
 import { Resource, ResourceType, FunctionResource } from '../models/resource';
@@ -23,20 +24,25 @@ export function importFunction(context: vscode.ExtensionContext) {
 }
 
 async function process(serviceName: string, functionName: string) {
-  if (!cwd) {
-    vscode.window.showErrorMessage('Import function should under a workspace');
-  }
   const channel = getFunctionComputeOutputChannel();
   channel.clear();
   channel.show();
-
-  let importPath = <string>vscode.workspace.getConfiguration().get(serverlessConfigs.ALIYUN_FC_IMPORT_BASE_PATH);
-  importPath = path.resolve(cwd as string, importPath || '.');
+  const selectedPath = await vscode.window.showOpenDialog({
+    canSelectFolders: true,
+    canSelectFiles: false,
+    canSelectMany: false,
+    defaultUri: vscode.Uri.file(cwd || os.homedir()),
+    openLabel: '下载',
+  });
+  if (!selectedPath) {
+    return;
+  }
+  const importPath = selectedPath[0].fsPath;
   if (! await existLocalFunctionFiles(serviceName, functionName, importPath)) {
     const choice = await vscode.window.showInformationMessage('Function already exists: '
       + `${serviceName}/${functionName}`
       + '. Continuing operations may result in the loss of local files. Continue ？', 'Continue', 'Cancel');
-    if (choice === 'Cancel') {
+    if (choice !== 'Continue') {
       return;
     }
   }
