@@ -40,7 +40,10 @@ export class FnFRemoteResourceProvider implements vscode.TreeDataProvider<vscode
         new CommandResource(serverlessCommands.BIND_ACCOUNT.title, serverlessCommands.BIND_ACCOUNT.id),
       ]);
     }
-    return this.getRemoteResource(element);
+    return this.getRemoteResource(element)
+      .catch(() =>
+        [new CommandResource(serverlessCommands.FNF_GOTO_CONSOLE.title, serverlessCommands.FNF_GOTO_CONSOLE.id)]
+      );
   }
 
   private async getRemoteResource(element: Resource | undefined): Promise<Resource[]> {
