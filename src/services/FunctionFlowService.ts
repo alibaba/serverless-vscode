@@ -54,21 +54,16 @@ export class FunctionFlowService extends BaseService {
       return flows;
     }
     do {
-      try {
-        if (nextToken) {
-          result = await client.listFlows({
-            NextToken: nextToken,
-          });
-        } else {
-          result = await client.listFlows();
-        }
-        ( { NextToken: nextToken } = result );
-        if (result.Flows) {
-          flows.push(...result.Flows);
-        }
-      } catch (ex) {
-        output.error(ex.message);
-        break;
+      if (nextToken) {
+        result = await client.listFlows({
+          NextToken: nextToken,
+        });
+      } else {
+        result = await client.listFlows();
+      }
+      ( { NextToken: nextToken } = result );
+      if (result.Flows) {
+        flows.push(...result.Flows);
       }
     } while (result.Flows && result.NextToken);
     return flows;
@@ -82,24 +77,19 @@ export class FunctionFlowService extends BaseService {
       return executions;
     }
     do {
-      try {
-        if (nextToken) {
-          result = await client.listExecutions({
-            FlowName: flowName,
-            NextToken: nextToken,
-          });
-        } else {
-          result = await client.listExecutions({
-            FlowName: flowName,
-          });
-        }
-        ( { NextToken: nextToken } = result );
-        if (result.Executions) {
-          executions.push(...result.Executions);
-        }
-      } catch (ex) {
-        output.error(ex.message);
-        break;
+      if (nextToken) {
+        result = await client.listExecutions({
+          FlowName: flowName,
+          NextToken: nextToken,
+        });
+      } else {
+        result = await client.listExecutions({
+          FlowName: flowName,
+        });
+      }
+      ( { NextToken: nextToken } = result );
+      if (result.Executions) {
+        executions.push(...result.Executions);
       }
     } while (result.Executions && result.NextToken);
     return executions;
