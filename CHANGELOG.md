@@ -2,6 +2,26 @@
 
 所有对 "Aliyun Serverless" 插件的更改都将记录在这个文件中。
 
+## 1.17.0 - 2019-11-21
+### Added
+1. 优化 Function Flow 远端资源树。
+   - 用户未开通时提供跳转到 Function Flow 控制台的菜单项。
+   - 在未支持区域加载 Function Flow 远端资源树将提供跳转控制台的菜单项。
+2. 支持选择远端服务与函数导入时的目录。
+   - 在远端资源树中点击服务名或函数名右侧的导入按钮，在弹出的窗口中选择相应目录，即可将服务或函数导入到该目录下。
+   - 取消 `aliyun.fc.import.base.path` 配置。
+3. 支持 Java8 Runtime。
+   - 在本地资源树中，点击 Java8 Runtime 函数名右侧的编辑按钮即可跳转到对应的入口文件。
+   - 支持本地以及远端调用 Java8 Runtime 的函数。
+   - 支持本地断点调试 Java8 Runtime 的 Event Trigger 函数。
+4. 优化本地调试时的行为。
+   - 适配 VSCode Python Extension。
+   - 优化 VSCode Debug 模式启动的时机。
+   - 提供 Java8 Runtime 函数调试时的 Debugger 插件检测。
+
+### Other
+1. 修复 Win7 环境下安装了 Docker Toolbox 无法正确激活插件的 Issue。
+
 ## 1.16.0 - 2019-11-15
 ### Added
 1. 支持本地 Function Flow 定义文件的可视化展示。

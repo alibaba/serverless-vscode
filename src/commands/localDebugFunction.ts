@@ -343,6 +343,35 @@ class PythonLocalDebugHelper extends AbstractLocalDebugHelper {
       console: 'externalTerminal',
     }
   }
+  async startDebugging(
+    serviceName: string,
+    functionName: string,
+    runtime: string,
+    templatePath: string,
+    hasHttpTrigger: boolean,
+    eventFilePath: string | undefined,
+    configuration: vscode.DebugConfiguration,
+    debugPort?: number,
+    reuse?: boolean,
+  ) {
+    const terminal: vscode.Terminal = this.executeFunLocal(
+      serviceName,
+      functionName,
+      configuration.port,
+      templatePath,
+      hasHttpTrigger,
+      eventFilePath,
+      reuse,
+    );
+    if (debugPort && debugPortSet.has(debugPort)) {
+      return;
+    }
+    await waitUntilImagePullCompleted(runtime);
+    await waitUntilContainerStarted(runtime, configuration.port);
+    await new Promise((resolve) => { setTimeout(resolve, 2000); });
+    await vscode.debug.startDebugging(undefined, configuration);
+    terminal.show();
+  }
 }
 
 class PhpLocalDebugHelper extends AbstractLocalDebugHelper {
