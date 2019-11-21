@@ -61,7 +61,7 @@ export class TemplateService {
   getHandlerFileName(handler: string, runtime: string): string {
     if (isJava(runtime)) {
       const packageAndClass = handler.split('::')[0];
-      return `${packageAndClass.split('.').join('/')}.java`;
+      return `src/main/java/${packageAndClass.split('.').join('/')}.java`;
     }
     const prefix = handler.substring(0, handler.indexOf('.'));
     return `${prefix}${getSuffix(runtime)}`;
