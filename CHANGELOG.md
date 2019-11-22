@@ -2,7 +2,7 @@
 
 所有对 "Aliyun Serverless" 插件的更改都将记录在这个文件中。
 
-## 1.17.0 - 2019-11-21
+## 1.17.1 - 2019-11-21
 ### Added
 1. 优化 Function Flow 远端资源树。
    - 用户未开通时提供跳转到 Function Flow 控制台的菜单项。
@@ -21,6 +21,7 @@
 
 ### Other
 1. 修复 Win7 环境下安装了 Docker Toolbox 无法正确激活插件的 Issue。
+2. 修复在 Remote SSH 场景下未安装 VSCode 本地调试报错的 Issue。
 
 ## 1.16.0 - 2019-11-15
 ### Added
