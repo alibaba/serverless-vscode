@@ -267,7 +267,12 @@ abstract class AbstractLocalDebugHelper {
     return terminal;
   }
   async getInstalledExtensions(): Promise<string> {
-    return await cpUtils.executeCommand(undefined, undefined, 'code', '--list-extensions');
+    try {
+      return await cpUtils.executeCommand(undefined, undefined, 'code', '--list-extensions');
+    } catch (ex) {
+      // remote ssh 的情境下，若 ssh 的机器没有安装 vscode，会报错.
+      return '';
+    }
   }
   promptInstallExtension(extensionName: string) {
     vscode.window.showInformationMessage(
