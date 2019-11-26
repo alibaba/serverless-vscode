@@ -165,7 +165,7 @@ steps:
       Definition: flowDefinition,
     },
     'describeInitialEntry': {
-      entry: '/fc/services/item/demo/functions/item/func01'
+      entry: '/fc/services/item/demo'
     },
     'fc/getFunction': {
       serviceName: 'demo',
@@ -190,5 +190,43 @@ steps:
 }`,
     },
     'fc/updateEventContent': {},
+    'fc/getService': {
+      serviceName: 'demo',
+      createdTime: '2019-06-25T07:06:17Z',
+      regionId: 'cn-shanghai',
+      lastModifiedTime: '2019-08-25T07:06:17Z',
+      role: 'acs:ram::123456789:role/fakeRoleSample',
+      description: 'fake service',
+      logConfig: {
+        logstore: 'fake-logstore',
+        project: 'fake-project',
+      },
+      internetAccess: false,
+      vpcConfig: {
+        securityGroupId: '',
+        vpcId: '',
+        vSwitchIds: [],
+      },
+      nasConfig: {
+        groupId: -1,
+        userId: -1,
+        mountPoints: [],
+      },
+    },
+    'fc/listFunctions': {
+      functions: [
+        {
+          createdTime: '2019-06-25T07:06:17Z',
+          description: '',
+          functionName: 'fake-func',
+          handler: 'index.handler',
+          lastModifiedTime: '2019-08-25T07:06:17Z',
+          memorySize: 128,
+          runtime: 'nodejs8',
+          timeout: 3,
+        },
+      ],
+    },
+    'fc/showRemoteFunctionInfo': {}
   }
 }

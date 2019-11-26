@@ -66,7 +66,7 @@ export const ExecutionHistory = () => {
 
   const handleNextBtnClick = async () => {
     const newPageNumber = pageNumber + 1;
-    if (events.length >= pageNumber * pageSize
+    if (events.length >= newPageNumber * pageSize
       || !nextToken
     ) {
       setDataSource(sliceEvents(events, newPageNumber, pageSize));
