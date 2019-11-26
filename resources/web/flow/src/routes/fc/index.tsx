@@ -3,6 +3,7 @@ import {
   Switch,
   Route,
  } from 'react-router-dom';
+import { ServiceInfo } from '../../containers/fc/ServiceInfo';
 import { FunctionInfo } from '../../containers/fc/FunctionInfo';
 
  export const FCRouter = () => {
@@ -10,6 +11,9 @@ import { FunctionInfo } from '../../containers/fc/FunctionInfo';
      <Switch>
        <Route path="/fc/services/item/:serviceName/functions/item/:functionName">
          <FunctionInfo />
+       </Route>
+       <Route path = "/fc/services/item/:serviceName">
+         <ServiceInfo />
        </Route>
      </Switch>
    )

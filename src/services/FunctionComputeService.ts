@@ -64,6 +64,27 @@ export class FunctionComputeService extends BaseService {
     return functions;
   }
 
+  async listFunctions(serviceName: string, nextToken: string): Promise<any> {
+    const client = this.newFCClient();
+    if (!client) {
+      return;
+    }
+    let result: any;
+    if (nextToken) {
+      result = await client.listFunctions(
+        serviceName,
+        { nextToken },
+      );
+    } else {
+      result = await client.listFunctions(serviceName);
+    }
+    const { data: { functions = [], nextToken: newNextToken = '' } = {} } = result;
+    return {
+      functions,
+      nextToken: newNextToken,
+    }
+  }
+
   async invokeFunction(serviceName: string, functionName: string, event: string) {
     let result: any = {};
     const client = this.newFCClient();
