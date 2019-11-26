@@ -11,6 +11,7 @@ import { isPathExists, createEventFile } from '../utils/file';
 import { FunctionComputeService } from '../services/FunctionComputeService';
 import { serverlessCommands } from '../utils/constants';
 import { FunctionResource } from '../models/resource';
+import { recordPageView } from '../utils/visitor';
 
 const findFile = util.promisify(glob);
 
@@ -36,23 +37,38 @@ export class FunctionInfoPanelCreator extends AbstractFlowPanelCreator<FunctionD
         return;
       }
       case 'fc/getEventFileList': {
+        recordPageView('/showRemoteFunctionInfo/getEventFileList');
         this.getEventFileList(message, descriptor, panel);
         return;
       }
       case 'fc/getEventContent': {
+        recordPageView('/showRemoteFunctionInfo/getEventContent');
         this.getEventContent(message, descriptor, panel);
         return;
       }
       case 'fc/getFunction': {
+        recordPageView('/showRemoteFunctionInfo/getFunction');
         this.getFunction(message, descriptor, panel);
         return;
       }
       case 'fc/remoteInvoke': {
+        recordPageView('/showRemoteFunctionInfo/remoteInvoke');
         this.remoteInvoke(message, descriptor, panel);
         return;
       }
       case 'fc/updateEventContent': {
+        recordPageView('/showRemoteFunctionInfo/updateEventContent');
         this.updateEventContent(message, descriptor, panel);
+        return;
+      }
+      case 'fc/listTriggers': {
+        recordPageView('/showRemoteFunctionInfo/listTriggers');
+        this.listTriggers(message, descriptor, panel);
+        return;
+      }
+      case 'fc/showRemoteTriggerInfo': {
+        recordPageView('/showRemoteFunctionInfo/showRemoteTriggerInfo');
+        this.showRemoteTriggerInfo(message, descriptor, panel);
         return;
       }
     }
@@ -184,5 +200,26 @@ export class FunctionInfoPanelCreator extends AbstractFlowPanelCreator<FunctionD
       data: {},
     });
     return;
+  }
+
+  public async listTriggers(message: any, descriptor: FunctionDescriptor, panel: vscode.WebviewPanel) {
+    const functionComputeService = new FunctionComputeService();
+    const data = await functionComputeService.listTriggers(
+      descriptor.serviceName, descriptor.functionName, message.nextToken
+    );
+    panel.webview.postMessage({
+      id: message.id,
+      data,
+    });
+  }
+
+  public async showRemoteTriggerInfo(message: any, descriptor: FunctionDescriptor, panel: vscode.WebviewPanel) {
+    vscode.commands.executeCommand(
+      serverlessCommands.SHOW_REMOTE_TRIGGER_INFO.id,
+      descriptor.serviceName,
+      descriptor.functionName,
+      message.triggerName,
+      message.triggerType,
+    );
   }
 }

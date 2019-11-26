@@ -64,6 +64,29 @@ export class FunctionComputeService extends BaseService {
     return functions;
   }
 
+  async listAllRemoteTriggerInFunction(serviceName: string, functionName: string): Promise<any[]> {
+    let result, nextToken = null;
+    const limit = 50;
+    const triggers: any[] = [];
+    const client = this.newFCClient();
+    if (!client) {
+      return [];
+    }
+    do {
+      try {
+        result = await client.listTriggers(serviceName, functionName, { nextToken, limit });
+        ({ data: { nextToken = null } = {} } = result);
+        if (result.data && result.data.triggers) {
+          triggers.push(...result.data.triggers);
+        }
+      } catch (ex) {
+        output.error(ex.message);
+        break;
+      }
+    } while (result.data && result.data.nextToken);
+    return triggers;
+  }
+
   async listFunctions(serviceName: string, nextToken: string): Promise<any> {
     const client = this.newFCClient();
     if (!client) {
@@ -101,18 +124,26 @@ export class FunctionComputeService extends BaseService {
     return result;
   }
 
-  async listTriggers(serviceName: string, functionName: string): Promise<any[]> {
+  async listTriggers(serviceName: string, functionName: string, nextToken: string): Promise<any> {
     const client = this.newFCClient();
     if (!client) {
       return [];
     }
-    try {
-      const { data: { triggers = [] } = {} } = await client.listTriggers(serviceName, functionName);
-      return triggers;
-    } catch (ex) {
-      output.error(ex.message);
+    let result: any;
+    if (nextToken) {
+      result = await client.listTriggers(
+        serviceName,
+        functionName,
+        { nextToken },
+      );
+    } else {
+      result = await client.listTriggers(serviceName, functionName);
     }
-    return [];
+    const { data: { triggers = [], nextToken: newNextToken = '' } = {} } = result;
+    return {
+      triggers,
+      nextToken: newNextToken,
+    }
   }
 
   async getService(serviceName: string) {

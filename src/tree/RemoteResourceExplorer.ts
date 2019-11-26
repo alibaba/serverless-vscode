@@ -87,7 +87,7 @@ export class RemoteResourceProvider implements vscode.TreeDataProvider<vscode.Tr
   private async getRemoteTriggerResource(element: FunctionResource): Promise<Resource[]> {
     const serviceName = element.serviceName;
     const functionName = element.functionName;
-    const triggers = await this.functionComputeService.listTriggers(serviceName, functionName);
+    const triggers = await this.functionComputeService.listAllRemoteTriggerInFunction(serviceName, functionName);
     return triggers.map(trigger => (
       new TriggerResource(
         serviceName,

@@ -165,7 +165,7 @@ steps:
       Definition: flowDefinition,
     },
     'describeInitialEntry': {
-      entry: '/fc/services/item/demo'
+      entry: '/fc/services/item/demo/functions/item/func01'
     },
     'fc/getFunction': {
       serviceName: 'demo',
@@ -227,6 +227,19 @@ steps:
         },
       ],
     },
-    'fc/showRemoteFunctionInfo': {}
+    'fc/showRemoteFunctionInfo': {},
+    'fc/listTriggers': {
+      triggers: [
+        {
+          triggerName: 'fake-oss-trigger',
+          sourceArn: 'acs:oss:cn-shanghai:123456:xxxxxxxx',
+          qualifier: 'LATEST',
+          triggerType: 'oss',
+          createdTime: '2019-06-25T07:06:17Z',
+          lastModifiedTime: '2019-08-25T07:06:17Z',
+        }
+      ],
+    },
+    'fc/showRemoteTriggerInfo': {},
   }
 }
