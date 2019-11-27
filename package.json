@@ -87,6 +87,10 @@
           "default": "./event.evt",
           "description": "Function Compute remote resource event file path"
         },
+        "aliyun.fc.createFunction.codeUri.prefix": {
+          "type": "string",
+          "description": "The prefix path to the code directory when create function"
+        },
         "aliyun.fc.fun.path": {
           "type": "string",
           "description": "External Fun command which will replace the internal Fun"

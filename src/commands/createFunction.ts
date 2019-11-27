@@ -3,7 +3,7 @@ import * as path from 'path';
 import { ext } from '../extensionVariables';
 import { MultiStepInput } from '../ui/MultiStepInput';
 import { getSupportedRuntimes, isSupportedRuntime, isNodejs, isPython } from '../utils/runtime';
-import { serverlessCommands } from '../utils/constants';
+import { serverlessCommands, serverlessConfigs } from '../utils/constants';
 import { isPathExists, createDirectory } from '../utils/file';
 import { getSuffix, createIndexFile } from '../utils/runtime';
 import { recordPageView } from '../utils/visitor';
@@ -62,7 +62,7 @@ async function process(context: vscode.ExtensionContext, serviceName: string, te
     const name = await input.showInputBox({
       title: 'Create Function (Input Service Name)',
       step: 1,
-      totalSteps: 4,
+      totalSteps: 5,
       value: state.serviceName || '',
       prompt: 'Input service name',
       validate: validateServiceName,
@@ -75,20 +75,40 @@ async function process(context: vscode.ExtensionContext, serviceName: string, te
     const name = await input.showInputBox({
       title: 'Create Function (Input Function Name)',
       step: 2,
-      totalSteps: 4,
+      totalSteps: 5,
       value: state.functionName || '',
       prompt: 'Input function name',
       validate: validateFunctionName,
     });
     state.functionName = name as string;
+    return (input: MultiStepInput) => inputCodeUri(input, state);
+  }
+
+  async function inputCodeUri(input: MultiStepInput, state: Partial<State>) {
+    const prefix = <string>vscode.workspace.getConfiguration().get(
+      serverlessConfigs.ALIYUN_FC_CREATEFUNCTION_CODEURI_PREFIX,
+    );
+    let defaultCodeUri = prefix ?
+      path.join(prefix, state.serviceName as string, state.functionName as string)
+      :
+      path.join(state.serviceName as string, state.functionName as string);
+    const codeUri = await input.showInputBox({
+      title: 'Create Function (Check Code Uri, Recommended not to modify)',
+      step: 3,
+      totalSteps: 5,
+      value: defaultCodeUri,
+      prompt: 'Check code uri which is the relative path to template file. Recommended not to modify',
+      validate: validateCodeUri,
+    });
+    state.codeUri = codeUri as string;
     return (input: MultiStepInput) => pickFunctionRuntime(input, state);
   }
 
   async function pickFunctionRuntime(input: MultiStepInput, state: Partial<State>) {
     const pick = await input.showQuickPick({
       title: 'Create Function (Choose Function Runtime)',
-      step: 3,
-      totalSteps: 4,
+      step: 4,
+      totalSteps: 5,
       placeholder: 'Pick function runtime',
       items: runtimes,
     });
@@ -99,8 +119,8 @@ async function process(context: vscode.ExtensionContext, serviceName: string, te
   async function pickFunctionType(input: MultiStepInput, state: Partial<State>) {
     const pick = await input.showQuickPick({
       title: 'Create Function (Choose Function Type)',
-      step: 4,
-      totalSteps: 4,
+      step: 5,
+      totalSteps: 5,
       placeholder: 'Pick function type',
       items: functionTypes,
     });
@@ -115,6 +135,10 @@ async function process(context: vscode.ExtensionContext, serviceName: string, te
     return input ? undefined : 'Function name should not be null';
   }
 
+  async function validateCodeUri(input: string): Promise<string | undefined> {
+    return input ? undefined : 'Code uri should not be null';
+  }
+
   async function validateCreateFuncionState(state: State): Promise<boolean> {
     const functionTypes = ['NORMAL', 'HTTP'];
     if (!state || !state.serviceName
@@ -126,22 +150,15 @@ async function process(context: vscode.ExtensionContext, serviceName: string, te
   }
 
   async function createFunctionFile(state: State): Promise<boolean> {
-    const { serviceName, functionName, runtime, type } = state;
+    const { runtime, type } = state;
     if (!ext.cwd) {
       vscode.window.showErrorMessage('You should open a workspace');
       return false;
     }
-    const servicePath = path.join(path.dirname(templatePath as string), serviceName);
-    if (!isPathExists(servicePath)) {
-      if (!createDirectory(servicePath)) {
-        vscode.window.showErrorMessage(`Create ${servicePath} error`);
-        return false;
-      }
-    }
-    const functionPath = path.join(servicePath, functionName);
-    if (!isPathExists(functionPath)) {
-      if (!createDirectory(functionPath)) {
-        vscode.window.showErrorMessage(`Create ${functionPath} error`);
+    const codeUriPath = path.resolve(path.dirname(templatePath as string), state.codeUri);
+    if (!isPathExists(codeUriPath)) {
+      if (!createDirectory(codeUriPath)) {
+        vscode.window.showErrorMessage(`Create ${codeUriPath} error`);
         return false;
       }
     }
@@ -150,7 +167,7 @@ async function process(context: vscode.ExtensionContext, serviceName: string, te
       vscode.window.showErrorMessage(`${runtime} runtime is not supported`);
       return false;
     }
-    const indexPath = path.join(functionPath, `index${suffix}`)
+    const indexPath = path.join(codeUriPath, `index${suffix}`)
     if (isPathExists(indexPath)) {
       vscode.window.showErrorMessage(`${indexPath} is already exist`);
       return false;
@@ -159,7 +176,6 @@ async function process(context: vscode.ExtensionContext, serviceName: string, te
       vscode.window.showErrorMessage(`Create ${runtime} index file error`);
       return false;
     }
-    state.codeUri = path.join(serviceName, functionName);
     return true;
   }
 
