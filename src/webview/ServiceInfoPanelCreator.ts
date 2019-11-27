@@ -3,6 +3,7 @@ import { ServiceDescriptor } from '../descriptors/descriptor';
 import { AbstractFlowPanelCreator } from './AbstractFlowPanelCreator';
 import { FunctionComputeService } from '../services/FunctionComputeService';
 import { serverlessCommands } from '../utils/constants';
+import { recordPageView } from '../utils/visitor';
 
 export class ServiceInfoPanelCreator extends AbstractFlowPanelCreator<ServiceDescriptor> {
   viewType = 'serviceInfo';
@@ -22,14 +23,17 @@ export class ServiceInfoPanelCreator extends AbstractFlowPanelCreator<ServiceDes
         return;
       }
       case 'fc/getService': {
+        recordPageView('/showRemoteServiceInfo/getService');
         this.getService(message, descriptor, panel);
         return;
       }
       case 'fc/listFunctions': {
+        recordPageView('/showRemoteServiceInfo/listFunctions');
         this.listFunctions(message, descriptor, panel);
         return;
       }
       case 'fc/showRemoteFunctionInfo': {
+        recordPageView('/showRemoteServiceInfo/showRemoteFunctionInfo');
         this.showRemoteFunctionInfo(message, descriptor, panel);
         return;
       }
