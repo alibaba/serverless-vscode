@@ -211,6 +211,7 @@ const functionSchema = {
         'Timeout': {},
         'InitializationTimeout': {},
         'EnvironmentVariables': {},
+        'InstanceConcurrency': {},
       }
     },
   },
