@@ -3,6 +3,8 @@ import * as path from 'path';
 import * as fs from 'fs';
 import * as rt from '../utils/runtime';
 import * as Docker from 'dockerode';
+import * as util from 'util';
+import * as tcpp from 'tcp-ping';
 import { ext } from '../extensionVariables';
 import { serverlessCommands } from '../utils/constants';
 import { isPathExists, createDirectory, createLaunchFile, createEventFile } from '../utils/file';
@@ -12,6 +14,8 @@ import { cpUtils } from '../utils/cpUtils';
 import { FunService } from '../services/FunService';
 import { TemplateService } from '../services/TemplateService';
 import { Resource, ResourceType, FunctionResource } from '../models/resource';
+
+const tcpprobe = util.promisify(tcpp.probe);
 
 const { resolveRuntimeToDockerImage } = require('@alicloud/fun/lib/docker-opts.js');
 const debugPortSet = new Set();
@@ -196,8 +200,7 @@ abstract class AbstractLocalDebugHelper {
     if (debugPort && debugPortSet.has(debugPort)) {
       return;
     }
-    await waitUntilImagePullCompleted(runtime);
-    await waitUntilContainerStarted(runtime, configuration.port);
+    await waitUntilContainerStarted(configuration.port);
     await vscode.debug.startDebugging(undefined, configuration);
     terminal.show();
   }
@@ -218,9 +221,9 @@ abstract class AbstractLocalDebugHelper {
   generateConfigurationName(serviceName: string, functionName: string): string {
     return `fc/${serviceName}/${functionName}`;
   }
-  getDefaultDebugPort(): number {
+  async getDefaultDebugPort(): Promise<number> {
     let port = 3000 + Math.floor(Math.random() * 100);
-    while (debugPortSet.has(port)) {
+    while (debugPortSet.has(port) || await portAlive(port)) {
       port = 3000 + Math.floor(Math.random() * 100);
     }
     return port;
@@ -297,12 +300,13 @@ class NodejsLocalDebugHelper extends AbstractLocalDebugHelper {
   ): Promise<vscode.DebugConfiguration> {
     const { Properties: properties } = functionInfo;
     const { Runtime: runtime } = properties;
+    const port = await this.getDefaultDebugPort();
     return <vscode.DebugConfiguration> {
       name: this.generateConfigurationName(serviceName, functionName),
       type: 'node',
       request: 'attach',
       address: 'localhost',
-      port: this.getDefaultDebugPort(),
+      port,
       localRoot: this.generateLocalRootPath(functionInfo, templatePath),
       remoteRoot: '/code',
       protocol: runtime === 'nodejs6' ? 'legacy' : 'inspector',
@@ -331,12 +335,13 @@ class PythonLocalDebugHelper extends AbstractLocalDebugHelper {
     functionInfo: any,
     templatePath: string,
   ): Promise<vscode.DebugConfiguration> {
+    const port = await this.getDefaultDebugPort();
     return <vscode.DebugConfiguration> {
       name: this.generateConfigurationName(serviceName, functionName),
       type: 'python',
       request: 'attach',
       host: 'localhost',
-      port: this.getDefaultDebugPort(),
+      port,
       pathMappings: [
         {
           localRoot: this.generateLocalRootPath(functionInfo, templatePath),
@@ -371,9 +376,10 @@ class PythonLocalDebugHelper extends AbstractLocalDebugHelper {
     if (debugPort && debugPortSet.has(debugPort)) {
       return;
     }
-    await waitUntilImagePullCompleted(runtime);
-    await waitUntilContainerStarted(runtime, configuration.port);
-    await new Promise((resolve) => { setTimeout(resolve, 2000); });
+    await waitUntilContainerStarted(configuration.port);
+    await new Promise((resolve) => { setTimeout(() => {
+      resolve();
+    }, 2000); });
     await vscode.debug.startDebugging(undefined, configuration);
     terminal.show();
   }
@@ -399,12 +405,13 @@ class PhpLocalDebugHelper extends AbstractLocalDebugHelper {
     functionInfo: any,
     templatePath: string,
   ): Promise<vscode.DebugConfiguration> {
+    const port = await this.getDefaultDebugPort();
     return <vscode.DebugConfiguration> {
       name: this.generateConfigurationName(serviceName, functionName),
       type: 'php',
       request: 'launch',
       host: 'localhost',
-      port: this.getDefaultDebugPort(),
+      port,
       stopOnEntry: false,
       pathMappings: {
         '/code': this.generateLocalRootPath(functionInfo, templatePath),
@@ -461,12 +468,13 @@ class JavaLocalDebugHelper extends AbstractLocalDebugHelper {
     functionInfo: any,
     templatePath: string,
   ): Promise<vscode.DebugConfiguration> {
+    const port = await this.getDefaultDebugPort();
     return <vscode.DebugConfiguration> {
       name: this.generateConfigurationName(serviceName, functionName),
       type: 'java',
       request: 'attach',
       hostName: 'localhost',
-      port: this.getDefaultDebugPort(),
+      port,
     }
   }
   async startDebugging(
@@ -495,12 +503,18 @@ class JavaLocalDebugHelper extends AbstractLocalDebugHelper {
     if (debugPort && debugPortSet.has(debugPort)) {
       return;
     }
-    await waitUntilImagePullCompleted(runtime);
-    await waitUntilContainerStarted(runtime, configuration.port);
-    await new Promise((resolve) => { setTimeout(resolve, 2000); });
+    await waitUntilContainerStarted(configuration.port);
+    await new Promise((resolve) => { setTimeout(() => {
+      resolve();
+    }, 2000); });
     await vscode.debug.startDebugging(undefined, configuration);
     terminal.show();
   }
+}
+
+async function portAlive(port: number): Promise<boolean> {
+  const state: any = await tcpprobe('localhost', port);
+  return state;
 }
 
 async function waitUntilImagePullCompleted(runtime: string) {
@@ -523,18 +537,17 @@ async function waitUntilImagePullCompleted(runtime: string) {
   });
 }
 
-async function waitUntilContainerStarted(runtime: string, port: number) {
-  const imageName: string = await resolveRuntimeToDockerImage(runtime);
+async function waitUntilContainerStarted(port: number) {
   return new Promise((resolve, reject) => {
     const checkContainerStarted = () => {
-      containerStarted(imageName, port)
+      containerStarted(port)
         .then((started) => {
           if (started) {
             resolve();
           } else {
             setTimeout(() => {
               checkContainerStarted();
-            }, 3000);
+            }, 500);
           }
         })
         .catch(reject);
@@ -543,13 +556,12 @@ async function waitUntilContainerStarted(runtime: string, port: number) {
   });
 }
 
-async function containerStarted(imageName: string, port: number): Promise<boolean> {
+async function containerStarted(port: number): Promise<boolean> {
   if (!docker) {
     return true;
   }
   const containers = await docker.listContainers({
     filters: {
-      ancestor: [imageName],
       expose: [port.toString()],
     }
   });
