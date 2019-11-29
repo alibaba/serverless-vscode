@@ -2,6 +2,29 @@
 
 所有对 "Aliyun Serverless" 插件的更改都将记录在这个文件中。
 
+## 1.18.0 - 2019-11-29
+### Added
+1. 远端资源信息面板增强
+   - 服务信息面板优化，提供函数列表，单击函数名称可访问相应的函数信息面板。
+   - 函数信息面板优化，提供触发器列表，单击触发器名称可访问相应的触发器信息面板。
+
+![](https://github.com/alibaba/serverless-vscode/blob/master/media/changelog/v1.18.0/remote-panel.gif?raw=true)
+
+2. 支持自定义配置创建函数时的 CodeUri 代码目录
+   - 提供 `aliyun.fc.createFunction.codeUri.prefix` 配置参数，用于自定义默认的 CodeUri 代码目录前缀。
+   - 创建函数向导中新增配置 CodeUri 代码目录步骤，可自行修改生成函数的代码目录。
+
+![](https://github.com/alibaba/serverless-vscode/blob/master/media/changelog/v1.18.0/codeuri-config.gif?raw=true)
+
+3. 优化 Local Debug 本地调试
+   - 优化 VSCode Debug 模式启动逻辑。
+   - 优化 Local Debug 端口分配逻辑，避免端口冲突。
+4. 优化 template 模版文件的语法提示
+   - 支持函数实例并发度配置的自动补全、错误校验、悬浮提示。
+   - 初步支持 ROS 模版的 输出(Outputs) 以及 参数(Parameters) 语法。
+
+![](https://github.com/alibaba/serverless-vscode/blob/master/media/changelog/v1.18.0/instanceConcurrency.gif?raw=true)
+
 ## 1.17.1 - 2019-11-21
 ### Added
 1. 优化 Function Flow 远端资源树。
