@@ -62,6 +62,7 @@ import { createRemoteFlow } from './commands/fnf/createRemoteFlow';
 import { gotoFnFConsole } from './commands/fnf/gotoFnFConsole';
 import { showRemoteFlowInfo, clearRemoteFlowInfo } from './commands/fnf/showRemoteFlowInfo';
 import { showDefinitionGraph } from './commands/fnf/showDefinitionGraph';
+import { ROSTemplateDocumentSymbolProvider } from './documentSymbols/ROSTemplateDocumentSymbolProvider';
 
 export function activate(context: vscode.ExtensionContext) {
   recordPageView('/');
@@ -161,6 +162,10 @@ export function activate(context: vscode.ExtensionContext) {
     new ROSTemplateHoverProvider(),
   );
   new ROSTemplateDiagnosticsProvider().startDiagnostic();
+  vscode.languages.registerDocumentSymbolProvider(
+    selector,
+    new ROSTemplateDocumentSymbolProvider(),
+  );
 
   vscode.languages.registerCompletionItemProvider(
     { pattern: '**/Funfile' },
