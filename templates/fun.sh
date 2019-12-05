@@ -3,12 +3,12 @@
 ELECTRON="{{ELECTRON}}"
 FUN="{{FUN}}"
 
-if [ $1x == '--electron-path'x ]; then
+if [ "$1" = "--electron-path" ]; then
   echo $ELECTRON
   exit 0
 fi
 
-if [ $1x == '--fun-path'x ]; then
+if [ "$1" = "--fun-path" ]; then
   echo $FUN
   exit 0
 fi
