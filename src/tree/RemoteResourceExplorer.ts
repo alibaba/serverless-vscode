@@ -55,6 +55,12 @@ export class RemoteResourceProvider implements vscode.TreeDataProvider<vscode.Tr
 
   private async getRemoteServiceResource(): Promise<Resource[]> {
     const services = await this.functionComputeService.listAllRemoteServices();
+    if (!services || !services.length) {
+      return [new CommandResource (
+        serverlessCommands.FC_GOTO_CONSOLE.title,
+        serverlessCommands.FC_GOTO_CONSOLE.id,
+      )];
+    }
     return services.map(service => (
       new ServiceResource(
         service.serviceName,

@@ -5,7 +5,9 @@ import { BaseService } from './BaseService';
 const FCClient = require('@alicloud/fc2');
 
 
-const output = permissionPromptDecorator(error);
+const output = enableServicePromptDecorator(
+  permissionPromptDecorator(error)
+);
 
 export class FunctionComputeService extends BaseService {
   newFCClient() {
@@ -224,5 +226,22 @@ function permissionPromptDecorator(output: (msg: string) => void) {
 You can create the above permission policies and grant current user.
 https://ram.console.aliyun.com/policies/new
 =====`);
+  }
+}
+
+function enableServicePromptDecorator(output: (msg: string) => void) {
+  return function(msg: string) {
+    output(msg);
+    const reg = new RegExp('FC service is not enabled for current user');
+    const res = reg.exec(msg);
+    if (!res) {
+      return;
+    } else {
+      error(`
+=====
+To view Resource Panel you should enable Function Compute service.
+http://fc.console.aliyun.com/
+=====`);
+    }
   }
 }

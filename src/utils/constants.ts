@@ -3,6 +3,10 @@ export namespace serverlessCommands {
     id: 'fc.extension.bind.account',
     title: 'Bind New Account',
   };
+  export const FC_GOTO_CONSOLE = {
+    id: 'fc.extension.goto.console',
+    title: 'Goto Function Compute Console',
+  };
   export const CREATE_FUNCTION = {
     id: 'fc.extension.function.create',
     title: 'Create Function',
@@ -261,6 +265,7 @@ export const FC_REGIONS = [
 export const ALIYUN_SERVERLESS_SERVICE_TYPE = 'Aliyun::Serverless::Service';
 export const ALIYUN_SERVERLESS_FUNCTION_TYPE = 'Aliyun::Serverless::Function';
 
+export const ALIYUN_FUNCTION_COMPUTE_CONSOLE_URL = 'https://fc.console.aliyun.com/';
 
 export const ALIYUN_SERVERLESS_CHANGELOG_URL = 'https://github.com/alibaba/serverless-vscode/blob/master/CHANGELOG.md';
 export const ALIYUN_FUNCTION_FLOW_CONSOLE_URL = 'https://fnf.console.aliyun.com/';
