@@ -1,8 +1,11 @@
 import * as fc from '@alicloud/fc2';
-import * as output from '../utils/output';
+import { error } from '../utils/output';
 import { BaseService } from './BaseService';
 
 const FCClient = require('@alicloud/fc2');
+
+
+const output = permissionPromptDecorator(error);
 
 export class FunctionComputeService extends BaseService {
   newFCClient() {
@@ -14,7 +17,7 @@ export class FunctionComputeService extends BaseService {
         timeout: this.getTimeout(),
       });
     } catch (ex) {
-      output.error(ex.message);
+      output(ex.message);
     }
   }
 
@@ -34,7 +37,7 @@ export class FunctionComputeService extends BaseService {
           services.push(...result.data.services);
         }
       } catch (ex) {
-        output.error(ex.message);
+        output(ex.message);
         break;
       }
     } while (result.data && result.data.nextToken);
@@ -57,7 +60,7 @@ export class FunctionComputeService extends BaseService {
           functions.push(...result.data.functions);
         }
       } catch (ex) {
-        output.error(ex.message);
+        output(ex.message);
         break;
       }
     } while (result.data && result.data.nextToken);
@@ -80,7 +83,7 @@ export class FunctionComputeService extends BaseService {
           triggers.push(...result.data.triggers);
         }
       } catch (ex) {
-        output.error(ex.message);
+        output(ex.message);
         break;
       }
     } while (result.data && result.data.nextToken);
@@ -93,14 +96,23 @@ export class FunctionComputeService extends BaseService {
       return;
     }
     let result: any;
-    if (nextToken) {
-      result = await client.listFunctions(
-        serviceName,
-        { nextToken },
-      );
-    } else {
-      result = await client.listFunctions(serviceName);
+    try {
+      if (nextToken) {
+        result = await client.listFunctions(
+          serviceName,
+          { nextToken },
+        );
+      } else {
+        result = await client.listFunctions(serviceName);
+      }
+    } catch (ex) {
+      output(ex.message);
+      return {
+        functions: [],
+        nextToken: '',
+      };
     }
+
     const { data: { functions = [], nextToken: newNextToken = '' } = {} } = result;
     return {
       functions,
@@ -119,7 +131,7 @@ export class FunctionComputeService extends BaseService {
         'x-fc-log-type': 'Tail',
       });
     } catch (ex) {
-      output.error(ex.message);
+      output(ex.message);
     }
     return result;
   }
@@ -130,14 +142,22 @@ export class FunctionComputeService extends BaseService {
       return [];
     }
     let result: any;
-    if (nextToken) {
-      result = await client.listTriggers(
-        serviceName,
-        functionName,
-        { nextToken },
-      );
-    } else {
-      result = await client.listTriggers(serviceName, functionName);
+    try {
+      if (nextToken) {
+        result = await client.listTriggers(
+          serviceName,
+          functionName,
+          { nextToken },
+        );
+      } else {
+        result = await client.listTriggers(serviceName, functionName);
+      }
+    } catch (ex) {
+      output(ex.message);
+      return {
+        triggers: [],
+        nextToken: '',
+      };
     }
     const { data: { triggers = [], nextToken: newNextToken = '' } = {} } = result;
     return {
@@ -152,7 +172,7 @@ export class FunctionComputeService extends BaseService {
       const { data } = await client.getService(serviceName);
       return data;
     } catch (ex) {
-      output.error(ex.message);
+      output(ex.message);
     }
   }
 
@@ -162,7 +182,7 @@ export class FunctionComputeService extends BaseService {
       const { data } = await client.getFunction(serviceName, functionName);
       return data;
     } catch (ex) {
-      output.error(ex.message);
+      output(ex.message);
     }
   }
 
@@ -172,8 +192,37 @@ export class FunctionComputeService extends BaseService {
       const { data } = await client.getTrigger(serviceName, functionName, triggerName);
       return data;
     } catch (ex) {
-      output.error(ex.message);
+      output(ex.message);
       return {};
     }
+  }
+}
+
+
+function permissionPromptDecorator(output: (msg: string) => void) {
+  return function(msg: string) {
+    output(msg);
+    const reg = new RegExp("the caller is not authorized to perform '(.*)' on resource");
+    const res = reg.exec(msg);
+    if (!res) {
+      return;
+    }
+    error(`
+=====
+{
+  "Statement": [
+      {
+          "Effect": "Allow",
+          "Action": [
+              "${res[1]}"
+          ],
+          "Resource": "*"
+      }
+  ],
+  "Version": "1"
+}
+You can create the above permission policies and grant current user.
+https://ram.console.aliyun.com/policies/new
+=====`);
   }
 }
