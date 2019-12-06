@@ -2,6 +2,31 @@
 
 所有对 "Aliyun Serverless" 插件的更改都将记录在这个文件中。
 
+## 1.19.0 - 2019-12-06
+### Added
+1. 模版文件 template.yml 提供当前所在位置的层级面包屑
+   - 单击模版文件中的任意位置，将会在文件顶部以面包屑的形式显示出所在位置的层级。
+   - 提供文件内容结构树，单击文件顶部面包屑中的任意块会展开当前文件内容的结构树。
+   - 单击文件内容结构树中的列表项可跳转到文件中的对应位置。
+   - 支持在命令面板中通过 `@` 进行索引搜索。
+
+![](https://github.com/alibaba/serverless-vscode/blob/master/media/changelog/v1.19.0/documentSymbol.gif?raw=true)
+
+2. 子账户缺少权限时会给出更加精准的提示
+   - 在操作云端资源时，如果缺少对应权限会在 Output 面板中提示缺少的权限。
+   - 支持根据缺少的权限生成 RAM 权限策略模版输出在 Output 面板。
+
+![](https://github.com/alibaba/serverless-vscode/blob/master/media/changelog/v1.19.0/ramPolicy.gif?raw=true)
+
+3. 账户未开通函数计算服务或在所配置区域未存在服务时，云端资源面板将提供跳转到控制台的链接。
+4. 优化账户未开通函数计算服务时 Output 面板输出的信息提示。
+
+![](https://github.com/alibaba/serverless-vscode/blob/master/media/changelog/v1.19.0/fcConsole.gif?raw=true)
+
+### Fixed
+1. 修复 Posix 平台中 Fun 的 shell 脚本执行报错的 Issue。
+2. 修复模版文件 template.yml 中对于 ROS 模版的输出(Outputs)以及参数(Parameters)语法的基本支持。
+
 ## 1.18.0 - 2019-11-29
 ### Added
 1. 远端资源信息面板增强
