@@ -4,6 +4,7 @@ import { serverlessCommands } from './utils/constants';
 import { recordPageView } from './utils/visitor';
 import { initProject } from './commands/initProject';
 import { createFunction } from './commands/createFunction';
+import { gotoFCConsole } from './commands/gotoFCConsole';
 import { gotoFunctionCode } from './commands/gotoFunctionCode';
 import { gotoTemplate } from './commands/gotoTemplate';
 import { gotoFunctionDefinition } from './commands/gotoFunctionDefinition';
@@ -141,6 +142,7 @@ export function activate(context: vscode.ExtensionContext) {
   showRemoteFlowInfo(context);
   clearRemoteFlowInfo(context);
   showDefinitionGraph(context);
+  gotoFCConsole(context);
 
   vscode.commands.executeCommand(serverlessCommands.SHOW_REGION_STATUS.id);
   vscode.commands.executeCommand(serverlessCommands.SHOW_UPDATE_NOTIFICATION.id);
