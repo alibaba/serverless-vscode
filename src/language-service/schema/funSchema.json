@@ -961,16 +961,14 @@
         "Aliyun::Serverless-2018-04-03"
       ]
     },
+    "Parameters": {
+      "type": "object"
+    },
+    "Outputs": {
+      "type": "object"
+    },
     "Resources": {
       "type": "object",
-      "properties": {
-        "Parameters": {
-          "type": "object"
-        },
-        "Outputs": {
-          "type": "object"
-        }
-      },
       "patternProperties": {
         "^[a-zA-Z_][a-zA-Z.0-9_-]{0,127}$": {
           "anyOf": [
