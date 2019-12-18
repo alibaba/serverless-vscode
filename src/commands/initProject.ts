@@ -4,6 +4,7 @@ import { serverlessCommands } from '../utils/constants';
 import { isPathExists } from '../utils/file';
 import { recordPageView } from '../utils/visitor';
 import { FunService } from '../services/FunService';
+import { getSupportedRuntimes } from '../utils/runtime';
 
 export function initProject(context: vscode.ExtensionContext) {
   context.subscriptions.push(vscode.commands.registerCommand(serverlessCommands.INIT_PROJECT.id, async () => {
@@ -14,7 +15,7 @@ export function initProject(context: vscode.ExtensionContext) {
       return;
     }
 
-    const runtimes = ['nodejs8', 'nodejs6', 'python3', 'python2.7', 'php7.2']
+    const runtimes = getSupportedRuntimes();
     vscode.window.showQuickPick(runtimes, {
       ignoreFocusOut: true,
       placeHolder: 'Select a runtime for your function project',

@@ -1,8 +1,13 @@
-import { isPathExists } from './file';
+import { isPathExists, createDirectory } from './file';
 import * as fs from 'fs';
 import * as path from 'path';
+import * as util from 'util';
+import { ncp } from 'ncp';
 
-const supportedRuntimes = ['nodejs6', 'nodejs8', 'nodejs10', 'python2.7', 'python3', 'php7.2'];
+const cp = util.promisify(ncp);
+
+const supportedRuntimes =
+  ['nodejs6', 'nodejs8', 'nodejs10', 'python2.7', 'python3', 'php7.2', 'java8'];
 const types = ['NORMAL', 'HTTP'];
 
 export function getSupportedRuntimes() {
@@ -76,6 +81,59 @@ export function createIndexFile(type: string, runtime: string, ph: string): bool
     return type === 'NORMAL' ? createPhpHelloWorldIndexFile(ph) : createPhpHttpIndexFile(ph);
   }
   return false;
+}
+
+function getLanguage(runtime: string): string | undefined {
+  if (isNodejs(runtime)) {
+    return 'nodejs';
+  }
+  if (isPython(runtime)) {
+    return 'python';
+  }
+  if (isPhp(runtime)) {
+    return 'php';
+  }
+  if (isJava(runtime)) {
+    return 'java';
+  }
+  return;
+}
+
+function generateTemplateName(type: string, runtime: string): string | undefined {
+  let suffix: string;
+  if (type === 'NORMAL') {
+    suffix = 'helloworld';
+  } else if (type === 'HTTP') {
+    suffix = 'http';
+  } else {
+    return;
+  }
+  const prefix = getLanguage(runtime);
+  if (!prefix) {
+    return;
+  }
+  return `${prefix}-${suffix}`;
+}
+
+export async function createCodeFile(type: string, runtime: string, codeUriPath: string) {
+  if (!isSupportedRuntime(runtime)) {
+    throw new Error(`${runtime} is not supported`);
+  }
+  if (!types.includes(type)) {
+    throw new Error(`${type} is not supported`);
+  }
+  if (!isPathExists(codeUriPath)) {
+    if (!createDirectory(codeUriPath)) {
+      throw new Error(`Create ${codeUriPath} error`);
+    }
+  }
+  const templateName = generateTemplateName(type, runtime);
+  if (!templateName) {
+    throw new Error(`fail to generate template name. type: ${type}, runtime: ${runtime}`);
+  }
+  const srcDirPath = path.join(__dirname, '..', '..', 'templates', templateName);
+
+  await cp(srcDirPath, codeUriPath).catch((err) => { throw new Error(err) });
 }
 
 export function createNodejsHelloWorldIndexFile(ph: string): boolean {

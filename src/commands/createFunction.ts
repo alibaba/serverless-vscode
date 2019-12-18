@@ -4,8 +4,8 @@ import { ext } from '../extensionVariables';
 import { MultiStepInput } from '../ui/MultiStepInput';
 import { getSupportedRuntimes, isSupportedRuntime, isNodejs, isPython } from '../utils/runtime';
 import { serverlessCommands, serverlessConfigs } from '../utils/constants';
-import { isPathExists, createDirectory } from '../utils/file';
-import { getSuffix, createIndexFile } from '../utils/runtime';
+import { isNotEmpty } from '../utils/file';
+import { createCodeFile } from '../utils/runtime';
 import { recordPageView } from '../utils/visitor';
 import { ServiceResource } from '../models/resource';
 import { TemplateService } from '../services/TemplateService';
@@ -18,11 +18,11 @@ export function createFunction(context: vscode.ExtensionContext) {
       recordPageView('/functionCreate');
       if (!node) {
         await process(context, '', path.resolve(ext.cwd ? ext.cwd : '', 'template.yml'))
-          .catch(vscode.window.showErrorMessage);
+          .catch(ex => vscode.window.showErrorMessage(ex.message));
         return;
       }
       await process(context, node.serviceName ? node.serviceName : '', node.templatePath as string)
-        .catch(vscode.window.showErrorMessage);
+        .catch(ex => vscode.window.showErrorMessage(ex.message));
     })
   );
 }
@@ -149,41 +149,29 @@ async function process(context: vscode.ExtensionContext, serviceName: string, te
     return true;
   }
 
-  async function createFunctionFile(state: State): Promise<boolean> {
+  async function createFunctionFile(state: State): Promise<void> {
     const { runtime, type } = state;
     if (!ext.cwd) {
-      vscode.window.showErrorMessage('You should open a workspace');
-      return false;
+      throw new Error('You should open a workspace');
     }
     const codeUriPath = path.resolve(path.dirname(templatePath as string), state.codeUri);
-    if (!isPathExists(codeUriPath)) {
-      if (!createDirectory(codeUriPath)) {
-        vscode.window.showErrorMessage(`Create ${codeUriPath} error`);
-        return false;
+    if (isNotEmpty(codeUriPath)) {
+      const choose = await vscode.window.showInformationMessage(
+        `There are some files in the directory: ${codeUriPath}. `
+        + 'If you choose to continue, you may overwrite some files.',
+        'Continue',
+        'Cancel',
+      );
+      if (choose !== 'Continue') {
+        throw new Error('Interrupt create function operation');
       }
     }
-    const suffix = getSuffix(runtime);
-    if (!suffix) {
-      vscode.window.showErrorMessage(`${runtime} runtime is not supported`);
-      return false;
-    }
-    const indexPath = path.join(codeUriPath, `index${suffix}`)
-    if (isPathExists(indexPath)) {
-      vscode.window.showErrorMessage(`${indexPath} is already exist`);
-      return false;
-    }
-    if (!createIndexFile(type, runtime, indexPath)) {
-      vscode.window.showErrorMessage(`Create ${runtime} index file error`);
-      return false;
-    }
-    return true;
+
+    await createCodeFile(type, runtime, codeUriPath);
   }
 
   const state = await collectFuncInfo();
   if (!await validateCreateFuncionState(state)) {
-    return;
-  }
-  if (!await createFunctionFile(state)) {
     return;
   }
   const templateService = new TemplateService(templatePath as string);
@@ -191,6 +179,8 @@ async function process(context: vscode.ExtensionContext, serviceName: string, te
     return;
   }
   templateChangeEventEmitter.fire();
+  await createFunctionFile(state);
+
   vscode.commands.executeCommand(serverlessCommands.REFRESH_LOCAL_RESOURCE.id);
   await gotoFunctionCode(state.serviceName, state.functionName, templatePath);
   if (isNodejs(state.runtime) || isPython(state.runtime)) {
