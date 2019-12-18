@@ -103,6 +103,14 @@ export const MNSTOPIC_INSERT_TEXT =
 "    MaximumMessageSize: 2048\n" +
 "    LoggingEnabled: false"
 
+export const FLOW_INSERT_TEXT = `\${1:flow}:
+  Type: 'Aliyun::Serverless::Flow'
+  Properties:
+    Description: 'function flow'
+    DefinitionUri: \${2:./index.flow.yml}
+    Policies:
+      - AliyunFCInvocationAccess`
+
 export const VPCCONFIG_INSERT_TEXT =
   "VpcConfig:\n" +
   "  VpcId: ${1:vpcId}\n" +

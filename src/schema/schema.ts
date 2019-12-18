@@ -17,6 +17,7 @@ import {
   ALIYUN_SERVERLESS_TRIGGERS_MNSTOPIC_TYPE,
   ALIYUN_SERVERLESS_TRIGGERS_TABLESTORE_TYPE,
   ALIYUN_SERVERLESS_TRIGGERS_CDN_TYPE,
+  ALIYUN_SERVERLESS_FLOW_TYPE,
 } from '../utils/constants';
 
 import {
@@ -50,6 +51,7 @@ import {
   TABLESTORE_TRIGGER_INSERT_TEXT,
   CDN_TRIGGER_INSERT_TEXT,
   MEMORYSIZE_INSERT_TEXT,
+  FLOW_INSERT_TEXT,
 } from './constants';
 
 // TODO: schema 的进一步定义
@@ -387,6 +389,21 @@ const mnstopicSchema = {
   documentation: MNSTOPIC_DOCUMENTATION_URL,
 };
 
+const flowSchema = {
+  label: 'Flow',
+  properties: {
+    Properties: {
+      properties: {
+        'Description': {},
+        'DefinitionUri': {},
+        'Role': {},
+        'Policies': {},
+      }
+    },
+  },
+  insertText: FLOW_INSERT_TEXT,
+}
+
 const resourceSchema = {
   properties: {
     [ALIYUN_SERVERLESS_SERVICE_TYPE]: serviceSchema,
@@ -395,6 +412,7 @@ const resourceSchema = {
     [ALIYUN_SERVERLESS_TABLESTORE_TYPE]: tablestoreSchema,
     [ALIYUN_SERVERLESS_LOG_TYPE]: logSchema,
     [ALIYUN_SERVERLESS_MNSTOPIC_TYPE]: mnstopicSchema,
+    [ALIYUN_SERVERLESS_FLOW_TYPE]: flowSchema,
   },
   insertText: RESOURCES_INSERT_TEXT,
   triggerSuggest: true,

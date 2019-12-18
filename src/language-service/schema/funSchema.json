@@ -845,6 +845,49 @@
         "zh-TW": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03-zh-cn.md#mnstopic"
       }
     },
+    "Aliyun::Serverless::Flow": {
+      "$id": "Aliyun::Serverless::Flow",
+      "type": "object",
+      "properties": {
+        "Type": {
+          "type": "string",
+          "enum": [
+            "Aliyun::Serverless::Flow"
+          ]
+        },
+        "Properties": {
+          "type": "object",
+          "properties": {
+            "Description": {
+              "type": "string"
+            },
+            "DefinitionUri": {
+              "type": "string"
+            },
+            "Role": {
+              "type": "string"
+            },
+            "Policies": {
+              "oneOf": [
+                { "type": "string" },
+                {
+                  "$ref": "#/definitions/Aliyun::Serverless::Service::Role"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "oneOf": [
+                      { "type": "string" },
+                      { "$ref": "#/definitions/Aliyun::Serverless::Service::Role" }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
     "Aliyun::Serverless::Triggers::TableStore": {
       "$id": "Aliyun::Serverless::Triggers::TableStore",
       "type": "object",
@@ -989,6 +1032,9 @@
             },
             {
               "$ref": "#/definitions/Aliyun::Serverless::MNSTopic"
+            },
+            {
+              "$ref": "#/definitions/Aliyun::Serverless::Flow"
             }
           ]
         }
