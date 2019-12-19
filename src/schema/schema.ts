@@ -421,5 +421,8 @@ const resourceSchema = {
 export const schema = {
   properties: {
     Resources: resourceSchema,
+    Description: {},
+    Parameters: {},
+    Outputs: {},
   },
 };

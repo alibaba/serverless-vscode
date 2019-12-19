@@ -3,14 +3,21 @@ import { StringASTNode } from './StringASTNode';
 import { SlotASTNode } from './SlotASTNode';
 import { JSONSchema } from '../language-service/jsonSchema';
 import { ValidationResult, ISchemaCollector } from '../language-service/parser/jsonParser';
+import { CustomTag } from '../language-service/model/customTags';
 
 export class PropertyASTNode extends SlotASTNode {
   key: StringASTNode;
   value: ASTNode | undefined;
   colonOffset: number;
 
-  constructor(parent: ASTNode | undefined, key: StringASTNode, start: number, end: number) {
-    super(parent, 'property', start, end);
+  constructor(
+    parent: ASTNode | undefined,
+    key: StringASTNode,
+    start: number,
+    end: number,
+    customTag?: CustomTag,
+  ) {
+    super(parent, 'property', start, end, customTag);
     this.key = key;
     this.key.parent = this;
     this.slot = key.value;

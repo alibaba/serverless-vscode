@@ -1,5 +1,6 @@
 import { JSONSchema } from '../language-service/jsonSchema';
 import { ValidationResult, ISchemaCollector, ProblemSeverity } from '../language-service/parser/jsonParser';
+import { CustomTag } from '../language-service/model/customTags';
 
 export class ASTNode {
   start: number;
@@ -7,17 +8,20 @@ export class ASTNode {
   type: string;
   parent: ASTNode | undefined;
   slot: string | undefined;
+  customTag: CustomTag | undefined;
 
   constructor(
     parent: ASTNode | undefined,
     type: string,
     start: number,
-    end: number
+    end: number,
+    customTag?: CustomTag,
   ) {
     this.parent = parent;
     this.type = type;
     this.start = start;
     this.end = end;
+    this.customTag = customTag;
   }
 
   getValue(): any {
