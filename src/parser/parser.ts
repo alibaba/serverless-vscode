@@ -7,6 +7,7 @@ import { StringASTNode } from './StringASTNode';
 import { ArrayASTNode } from './ArrayASTNode';
 import { BooleanASTNode } from './BooleanASTNode';
 import { NumberASTNode } from './NumberASTNode';
+import { CUSTOM_TAGS_BY_PROPERTY_NAME } from '../language-service/model/customTags';
 
 export function buildAstRecursively(parent: ASTNode | undefined, node: Yaml.YAMLNode): ASTNode {
   if (!node) {
@@ -38,8 +39,9 @@ export function buildAstRecursively(parent: ASTNode | undefined, node: Yaml.YAML
         key.endPosition,
       );
       keyNode.value = key.value;
+      const customTag = CUSTOM_TAGS_BY_PROPERTY_NAME[key.value];
 
-      const result = new PropertyASTNode(parent, keyNode, keyNode.start, instance.endPosition);
+      const result = new PropertyASTNode(parent, keyNode, keyNode.start, instance.endPosition, customTag);
 
       const valueNode = instance.value
         ? buildAstRecursively(result, instance.value)
