@@ -2,6 +2,27 @@
 
 所有对 "Aliyun Serverless" 插件的更改都将记录在这个文件中。
 
+## 1.20.0 - 2019-12-20
+### Added
+1. 新增针对函数计算 java8 runtime 的支持
+   - 支持初始化 java8 runtime 项目
+   - 支持创建 java8 runtime 的 Event Trigger 函数
+   - 支持创建 java8 runtime 的 HTTP Trigger 函数
+
+![](https://img.alicdn.com/tfs/TB1ApeOrbH1gK0jSZFwXXc7aXXa-1857-998.gif)
+
+2. 模版文件 template.yml 提供针对函数工作流的语法提示
+   - 支持针对 `Aliyun::Serverless::Flow` 的 Schema 定义
+   - 支持相关内容的自动补全、错误校验、悬浮提示
+
+![](https://img.alicdn.com/tfs/TB1P9uKrXP7gK0jSZFjXXc5aXXa-1857-998.gif)
+
+3. 模版文件 template.yml 针对 ROS 模版进行增强
+   - 进一步支持 ROS 模版语法中的 `Parameters`、 `Description`、`Outputs`
+   - 错误校验支持 ROS 模版语法中的 ROS Function，如: `Ref`、`Fn::GetAtt` 等
+
+![](https://img.alicdn.com/tfs/TB19faLroY1gK0jSZFMXXaWcVXa-1857-998.gif)
+
 ## 1.19.0 - 2019-12-06
 ### Added
 1. 模版文件 template.yml 提供当前所在位置的层级面包屑
