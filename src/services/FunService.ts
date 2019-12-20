@@ -16,7 +16,7 @@ export class FunService {
       vscode.window.showErrorMessage(`${runtime} is not valid runtime`);
     }
     getFunBin().then(funBin => {
-      const command = `${funBin} init helloworld-${runtime}`;
+      const command = `${funBin} init event-${runtime}`;
       terminal.sendText(command);
       terminal.show();
     })

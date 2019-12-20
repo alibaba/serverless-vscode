@@ -10,6 +10,15 @@ import { getSuffix } from '../utils/runtime';
 
 const readFile = util.promisify(fs.readFile);
 
+const JAVA_HELLO_WORLD_DEFAULT_HANDLER = 'example.App::handleRequest';
+
+function getDefaultHandler(runtime: string) {
+  if (isJava(runtime)) {
+    return JAVA_HELLO_WORLD_DEFAULT_HANDLER;
+  }
+  return 'index.handler';
+}
+
 export class TemplateService {
   private templatePath: string;
   constructor(templatePath: string) {
@@ -155,7 +164,7 @@ export class TemplateService {
     tpl.Resources[serviceName][functionName] = {
       Type: 'Aliyun::Serverless::Function',
       Properties: {
-        Handler: 'index.handler',
+        Handler: getDefaultHandler(runtime),
         Runtime: runtime,
         Timeout: 60,
         MemorySize: 512,
