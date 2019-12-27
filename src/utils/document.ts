@@ -13,7 +13,7 @@ const flowTypeRegExp = /"?'?type"?'?:\s*"?'?flow"?'?/
 export function isSupportedDocument(document: vscode.TextDocument): boolean {
   if (isTemplateYaml(document)) {
     const textDocument = document.getText();
-    return rosRegExp.test(textDocument) && transformRegExp.test(textDocument);
+    return rosRegExp.test(textDocument);
   }
   return false;
 }

@@ -1,0 +1,83 @@
+{
+  "$id": "ALIYUN::ECS::DedicatedHost",
+  "type": "object",
+  "properties": {
+    "Type": {
+      "type": "string",
+      "enum": [
+        "ALIYUN::ECS::DedicatedHost"
+      ]
+    },
+    "Properties": {
+      "type": "object",
+      "properties": {
+        "Period": {
+          "type": "number"
+        },
+        "ChargeType": {
+          "type": "string"
+        },
+        "NetworkAttributesUdpTimeout": {
+          "type": "integer"
+        },
+        "Description": {
+          "type": "string"
+        },
+        "Quantity": {
+          "type": "integer"
+        },
+        "AutoPlacement": {
+          "type": "string"
+        },
+        "ResourceGroupId": {
+          "type": "string"
+        },
+        "ZoneId": {
+          "type": "string"
+        },
+        "AutoRenew": {
+          "type": "string"
+        },
+        "Tags": {
+          "type": "array"
+        },
+        "AutoRenewPeriod": {
+          "type": "number"
+        },
+        "NetworkAttributesSlbUdpTimeout": {
+          "type": "integer"
+        },
+        "DedicatedHostType": {
+          "type": "string"
+        },
+        "DedicatedHostName": {
+          "type": "string"
+        },
+        "ActionOnMaintenance": {
+          "type": "string"
+        },
+        "AutoReleaseTime": {
+          "type": "string"
+        },
+        "PeriodUnit": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "DedicatedHostType"
+      ],
+      "additionalProperties": false,
+      "document": {
+        "default": "https://rosnext.console.aliyun.com/resourceType/ALIYUN::ECS::DedicatedHost"
+      }
+    }
+  },
+  "required": [
+    "Type",
+    "Properties"
+  ],
+  "document": {
+    "default": "https://rosnext.console.aliyun.com/resourceType/ALIYUN::ECS::DedicatedHost"
+  },
+  "insertText": "${1:DedicatedHost}:\n  Type: ALIYUN::ECS::DedicatedHost\n  Properties:\n    "
+}

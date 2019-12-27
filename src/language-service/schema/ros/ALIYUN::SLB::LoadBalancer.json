@@ -1,0 +1,78 @@
+{
+  "$id": "ALIYUN::SLB::LoadBalancer",
+  "type": "object",
+  "properties": {
+    "Type": {
+      "type": "string",
+      "enum": [
+        "ALIYUN::SLB::LoadBalancer"
+      ]
+    },
+    "Properties": {
+      "type": "object",
+      "properties": {
+        "LoadBalancerName": {
+          "type": "string"
+        },
+        "ResourceGroupId": {
+          "type": "string"
+        },
+        "VSwitchId": {
+          "type": "string"
+        },
+        "InternetChargeType": {
+          "type": "string"
+        },
+        "AutoPay": {
+          "type": "boolean"
+        },
+        "VpcId": {
+          "type": "string"
+        },
+        "PricingCycle": {
+          "type": "string"
+        },
+        "SlaveZoneId": {
+          "type": "string"
+        },
+        "LoadBalancerSpec": {
+          "type": "string"
+        },
+        "Tags": {
+          "type": "array"
+        },
+        "MasterZoneId": {
+          "type": "string"
+        },
+        "Duration": {
+          "type": "number"
+        },
+        "AddressType": {
+          "type": "string"
+        },
+        "DeletionProtection": {
+          "type": "boolean"
+        },
+        "PayType": {
+          "type": "string"
+        },
+        "Bandwidth": {
+          "type": "integer"
+        }
+      },
+      "required": [],
+      "additionalProperties": false,
+      "document": {
+        "default": "https://rosnext.console.aliyun.com/resourceType/ALIYUN::SLB::LoadBalancer"
+      }
+    }
+  },
+  "required": [
+    "Type",
+    "Properties"
+  ],
+  "document": {
+    "default": "https://rosnext.console.aliyun.com/resourceType/ALIYUN::SLB::LoadBalancer"
+  },
+  "insertText": "${1:LoadBalancer}:\n  Type: ALIYUN::SLB::LoadBalancer\n  Properties:\n    "
+}

@@ -1,0 +1,43 @@
+{
+  "$id": "ALIYUN::SLB::VServerGroup",
+  "type": "object",
+  "properties": {
+    "Type": {
+      "type": "string",
+      "enum": [
+        "ALIYUN::SLB::VServerGroup"
+      ]
+    },
+    "Properties": {
+      "type": "object",
+      "properties": {
+        "BackendServers": {
+          "type": "array"
+        },
+        "LoadBalancerId": {
+          "type": "string"
+        },
+        "VServerGroupName": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "BackendServers",
+        "LoadBalancerId",
+        "VServerGroupName"
+      ],
+      "additionalProperties": false,
+      "document": {
+        "default": "https://rosnext.console.aliyun.com/resourceType/ALIYUN::SLB::VServerGroup"
+      }
+    }
+  },
+  "required": [
+    "Type",
+    "Properties"
+  ],
+  "document": {
+    "default": "https://rosnext.console.aliyun.com/resourceType/ALIYUN::SLB::VServerGroup"
+  },
+  "insertText": "${1:VServerGroup}:\n  Type: ALIYUN::SLB::VServerGroup\n  Properties:\n    "
+}

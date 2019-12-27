@@ -1,0 +1,87 @@
+{
+  "$id": "ALIYUN::SLB::Listener",
+  "type": "object",
+  "properties": {
+    "Type": {
+      "type": "string",
+      "enum": [
+        "ALIYUN::SLB::Listener"
+      ]
+    },
+    "Properties": {
+      "type": "object",
+      "properties": {
+        "RequestTimeout": {
+          "type": "integer"
+        },
+        "AclStatus": {
+          "type": "string"
+        },
+        "Persistence": {
+          "type": "object"
+        },
+        "AclType": {
+          "type": "string"
+        },
+        "VServerGroupId": {
+          "type": "string"
+        },
+        "HealthCheck": {
+          "type": "object"
+        },
+        "LoadBalancerId": {
+          "type": "string"
+        },
+        "CACertificateId": {
+          "type": "string"
+        },
+        "ListenerPort": {
+          "type": "integer"
+        },
+        "ServerCertificateId": {
+          "type": "string"
+        },
+        "AclId": {
+          "type": "string"
+        },
+        "Scheduler": {
+          "type": "string"
+        },
+        "HttpConfig": {
+          "type": "object"
+        },
+        "IdleTimeout": {
+          "type": "integer"
+        },
+        "Protocol": {
+          "type": "string"
+        },
+        "BackendServerPort": {
+          "type": "integer"
+        },
+        "Bandwidth": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "LoadBalancerId",
+        "ListenerPort",
+        "Protocol",
+        "BackendServerPort",
+        "Bandwidth"
+      ],
+      "additionalProperties": false,
+      "document": {
+        "default": "https://rosnext.console.aliyun.com/resourceType/ALIYUN::SLB::Listener"
+      }
+    }
+  },
+  "required": [
+    "Type",
+    "Properties"
+  ],
+  "document": {
+    "default": "https://rosnext.console.aliyun.com/resourceType/ALIYUN::SLB::Listener"
+  },
+  "insertText": "${1:Listener}:\n  Type: ALIYUN::SLB::Listener\n  Properties:\n    "
+}

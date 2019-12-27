@@ -1,0 +1,42 @@
+{
+  "$id": "ALIYUN::NAS::FileSystem",
+  "type": "object",
+  "properties": {
+    "Type": {
+      "type": "string",
+      "enum": [
+        "ALIYUN::NAS::FileSystem"
+      ]
+    },
+    "Properties": {
+      "type": "object",
+      "properties": {
+        "Description": {
+          "type": "string"
+        },
+        "ProtocolType": {
+          "type": "string"
+        },
+        "StorageType": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "ProtocolType",
+        "StorageType"
+      ],
+      "additionalProperties": false,
+      "document": {
+        "default": "https://rosnext.console.aliyun.com/resourceType/ALIYUN::NAS::FileSystem"
+      }
+    }
+  },
+  "required": [
+    "Type",
+    "Properties"
+  ],
+  "document": {
+    "default": "https://rosnext.console.aliyun.com/resourceType/ALIYUN::NAS::FileSystem"
+  },
+  "insertText": "${1:FileSystem}:\n  Type: ALIYUN::NAS::FileSystem\n  Properties:\n    "
+}

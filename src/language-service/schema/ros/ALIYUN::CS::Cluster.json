@@ -1,0 +1,79 @@
+{
+  "$id": "ALIYUN::CS::Cluster",
+  "type": "object",
+  "properties": {
+    "Type": {
+      "type": "string",
+      "enum": [
+        "ALIYUN::CS::Cluster"
+      ]
+    },
+    "Properties": {
+      "type": "object",
+      "properties": {
+        "ImageId": {
+          "type": "string"
+        },
+        "CreateSlbByDefault": {
+          "type": "boolean"
+        },
+        "Password": {
+          "type": "string"
+        },
+        "ZoneId": {
+          "type": "string"
+        },
+        "DataDiskCategory": {
+          "type": "string"
+        },
+        "VSwitchId": {
+          "type": "string"
+        },
+        "VpcId": {
+          "type": "string"
+        },
+        "SubnetCidr": {
+          "type": "string"
+        },
+        "DataDiskSize": {
+          "type": "integer"
+        },
+        "InstanceType": {
+          "type": "string"
+        },
+        "Name": {
+          "type": "string"
+        },
+        "IoOptimized": {
+          "type": "boolean"
+        },
+        "InstanceIds": {
+          "type": "array"
+        },
+        "SystemDiskCategory": {
+          "type": "string"
+        },
+        "Size": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "Password",
+        "Name",
+        "Size"
+      ],
+      "additionalProperties": false,
+      "document": {
+        "default": "https://rosnext.console.aliyun.com/resourceType/ALIYUN::CS::Cluster"
+      }
+    }
+  },
+  "required": [
+    "Type",
+    "Properties"
+  ],
+  "document": {
+    "default": "https://rosnext.console.aliyun.com/resourceType/ALIYUN::CS::Cluster"
+  },
+  "insertText": "${1:Cluster}:\n  Type: ALIYUN::CS::Cluster\n  Properties:\n    "
+}

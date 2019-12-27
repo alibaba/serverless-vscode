@@ -1,11 +1,14 @@
 import * as vscode from 'vscode';
 import * as Yaml from 'yaml-ast-parser';
+import * as osLocale from 'os-locale';
 import { isSupportedDocument, fixNodeForCompletion, isTemplateYaml } from '../utils/document';
 import { buildAstRecursively, getNodeFromOffset } from '../parser/parser';
 import { ASTNode } from '../parser/ASTNode';
+import { JSONSchemaService } from '../language-service/services/jsonSchemaService';
+import { ValidationResult, SchemaCollector } from '../language-service/parser/jsonParser';
 import { StringASTNode } from '../parser/StringASTNode';
 import { ObjectASTNode } from '../parser/ObjectASTNode';
-import { schema } from '../schema/schema';
+import { JSONSchema } from '../language-service/jsonSchema';
 import { recordPageView } from '../utils/visitor';
 import { ROS_TEMPLATE_INSERT_TEXT, TRANSFORM_INSERT_TEXT } from '../schema/constants';
 import { serverlessCommands } from '../utils/constants';
@@ -30,15 +33,13 @@ export class ROSTemplateCompletionProvider implements vscode.CompletionItemProvi
   ):
     vscode.ProviderResult<vscode.CompletionItem[] | vscode.CompletionList> {
     if (!isSupportedDocument(document)) {
-      if (isTemplateYaml(document)) {
-        if (position.line === 0) {
-          return [rosTempCompletionItem];
-        }
-        if (position.line === 1) {
-          return [transformCompletionItem];
-        }
+      if (isTemplateYaml(document) && position.line === 0) {
+        return [rosTempCompletionItem];
       }
       return Promise.resolve([]);
+    }
+    if (position.line === 1) {
+      return [transformCompletionItem];
     }
     recordPageView('/templateAutoCompletion');
     const completionFix = fixNodeForCompletion(document, position);
@@ -55,81 +56,93 @@ function parse(text: string): ASTNode {
   return root;
 }
 
-function doCompletion(
+async function doCompletion(
   document: vscode.TextDocument,
   position: vscode.Position,
   docRoot: ASTNode,
-): vscode.CompletionItem[] {
+): Promise<vscode.CompletionItem[]> {
   const node = getNodeFromOffset(docRoot, document.offsetAt(position));
   if (!node || !(<StringASTNode>node).isKey) {
     return [];
   }
-  const path = node.getPath();
-  if (!path || !path.length) { // 只对 Resource 的儿子以及后代进行 auto completion
+  const jsonSchemaService = JSONSchemaService.getJSONSchemaService();
+  const resolvedSchema = await jsonSchemaService.getSchemaForResource();
+  if (!resolvedSchema) {
     return [];
   }
-  let resourceType = '';
-  let pNode: ASTNode | undefined = node.parent; // StringASTNode.parent -> PropertyASTNode
-  if (!pNode) {
-    return [];
-  }
-  const completionPath = [];
-  let typeFound = false;
-  while (pNode && pNode.parent && pNode.parent.parent) {
-    pNode = pNode.parent && pNode.parent.parent; // PropertyASTNode -> ObjectASTNode -> PropertyASTNode
-    while (pNode && pNode.type !== 'property') { // 有可能遇到 ArrayASTNode 的情况
-      pNode = pNode.parent;
+  const validationResult = new ValidationResult();
+  const matchingSchemas = new SchemaCollector(undefined, undefined);
+  docRoot.validate(resolvedSchema.schema, validationResult, matchingSchemas);
+  let schema: JSONSchema | undefined;
+  let curMinDist = Number.MAX_VALUE;
+  matchingSchemas.schemas.forEach((applicableSchema) => {
+    if (!applicableSchema.node || applicableSchema.node.type !== 'object') {
+      return;
     }
-    if (!pNode) {
-      return [];
-    }
-    const oNode = pNode.getValue();
-    if (oNode.type === 'object') {
-      (<ObjectASTNode>oNode).properties.forEach(p => {
-        if (p.key.getValue() === 'Type') {
-          typeFound = true;
-          resourceType = p.value ? p.value.getValue() : '';
+    const objectNode = applicableSchema.node as ObjectASTNode;
+    if (objectNode.contains(document.offsetAt(position))) {
+      if (!schema) {
+        schema = applicableSchema.schema;
+        curMinDist = objectNode.end - objectNode.start;
+      } else {
+        const dist = objectNode.end - objectNode.start;
+        if (dist < curMinDist) {
+          curMinDist = dist;
+          schema = applicableSchema.schema;
         }
-      });
+      }
     }
-    if (typeFound) {
-      typeFound = false;
-      completionPath.push(resourceType);
-    } else {
-      completionPath.push(pNode.slot);
-    }
-  }
-
-  let schemaPoint = schema;
-  while(completionPath.length) {
-    const completionPathDot = completionPath.pop() as string;
-    schemaPoint = schemaPoint.properties && (<any>schemaPoint.properties)[completionPathDot];
-    if (!schemaPoint) {
-      return [];
-    }
-  }
-
-  if (!schemaPoint.properties) {
+  });
+  if (!schema) {
     return [];
   }
 
-  return Object.keys(schemaPoint.properties).map(item => {
-    const completionItem = new vscode.CompletionItem(item);
-    const itemInfo: any = (<any>schemaPoint.properties)[item];
-    completionItem.label = itemInfo.label || item;
-    if (itemInfo.insertText) {
-      completionItem.insertText = new vscode.SnippetString(itemInfo.insertText);
+  const result: vscode.CompletionItem[] = [];
+
+  Object.entries(schema.properties || {}).forEach(([propertyName, propertySchema]) => {
+    const completionItem = new vscode.CompletionItem(propertyName);
+    completionItem.label = propertySchema.title || propertyName;
+    if (propertySchema.insertText) {
+      completionItem.insertText = new vscode.SnippetString(propertySchema.insertText);
       completionItem.kind = vscode.CompletionItemKind.Class;
     } else {
       completionItem.kind = vscode.CompletionItemKind.Field;
     }
-    if (itemInfo.documentation) {
-      completionItem.documentation = new vscode.MarkdownString(`[文档地址：${item}](${itemInfo.documentation})`)
+    if (propertySchema.document) {
+      completionItem.documentation =
+        new vscode.MarkdownString(`[文档地址: ${propertyName}](${getLocalDoc(propertySchema)})`);
     }
-    if (itemInfo.triggerSuggest) {
+    if (propertySchema.triggerSuggest) {
       completionItem.command = triggerSuggestCmd;
     }
-    return completionItem;
-  })
+    result.push(completionItem);
+  });
 
+  Object.entries(schema.patternProperties || {}).forEach(([patternExp, patternSchema]) => {
+    if (!patternSchema.anyOf) {
+      return;
+    }
+    patternSchema.anyOf.forEach((schema) => {
+      if ((schema.$id || schema.title) && schema.insertText) {
+        const label: string = (schema.$id || schema.title) as string;
+        const completionItem = new vscode.CompletionItem(label);
+        completionItem.insertText = new vscode.SnippetString(schema.insertText);
+        completionItem.kind = vscode.CompletionItemKind.Class;
+        if (schema.document) {
+          completionItem.documentation =
+        new vscode.MarkdownString(`[文档地址: ${label}](${getLocalDoc(schema)})`);
+        }
+        result.push(completionItem);
+      }
+    });
+  });
+  return result;
+}
+
+function getLocalDoc(schema: JSONSchema): string {
+  const language = osLocale.sync();
+  if (schema.document) {
+    return (language && schema.document[language]) || schema.document['default'];
+  }
+  return ''
 }

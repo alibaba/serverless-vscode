@@ -1,0 +1,47 @@
+{
+  "$id": "ALIYUN::ApiGateway::SignatureBinding",
+  "type": "object",
+  "properties": {
+    "Type": {
+      "type": "string",
+      "enum": [
+        "ALIYUN::ApiGateway::SignatureBinding"
+      ]
+    },
+    "Properties": {
+      "type": "object",
+      "properties": {
+        "StageName": {
+          "type": "string"
+        },
+        "SignatureId": {
+          "type": "string"
+        },
+        "ApiIds": {
+          "type": "array"
+        },
+        "GroupId": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "StageName",
+        "SignatureId",
+        "ApiIds",
+        "GroupId"
+      ],
+      "additionalProperties": false,
+      "document": {
+        "default": "https://rosnext.console.aliyun.com/resourceType/ALIYUN::ApiGateway::SignatureBinding"
+      }
+    }
+  },
+  "required": [
+    "Type",
+    "Properties"
+  ],
+  "document": {
+    "default": "https://rosnext.console.aliyun.com/resourceType/ALIYUN::ApiGateway::SignatureBinding"
+  },
+  "insertText": "${1:SignatureBinding}:\n  Type: ALIYUN::ApiGateway::SignatureBinding\n  Properties:\n    "
+}

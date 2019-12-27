@@ -1,0 +1,49 @@
+{
+  "$id": "ALIYUN::SLS::LogtailConfig",
+  "type": "object",
+  "properties": {
+    "Type": {
+      "type": "string",
+      "enum": [
+        "ALIYUN::SLS::LogtailConfig"
+      ]
+    },
+    "Properties": {
+      "type": "object",
+      "properties": {
+        "ProjectName": {
+          "type": "string"
+        },
+        "LogtailConfigName": {
+          "type": "string"
+        },
+        "CloneFrom": {
+          "type": "object"
+        },
+        "RawConfigData": {
+          "type": "object"
+        },
+        "LogstoreName": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "ProjectName",
+        "LogtailConfigName",
+        "LogstoreName"
+      ],
+      "additionalProperties": false,
+      "document": {
+        "default": "https://rosnext.console.aliyun.com/resourceType/ALIYUN::SLS::LogtailConfig"
+      }
+    }
+  },
+  "required": [
+    "Type",
+    "Properties"
+  ],
+  "document": {
+    "default": "https://rosnext.console.aliyun.com/resourceType/ALIYUN::SLS::LogtailConfig"
+  },
+  "insertText": "${1:LogtailConfig}:\n  Type: ALIYUN::SLS::LogtailConfig\n  Properties:\n    "
+}

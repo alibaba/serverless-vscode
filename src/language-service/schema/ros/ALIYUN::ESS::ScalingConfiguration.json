@@ -1,0 +1,113 @@
+{
+  "$id": "ALIYUN::ESS::ScalingConfiguration",
+  "type": "object",
+  "properties": {
+    "Type": {
+      "type": "string",
+      "enum": [
+        "ALIYUN::ESS::ScalingConfiguration"
+      ]
+    },
+    "Properties": {
+      "type": "object",
+      "properties": {
+        "ImageId": {
+          "type": "string"
+        },
+        "SecurityGroupId": {
+          "type": "string"
+        },
+        "InstanceTypes": {
+          "type": "array"
+        },
+        "InstanceId": {
+          "type": "string"
+        },
+        "InternetMaxBandwidthIn": {
+          "type": "integer"
+        },
+        "SystemDiskAutoSnapshotPolicyId": {
+          "type": "string"
+        },
+        "InternetChargeType": {
+          "type": "string"
+        },
+        "SpotStrategy": {
+          "type": "string"
+        },
+        "PasswordInherit": {
+          "type": "boolean"
+        },
+        "IoOptimized": {
+          "type": "string"
+        },
+        "InternetMaxBandwidthOut": {
+          "type": "integer"
+        },
+        "SpotPriceLimit": {
+          "type": "number"
+        },
+        "ScalingConfigurationName": {
+          "type": "string"
+        },
+        "KeyPairName": {
+          "type": "string"
+        },
+        "InstanceName": {
+          "type": "string"
+        },
+        "RamRoleName": {
+          "type": "string"
+        },
+        "SystemDiskSize": {
+          "type": "integer"
+        },
+        "ResourceGroupId": {
+          "type": "string"
+        },
+        "DiskMappings": {
+          "type": "array"
+        },
+        "UserData": {
+          "type": "string"
+        },
+        "InstanceType": {
+          "type": "string"
+        },
+        "TagList": {
+          "type": "array"
+        },
+        "HpcClusterId": {
+          "type": "string"
+        },
+        "SpotPriceLimitForInstanceType": {
+          "type": "object"
+        },
+        "ScalingGroupId": {
+          "type": "string"
+        },
+        "SystemDiskCategory": {
+          "type": "string"
+        },
+        "DeploymentSetId": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "ScalingGroupId"
+      ],
+      "additionalProperties": false,
+      "document": {
+        "default": "https://rosnext.console.aliyun.com/resourceType/ALIYUN::ESS::ScalingConfiguration"
+      }
+    }
+  },
+  "required": [
+    "Type",
+    "Properties"
+  ],
+  "document": {
+    "default": "https://rosnext.console.aliyun.com/resourceType/ALIYUN::ESS::ScalingConfiguration"
+  },
+  "insertText": "${1:ScalingConfiguration}:\n  Type: ALIYUN::ESS::ScalingConfiguration\n  Properties:\n    "
+}

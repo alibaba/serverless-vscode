@@ -1,0 +1,57 @@
+{
+  "$id": "ALIYUN::ECS::NatGateway",
+  "type": "object",
+  "properties": {
+    "Type": {
+      "type": "string",
+      "enum": [
+        "ALIYUN::ECS::NatGateway"
+      ]
+    },
+    "Properties": {
+      "type": "object",
+      "properties": {
+        "Description": {
+          "type": "string"
+        },
+        "Spec": {
+          "type": "string"
+        },
+        "DeletionForce": {
+          "type": "boolean"
+        },
+        "NatGatewayName": {
+          "type": "string"
+        },
+        "DeletionProtection": {
+          "type": "boolean"
+        },
+        "BandwidthPackage": {
+          "type": "array"
+        },
+        "VSwitchId": {
+          "type": "string"
+        },
+        "VpcId": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "VSwitchId",
+        "VpcId"
+      ],
+      "additionalProperties": false,
+      "document": {
+        "default": "https://rosnext.console.aliyun.com/resourceType/ALIYUN::ECS::NatGateway"
+      }
+    }
+  },
+  "required": [
+    "Type",
+    "Properties"
+  ],
+  "document": {
+    "default": "https://rosnext.console.aliyun.com/resourceType/ALIYUN::ECS::NatGateway"
+  },
+  "insertText": "${1:NatGateway}:\n  Type: ALIYUN::ECS::NatGateway\n  Properties:\n    "
+}

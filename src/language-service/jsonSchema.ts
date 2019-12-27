@@ -42,6 +42,9 @@ export interface JSONSchema {
   ignoreCase?: string; // VSCode extension
   aliases?: string[]; // VSCode extension
   document?: { [key: string]: string };
+  $id?: string;
+  insertText?: string;
+  triggerSuggest?: boolean;
 }
 
 export interface JSONSchemaMap {

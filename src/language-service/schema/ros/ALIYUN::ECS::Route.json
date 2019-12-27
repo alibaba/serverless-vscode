@@ -1,0 +1,52 @@
+{
+  "$id": "ALIYUN::ECS::Route",
+  "type": "object",
+  "properties": {
+    "Type": {
+      "type": "string",
+      "enum": [
+        "ALIYUN::ECS::Route"
+      ]
+    },
+    "Properties": {
+      "type": "object",
+      "properties": {
+        "NextHopId": {
+          "type": "string"
+        },
+        "RouteId": {
+          "type": "string"
+        },
+        "NextHopType": {
+          "type": "string"
+        },
+        "RouteTableId": {
+          "type": "string"
+        },
+        "DestinationCidrBlock": {
+          "type": "string"
+        },
+        "NextHopList": {
+          "type": "array"
+        }
+      },
+      "required": [
+        "RouteId",
+        "RouteTableId",
+        "DestinationCidrBlock"
+      ],
+      "additionalProperties": false,
+      "document": {
+        "default": "https://rosnext.console.aliyun.com/resourceType/ALIYUN::ECS::Route"
+      }
+    }
+  },
+  "required": [
+    "Type",
+    "Properties"
+  ],
+  "document": {
+    "default": "https://rosnext.console.aliyun.com/resourceType/ALIYUN::ECS::Route"
+  },
+  "insertText": "${1:Route}:\n  Type: ALIYUN::ECS::Route\n  Properties:\n    "
+}

@@ -1,0 +1,55 @@
+{
+  "$id": "ALIYUN::CEN::RouteEntry",
+  "type": "object",
+  "properties": {
+    "Type": {
+      "type": "string",
+      "enum": [
+        "ALIYUN::CEN::RouteEntry"
+      ]
+    },
+    "Properties": {
+      "type": "object",
+      "properties": {
+        "ChildInstanceRouteTableId": {
+          "type": "string"
+        },
+        "ChildInstanceId": {
+          "type": "string"
+        },
+        "ChildInstanceRegionId": {
+          "type": "string"
+        },
+        "DestinationCidrBlock": {
+          "type": "string"
+        },
+        "CenId": {
+          "type": "string"
+        },
+        "ChildInstanceType": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "ChildInstanceRouteTableId",
+        "ChildInstanceId",
+        "ChildInstanceRegionId",
+        "DestinationCidrBlock",
+        "CenId",
+        "ChildInstanceType"
+      ],
+      "additionalProperties": false,
+      "document": {
+        "default": "https://rosnext.console.aliyun.com/resourceType/ALIYUN::CEN::RouteEntry"
+      }
+    }
+  },
+  "required": [
+    "Type",
+    "Properties"
+  ],
+  "document": {
+    "default": "https://rosnext.console.aliyun.com/resourceType/ALIYUN::CEN::RouteEntry"
+  },
+  "insertText": "${1:RouteEntry}:\n  Type: ALIYUN::CEN::RouteEntry\n  Properties:\n    "
+}

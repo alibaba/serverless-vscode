@@ -1,0 +1,52 @@
+{
+  "$id": "ALIYUN::ECS::VSwitch",
+  "type": "object",
+  "properties": {
+    "Type": {
+      "type": "string",
+      "enum": [
+        "ALIYUN::ECS::VSwitch"
+      ]
+    },
+    "Properties": {
+      "type": "object",
+      "properties": {
+        "CidrBlock": {
+          "type": "string"
+        },
+        "Description": {
+          "type": "string"
+        },
+        "Ipv6CidrBlock": {
+          "type": "integer"
+        },
+        "VSwitchName": {
+          "type": "string"
+        },
+        "ZoneId": {
+          "type": "string"
+        },
+        "VpcId": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "CidrBlock",
+        "ZoneId",
+        "VpcId"
+      ],
+      "additionalProperties": false,
+      "document": {
+        "default": "https://rosnext.console.aliyun.com/resourceType/ALIYUN::ECS::VSwitch"
+      }
+    }
+  },
+  "required": [
+    "Type",
+    "Properties"
+  ],
+  "document": {
+    "default": "https://rosnext.console.aliyun.com/resourceType/ALIYUN::ECS::VSwitch"
+  },
+  "insertText": "${1:VSwitch}:\n  Type: ALIYUN::ECS::VSwitch\n  Properties:\n    "
+}

@@ -1,0 +1,53 @@
+{
+  "$id": "ALIYUN::UIS::UisNode",
+  "type": "object",
+  "properties": {
+    "Type": {
+      "type": "string",
+      "enum": [
+        "ALIYUN::UIS::UisNode"
+      ]
+    },
+    "Properties": {
+      "type": "object",
+      "properties": {
+        "Name": {
+          "type": "string"
+        },
+        "Description": {
+          "type": "string"
+        },
+        "UisNodeAreaId": {
+          "type": "string"
+        },
+        "IpAddrsNum": {
+          "type": "integer"
+        },
+        "UisId": {
+          "type": "string"
+        },
+        "UisNodeBandwidth": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "UisNodeAreaId",
+        "IpAddrsNum",
+        "UisId",
+        "UisNodeBandwidth"
+      ],
+      "additionalProperties": false,
+      "document": {
+        "default": "https://rosnext.console.aliyun.com/resourceType/ALIYUN::UIS::UisNode"
+      }
+    }
+  },
+  "required": [
+    "Type",
+    "Properties"
+  ],
+  "document": {
+    "default": "https://rosnext.console.aliyun.com/resourceType/ALIYUN::UIS::UisNode"
+  },
+  "insertText": "${1:UisNode}:\n  Type: ALIYUN::UIS::UisNode\n  Properties:\n    "
+}

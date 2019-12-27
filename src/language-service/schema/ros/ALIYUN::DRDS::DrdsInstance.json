@@ -1,0 +1,74 @@
+{
+  "$id": "ALIYUN::DRDS::DrdsInstance",
+  "type": "object",
+  "properties": {
+    "Type": {
+      "type": "string",
+      "enum": [
+        "ALIYUN::DRDS::DrdsInstance"
+      ]
+    },
+    "Properties": {
+      "type": "object",
+      "properties": {
+        "PricingCycle": {
+          "type": "string"
+        },
+        "Description": {
+          "type": "string"
+        },
+        "Quantity": {
+          "type": "integer"
+        },
+        "Type": {
+          "type": "string"
+        },
+        "Duration": {
+          "type": "integer"
+        },
+        "InstanceSeries": {
+          "type": "string"
+        },
+        "VswitchId": {
+          "type": "string"
+        },
+        "Specification": {
+          "type": "string"
+        },
+        "ZoneId": {
+          "type": "string"
+        },
+        "IsAutoRenew": {
+          "type": "boolean"
+        },
+        "PayType": {
+          "type": "string"
+        },
+        "VpcId": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "Description",
+        "Quantity",
+        "Type",
+        "InstanceSeries",
+        "Specification",
+        "ZoneId",
+        "PayType"
+      ],
+      "additionalProperties": false,
+      "document": {
+        "default": "https://rosnext.console.aliyun.com/resourceType/ALIYUN::DRDS::DrdsInstance"
+      }
+    }
+  },
+  "required": [
+    "Type",
+    "Properties"
+  ],
+  "document": {
+    "default": "https://rosnext.console.aliyun.com/resourceType/ALIYUN::DRDS::DrdsInstance"
+  },
+  "insertText": "${1:DrdsInstance}:\n  Type: ALIYUN::DRDS::DrdsInstance\n  Properties:\n    "
+}

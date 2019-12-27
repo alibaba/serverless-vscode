@@ -1,0 +1,47 @@
+{
+  "$id": "ALIYUN::CEN::CenBandwidthLimit",
+  "type": "object",
+  "properties": {
+    "Type": {
+      "type": "string",
+      "enum": [
+        "ALIYUN::CEN::CenBandwidthLimit"
+      ]
+    },
+    "Properties": {
+      "type": "object",
+      "properties": {
+        "LocalRegionId": {
+          "type": "string"
+        },
+        "OppositeRegionId": {
+          "type": "string"
+        },
+        "CenId": {
+          "type": "string"
+        },
+        "BandwidthLimit": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "LocalRegionId",
+        "OppositeRegionId",
+        "CenId",
+        "BandwidthLimit"
+      ],
+      "additionalProperties": false,
+      "document": {
+        "default": "https://rosnext.console.aliyun.com/resourceType/ALIYUN::CEN::CenBandwidthLimit"
+      }
+    }
+  },
+  "required": [
+    "Type",
+    "Properties"
+  ],
+  "document": {
+    "default": "https://rosnext.console.aliyun.com/resourceType/ALIYUN::CEN::CenBandwidthLimit"
+  },
+  "insertText": "${1:CenBandwidthLimit}:\n  Type: ALIYUN::CEN::CenBandwidthLimit\n  Properties:\n    "
+}

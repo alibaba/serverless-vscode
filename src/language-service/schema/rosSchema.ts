@@ -1,4 +1,31 @@
-{
+/* eslint-disable quotes, max-len */
+
+import {
+  RESOURCES_INSERT_TEXT,
+  SERVICE_INSERT_TEXT,
+  CUSTOMDOMAIN_INSERT_TEXT,
+  API_INSERT_TEXT,
+  TABLESTORE_INSERT_TEXT,
+  LOG_INSERT_TEXT,
+  MNSTOPIC_INSERT_TEXT,
+  FLOW_INSERT_TEXT,
+  FUNCTION_INSERT_TEXT,
+  VPCCONFIG_INSERT_TEXT,
+  LOGCONFIG_INSERT_TEXT,
+  NASCONFIG_INSERT_TEXT,
+  EVENTS_INSERT_TEXT,
+  TIMER_TRIGGER_INSERT_TEXT,
+  HTTP_TRIGGER_INSERT_TEXT,
+  LOG_TRIGGER_INSERT_TEXT,
+  OSS_TRIGGER_INSERT_TEXT,
+  RDS_TRIGGER_INSERT_TEXT,
+  MNSTOPIC_TRIGGER_INSERT_TEXT,
+  TABLESTORE_TRIGGER_INSERT_TEXT,
+  CDN_TRIGGER_INSERT_TEXT,
+  MEMORYSIZE_INSERT_TEXT,
+} from '../../schema/constants';
+
+export const rosSchema = {
   "$id": "http://json-schema.org/draft-04/schema#",
   "type": "object",
   "definitions": {
@@ -57,7 +84,8 @@
                   "required": ["VpcId", "VSwitchIds", "SecurityGroupId"],
                   "additionalProperties": false
                 }
-              ]
+              ],
+              "insertText": VPCCONFIG_INSERT_TEXT,
             },
             "LogConfig": {
               "type": "object",
@@ -66,7 +94,8 @@
                 "Logstore": { "type": "string" }
               },
               "required": ["Project", "Logstore"],
-              "additionalProperties": false
+              "additionalProperties": false,
+              "insertText": LOGCONFIG_INSERT_TEXT,
             },
             "NasConfig": {
               "oneOf": [
@@ -92,7 +121,8 @@
                   "required": ["UserId", "GroupId", "MountPoints"],
                   "additionalProperties": false
                 }
-              ]
+              ],
+              "insertText": NASCONFIG_INSERT_TEXT,
             }
           },
           "additionalProperties": false,
@@ -110,6 +140,7 @@
       },
       "required": ["Type"],
       "additionalProperties": false,
+      "insertText": SERVICE_INSERT_TEXT,
       "document": {
         "default": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03.md#aliyunserverlessservice",
         "zh-CN": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03-zh-cn.md#aliyunserverlessservice",
@@ -163,7 +194,8 @@
                 1856, 1920, 1984, 2048, 2112, 2176, 2240, 2304,
                 2368, 2432, 2496, 2560, 2624, 2688, 2752, 2816,
                 2880, 2944, 3008, 3072
-              ]
+              ],
+              "insertText": MEMORYSIZE_INSERT_TEXT,
             },
             "InstanceConcurrency": {
               "type": "integer"
@@ -208,7 +240,9 @@
                 }
               ]
             }
-          }
+          },
+          "insertText": EVENTS_INSERT_TEXT,
+          "triggerSuggest": true,
         }
       },
       "required": ["Type"],
@@ -216,7 +250,8 @@
         "default": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03.md#aliyunserverlessfunction",
         "zh-CN": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03-zh-cn.md#aliyunserverlessfunction",
         "zh-TW": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03-zh-cn.md#aliyunserverlessfunction"
-      }
+      },
+      "insertText": FUNCTION_INSERT_TEXT,
     },
     "Aliyun::Serverless::Service::Role": {
       "$id": "Aliyun::Serverless::Service::Role",
@@ -317,7 +352,8 @@
         "default": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03.md#aliyunserverlesscustomdomain",
         "zh-CN": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03-zh-cn.md#aliyunserverlesscustomdomain",
         "zh-TW": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03-zh-cn.md#aliyunserverlesscustomdomain"
-      }
+      },
+      "insertText": CUSTOMDOMAIN_INSERT_TEXT,
     },
     "Aliyun::Serverless::CustomDomain::PathConfig": {
       "$id": "Aliyun::Serverless::CustomDomain::PathConfig",
@@ -380,7 +416,8 @@
         "default": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03.md#aliyunserverlessapi",
         "zh-CN": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03-zh-cn.md#aliyunserverlessapi",
         "zh-TW": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03-zh-cn.md#aliyunserverlessapi"
-      }
+      },
+      "insertText": API_INSERT_TEXT,
     },
     "Aliyun::Serverless::Api::CORS": {
       "$id": "Aliyun::Serverless::Api::CORS",
@@ -432,7 +469,8 @@
         "default": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03.md#aliyunserverlesstablestore",
         "zh-CN": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03-zh-cn.md#aliyunserverlesstablestore",
         "zh-TW": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03-zh-cn.md#aliyunserverlesstablestore"
-      }
+      },
+      "insertText": TABLESTORE_INSERT_TEXT,
     },
     "Aliyun::Serverless::Log": {
       "$id": "Aliyun::Serverless::Log",
@@ -459,7 +497,8 @@
         "default": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03.md#aliyunserverlesslog",
         "zh-CN": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03-zh-cn.md#aliyunserverlesslog",
         "zh-TW": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03-zh-cn.md#aliyunserverlesslog"
-      }
+      },
+      "insertText": LOG_INSERT_TEXT,
     },
     "Aliyun::Serverless::MNSTopic": {
       "$id": "Aliyun::Serverless::MNSTopic",
@@ -494,7 +533,8 @@
         "default": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03.md#aliyunserverlessmnstopic",
         "zh-CN": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03-zh-cn.md#aliyunserverlessmnstopic",
         "zh-TW": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03-zh-cn.md#aliyunserverlessmnstopic"
-      }
+      },
+      "insertText": MNSTOPIC_INSERT_TEXT,
     },
     "Aliyun::Serverless::Triggers::Timer": {
       "$id": "Aliyun::Serverless::Triggers::Timer",
@@ -540,7 +580,8 @@
         "default": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03.md#timer",
         "zh-CN": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03-zh-cn.md#timer",
         "zh-TW": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03-zh-cn.md#timer"
-      }
+      },
+      "insertText": TIMER_TRIGGER_INSERT_TEXT,
     },
     "Aliyun::Serverless::Triggers::HTTP": {
       "$id": "Aliyun::Serverless::Triggers::HTTP",
@@ -588,7 +629,8 @@
         "default": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03.md#http",
         "zh-CN": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03-zh-cn.md#http",
         "zh-TW": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03-zh-cn.md#http"
-      }
+      },
+      "insertText": HTTP_TRIGGER_INSERT_TEXT,
     },
     "Aliyun::Serverless::Triggers::Log": {
       "$id": "Aliyun::Serverless::Triggers::Log",
@@ -667,7 +709,8 @@
         "default": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03.md#log",
         "zh-CN": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03-zh-cn.md#log",
         "zh-TW": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03-zh-cn.md#log"
-      }
+      },
+      "insertText": LOG_TRIGGER_INSERT_TEXT,
     },
     "Aliyun::Serverless::Triggers::OSS": {
       "$id": "Aliyun::Serverless::Triggers::OSS",
@@ -731,7 +774,8 @@
         "default": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03.md#oss",
         "zh-CN": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03-zh-cn.md#oss",
         "zh-TW": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03-zh-cn.md#oss"
-      }
+      },
+      "insertText": OSS_TRIGGER_INSERT_TEXT,
     },
     "Aliyun::Serverless::Triggers::RDS": {
       "$id": "Aliyun::Serverless::Triggers::RDS",
@@ -789,7 +833,8 @@
         "default": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03.md#rds",
         "zh-CN": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03-zh-cn.md#rds",
         "zh-TW": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03-zh-cn.md#rds"
-      }
+      },
+      "insertText": RDS_TRIGGER_INSERT_TEXT,
     },
     "Aliyun::Serverless::Triggers::MNSTopic": {
       "$id": "Aliyun::Serverless::Triggers::MNSTopic",
@@ -843,7 +888,8 @@
         "default": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03.md#mnstopic",
         "zh-CN": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03-zh-cn.md#mnstopic",
         "zh-TW": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03-zh-cn.md#mnstopic"
-      }
+      },
+      "insertText": MNSTOPIC_TRIGGER_INSERT_TEXT,
     },
     "Aliyun::Serverless::Flow": {
       "$id": "Aliyun::Serverless::Flow",
@@ -886,7 +932,8 @@
             }
           }
         }
-      }
+      },
+      "insertText": FLOW_INSERT_TEXT,
     },
     "Aliyun::Serverless::Triggers::TableStore": {
       "$id": "Aliyun::Serverless::Triggers::TableStore",
@@ -929,7 +976,8 @@
         "default": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03.md#tablestore",
         "zh-CN": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03-zh-cn.md#tablestore",
         "zh-TW": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03-zh-cn.md#tablestore"
-      }
+      },
+      "insertText": TABLESTORE_TRIGGER_INSERT_TEXT,
     },
     "Aliyun::Serverless::Triggers::CDN": {
       "$id": "Aliyun::Serverless::Triggers::CDN",
@@ -988,7 +1036,8 @@
         "default": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03.md#cdn",
         "zh-CN": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03-zh-cn.md#cdn",
         "zh-TW": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03-zh-cn.md#cdn"
-      }
+      },
+      "insertText": CDN_TRIGGER_INSERT_TEXT,
     }
   },
   "properties": {
@@ -1028,6 +1077,12 @@
     "Outputs": {
       "type": "object"
     },
+    "Mappings": {
+      "type": "object"
+    },
+    "Conditions": {
+      "type": "object"
+    },
     "Description": {
       "type": "string"
     },
@@ -1059,7 +1114,9 @@
             }
           ]
         }
-      }
+      },
+      "insertText": RESOURCES_INSERT_TEXT,
+      "triggerSuggest": true,
     }
   },
   "required": ["ROSTemplateFormatVersion", "Resources"],

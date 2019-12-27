@@ -1,0 +1,48 @@
+{
+  "$id": "ALIYUN::ESS::ScalingRule",
+  "type": "object",
+  "properties": {
+    "Type": {
+      "type": "string",
+      "enum": [
+        "ALIYUN::ESS::ScalingRule"
+      ]
+    },
+    "Properties": {
+      "type": "object",
+      "properties": {
+        "AdjustmentType": {
+          "type": "string"
+        },
+        "ScalingGroupId": {
+          "type": "string"
+        },
+        "AdjustmentValue": {
+          "type": "integer"
+        },
+        "Cooldown": {
+          "type": "integer"
+        },
+        "ScalingRuleName": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "AdjustmentType",
+        "ScalingGroupId"
+      ],
+      "additionalProperties": false,
+      "document": {
+        "default": "https://rosnext.console.aliyun.com/resourceType/ALIYUN::ESS::ScalingRule"
+      }
+    }
+  },
+  "required": [
+    "Type",
+    "Properties"
+  ],
+  "document": {
+    "default": "https://rosnext.console.aliyun.com/resourceType/ALIYUN::ESS::ScalingRule"
+  },
+  "insertText": "${1:ScalingRule}:\n  Type: ALIYUN::ESS::ScalingRule\n  Properties:\n    "
+}

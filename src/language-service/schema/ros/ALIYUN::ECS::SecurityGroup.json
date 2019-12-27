@@ -1,0 +1,54 @@
+{
+  "$id": "ALIYUN::ECS::SecurityGroup",
+  "type": "object",
+  "properties": {
+    "Type": {
+      "type": "string",
+      "enum": [
+        "ALIYUN::ECS::SecurityGroup"
+      ]
+    },
+    "Properties": {
+      "type": "object",
+      "properties": {
+        "Tags": {
+          "type": "array"
+        },
+        "SecurityGroupName": {
+          "type": "string"
+        },
+        "Description": {
+          "type": "string"
+        },
+        "ResourceGroupId": {
+          "type": "string"
+        },
+        "SecurityGroupType": {
+          "type": "string"
+        },
+        "SecurityGroupIngress": {
+          "type": "array"
+        },
+        "SecurityGroupEgress": {
+          "type": "array"
+        },
+        "VpcId": {
+          "type": "string"
+        }
+      },
+      "required": [],
+      "additionalProperties": false,
+      "document": {
+        "default": "https://rosnext.console.aliyun.com/resourceType/ALIYUN::ECS::SecurityGroup"
+      }
+    }
+  },
+  "required": [
+    "Type",
+    "Properties"
+  ],
+  "document": {
+    "default": "https://rosnext.console.aliyun.com/resourceType/ALIYUN::ECS::SecurityGroup"
+  },
+  "insertText": "${1:SecurityGroup}:\n  Type: ALIYUN::ECS::SecurityGroup\n  Properties:\n    "
+}

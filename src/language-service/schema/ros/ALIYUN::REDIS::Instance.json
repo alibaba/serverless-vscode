@@ -1,0 +1,57 @@
+{
+  "$id": "ALIYUN::REDIS::Instance",
+  "type": "object",
+  "properties": {
+    "Type": {
+      "type": "string",
+      "enum": [
+        "ALIYUN::REDIS::Instance"
+      ]
+    },
+    "Properties": {
+      "type": "object",
+      "properties": {
+        "EvictionPolicy": {
+          "type": "string"
+        },
+        "InstanceClass": {
+          "type": "string"
+        },
+        "Password": {
+          "type": "string"
+        },
+        "ZoneId": {
+          "type": "string"
+        },
+        "Capacity": {
+          "type": "integer"
+        },
+        "EngineVersion": {
+          "type": "string"
+        },
+        "VSwitchId": {
+          "type": "string"
+        },
+        "InstanceName": {
+          "type": "string"
+        },
+        "VpcId": {
+          "type": "string"
+        }
+      },
+      "required": [],
+      "additionalProperties": false,
+      "document": {
+        "default": "https://rosnext.console.aliyun.com/resourceType/ALIYUN::REDIS::Instance"
+      }
+    }
+  },
+  "required": [
+    "Type",
+    "Properties"
+  ],
+  "document": {
+    "default": "https://rosnext.console.aliyun.com/resourceType/ALIYUN::REDIS::Instance"
+  },
+  "insertText": "${1:Instance}:\n  Type: ALIYUN::REDIS::Instance\n  Properties:\n    "
+}

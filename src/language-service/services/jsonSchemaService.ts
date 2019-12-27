@@ -1,6 +1,8 @@
 import * as path from 'path';
+import * as fs from 'fs';
 import { ext } from '../../extensionVariables';
 import { JSONSchema } from '../jsonSchema';
+import { rosSchema } from '../schema/rosSchema';
 
 export class UnresolvedSchema {
   schema: JSONSchema;
@@ -24,6 +26,7 @@ export class ResolvedSchema {
 
 export class JSONSchemaService {
   public static jsonSchemaService = new JSONSchemaService();
+  public rosResolvedSchema: ResolvedSchema | undefined;
   private constructor() {
 
   }
@@ -147,20 +150,33 @@ export class JSONSchemaService {
   }
 
   async getSchemaForResource(): Promise<ResolvedSchema | void> {
-    return this.resolveSchemaContent(
+    if (this.rosResolvedSchema) {
+      return this.rosResolvedSchema;
+    }
+    const schemaBasePath = path.resolve(
+      ext.context.extensionPath,
+      'src',
+      'language-service',
+      'schema',
+    );
+    const rosSchemaFileNames = fs.readdirSync(path.resolve(schemaBasePath, 'ros'));
+    const baseSchema: any = rosSchema;
+    for (const fileName of rosSchemaFileNames) {
+      const resourceSchema = require(path.resolve(schemaBasePath, 'ros', fileName));
+      if (resourceSchema.$id) {
+        baseSchema.definitions[resourceSchema.$id] = resourceSchema;
+        baseSchema.properties.Resources.patternProperties['^[a-zA-Z_][a-zA-Z.0-9_-]{0,127}$'].anyOf.push({
+          $ref: `#/definitions/${resourceSchema.$id}`,
+        })
+      }
+    }
+    this.rosResolvedSchema = await this.resolveSchemaContent(
       new UnresolvedSchema(
-        require(
-          path.resolve(
-            ext.context.extensionPath,
-            'src',
-            'language-service',
-            'schema',
-            'funSchema.json'
-          ),
-        ),
+        baseSchema,
         []
       ),
-    )
+    );
+    return this.rosResolvedSchema;
   }
 
   async getSchemaForFlow(): Promise<ResolvedSchema | void> {
