@@ -1,0 +1,87 @@
+{
+  "$id": "ALIYUN::VPC::RouterInterface",
+  "type": "object",
+  "properties": {
+    "Type": {
+      "type": "string",
+      "enum": [
+        "ALIYUN::VPC::RouterInterface"
+      ]
+    },
+    "Properties": {
+      "type": "object",
+      "properties": {
+        "Period": {
+          "type": "number"
+        },
+        "Description": {
+          "type": "string"
+        },
+        "Spec": {
+          "type": "string"
+        },
+        "OppositeInterfaceOwnerId": {
+          "type": "string"
+        },
+        "OppositeAccessPointId": {
+          "type": "string"
+        },
+        "HealthCheckTargetIp": {
+          "type": "string"
+        },
+        "AutoPay": {
+          "type": "boolean"
+        },
+        "Name": {
+          "type": "string"
+        },
+        "PricingCycle": {
+          "type": "string"
+        },
+        "RouterType": {
+          "type": "string"
+        },
+        "OppositeRouterType": {
+          "type": "string"
+        },
+        "OppositeRouterId": {
+          "type": "string"
+        },
+        "RouterId": {
+          "type": "string"
+        },
+        "OppositeRegionId": {
+          "type": "string"
+        },
+        "Role": {
+          "type": "string"
+        },
+        "InstanceChargeType": {
+          "type": "string"
+        },
+        "HealthCheckSourceIp": {
+          "type": "string"
+        },
+        "AccessPointId": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "RouterId",
+        "Role"
+      ],
+      "additionalProperties": false,
+      "document": {
+        "default": "https://rosnext.console.aliyun.com/resourceType/ALIYUN::VPC::RouterInterface"
+      }
+    }
+  },
+  "required": [
+    "Type",
+    "Properties"
+  ],
+  "document": {
+    "default": "https://rosnext.console.aliyun.com/resourceType/ALIYUN::VPC::RouterInterface"
+  },
+  "insertText": "${1:RouterInterface}:\n  Type: ALIYUN::VPC::RouterInterface\n  Properties:\n    "
+}

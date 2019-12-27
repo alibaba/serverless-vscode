@@ -1,0 +1,147 @@
+{
+  "$id": "ALIYUN::EMR::Cluster",
+  "type": "object",
+  "properties": {
+    "Type": {
+      "type": "string",
+      "enum": [
+        "ALIYUN::EMR::Cluster"
+      ]
+    },
+    "Properties": {
+      "type": "object",
+      "properties": {
+        "Period": {
+          "type": "integer"
+        },
+        "SecurityGroupId": {
+          "type": "string"
+        },
+        "Config": {
+          "type": "array"
+        },
+        "InstanceGeneration": {
+          "type": "string"
+        },
+        "OptionSoftWareList": {
+          "type": "array"
+        },
+        "EmrVer": {
+          "type": "string"
+        },
+        "DepositType": {
+          "type": "string"
+        },
+        "SshEnable": {
+          "type": "boolean"
+        },
+        "ZoneId": {
+          "type": "string"
+        },
+        "AutoRenew": {
+          "type": "boolean"
+        },
+        "MasterPwd": {
+          "type": "string"
+        },
+        "VSwitchId": {
+          "type": "string"
+        },
+        "VpcId": {
+          "type": "string"
+        },
+        "IoOptimized": {
+          "type": "boolean"
+        },
+        "HostGroup": {
+          "type": "array"
+        },
+        "KeyPairName": {
+          "type": "string"
+        },
+        "ChargeType": {
+          "type": "string"
+        },
+        "InitCustomHiveMetaDB": {
+          "type": "boolean"
+        },
+        "MachineType": {
+          "type": "string"
+        },
+        "UseLocalMetaDb": {
+          "type": "boolean"
+        },
+        "RelatedClusterId": {
+          "type": "string"
+        },
+        "WhiteListType": {
+          "type": "string"
+        },
+        "Configurations": {
+          "type": "string"
+        },
+        "BootstrapAction": {
+          "type": "array"
+        },
+        "EasEnable": {
+          "type": "boolean"
+        },
+        "Name": {
+          "type": "string"
+        },
+        "UseCustomHiveMetaDB": {
+          "type": "boolean"
+        },
+        "HighAvailabilityEnable": {
+          "type": "boolean"
+        },
+        "SecurityGroupName": {
+          "type": "string"
+        },
+        "IsOpenPublicIp": {
+          "type": "boolean"
+        },
+        "LogPath": {
+          "type": "string"
+        },
+        "UserInfo": {
+          "type": "array"
+        },
+        "ClusterType": {
+          "type": "string"
+        },
+        "NetType": {
+          "type": "string"
+        },
+        "AuthorizeContent": {
+          "type": "string"
+        },
+        "UserDefinedEmrEcsRole": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "EmrVer",
+        "ZoneId",
+        "HostGroup",
+        "ChargeType",
+        "UseLocalMetaDb",
+        "Name",
+        "ClusterType",
+        "NetType"
+      ],
+      "additionalProperties": false,
+      "document": {
+        "default": "https://rosnext.console.aliyun.com/resourceType/ALIYUN::EMR::Cluster"
+      }
+    }
+  },
+  "required": [
+    "Type",
+    "Properties"
+  ],
+  "document": {
+    "default": "https://rosnext.console.aliyun.com/resourceType/ALIYUN::EMR::Cluster"
+  },
+  "insertText": "${1:Cluster}:\n  Type: ALIYUN::EMR::Cluster\n  Properties:\n    "
+}

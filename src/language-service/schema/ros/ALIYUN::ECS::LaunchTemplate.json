@@ -1,0 +1,122 @@
+{
+  "$id": "ALIYUN::ECS::LaunchTemplate",
+  "type": "object",
+  "properties": {
+    "Type": {
+      "type": "string",
+      "enum": [
+        "ALIYUN::ECS::LaunchTemplate"
+      ]
+    },
+    "Properties": {
+      "type": "object",
+      "properties": {
+        "SecurityGroupId": {
+          "type": "string"
+        },
+        "ImageId": {
+          "type": "string"
+        },
+        "NetworkInterfaces": {
+          "type": "array"
+        },
+        "InternetMaxBandwidthIn": {
+          "type": "integer"
+        },
+        "ZoneId": {
+          "type": "string"
+        },
+        "VSwitchId": {
+          "type": "string"
+        },
+        "InternetChargeType": {
+          "type": "string"
+        },
+        "SpotStrategy": {
+          "type": "string"
+        },
+        "LaunchTemplateName": {
+          "type": "string"
+        },
+        "IoOptimized": {
+          "type": "string"
+        },
+        "NetworkType": {
+          "type": "string"
+        },
+        "InternetMaxBandwidthOut": {
+          "type": "integer"
+        },
+        "SpotPriceLimit": {
+          "type": "string"
+        },
+        "AutoReleaseTime": {
+          "type": "string"
+        },
+        "KeyPairName": {
+          "type": "string"
+        },
+        "InstanceName": {
+          "type": "string"
+        },
+        "VersionDescription": {
+          "type": "string"
+        },
+        "RamRoleName": {
+          "type": "string"
+        },
+        "Description": {
+          "type": "string"
+        },
+        "SystemDiskSize": {
+          "type": "number"
+        },
+        "DiskMappings": {
+          "type": "array"
+        },
+        "UserData": {
+          "type": "string"
+        },
+        "SecurityEnhancementStrategy": {
+          "type": "string"
+        },
+        "HostName": {
+          "type": "string"
+        },
+        "InstanceType": {
+          "type": "string"
+        },
+        "Tags": {
+          "type": "array"
+        },
+        "TemplateTags": {
+          "type": "array"
+        },
+        "SystemDiskDescription": {
+          "type": "string"
+        },
+        "SystemDiskDiskName": {
+          "type": "string"
+        },
+        "SystemDiskCategory": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "LaunchTemplateName"
+      ],
+      "additionalProperties": false,
+      "document": {
+        "default": "https://rosnext.console.aliyun.com/resourceType/ALIYUN::ECS::LaunchTemplate"
+      }
+    }
+  },
+  "required": [
+    "Type",
+    "Properties"
+  ],
+  "document": {
+    "default": "https://rosnext.console.aliyun.com/resourceType/ALIYUN::ECS::LaunchTemplate"
+  },
+  "insertText": "${1:LaunchTemplate}:\n  Type: ALIYUN::ECS::LaunchTemplate\n  Properties:\n    "
+}

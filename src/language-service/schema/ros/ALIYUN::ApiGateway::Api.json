@@ -1,0 +1,89 @@
+{
+  "$id": "ALIYUN::ApiGateway::Api",
+  "type": "object",
+  "properties": {
+    "Type": {
+      "type": "string",
+      "enum": [
+        "ALIYUN::ApiGateway::Api"
+      ]
+    },
+    "Properties": {
+      "type": "object",
+      "properties": {
+        "ConstParameters": {
+          "type": "array"
+        },
+        "ErrorCodeSamples": {
+          "type": "array"
+        },
+        "Description": {
+          "type": "string"
+        },
+        "ApiName": {
+          "type": "string"
+        },
+        "RequestParameters": {
+          "type": "array"
+        },
+        "GroupId": {
+          "type": "string"
+        },
+        "FailResultSample": {
+          "type": "string"
+        },
+        "SystemParameters": {
+          "type": "array"
+        },
+        "ServiceParameters": {
+          "type": "array"
+        },
+        "ServiceParametersMap": {
+          "type": "array"
+        },
+        "ServiceConfig": {
+          "type": "object"
+        },
+        "OpenIdConnectConfig": {
+          "type": "object"
+        },
+        "RequestConfig": {
+          "type": "object"
+        },
+        "Visibility": {
+          "type": "string"
+        },
+        "AuthType": {
+          "type": "string"
+        },
+        "ResultSample": {
+          "type": "string"
+        },
+        "ResultType": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "ApiName",
+        "GroupId",
+        "ServiceConfig",
+        "RequestConfig",
+        "Visibility",
+        "ResultSample",
+        "ResultType"
+      ],
+      "additionalProperties": false,
+      "document": {
+        "default": "https://rosnext.console.aliyun.com/resourceType/ALIYUN::ApiGateway::Api"
+      }
+    }
+  },
+  "required": [
+    "Type",
+    "Properties"
+  ],
+  "document": {
+    "default": "https://rosnext.console.aliyun.com/resourceType/ALIYUN::ApiGateway::Api"
+  },
+  "insertText": "${1:Api}:\n  Type: ALIYUN::ApiGateway::Api\n  Properties:\n    "
+}

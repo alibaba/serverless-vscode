@@ -1,0 +1,57 @@
+{
+  "$id": "ALIYUN::VPC::EIP",
+  "type": "object",
+  "properties": {
+    "Type": {
+      "type": "string",
+      "enum": [
+        "ALIYUN::VPC::EIP"
+      ]
+    },
+    "Properties": {
+      "type": "object",
+      "properties": {
+        "PricingCycle": {
+          "type": "string"
+        },
+        "Period": {
+          "type": "number"
+        },
+        "Isp": {
+          "type": "string"
+        },
+        "ResourceGroupId": {
+          "type": "string"
+        },
+        "DeletionProtection": {
+          "type": "boolean"
+        },
+        "InstanceChargeType": {
+          "type": "string"
+        },
+        "InternetChargeType": {
+          "type": "string"
+        },
+        "AutoPay": {
+          "type": "boolean"
+        },
+        "Bandwidth": {
+          "type": "number"
+        }
+      },
+      "required": [],
+      "additionalProperties": false,
+      "document": {
+        "default": "https://rosnext.console.aliyun.com/resourceType/ALIYUN::VPC::EIP"
+      }
+    }
+  },
+  "required": [
+    "Type",
+    "Properties"
+  ],
+  "document": {
+    "default": "https://rosnext.console.aliyun.com/resourceType/ALIYUN::VPC::EIP"
+  },
+  "insertText": "${1:EIP}:\n  Type: ALIYUN::VPC::EIP\n  Properties:\n    "
+}

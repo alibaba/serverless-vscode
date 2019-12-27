@@ -1,0 +1,78 @@
+{
+  "$id": "ALIYUN::ESS::ScalingGroup",
+  "type": "object",
+  "properties": {
+    "Type": {
+      "type": "string",
+      "enum": [
+        "ALIYUN::ESS::ScalingGroup"
+      ]
+    },
+    "Properties": {
+      "type": "object",
+      "properties": {
+        "DefaultCooldown": {
+          "type": "integer"
+        },
+        "RemovalPolicys": {
+          "type": "array"
+        },
+        "MultiAZPolicy": {
+          "type": "string"
+        },
+        "MaxSize": {
+          "type": "integer"
+        },
+        "VSwitchId": {
+          "type": "string"
+        },
+        "ScalingGroupName": {
+          "type": "string"
+        },
+        "ProtectedInstances": {
+          "type": "array"
+        },
+        "HealthCheckType": {
+          "type": "string"
+        },
+        "VSwitchIds": {
+          "type": "array"
+        },
+        "GroupDeletionProtection": {
+          "type": "boolean"
+        },
+        "DBInstanceIds": {
+          "type": "array"
+        },
+        "LoadBalancerIds": {
+          "type": "array"
+        },
+        "StandbyInstances": {
+          "type": "array"
+        },
+        "NotificationConfigurations": {
+          "type": "array"
+        },
+        "MinSize": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "MaxSize",
+        "MinSize"
+      ],
+      "additionalProperties": false,
+      "document": {
+        "default": "https://rosnext.console.aliyun.com/resourceType/ALIYUN::ESS::ScalingGroup"
+      }
+    }
+  },
+  "required": [
+    "Type",
+    "Properties"
+  ],
+  "document": {
+    "default": "https://rosnext.console.aliyun.com/resourceType/ALIYUN::ESS::ScalingGroup"
+  },
+  "insertText": "${1:ScalingGroup}:\n  Type: ALIYUN::ESS::ScalingGroup\n  Properties:\n    "
+}

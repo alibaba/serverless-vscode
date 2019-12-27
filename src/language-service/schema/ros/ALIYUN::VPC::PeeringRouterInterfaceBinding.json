@@ -1,0 +1,45 @@
+{
+  "$id": "ALIYUN::VPC::PeeringRouterInterfaceBinding",
+  "type": "object",
+  "properties": {
+    "Type": {
+      "type": "string",
+      "enum": [
+        "ALIYUN::VPC::PeeringRouterInterfaceBinding"
+      ]
+    },
+    "Properties": {
+      "type": "object",
+      "properties": {
+        "OppositeRouterId": {
+          "type": "string"
+        },
+        "RouterInterfaceId": {
+          "type": "string"
+        },
+        "OppositeInterfaceId": {
+          "type": "string"
+        },
+        "OppositeInterfaceOwnerId": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "RouterInterfaceId",
+        "OppositeInterfaceId"
+      ],
+      "additionalProperties": false,
+      "document": {
+        "default": "https://rosnext.console.aliyun.com/resourceType/ALIYUN::VPC::PeeringRouterInterfaceBinding"
+      }
+    }
+  },
+  "required": [
+    "Type",
+    "Properties"
+  ],
+  "document": {
+    "default": "https://rosnext.console.aliyun.com/resourceType/ALIYUN::VPC::PeeringRouterInterfaceBinding"
+  },
+  "insertText": "${1:PeeringRouterInterfaceBinding}:\n  Type: ALIYUN::VPC::PeeringRouterInterfaceBinding\n  Properties:\n    "
+}

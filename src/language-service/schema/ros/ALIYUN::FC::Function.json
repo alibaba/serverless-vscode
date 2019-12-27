@@ -1,0 +1,72 @@
+{
+  "$id": "ALIYUN::FC::Function",
+  "type": "object",
+  "properties": {
+    "Type": {
+      "type": "string",
+      "enum": [
+        "ALIYUN::FC::Function"
+      ]
+    },
+    "Properties": {
+      "type": "object",
+      "properties": {
+        "Description": {
+          "type": "string"
+        },
+        "Timeout": {
+          "type": "integer"
+        },
+        "InstanceConcurrency": {
+          "type": "integer"
+        },
+        "InitializationTimeout": {
+          "type": "integer"
+        },
+        "ServiceName": {
+          "type": "string"
+        },
+        "Runtime": {
+          "type": "string"
+        },
+        "Initializer": {
+          "type": "string"
+        },
+        "FunctionName": {
+          "type": "string"
+        },
+        "MemorySize": {
+          "type": "integer"
+        },
+        "Code": {
+          "type": "object"
+        },
+        "EnvironmentVariables": {
+          "type": "object"
+        },
+        "Handler": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "ServiceName",
+        "Runtime",
+        "FunctionName",
+        "Code",
+        "Handler"
+      ],
+      "additionalProperties": false,
+      "document": {
+        "default": "https://rosnext.console.aliyun.com/resourceType/ALIYUN::FC::Function"
+      }
+    }
+  },
+  "required": [
+    "Type",
+    "Properties"
+  ],
+  "document": {
+    "default": "https://rosnext.console.aliyun.com/resourceType/ALIYUN::FC::Function"
+  },
+  "insertText": "${1:Function}:\n  Type: ALIYUN::FC::Function\n  Properties:\n    "
+}
