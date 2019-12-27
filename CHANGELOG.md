@@ -2,6 +2,16 @@
 
 所有对 "Aliyun Serverless" 插件的更改都将记录在这个文件中。
 
+## 1.21.0 - 2019-12-27
+### Added
+1. 模版文件 template.yml 提供针对 ROS 资源的语法提示
+   - 提供模版文件 template.yml 内 ROS 资源创建的自动补全
+   - 提供模版文件 template.yml 内 ROS 资源属性的自动补全
+   - 提供模版文件 template.yml 内 ROS 资源配置信息的校验
+   - 提供模版文件 template.yml 内 ROS 资源配置信息的上下文帮助(悬浮提示以及文档链接)
+
+![](https://img.alicdn.com/tfs/TB1sEMTrVY7gK0jSZKzXXaikpXa-1856-998.gif)
+
 ## 1.20.0 - 2019-12-20
 ### Added
 1. 新增针对函数计算 java8 runtime 的支持
