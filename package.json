@@ -223,6 +223,14 @@
         }
       },
       {
+        "command": "fc.extension.localResource.gotoFlow",
+        "title": "Goto Flow",
+        "icon": {
+          "light": "media/light/code.svg",
+          "dark": "media/dark/code.svg"
+        }
+      },
+      {
         "command": "fc.extension.service.import",
         "title": "Import Service",
         "icon": {
@@ -551,6 +559,16 @@
           "group": "2_local@1"
         },
         {
+          "command": "fc.extension.localResource.gotoFlow",
+          "when": "view == fcLocalResource && viewItem == flow",
+          "group": "inline"
+        },
+        {
+          "command": "fc.extension.localResource.gotoFlow",
+          "when": "view == fcLocalResource && viewItem == flow",
+          "group": "2_local@1"
+        },
+        {
           "command": "fc.extension.remoteResource.remote.invoke",
           "when": "view == fcRemoteResource && viewItem == function",
           "group": "inline"
@@ -623,6 +641,10 @@
         },
         {
           "command": "fc.extension.localResource.gotoFunction",
+          "when": "never"
+        },
+        {
+          "command": "fc.extension.localResource.gotoFlow",
           "when": "never"
         },
         {

@@ -64,6 +64,8 @@ import { gotoFnFConsole } from './commands/fnf/gotoFnFConsole';
 import { showRemoteFlowInfo, clearRemoteFlowInfo } from './commands/fnf/showRemoteFlowInfo';
 import { showDefinitionGraph } from './commands/fnf/showDefinitionGraph';
 import { ROSTemplateDocumentSymbolProvider } from './documentSymbols/ROSTemplateDocumentSymbolProvider';
+import { gotoFlowDefinition } from './commands/gotoFlowDefinition';
+import { gotoFlowCode } from './commands/gotoFlowCode';
 
 export function activate(context: vscode.ExtensionContext) {
   recordPageView('/');
@@ -143,6 +145,8 @@ export function activate(context: vscode.ExtensionContext) {
   clearRemoteFlowInfo(context);
   showDefinitionGraph(context);
   gotoFCConsole(context);
+  gotoFlowDefinition(context);
+  gotoFlowCode(context);
 
   vscode.commands.executeCommand(serverlessCommands.SHOW_REGION_STATUS.id);
   vscode.commands.executeCommand(serverlessCommands.SHOW_UPDATE_NOTIFICATION.id);
