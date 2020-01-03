@@ -19,8 +19,7 @@ export function isSupportedDocument(document: vscode.TextDocument): boolean {
 }
 
 export function isTemplateYaml(document: vscode.TextDocument): boolean {
-  return document.fileName.endsWith('template.yml') || document.fileName.endsWith('template.yaml')
-    || document.fileName.endsWith('template.build.yml') || document.fileName.endsWith('template.packaged.yml');
+  return document.fileName.endsWith('yaml') || document.fileName.endsWith('yml');
 }
 
 export function isFlowDefinitionDocument(document: vscode.TextDocument): boolean {

@@ -55,6 +55,11 @@ export const CUSTOM_TAGS: CustomTag[] = [
       'The intrinsic function Fn::Select returns a single object from a list of objects by index.',
   },
   {
+    tag: '!Sub',
+    kind: 'sequence',
+    propertyName: 'Fn::Sub',
+  },
+  {
     tag: '!Ref',
     kind: 'scalar',
     propertyName: 'Ref',
