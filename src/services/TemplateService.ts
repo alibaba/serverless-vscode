@@ -5,7 +5,7 @@ import * as yaml from 'js-yaml';
 import * as util from 'util';
 import { isJava } from '../utils/runtime';
 import { isDirectory } from '../utils/file';
-import { ALIYUN_SERVERLESS_FUNCTION_TYPE } from '../utils/constants';
+import { ALIYUN_SERVERLESS_FUNCTION_TYPE, ALIYUN_SERVERLESS_FLOW_TYPE } from '../utils/constants';
 import { getSuffix } from '../utils/runtime';
 
 const readFile = util.promisify(fs.readFile);
@@ -114,6 +114,22 @@ export class TemplateService {
       .filter(([name, resource]) => name === serviceName && resource.Type === 'Aliyun::Serverless::Service' );
     if (services.length > 0) {
       return services[0][1];
+    }
+    return null;
+  }
+  async getFlow(flowName: string): Promise<any> {
+    if (!this.templateExists()) {
+      return null;
+    }
+    const content = await readFile(this.getTemplatePath(), 'utf8');
+    const tpl = <Tpl>yaml.safeLoad(content);
+    if (!tpl.Resources) {
+      return null;
+    }
+    const flows = Object.entries(tpl.Resources)
+      .filter(([name, resource]) => name === flowName && resource.Type === ALIYUN_SERVERLESS_FLOW_TYPE );
+    if (flows.length > 0) {
+      return flows[0][1];
     }
     return null;
   }

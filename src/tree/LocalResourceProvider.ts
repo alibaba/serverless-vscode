@@ -7,6 +7,7 @@ import {
   ALIYUN_SERVERLESS_FUNCTION_TYPE,
   serverlessCommands,
   ALIYUN_SERVERLESS_EVENT_TYPES,
+  ALIYUN_SERVERLESS_FLOW_TYPE,
 } from '../utils/constants';
 import {
   Resource,
@@ -15,7 +16,8 @@ import {
   ResourceType,
   TriggerResource,
   NasResource,
-  TemplateResource
+  TemplateResource,
+  FlowResource
 } from '../models/resource';
 import { templateChangeEventEmitter } from '../models/events';
 import { TemplateService } from '../services/TemplateService';
@@ -91,7 +93,10 @@ export class LocalResourceProvider implements vscode.TreeDataProvider<Resource> 
 
   private async getResourceInTpl(element: Resource): Promise<Resource[]> {
     if (element.resourceType === ResourceType.Template) {
-      return this.getServiceResourceInTpl(element as TemplateResource);
+      return [
+        ...await this.getServiceResourceInTpl(element as TemplateResource),
+        ...await this.getFlowResourceInTpl(element as TemplateResource),
+      ]
     }
     if (element.resourceType === ResourceType.Service) {
       return [
@@ -280,6 +285,29 @@ export class LocalResourceProvider implements vscode.TreeDataProvider<Resource> 
         )
       ))
     return triggers;
+  }
+
+  private async getFlowResourceInTpl(element: TemplateResource): Promise<FlowResource[]> {
+    const templateService = new TemplateService(element.templatePath);
+    const tpl = await templateService.getTemplateDefinition();
+    if (!tpl || !tpl.Resources) {
+      return [];
+    }
+    const flows = Object.entries(tpl.Resources)
+      .filter(([_, resource]) => {
+        return (<any>resource).Type === ALIYUN_SERVERLESS_FLOW_TYPE
+      })
+      .map(([name]) => new FlowResource(
+        name,
+        {
+          title: serverlessCommands.GOTO_FLOW_DEFINITION.title,
+          command: serverlessCommands.GOTO_FLOW_DEFINITION.id,
+          arguments: [name, element.templatePath],
+        },
+        vscode.TreeItemCollapsibleState.None,
+        element.templatePath,
+      ));
+    return flows;
   }
 
   private checkResourceUnique(resourceName: string, resources: any) {

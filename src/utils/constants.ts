@@ -39,6 +39,14 @@ export namespace serverlessCommands {
     id: 'fc.extension.localResource.service.gotoDefinition',
     title: 'Goto Service Definition'
   };
+  export const GOTO_FLOW_DEFINITION = {
+    id: 'fc.extension.localResource.flow.gotoDefinition',
+    title: 'Goto Flow Definition'
+  };
+  export const GOTO_FLOW_CODE = {
+    id: 'fc.extension.localResource.gotoFlow',
+    title: 'Goto Flow Code',
+  };
   export const GOTO_TRIGGER_DEFINITION = {
     id: 'fc.extension.localResource.trigger.gotoDefinition',
     title: 'Goto Trigger Definition'
@@ -264,7 +272,6 @@ export const FC_REGIONS = [
 ]
 export const ALIYUN_SERVERLESS_SERVICE_TYPE = 'Aliyun::Serverless::Service';
 export const ALIYUN_SERVERLESS_FUNCTION_TYPE = 'Aliyun::Serverless::Function';
-
 export const ALIYUN_FUNCTION_COMPUTE_CONSOLE_URL = 'https://fc.console.aliyun.com/';
 
 export const ALIYUN_SERVERLESS_CHANGELOG_URL = 'https://github.com/alibaba/serverless-vscode/blob/master/CHANGELOG.md';

@@ -180,17 +180,21 @@ export class TriggerResource extends Resource {
 
 export class FlowResource extends Resource {
   flowName: string;
+  templatePath: string | undefined;
   constructor(
     flowName: string,
     command?: vscode.Command,
+    collapsibleState?: vscode.TreeItemCollapsibleState,
+    templatePath?: string,
   ) {
     super(
       flowName,
       ResourceType.Flow,
-      vscode.TreeItemCollapsibleState.Collapsed,
+      collapsibleState !== undefined ? collapsibleState : vscode.TreeItemCollapsibleState.Collapsed,
       command,
     );
     this.flowName = flowName;
+    this.templatePath = templatePath;
     this.iconPath = {
       light: path.resolve(__dirname, '..', '..', 'media', 'light', 'flow.svg'),
       dark: path.resolve(__dirname, '..', '..', 'media', 'dark', 'flow.svg'),
