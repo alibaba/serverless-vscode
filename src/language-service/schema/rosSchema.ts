@@ -103,6 +103,7 @@ export const rosSchema = {
                 {
                   "type": "object",
                   "properties": {
+                    "Auto": { "type": "boolean" },
                     "UserId": { "type": "integer" },
                     "GroupId": { "type": "integer" },
                     "MountPoints": {

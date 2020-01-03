@@ -154,7 +154,7 @@ export function activate(context: vscode.ExtensionContext) {
 
   RainbowDecorator.getRainbowDecorator().decorate();
 
-  const selector = { pattern: '**/template.{yml,yaml}' };
+  const selector = { pattern: '**/*.{yml,yaml}' };
   vscode.languages.registerDefinitionProvider(
     selector,
     new ROSTemplateDefinitionProvider()
