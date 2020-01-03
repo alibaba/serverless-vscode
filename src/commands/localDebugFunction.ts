@@ -270,12 +270,7 @@ abstract class AbstractLocalDebugHelper {
     return terminal;
   }
   async getInstalledExtensions(): Promise<string> {
-    try {
-      return await cpUtils.executeCommand(undefined, undefined, 'code', '--list-extensions');
-    } catch (ex) {
-      // remote ssh 的情境下，若 ssh 的机器没有安装 vscode，会报错.
-      return '';
-    }
+    return await cpUtils.executeCommand(undefined, undefined, 'code', '--list-extensions');
   }
   promptInstallExtension(extensionName: string) {
     vscode.window.showInformationMessage(
@@ -320,11 +315,16 @@ class PythonLocalDebugHelper extends AbstractLocalDebugHelper {
     if (!autoCheckPythonDebugger) {
       return true;
     }
-    const installExtensions = await this.getInstalledExtensions();
-    if (!installExtensions.includes(EXTENSION_PYTHON_DEBUG)) {
-      this.promptInstallExtension(EXTENSION_PYTHON_DEBUG);
-      return false;
-    } else {
+    try {
+      const installExtensions = await this.getInstalledExtensions();
+      if (!installExtensions.includes(EXTENSION_PYTHON_DEBUG)) {
+        this.promptInstallExtension(EXTENSION_PYTHON_DEBUG);
+        return false;
+      } else {
+        autoCheckPythonDebugger = false;
+        return true;
+      }
+    } catch (ex) {
       autoCheckPythonDebugger = false;
       return true;
     }
@@ -390,11 +390,16 @@ class PhpLocalDebugHelper extends AbstractLocalDebugHelper {
     if (!autoCheckPhpDebugger) {
       return true;
     }
-    const installExtensions = await this.getInstalledExtensions();
-    if (!installExtensions.includes(EXTENSION_PHP_DEBUG)) {
-      this.promptInstallExtension(EXTENSION_PHP_DEBUG);
-      return false;
-    } else {
+    try {
+      const installExtensions = await this.getInstalledExtensions();
+      if (!installExtensions.includes(EXTENSION_PHP_DEBUG)) {
+        this.promptInstallExtension(EXTENSION_PHP_DEBUG);
+        return false;
+      } else {
+        autoCheckPhpDebugger = false;
+        return true;
+      }
+    } catch (ex) {
       autoCheckPhpDebugger = false;
       return true;
     }
@@ -453,11 +458,16 @@ class JavaLocalDebugHelper extends AbstractLocalDebugHelper {
     if (!autoCheckJavaDebugger) {
       return true;
     }
-    const installExtensions = await this.getInstalledExtensions();
-    if (!installExtensions.includes(EXTENSION_JAVA_DEBUG)) {
-      this.promptInstallExtension(EXTENSION_JAVA_DEBUG);
-      return false;
-    } else {
+    try {
+      const installExtensions = await this.getInstalledExtensions();
+      if (!installExtensions.includes(EXTENSION_JAVA_DEBUG)) {
+        this.promptInstallExtension(EXTENSION_JAVA_DEBUG);
+        return false;
+      } else {
+        autoCheckJavaDebugger = false;
+        return true;
+      }
+    } catch(ex) {
       autoCheckJavaDebugger = false;
       return true;
     }
