@@ -2,6 +2,19 @@
 
 所有对 "Aliyun Serverless" 插件的更改都将记录在这个文件中。
 
+
+## 1.22.0 - 2019-01-04
+### Added
+1. 模版文件 template.yml 语法提示增强
+   - 语法提示支持从 template.yml 文件拓展为 yml 文件。
+   - 模版文件 `Aliyun::Serverless::Service` 资源下的 NasConfig 支持 Auto 属性配置。
+   - 模版文件校验支持 ROS 语法的 `Fn::Sub` 函数。
+2. 提供针对 Function Flow 本地资源的相关支持
+   - 本地资源树中提供 Flow 流程资源显示。
+   - 在本地资源树中左击 Flow 名称可跳转至模版文件 template.yml 中的对应行，该 Flow 描述块的背景会高亮并逐渐退去。
+   - 提供跳转到流程定义文件的功能。左击本地资源树中流程名称右侧的跳转按钮，可跳转到流程定义文件。
+3. 优化当 PATH 中未安装 `code` 命令时本地调试的行为。
+
 ## 1.21.0 - 2019-12-27
 ### Added
 1. 模版文件 template.yml 提供针对 ROS 资源的语法提示
