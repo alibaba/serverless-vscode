@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import * as Yaml from 'yaml-ast-parser';
 import { ext } from '../extensionVariables';
-import { isSupportedDocument } from '../utils/document';
+import { isSupportedDocument, isPartialTpl } from '../utils/document';
 import { ASTNode } from '../parser/ASTNode';
 import { buildAstRecursively } from '../parser/parser';
 import { JSONSchemaService } from '../language-service/services/jsonSchemaService';
@@ -9,6 +9,7 @@ import { ValidationResult, SchemaCollector } from '../language-service/parser/js
 
 const validationDelayMs = 200;
 const diagnosticResult: { [uri: string]: vscode.DiagnosticCollection } = {};
+const disableValidationMarker = /#\s*disable-validation\b/
 export class ROSTemplateDiagnosticsProvider {
   private timer: NodeJS.Timer | undefined;
   public startDiagnostic() {
@@ -31,7 +32,14 @@ export class ROSTemplateDiagnosticsProvider {
 
   private validateAndDiagnostic(editor: vscode.TextEditor) {
     const document = editor.document;
-    if (!document || !isSupportedDocument(document)) {
+    if (!document) {
+      return;
+    }
+    if (!isSupportedDocument(document) ||
+      disableValidationMarker.test(document.lineAt(0).text) ||
+      isPartialTpl(document)
+    ) {
+      this.clearAndSetDocumentDiagnostic(document, []);
       return;
     }
     this.cleanTimer();
