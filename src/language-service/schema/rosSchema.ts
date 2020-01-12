@@ -1069,11 +1069,52 @@ export const rosSchema = {
                 "Json",
                 "Boolean"
               ]
-            }
+            },
+            "Default": {},
+            "AllowedValues": {
+              "type": "array",
+            },
+            "AllowedPattern": {
+              "type": "string",
+            },
+            "MaxLength": {
+              "type": "integer",
+            },
+            "MinLength": {
+              "type": "integer",
+            },
+            "MaxValue": {
+              "type": "number",
+            },
+            "MinValue": {
+              "type": "number",
+            },
+            "NoEcho": {
+              "type": "boolean",
+            },
+            "Description": {
+              "type": "string",
+            },
+            "ConstraintDescription": {
+              "type": "string",
+            },
+            "Label": {
+              "type": "string",
+            },
+            "AssociationProperty": {},
+            "Confirm": {
+              "type": "boolean",
+            },
           },
-          "required": ["Type"]
+          "required": ["Type"],
+          "document": {
+            "default": "https://help.aliyun.com/document_detail/28861.html",
+          },
         }
-      }
+      },
+      "document": {
+        "default": "https://help.aliyun.com/document_detail/28861.html",
+      },
     },
     "Outputs": {
       "type": "object"
