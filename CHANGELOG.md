@@ -2,6 +2,10 @@
 
 所有对 "Aliyun Serverless" 插件的更改都将记录在这个文件中。
 
+## 1.23.0 - 2019-01-12
+### Added
+1. 模版文件 template.yml 提供有关于 ROS Parameter 的语法提示(自动补全、错误校验、悬浮提示)。
+2. 模版文件 template.yml 支持通过 `# disable-validation` 标记禁用错误校验。
 
 ## 1.22.0 - 2019-01-04
 ### Added
