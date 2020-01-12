@@ -18,12 +18,20 @@ export function isSupportedDocument(document: vscode.TextDocument): boolean {
   return false;
 }
 
-export function isTemplateYaml(document: vscode.TextDocument): boolean {
+export  function isYamlFile(document: vscode.TextDocument): boolean {
   return document.fileName.endsWith('yaml') || document.fileName.endsWith('yml');
 }
 
+export function isTemplateYaml(document: vscode.TextDocument): boolean {
+  return isYamlFile(document);
+}
+
+export function isPartialTpl(document: vscode.TextDocument): boolean {
+  return document.fileName.endsWith('override.yaml') || document.fileName.endsWith('override.yml');
+}
+
 export function isFlowDefinitionDocument(document: vscode.TextDocument): boolean {
-  if (document.fileName.endsWith('yaml') || document.fileName.endsWith('yml')) {
+  if (isYamlFile(document)) {
     const textDocument = document.getText();
     return flowVersionRegExp.test(textDocument) && flowTypeRegExp.test(textDocument);
   }
