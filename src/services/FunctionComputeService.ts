@@ -5,8 +5,10 @@ import { BaseService } from './BaseService';
 const FCClient = require('@alicloud/fc2');
 
 
-const output = enableServicePromptDecorator(
-  permissionPromptDecorator(error)
+const output = primaryAccountPromptDecorator(
+  enableServicePromptDecorator(
+    permissionPromptDecorator(error)
+  )
 );
 
 export class FunctionComputeService extends BaseService {
@@ -241,6 +243,24 @@ function enableServicePromptDecorator(output: (msg: string) => void) {
 =====
 To view Resource Panel you should enable Function Compute service.
 http://fc.console.aliyun.com/
+=====`);
+    }
+  }
+}
+
+function primaryAccountPromptDecorator(output: (msg: string) => void) {
+  return function(msg: string) {
+    output(msg);
+    const reg = new RegExp('The service or function doesn\'t belong to you');
+    const res = reg.exec(msg);
+    if (!res) {
+      return;
+    } else {
+      error(`
+=====
+The accountId you entered is incorrect.
+You can only use the primary account id, whether or not you use a sub-account or a primary account ak.
+You can get primary account ID on this page https://account.console.aliyun.com/#/secure .
 =====`);
     }
   }
