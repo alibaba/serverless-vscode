@@ -150,7 +150,9 @@ export function activate(context: vscode.ExtensionContext) {
 
   vscode.commands.executeCommand(serverlessCommands.SHOW_REGION_STATUS.id);
   vscode.commands.executeCommand(serverlessCommands.SHOW_UPDATE_NOTIFICATION.id);
-  vscode.languages.registerCodeLensProvider(['javascript', 'python', 'php'], new ServerlessLensProvider(cwd));
+  vscode.languages.registerCodeLensProvider(
+    ['javascript', 'python', 'php', 'csharp', 'java'], new ServerlessLensProvider(cwd)
+  );
 
   RainbowDecorator.getRainbowDecorator().decorate();
 
