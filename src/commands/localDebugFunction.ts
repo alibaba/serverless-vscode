@@ -31,9 +31,11 @@ try {
 const EXTENSION_PYTHON_DEBUG = 'ms-python.python';
 const EXTENSION_PHP_DEBUG = 'felixfbecker.php-debug';
 const EXTENSION_JAVA_DEBUG = 'vscjava.vscode-java-debug';
+const EXTENSION_DOTNET_DEBUG = 'ms-vscode.csharp';
 let autoCheckPythonDebugger = true;
 let autoCheckPhpDebugger = true;
 let autoCheckJavaDebugger = true;
+let autoCheckDotnetDebugger = true;
 
 export function localDebugFunction(context: vscode.ExtensionContext) {
   const debugManager = new LocalDebugManager();
@@ -125,6 +127,9 @@ class LocalDebugManager {
     }
     if (rt.isJava(runtime)) {
       return new JavaLocalDebugHelper();
+    }
+    if (rt.isDotnetcore(runtime)) {
+      return new DotnetLocalDebugHelper();
     }
     throw new Error(`${runtime} runtime Local Debug will be supported soon`);
   }
@@ -519,6 +524,65 @@ class JavaLocalDebugHelper extends AbstractLocalDebugHelper {
     }, 2000); });
     await vscode.debug.startDebugging(undefined, configuration);
     terminal.show();
+  }
+}
+
+class DotnetLocalDebugHelper extends AbstractLocalDebugHelper {
+  async checkDebugExtensionInstalled(): Promise<boolean> {
+    if (!autoCheckDotnetDebugger) {
+      return true;
+    }
+    try {
+      const installExtensions = await this.getInstalledExtensions();
+      if (!installExtensions.includes(EXTENSION_DOTNET_DEBUG)) {
+        this.promptInstallExtension(EXTENSION_DOTNET_DEBUG);
+        return false;
+      } else {
+        autoCheckDotnetDebugger = false;
+        return true;
+      }
+    } catch(ex) {
+      autoCheckDotnetDebugger = false;
+      return true;
+    }
+  }
+  async generateDefaultDebugConfiguration(
+    serviceName: string,
+    functionName: string,
+    functionInfo: any,
+    templatePath: string,
+  ): Promise<vscode.DebugConfiguration> {
+    const port = await this.getDefaultDebugPort();
+    return <vscode.DebugConfiguration> {
+      name: this.generateConfigurationName(serviceName, functionName),
+      type: 'coreclr',
+      request: 'attach',
+      processName: 'dotnet',
+      port,
+      pipeTransport: {
+        pipeProgram: 'sh',
+        pipeArgs: [
+          '-c',
+          `docker exec -i $(docker ps -q -f publish=${port}) \${debuggerCommand}`,
+        ],
+        debuggerPath: '/vsdbg/vsdbg',
+        pipeCwd: '${workspaceFolder}',
+      },
+      windows: {
+        pipeTransport: {
+          pipeProgram: 'powershell',
+          pipeArgs: [
+            '-c',
+            `docker exec -i $(docker ps -q -f publish=${port}) \${debuggerCommand}`,
+          ],
+          debuggerPath: '/vsdbg/vsdbg',
+          pipeCwd: '${workspaceFolder}',
+        },
+      },
+      sourceFileMap: {
+        '/code': this.generateLocalRootPath(functionInfo, templatePath),
+      }
+    }
   }
 }
 

@@ -7,7 +7,7 @@ import { ncp } from 'ncp';
 const cp = util.promisify(ncp);
 
 const supportedRuntimes =
-  ['nodejs6', 'nodejs8', 'nodejs10', 'python2.7', 'python3', 'php7.2', 'java8'];
+  ['nodejs6', 'nodejs8', 'nodejs10', 'python2.7', 'python3', 'php7.2', 'java8', 'dotnetcore2.1'];
 const types = ['NORMAL', 'HTTP'];
 
 export function getSupportedRuntimes() {
@@ -95,6 +95,9 @@ function getLanguage(runtime: string): string | undefined {
   }
   if (isJava(runtime)) {
     return 'java';
+  }
+  if (isDotnetcore(runtime)) {
+    return 'dotnetcore';
   }
   return;
 }
@@ -211,4 +214,8 @@ export function isPhp(runtime: string): boolean {
 
 export function isJava(runtime: string): boolean {
   return runtime.indexOf('java') > -1;
+}
+
+export function isDotnetcore(runtime: string): boolean {
+  return runtime.indexOf('dotnetcore') > -1;
 }

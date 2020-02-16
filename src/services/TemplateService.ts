@@ -3,18 +3,22 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as yaml from 'js-yaml';
 import * as util from 'util';
-import { isJava } from '../utils/runtime';
+import { isJava, isDotnetcore } from '../utils/runtime';
 import { isDirectory } from '../utils/file';
 import { ALIYUN_SERVERLESS_FUNCTION_TYPE, ALIYUN_SERVERLESS_FLOW_TYPE } from '../utils/constants';
 import { getSuffix } from '../utils/runtime';
 
 const readFile = util.promisify(fs.readFile);
 
-const JAVA_HELLO_WORLD_DEFAULT_HANDLER = 'example.App::handleRequest';
+const JAVA_DEFAULT_HANDLER = 'example.App::handleRequest';
+const DOTNET_DEFAULT_HANDLER = 'project::example.App::HandleRequest';
 
 function getDefaultHandler(runtime: string) {
   if (isJava(runtime)) {
-    return JAVA_HELLO_WORLD_DEFAULT_HANDLER;
+    return JAVA_DEFAULT_HANDLER;
+  }
+  if (isDotnetcore(runtime)) {
+    return DOTNET_DEFAULT_HANDLER;
   }
   return 'index.handler';
 }
@@ -52,9 +56,10 @@ export class TemplateService {
     const {
       Properties: {
         Handler: handler,
+        Runtime: runtime,
       }
     } = functionInfo;
-    return this.getHandlerFunctionName(handler);
+    return this.getHandlerFunctionName(handler, runtime);
   }
   validateFunctionResource(functionInfo: any): boolean {
     if (!functionInfo
@@ -72,10 +77,22 @@ export class TemplateService {
       const packageAndClass = handler.split('::')[0];
       return `src/main/java/${packageAndClass.split('.').join('/')}.java`;
     }
+    if (isDotnetcore(runtime)) {
+      const arr = handler.split('::');
+      if (arr.length !== 3) {
+        throw new Error(`Handler ${handler} is invalid`);
+      }
+      const namespaceAndClassName = arr[1].split('.');
+      return `${namespaceAndClassName[namespaceAndClassName.length-1]}.cs`;
+    }
     const prefix = handler.substring(0, handler.indexOf('.'));
     return `${prefix}${getSuffix(runtime)}`;
   }
-  getHandlerFunctionName(handler: string): string {
+  getHandlerFunctionName(handler: string, runtime: string): string {
+    if (isJava(runtime) || isDotnetcore(runtime)) {
+      const arr = handler.split('::');
+      return arr[arr.length - 1];
+    }
     return handler.substring(handler.indexOf('.') + 1);
   }
   async getTemplateContent(): Promise<string> {
