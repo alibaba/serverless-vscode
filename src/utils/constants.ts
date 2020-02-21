@@ -241,6 +241,7 @@ export namespace serverlessConfigs {
   export const ALIYUN_FC_REFERERENCE_LIB_TIP = 'aliyun.fc.referenceLib.tip';
   export const ALIYUN_FC_IMPORT_BASE_PATH = 'aliyun.fc.import.base.path';
   export const ALIYUN_FC_CREATEFUNCTION_CODEURI_PREFIX = 'aliyun.fc.createFunction.codeUri.prefix';
+  export const ALIYUN_FC_FUN_DEPLOY_ASSUMEYES = 'aliyun.fc.fun.deploy.assumeYes';
 }
 
 export const SERVERLESS_EXTENTION_DOCUMENTATION_URL =

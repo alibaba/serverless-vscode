@@ -88,13 +88,18 @@ export const rosSchema = {
               "insertText": VPCCONFIG_INSERT_TEXT,
             },
             "LogConfig": {
-              "type": "object",
-              "properties": {
-                "Project": { "type": "string" },
-                "Logstore": { "type": "string" }
-              },
-              "required": ["Project", "Logstore"],
-              "additionalProperties": false,
+              "oneOf": [
+                { "type": "string" },
+                {
+                  "type": "object",
+                  "properties": {
+                    "Project": { "type": "string" },
+                    "Logstore": { "type": "string" }
+                  },
+                  "required": ["Project", "Logstore"],
+                  "additionalProperties": false,
+                },
+              ],
               "insertText": LOGCONFIG_INSERT_TEXT,
             },
             "NasConfig": {
@@ -371,6 +376,9 @@ export const rosSchema = {
         },
         "FunctionName": {
           "type": "string"
+        },
+        "Qualifier": {
+          "type": "string"
         }
       },
       "additionalProperties": false
@@ -493,6 +501,15 @@ export const rosSchema = {
           "additionalProperties": false
         }
       },
+      "patternProperties": {
+        "^[a-zA-Z][a-zA-Z0-9-]{0,127}$": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Aliyun::Serverless::Log::Logstore"
+            },
+          ]
+        }
+      },
       "required": ["Type"],
       "document": {
         "default": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03.md#aliyunserverlesslog",
@@ -500,6 +517,38 @@ export const rosSchema = {
         "zh-TW": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03-zh-cn.md#aliyunserverlesslog"
       },
       "insertText": LOG_INSERT_TEXT,
+    },
+    "Aliyun::Serverless::Log::Logstore": {
+      "$id": "Aliyun::Serverless::Log::Logstore",
+      "type": "object",
+      "properties": {
+        "Type": {
+          "type": "string",
+          "enum": [
+            "Aliyun::Serverless::Log::Logstore"
+          ]
+        },
+        "Properties": {
+          "type": "object",
+          "properties": {
+            "TTL": {
+              "type": "integer"
+            },
+            "ShardCount": {
+              "type": "integer"
+            }
+          },
+          "required": ["TTL", "ShardCount"],
+          "additionalProperties": false
+        }
+      },
+      "required": ["Type", "Properties"],
+      "additionalProperties": false,
+      "document": {
+        "default": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03.md#aliyunserverlessloglogstore",
+        "zh-CN": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03-zh-cn.md#aliyunserverlessloglogstore",
+        "zh-TW": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03-zh-cn.md#aliyunserverlessloglogstore"
+      },
     },
     "Aliyun::Serverless::MNSTopic": {
       "$id": "Aliyun::Serverless::MNSTopic",

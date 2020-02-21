@@ -4,6 +4,7 @@ import * as path from 'path';
 import * as terminalService from '../utils/terminal';
 import { getFunBin } from '../utils/fun';
 import { isDirectory } from '../utils/file';
+import { serverlessConfigs } from '../utils/constants';
 
 export class FunService {
   constructor (private templatePath: string) {
@@ -24,11 +25,13 @@ export class FunService {
 
   deploy(serviceName?: string, functionName? :string) {
     const terminal = terminalService.getFunctionComputeTerminal(path.dirname(this.templatePath));
+    const assumeYes =
+      <boolean>vscode.workspace.getConfiguration().get(serverlessConfigs.ALIYUN_FC_FUN_DEPLOY_ASSUMEYES) ? '-y' : '';
     getFunBin().then(funBin => {
       const command = functionName ?
-        `${funBin} deploy ${serviceName}/${functionName} -t ${this.templatePath}` :
-        serviceName ? `${funBin} deploy ${serviceName} -t ${this.templatePath}` :
-          `${funBin} deploy -t ${this.templatePath}`;
+        `${funBin} deploy ${serviceName}/${functionName} -t ${this.templatePath} ${assumeYes}` :
+        serviceName ? `${funBin} deploy ${serviceName} -t ${this.templatePath} ${assumeYes}` :
+          `${funBin} deploy -t ${this.templatePath} ${assumeYes}`;
       terminal.sendText(command);
       terminal.show();
     })
