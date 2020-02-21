@@ -95,6 +95,11 @@
           "type": "string",
           "description": "External Fun command which will replace the internal Fun"
         },
+        "aliyun.fc.fun.deploy.assumeYes": {
+          "type": "boolean",
+          "description": "Automatic yes to prompts. Assume \"yes\" as answer to all prompts and run non-interactively.",
+          "default": true
+        },
         "aliyun.fc.referenceLib.tip": {
           "type": "boolean",
           "description": "Tips for enable reference lib that are provided by the runtime",
