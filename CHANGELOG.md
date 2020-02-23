@@ -2,7 +2,16 @@
 
 所有对 "Aliyun Serverless" 插件的更改都将记录在这个文件中。
 
-## 1.25.0 - 2019-02-16
+## 1.26.0 - 2020-02-23
+### Added
+1. 支持通过 `aliyun.fc.fun.deploy.assumeYes` 配置，自定义在插件部署时是否需要人工与 Fun 交互
+2. 本地资源面板树支持解析 fun package 后生成的 `template.packaged.yml` 文件
+3. 模版文件语法提示增强
+   - 服务配置 `LogConfig` 支持 Auto
+   - 自定义域名路由支持配置 `Qualifier`
+   - 补充 `Aliyun::Serverless::Log` 下 `Aliyun::Serverless::Log::Logstore` 的配置描述
+
+## 1.25.0 - 2020-02-16
 ### Added
 1. 支持 dotnetcore2.1 运行时
    - 支持初始化 Event/HTTP Trigger 函数
@@ -13,16 +22,16 @@
      ![](https://img.alicdn.com/tfs/TB1XSPyvNz1gK0jSZSgXXavwpXa-1376-818.gif)
    - 入口文件提供快捷访问 Local Run/Debug 以及 Invoke Panel
 
-## 1.24.0 - 2019-01-19
+## 1.24.0 - 2020-01-19
 ### Added
 1. 优化配置账号未设置主账号 AccountID 时 Output 面板输出的信息提示。
 
-## 1.23.0 - 2019-01-12
+## 1.23.0 - 2020-01-12
 ### Added
 1. 模版文件 template.yml 提供有关于 ROS Parameter 的语法提示(自动补全、错误校验、悬浮提示)。
 2. 模版文件 template.yml 支持通过 `# disable-validation` 标记禁用错误校验。
 
-## 1.22.0 - 2019-01-04
+## 1.22.0 - 2020-01-04
 ### Added
 1. 模版文件 template.yml 语法提示增强
    - 语法提示支持从 template.yml 文件拓展为 yml 文件。
