@@ -57,7 +57,7 @@ export class LocalResourceProvider implements vscode.TreeDataProvider<Resource> 
       const files = await findFile('**/template.?(packaged.){yml,yaml}', {
         cwd: this.workspaceRoot,
         ignore: [
-          'node_modules/**/template.{yml,yaml}',
+          '**/node_modules/**/template.{yml,yaml}',
         ],
       })
       if (!files || !files.length) {
