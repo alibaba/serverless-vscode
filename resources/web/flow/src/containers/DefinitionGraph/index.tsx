@@ -14,6 +14,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
 import IconButton from '../../components/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
+import { schema } from '../../utils/schema';
 
 export const DefinitionGraph: React.FunctionComponent<DefinitionGraphProps> = ({ definition }) => {
   const graphContainerRef = createRef<HTMLDivElement>();
@@ -31,7 +32,7 @@ export const DefinitionGraph: React.FunctionComponent<DefinitionGraphProps> = ({
     graphContainerRef.current.innerHTML = '';
 
     const graph = initGraph(graphContainerRef.current);
-    const input = yaml.safeLoad(definition);
+    const input = yaml.safeLoad(definition, { schema });
     try {
       analysisInputData(undefined, (input && input.steps) || [], cellMap, edgeList, 0);
       renderGraph(graph, cellMap, edgeList);
