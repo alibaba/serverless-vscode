@@ -21,6 +21,9 @@
           "intervalSeconds": {
             "type": "integer"
           },
+          "maxIntervalSeconds": {
+            "type": "integer"
+          },
           "maxAttempts": {
             "type": "integer"
           },

@@ -2,6 +2,10 @@
 
 所有对 "Aliyun Serverless" 插件的更改都将记录在这个文件中。
 
+## 1.27.2 - 2020-03-15
+### Added
+1. 更新函数工作流流程定义文件的语法提示，支持 `retry` 中关于 `maxIntervalSeconds` 的相关配置。
+
 ## 1.27.1 - 2020-03-04
 ### Fixed
 1. 修复函数工作流本地可视化在遇到 Custom Tag 时无法显示的 Issue。
