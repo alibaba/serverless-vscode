@@ -2,6 +2,10 @@
 
 所有对 "Aliyun Serverless" 插件的更改都将记录在这个文件中。
 
+## 1.27.3 - 2020-03-22
+### Fixed
+1. 更新本地调试时自动检测的 C# extension 名称
+
 ## 1.27.2 - 2020-03-15
 ### Added
 1. 更新函数工作流流程定义文件的语法提示，支持 `retry` 中关于 `maxIntervalSeconds` 的相关配置。

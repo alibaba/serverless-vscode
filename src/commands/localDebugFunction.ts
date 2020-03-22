@@ -31,7 +31,7 @@ try {
 const EXTENSION_PYTHON_DEBUG = 'ms-python.python';
 const EXTENSION_PHP_DEBUG = 'felixfbecker.php-debug';
 const EXTENSION_JAVA_DEBUG = 'vscjava.vscode-java-debug';
-const EXTENSION_DOTNET_DEBUG = 'ms-vscode.csharp';
+const EXTENSION_DOTNET_DEBUG = 'ms-dotnettools.csharp';
 let autoCheckPythonDebugger = true;
 let autoCheckPhpDebugger = true;
 let autoCheckJavaDebugger = true;
