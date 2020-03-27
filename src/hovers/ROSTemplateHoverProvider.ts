@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import * as Yaml from 'yaml-ast-parser';
 import * as osLocale from 'os-locale';
-import { isSupportedDocument } from '../utils/document';
+import { isSupportedROSDocument } from '../utils/document';
 import { recordPageView } from '../utils/visitor';
 import { ASTNode } from '../parser/ASTNode';
 import { buildAstRecursively, getNodeFromOffset } from '../parser/parser';
@@ -18,7 +18,7 @@ export class ROSTemplateHoverProvider implements vscode.HoverProvider {
     document: vscode.TextDocument,
     position: vscode.Position,
   ): vscode.ProviderResult<vscode.Hover> {
-    if (!isSupportedDocument(document)) {
+    if (!isSupportedROSDocument(document)) {
       return;
     }
     recordPageView('/templateHover');

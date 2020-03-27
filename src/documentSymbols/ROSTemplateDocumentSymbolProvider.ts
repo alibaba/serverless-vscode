@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import * as Yaml from 'yaml-ast-parser';
-import { isSupportedDocument } from '../utils/document';
+import { isSupportedROSDocument } from '../utils/document';
 import { buildAstRecursively } from '../parser/parser';
 import { recordPageView } from '../utils/visitor';
 import { ASTNode } from '../parser/ASTNode';
@@ -12,7 +12,7 @@ export class ROSTemplateDocumentSymbolProvider implements vscode.DocumentSymbolP
   provideDocumentSymbols(
     document: vscode.TextDocument
   ): vscode.ProviderResult<vscode.SymbolInformation[]> {
-    if (!isSupportedDocument(document)) {
+    if (!isSupportedROSDocument(document)) {
       return [];
     }
     recordPageView('/templateDocumentSymbol');

@@ -105,6 +105,17 @@
           "description": "Tips for enable reference lib that are provided by the runtime",
           "default": true
         },
+        "aliyun.fc.single.template.mode": {
+          "type": "boolean",
+          "default": "true",
+          "description": "Whether use single template mode. If this mode is enabled, only template.(yml|yaml) will be detected"
+        },
+        "aliyun.fc.multi.templates.path": {
+          "type": "array",
+          "default": [
+            "template.yml"
+          ]
+        },
         "aliyun.fnf.remoteResource.enable": {
           "type": "boolean",
           "default": true
@@ -691,6 +702,7 @@
     "@types/dockerode": "^2.5.20",
     "@types/dotenv": "^6.1.1",
     "@types/download": "^6.2.4",
+    "@types/fs-extra": "^8.1.0",
     "@types/glob": "^7.1.1",
     "@types/lodash": "^4.14.144",
     "@types/mocha": "^2.2.42",
@@ -720,6 +732,7 @@
     "dockerode": "^3.0.2",
     "dotenv": "^8.1.0",
     "download": "^7.1.0",
+    "fs-extra": "^9.0.0",
     "glob": "^7.1.4",
     "ignore": "^5.1.4",
     "inquirer": "^5.2.0",

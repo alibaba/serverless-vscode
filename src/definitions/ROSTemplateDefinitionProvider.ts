@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
-import { isSupportedDocument } from '../utils/document';
+import { isSupportedROSDocument } from '../utils/document';
 import { isPathExists, isDirectory } from '../utils/file';
 import { getHandlerFileName } from '../utils/runtime';
 import { recordPageView } from '../utils/visitor';
@@ -13,7 +13,7 @@ export class ROSTemplateDefinitionProvider implements vscode.DefinitionProvider 
     if (!cwd) {
       return;
     }
-    if (!isSupportedDocument(document)) {
+    if (!isSupportedROSDocument(document)) {
       return;
     }
     recordPageView('/showFuncDefineLink');

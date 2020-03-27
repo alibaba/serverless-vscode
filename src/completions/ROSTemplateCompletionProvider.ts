@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import * as Yaml from 'yaml-ast-parser';
 import * as osLocale from 'os-locale';
-import { isSupportedDocument, fixNodeForCompletion, isTemplateYaml } from '../utils/document';
+import { isSupportedROSDocument, fixNodeForCompletion, isTemplateYaml } from '../utils/document';
 import { buildAstRecursively, getNodeFromOffset } from '../parser/parser';
 import { ASTNode } from '../parser/ASTNode';
 import { JSONSchemaService } from '../language-service/services/jsonSchemaService';
@@ -32,7 +32,7 @@ export class ROSTemplateCompletionProvider implements vscode.CompletionItemProvi
     position: vscode.Position,
   ):
     vscode.ProviderResult<vscode.CompletionItem[] | vscode.CompletionList> {
-    if (!isSupportedDocument(document)) {
+    if (!isSupportedROSDocument(document)) {
       if (isTemplateYaml(document) && position.line === 0) {
         return [rosTempCompletionItem];
       }

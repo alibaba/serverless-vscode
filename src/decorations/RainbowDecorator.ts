@@ -1,5 +1,5 @@
 import * as vscode from 'vscode'
-import { createDecorationTypesByColors, isSupportedDocument, isFlowDefinitionDocument } from '../utils/document';
+import { createDecorationTypesByColors, isSupportedROSDocument, isFlowDefinitionDocument } from '../utils/document';
 import { recordPageView } from '../utils/visitor';
 
 const decorationTypes = createDecorationTypesByColors(
@@ -58,7 +58,7 @@ export class RainbowDecorator {
     if (!document) {
       return false;
     }
-    return isSupportedDocument(document) || isFlowDefinitionDocument(document);
+    return isSupportedROSDocument(document) || isFlowDefinitionDocument(document);
   }
 
   private decorateEditor(editor: vscode.TextEditor) {
