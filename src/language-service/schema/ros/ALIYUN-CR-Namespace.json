@@ -11,14 +11,14 @@
     "Properties": {
       "type": "object",
       "properties": {
+        "AutoCreate": {
+          "type": "boolean"
+        },
         "DefaultVisibility": {
           "type": "string"
         },
         "Namespace": {
           "type": "string"
-        },
-        "AutoCreate": {
-          "type": "boolean"
         }
       },
       "required": [

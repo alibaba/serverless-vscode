@@ -11,23 +11,23 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "CidrBlock": {
-          "type": "string"
-        },
-        "VpcName": {
-          "type": "string"
-        },
         "Description": {
           "type": "string"
         },
         "ResourceGroupId": {
           "type": "string"
         },
-        "EnableIpv6": {
-          "type": "boolean"
+        "CidrBlock": {
+          "type": "string"
+        },
+        "VpcName": {
+          "type": "string"
         },
         "Ipv6CidrBlock": {
           "type": "string"
+        },
+        "EnableIpv6": {
+          "type": "boolean"
         }
       },
       "required": [],

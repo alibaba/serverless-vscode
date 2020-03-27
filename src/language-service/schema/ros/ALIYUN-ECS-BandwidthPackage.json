@@ -11,25 +11,25 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "Description": {
+        "BandwidthPackageName": {
           "type": "string"
         },
         "IpCount": {
           "type": "integer"
         },
+        "Description": {
+          "type": "string"
+        },
         "ZoneId": {
-          "type": "string"
-        },
-        "InternetChargeType": {
-          "type": "string"
-        },
-        "BandwidthPackageName": {
           "type": "string"
         },
         "Bandwidth": {
           "type": "integer"
         },
         "NatGatewayId": {
+          "type": "string"
+        },
+        "InternetChargeType": {
           "type": "string"
         }
       },

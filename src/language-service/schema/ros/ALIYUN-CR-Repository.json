@@ -11,26 +11,26 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "Detail": {
-          "type": "string"
-        },
-        "RepoName": {
-          "type": "string"
-        },
         "RepoNamespace": {
           "type": "string"
         },
         "RepoType": {
           "type": "string"
         },
+        "RepoName": {
+          "type": "string"
+        },
         "Summary": {
+          "type": "string"
+        },
+        "Detail": {
           "type": "string"
         }
       },
       "required": [
-        "RepoName",
         "RepoNamespace",
         "RepoType",
+        "RepoName",
         "Summary"
       ],
       "additionalProperties": false,

@@ -137,6 +137,15 @@ export const rosSchema = {
             "zh-CN": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03-zh-cn.md#aliyunserverlessservice",
             "zh-TW": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03-zh-cn.md#aliyunserverlessservice"
           }
+        },
+        "DependsOn": {
+          "oneOf": [
+            { "type": "string" },
+            {
+              "type": "array",
+              "items": { "type": "string" }
+            }
+          ]
         }
       },
       "patternProperties": {

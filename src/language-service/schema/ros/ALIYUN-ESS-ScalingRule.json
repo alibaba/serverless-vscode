@@ -11,10 +11,7 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "AdjustmentType": {
-          "type": "string"
-        },
-        "ScalingGroupId": {
+        "ScalingRuleName": {
           "type": "string"
         },
         "AdjustmentValue": {
@@ -23,13 +20,16 @@
         "Cooldown": {
           "type": "integer"
         },
-        "ScalingRuleName": {
+        "ScalingGroupId": {
+          "type": "string"
+        },
+        "AdjustmentType": {
           "type": "string"
         }
       },
       "required": [
-        "AdjustmentType",
-        "ScalingGroupId"
+        "ScalingGroupId",
+        "AdjustmentType"
       ],
       "additionalProperties": false,
       "document": {

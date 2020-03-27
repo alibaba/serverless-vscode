@@ -11,25 +11,25 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "Region": {
-          "type": "string"
-        },
-        "Domain": {
-          "type": "string"
-        },
         "InstanceId": {
           "type": "string"
         },
         "RuleId": {
           "type": "integer"
         },
+        "Region": {
+          "type": "string"
+        },
+        "Domain": {
+          "type": "string"
+        },
         "Rules": {
           "type": "string"
         }
       },
       "required": [
-        "Domain",
         "InstanceId",
+        "Domain",
         "Rules"
       ],
       "additionalProperties": false,

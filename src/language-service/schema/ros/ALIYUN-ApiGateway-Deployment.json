@@ -11,10 +11,13 @@
     "Properties": {
       "type": "object",
       "properties": {
+        "Description": {
+          "type": "string"
+        },
         "StageName": {
           "type": "string"
         },
-        "Description": {
+        "ApiId": {
           "type": "string"
         },
         "HistoryVersion": {
@@ -22,15 +25,12 @@
         },
         "GroupId": {
           "type": "string"
-        },
-        "ApiId": {
-          "type": "string"
         }
       },
       "required": [
         "StageName",
-        "GroupId",
-        "ApiId"
+        "ApiId",
+        "GroupId"
       ],
       "additionalProperties": false,
       "document": {

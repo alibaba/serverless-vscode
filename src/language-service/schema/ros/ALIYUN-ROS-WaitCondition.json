@@ -11,19 +11,19 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "Handle": {
-          "type": "string"
-        },
         "Timeout": {
           "type": "number"
         },
         "Count": {
           "type": "number"
+        },
+        "Handle": {
+          "type": "string"
         }
       },
       "required": [
-        "Handle",
-        "Timeout"
+        "Timeout",
+        "Handle"
       ],
       "additionalProperties": false,
       "document": {

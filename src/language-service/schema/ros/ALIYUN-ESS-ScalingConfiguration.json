@@ -11,25 +11,43 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "ImageId": {
+        "ScalingConfigurationName": {
           "type": "string"
         },
-        "SecurityGroupId": {
-          "type": "string"
-        },
-        "InstanceTypes": {
+        "DiskMappings": {
           "type": "array"
         },
-        "InstanceId": {
+        "ResourceGroupId": {
           "type": "string"
         },
-        "InternetMaxBandwidthIn": {
+        "SystemDiskSize": {
           "type": "integer"
+        },
+        "UserData": {
+          "type": "string"
         },
         "SystemDiskAutoSnapshotPolicyId": {
           "type": "string"
         },
-        "InternetChargeType": {
+        "RamRoleName": {
+          "type": "string"
+        },
+        "SpotPriceLimitForInstanceType": {
+          "type": "object"
+        },
+        "ImageId": {
+          "type": "string"
+        },
+        "SpotPriceLimit": {
+          "type": "number"
+        },
+        "TagList": {
+          "type": "array"
+        },
+        "InstanceTypes": {
+          "type": "array"
+        },
+        "InstanceType": {
           "type": "string"
         },
         "SpotStrategy": {
@@ -38,59 +56,41 @@
         "PasswordInherit": {
           "type": "boolean"
         },
-        "IoOptimized": {
-          "type": "string"
-        },
-        "InternetMaxBandwidthOut": {
-          "type": "integer"
-        },
-        "SpotPriceLimit": {
-          "type": "number"
-        },
-        "ScalingConfigurationName": {
-          "type": "string"
-        },
         "KeyPairName": {
           "type": "string"
         },
-        "InstanceName": {
+        "IoOptimized": {
           "type": "string"
         },
-        "RamRoleName": {
+        "InstanceId": {
           "type": "string"
-        },
-        "SystemDiskSize": {
-          "type": "integer"
-        },
-        "ResourceGroupId": {
-          "type": "string"
-        },
-        "DiskMappings": {
-          "type": "array"
-        },
-        "UserData": {
-          "type": "string"
-        },
-        "InstanceType": {
-          "type": "string"
-        },
-        "TagList": {
-          "type": "array"
         },
         "HpcClusterId": {
           "type": "string"
         },
-        "SpotPriceLimitForInstanceType": {
-          "type": "object"
-        },
         "ScalingGroupId": {
+          "type": "string"
+        },
+        "SecurityGroupId": {
+          "type": "string"
+        },
+        "InternetChargeType": {
           "type": "string"
         },
         "SystemDiskCategory": {
           "type": "string"
         },
+        "InstanceName": {
+          "type": "string"
+        },
         "DeploymentSetId": {
           "type": "string"
+        },
+        "InternetMaxBandwidthOut": {
+          "type": "integer"
+        },
+        "InternetMaxBandwidthIn": {
+          "type": "integer"
         }
       },
       "required": [

@@ -11,16 +11,16 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "RouterInterfaceId": {
+        "OppositeInterfaceId": {
           "type": "string"
         },
-        "OppositeInterfaceId": {
+        "RouterInterfaceId": {
           "type": "string"
         }
       },
       "required": [
-        "RouterInterfaceId",
-        "OppositeInterfaceId"
+        "OppositeInterfaceId",
+        "RouterInterfaceId"
       ],
       "additionalProperties": false,
       "document": {

@@ -11,20 +11,20 @@
     "Properties": {
       "type": "object",
       "properties": {
+        "ListenerPort": {
+          "type": "integer"
+        },
         "RuleList": {
           "type": "array"
         },
         "LoadBalancerId": {
           "type": "string"
-        },
-        "ListenerPort": {
-          "type": "integer"
         }
       },
       "required": [
+        "ListenerPort",
         "RuleList",
-        "LoadBalancerId",
-        "ListenerPort"
+        "LoadBalancerId"
       ],
       "additionalProperties": false,
       "document": {

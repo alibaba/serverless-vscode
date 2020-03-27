@@ -11,26 +11,25 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "Name": {
-          "type": "string"
-        },
         "Description": {
           "type": "string"
         },
         "RequestId": {
           "type": "string"
         },
+        "Definition": {
+          "type": "string"
+        },
         "RoleArn": {
           "type": "string"
         },
-        "Definition": {
+        "Name": {
           "type": "string"
         }
       },
       "required": [
-        "Name",
-        "Description",
-        "Definition"
+        "Definition",
+        "Name"
       ],
       "additionalProperties": false,
       "document": {

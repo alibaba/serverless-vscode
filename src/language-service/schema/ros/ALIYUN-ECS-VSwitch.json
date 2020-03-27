@@ -11,29 +11,29 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "CidrBlock": {
-          "type": "string"
-        },
         "Description": {
           "type": "string"
         },
-        "Ipv6CidrBlock": {
-          "type": "integer"
-        },
-        "VSwitchName": {
+        "VpcId": {
           "type": "string"
         },
         "ZoneId": {
           "type": "string"
         },
-        "VpcId": {
+        "CidrBlock": {
           "type": "string"
+        },
+        "VSwitchName": {
+          "type": "string"
+        },
+        "Ipv6CidrBlock": {
+          "type": "integer"
         }
       },
       "required": [
-        "CidrBlock",
+        "VpcId",
         "ZoneId",
-        "VpcId"
+        "CidrBlock"
       ],
       "additionalProperties": false,
       "document": {

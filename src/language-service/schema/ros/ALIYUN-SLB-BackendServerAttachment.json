@@ -14,13 +14,13 @@
         "BackendServerList": {
           "type": "array"
         },
-        "BackendServers": {
-          "type": "array"
-        },
         "LoadBalancerId": {
           "type": "string"
         },
         "BackendServerWeightList": {
+          "type": "array"
+        },
+        "BackendServers": {
           "type": "array"
         }
       },

@@ -11,26 +11,26 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "ChargeType": {
-          "type": "string"
-        },
-        "PricingCycle": {
-          "type": "string"
-        },
-        "Quantity": {
-          "type": "number"
-        },
         "ProductCode": {
           "type": "string"
-        },
-        "Duration": {
-          "type": "number"
         },
         "Preference": {
           "type": "object"
         },
         "SkuCode": {
           "type": "string"
+        },
+        "PricingCycle": {
+          "type": "string"
+        },
+        "ChargeType": {
+          "type": "string"
+        },
+        "Quantity": {
+          "type": "number"
+        },
+        "Duration": {
+          "type": "number"
         }
       },
       "required": [

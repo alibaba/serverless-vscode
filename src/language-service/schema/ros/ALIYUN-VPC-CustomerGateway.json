@@ -11,13 +11,13 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "Name": {
-          "type": "string"
-        },
         "Description": {
           "type": "string"
         },
         "IpAddress": {
+          "type": "string"
+        },
+        "Name": {
           "type": "string"
         }
       },

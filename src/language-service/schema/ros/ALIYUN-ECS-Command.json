@@ -11,7 +11,13 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "Name": {
+        "WorkingDir": {
+          "type": "string"
+        },
+        "CommandContent": {
+          "type": "string"
+        },
+        "Type": {
           "type": "string"
         },
         "Description": {
@@ -20,13 +26,7 @@
         "Timeout": {
           "type": "integer"
         },
-        "CommandContent": {
-          "type": "string"
-        },
-        "Type": {
-          "type": "string"
-        },
-        "WorkingDir": {
+        "Name": {
           "type": "string"
         }
       },

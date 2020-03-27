@@ -17,13 +17,13 @@
         "DBInstanceId": {
           "type": "string"
         },
+        "AccountType": {
+          "type": "string"
+        },
         "AccountPassword": {
           "type": "string"
         },
         "AccountName": {
-          "type": "string"
-        },
-        "AccountType": {
           "type": "string"
         }
       },

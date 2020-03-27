@@ -11,25 +11,25 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "VpcConfig": {
-          "type": "object"
-        },
-        "Description": {
-          "type": "string"
-        },
-        "ServiceName": {
+        "Role": {
           "type": "string"
         },
         "InternetAccess": {
           "type": "boolean"
         },
-        "Role": {
+        "Description": {
           "type": "string"
         },
-        "LogConfig": {
+        "VpcConfig": {
           "type": "object"
         },
+        "ServiceName": {
+          "type": "string"
+        },
         "NasConfig": {
+          "type": "object"
+        },
+        "LogConfig": {
           "type": "object"
         }
       },

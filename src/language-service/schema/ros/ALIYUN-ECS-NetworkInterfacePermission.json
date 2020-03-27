@@ -11,10 +11,10 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "Permission": {
+        "AccountId": {
           "type": "string"
         },
-        "AccountId": {
+        "Permission": {
           "type": "string"
         },
         "NetworkInterfaceId": {
@@ -22,8 +22,8 @@
         }
       },
       "required": [
-        "Permission",
         "AccountId",
+        "Permission",
         "NetworkInterfaceId"
       ],
       "additionalProperties": false,

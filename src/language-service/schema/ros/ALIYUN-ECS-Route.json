@@ -11,29 +11,29 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "NextHopId": {
-          "type": "string"
-        },
-        "RouteId": {
-          "type": "string"
-        },
         "NextHopType": {
           "type": "string"
         },
         "RouteTableId": {
           "type": "string"
         },
-        "DestinationCidrBlock": {
+        "NextHopId": {
           "type": "string"
         },
         "NextHopList": {
           "type": "array"
+        },
+        "DestinationCidrBlock": {
+          "type": "string"
+        },
+        "RouteId": {
+          "type": "string"
         }
       },
       "required": [
-        "RouteId",
         "RouteTableId",
-        "DestinationCidrBlock"
+        "DestinationCidrBlock",
+        "RouteId"
       ],
       "additionalProperties": false,
       "document": {

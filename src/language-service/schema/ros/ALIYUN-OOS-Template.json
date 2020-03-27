@@ -11,19 +11,19 @@
     "Properties": {
       "type": "object",
       "properties": {
+        "Content": {
+          "type": "string"
+        },
         "TemplateName": {
           "type": "string"
         },
         "Tags": {
           "type": "object"
-        },
-        "Content": {
-          "type": "string"
         }
       },
       "required": [
-        "TemplateName",
-        "Content"
+        "Content",
+        "TemplateName"
       ],
       "additionalProperties": false,
       "document": {

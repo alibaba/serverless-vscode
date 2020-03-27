@@ -14,11 +14,11 @@
         "StageName": {
           "type": "string"
         },
-        "TrafficControlId": {
-          "type": "string"
-        },
         "ApiIds": {
           "type": "array"
+        },
+        "TrafficControlId": {
+          "type": "string"
         },
         "GroupId": {
           "type": "string"
@@ -26,8 +26,8 @@
       },
       "required": [
         "StageName",
-        "TrafficControlId",
         "ApiIds",
+        "TrafficControlId",
         "GroupId"
       ],
       "additionalProperties": false,

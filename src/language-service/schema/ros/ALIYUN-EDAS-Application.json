@@ -1,55 +1,51 @@
 {
-  "$id": "ALIYUN::CS::App",
+  "$id": "ALIYUN::EDAS::Application",
   "type": "object",
   "properties": {
     "Type": {
       "type": "string",
       "enum": [
-        "ALIYUN::CS::App"
+        "ALIYUN::EDAS::Application"
       ]
     },
     "Properties": {
       "type": "object",
       "properties": {
-        "Environment": {
-          "type": "object"
+        "ComponentIds": {
+          "type": "string"
         },
-        "Name": {
+        "LogicalRegionId": {
+          "type": "string"
+        },
+        "ApplicationName": {
           "type": "string"
         },
         "Description": {
           "type": "string"
         },
-        "Key": {
+        "EcuInfo": {
           "type": "string"
         },
-        "Template": {
+        "HealthCheckURL": {
           "type": "string"
         },
         "ClusterId": {
           "type": "string"
         },
-        "Ca": {
+        "PackageType": {
           "type": "string"
         },
-        "Version": {
-          "type": "string"
-        },
-        "MasterUrl": {
-          "type": "string"
-        },
-        "Cert": {
-          "type": "string"
+        "BuildPackId": {
+          "type": "integer"
         }
       },
       "required": [
-        "Name",
-        "ClusterId",
-        "MasterUrl"
+        "ApplicationName",
+        "ClusterId"
       ],
       "additionalProperties": false,
       "document": {
-        "default": "https://rosnext.console.aliyun.com/resourceType/ALIYUN::CS::App"
+        "default": "https://rosnext.console.aliyun.com/resourceType/ALIYUN::EDAS::Application"
       }
     }
   },
@@ -58,7 +54,7 @@
     "Properties"
   ],
   "document": {
-    "default": "https://rosnext.console.aliyun.com/resourceType/ALIYUN::CS::App"
+    "default": "https://rosnext.console.aliyun.com/resourceType/ALIYUN::EDAS::Application"
   },
-  "insertText": "${1:App}:\n  Type: ALIYUN::CS::App\n  Properties:\n    "
+  "insertText": "${1:Application}:\n  Type: ALIYUN::EDAS::Application\n  Properties:\n    "
 }

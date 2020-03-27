@@ -11,16 +11,16 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "BackendServers": {
-          "type": "array"
-        },
         "VServerGroupId": {
           "type": "string"
+        },
+        "BackendServers": {
+          "type": "array"
         }
       },
       "required": [
-        "BackendServers",
-        "VServerGroupId"
+        "VServerGroupId",
+        "BackendServers"
       ],
       "additionalProperties": false,
       "document": {

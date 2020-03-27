@@ -11,45 +11,45 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "Period": {
-          "type": "integer"
+        "MasterNode": {
+          "type": "object"
         },
         "Description": {
           "type": "string"
         },
-        "Password": {
-          "type": "string"
-        },
-        "MasterNode": {
-          "type": "object"
-        },
-        "DataNode": {
-          "type": "object"
-        },
         "PrivateWhitelist": {
+          "type": "array"
+        },
+        "PublicWhitelist": {
           "type": "array"
         },
         "Version": {
           "type": "string"
         },
+        "DataNode": {
+          "type": "object"
+        },
         "InstanceChargeType": {
+          "type": "string"
+        },
+        "VSwitchId": {
           "type": "string"
         },
         "KibanaWhitelist": {
           "type": "array"
         },
-        "VSwitchId": {
-          "type": "string"
+        "Period": {
+          "type": "integer"
         },
-        "PublicWhitelist": {
-          "type": "array"
+        "Password": {
+          "type": "string"
         }
       },
       "required": [
-        "Password",
-        "DataNode",
         "Version",
-        "VSwitchId"
+        "DataNode",
+        "VSwitchId",
+        "Password"
       ],
       "additionalProperties": false,
       "document": {

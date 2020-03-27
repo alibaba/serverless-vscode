@@ -14,31 +14,31 @@
         "Status": {
           "type": "string"
         },
-        "Value": {
-          "type": "string"
-        },
         "Rr": {
           "type": "string"
         },
         "Type": {
           "type": "string"
         },
-        "Ttl": {
-          "type": "integer"
-        },
         "ZoneId": {
           "type": "string"
         },
         "Priority": {
           "type": "integer"
+        },
+        "Value": {
+          "type": "string"
+        },
+        "Ttl": {
+          "type": "integer"
         }
       },
       "required": [
         "Status",
-        "Value",
         "Rr",
         "Type",
-        "ZoneId"
+        "ZoneId",
+        "Value"
       ],
       "additionalProperties": false,
       "document": {

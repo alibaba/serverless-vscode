@@ -11,14 +11,14 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "Name": {
-          "type": "string"
+        "IsDefault": {
+          "type": "boolean"
         },
         "Description": {
           "type": "string"
         },
-        "IsDefault": {
-          "type": "boolean"
+        "Name": {
+          "type": "string"
         }
       },
       "required": [],

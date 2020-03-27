@@ -11,35 +11,35 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "TagList": {
-          "type": "array"
-        },
-        "AddressList": {
+        "GroupName": {
           "type": "string"
         },
         "Description": {
           "type": "string"
         },
+        "TagRelation": {
+          "type": "string"
+        },
         "GroupType": {
           "type": "string"
         },
-        "GroupName": {
+        "TagList": {
+          "type": "array"
+        },
+        "RegionId": {
           "type": "string"
         },
         "AutoAddTagEcs": {
           "type": "boolean"
         },
-        "RegionId": {
-          "type": "string"
-        },
-        "TagRelation": {
+        "AddressList": {
           "type": "string"
         }
       },
       "required": [
+        "GroupName",
         "Description",
-        "GroupType",
-        "GroupName"
+        "GroupType"
       ],
       "additionalProperties": false,
       "document": {

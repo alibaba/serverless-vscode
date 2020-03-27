@@ -11,19 +11,22 @@
     "Properties": {
       "type": "object",
       "properties": {
+        "StorageType": {
+          "type": "string"
+        },
         "Description": {
+          "type": "string"
+        },
+        "ZoneId": {
           "type": "string"
         },
         "ProtocolType": {
           "type": "string"
-        },
-        "StorageType": {
-          "type": "string"
         }
       },
       "required": [
-        "ProtocolType",
-        "StorageType"
+        "StorageType",
+        "ProtocolType"
       ],
       "additionalProperties": false,
       "document": {

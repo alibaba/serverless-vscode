@@ -14,7 +14,7 @@
         "RR": {
           "type": "string"
         },
-        "Value": {
+        "Line": {
           "type": "string"
         },
         "Type": {
@@ -23,21 +23,21 @@
         "DomainName": {
           "type": "string"
         },
-        "Line": {
+        "Priority": {
+          "type": "integer"
+        },
+        "Value": {
           "type": "string"
         },
         "TTL": {
-          "type": "integer"
-        },
-        "Priority": {
           "type": "integer"
         }
       },
       "required": [
         "RR",
-        "Value",
         "Type",
-        "DomainName"
+        "DomainName",
+        "Value"
       ],
       "additionalProperties": false,
       "document": {

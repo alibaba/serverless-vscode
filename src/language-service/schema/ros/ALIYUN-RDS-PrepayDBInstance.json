@@ -11,105 +11,102 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "Period": {
-          "type": "number"
-        },
-        "AllocatePublicConnection": {
-          "type": "boolean"
-        },
-        "DBMappings": {
-          "type": "array"
-        },
         "PeriodType": {
-          "type": "string"
-        },
-        "ZoneId": {
-          "type": "string"
-        },
-        "AutoRenew": {
-          "type": "boolean"
-        },
-        "ConnectionMode": {
-          "type": "string"
-        },
-        "VSwitchId": {
-          "type": "string"
-        },
-        "VpcId": {
-          "type": "string"
-        },
-        "Engine": {
-          "type": "string"
-        },
-        "CommodityCode": {
           "type": "string"
         },
         "PrivateIpAddress": {
           "type": "string"
         },
-        "EngineVersion": {
-          "type": "string"
-        },
-        "MasterUserType": {
-          "type": "string"
-        },
-        "BackupRetentionPeriod": {
-          "type": "number"
-        },
-        "PayType": {
+        "ResourceGroupId": {
           "type": "string"
         },
         "DBInstanceNetType": {
           "type": "string"
         },
-        "Quantity": {
-          "type": "number"
+        "AutoRenew": {
+          "type": "boolean"
         },
-        "DBInstanceClass": {
-          "type": "string"
-        },
-        "ResourceGroupId": {
-          "type": "string"
-        },
-        "DBInstanceDescription": {
-          "type": "string"
+        "PreferredBackupPeriod": {
+          "type": "array"
         },
         "DBInstanceStorage": {
           "type": "integer"
         },
-        "MasterUserPassword": {
+        "CommodityCode": {
           "type": "string"
         },
-        "AutoPay": {
-          "type": "boolean"
-        },
-        "Tags": {
-          "type": "object"
-        },
-        "MasterUsername": {
-          "type": "string"
-        },
-        "PreferredBackupPeriod": {
+        "DBMappings": {
           "type": "array"
         },
         "MultiAZ": {
           "type": "boolean"
         },
-        "CouponCode": {
+        "Engine": {
           "type": "string"
+        },
+        "DBInstanceDescription": {
+          "type": "string"
+        },
+        "Tags": {
+          "type": "object"
+        },
+        "EngineVersion": {
+          "type": "string"
+        },
+        "ZoneId": {
+          "type": "string"
+        },
+        "DBInstanceClass": {
+          "type": "string"
+        },
+        "AllocatePublicConnection": {
+          "type": "boolean"
         },
         "PreferredBackupTime": {
           "type": "string"
+        },
+        "VSwitchId": {
+          "type": "string"
+        },
+        "Quantity": {
+          "type": "number"
+        },
+        "Period": {
+          "type": "number"
+        },
+        "AutoPay": {
+          "type": "boolean"
+        },
+        "MasterUserPassword": {
+          "type": "string"
+        },
+        "CouponCode": {
+          "type": "string"
+        },
+        "MasterUserType": {
+          "type": "string"
+        },
+        "VpcId": {
+          "type": "string"
+        },
+        "MasterUsername": {
+          "type": "string"
+        },
+        "ConnectionMode": {
+          "type": "string"
+        },
+        "BackupRetentionPeriod": {
+          "type": "number"
         }
       },
       "required": [
-        "Period",
         "PeriodType",
-        "Engine",
+        "DBInstanceStorage",
         "CommodityCode",
+        "Engine",
         "EngineVersion",
         "DBInstanceClass",
-        "DBInstanceStorage"
+        "Period"
       ],
       "additionalProperties": false,
       "document": {

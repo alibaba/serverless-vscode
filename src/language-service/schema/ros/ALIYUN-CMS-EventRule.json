@@ -11,16 +11,16 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "Description": {
-          "type": "string"
-        },
-        "State": {
-          "type": "string"
-        },
         "EventPattern": {
           "type": "array"
         },
+        "Description": {
+          "type": "string"
+        },
         "EventType": {
+          "type": "string"
+        },
+        "State": {
           "type": "string"
         },
         "RuleName": {

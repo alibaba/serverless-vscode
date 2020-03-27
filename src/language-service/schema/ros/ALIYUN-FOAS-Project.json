@@ -11,7 +11,7 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "Name": {
+        "DeployType": {
           "type": "string"
         },
         "ManagerIds": {
@@ -20,20 +20,20 @@
         "Description": {
           "type": "string"
         },
-        "DeployType": {
-          "type": "string"
-        },
         "ClusterId": {
           "type": "string"
         },
         "OrderId": {
           "type": "string"
+        },
+        "Name": {
+          "type": "string"
         }
       },
       "required": [
-        "Name",
+        "DeployType",
         "ManagerIds",
-        "DeployType"
+        "Name"
       ],
       "additionalProperties": false,
       "document": {

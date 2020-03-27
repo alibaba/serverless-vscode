@@ -11,122 +11,125 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "Period": {
-          "type": "number"
-        },
-        "SecurityGroupId": {
+        "DedicatedHostId": {
           "type": "string"
-        },
-        "ImageId": {
-          "type": "string"
-        },
-        "Password": {
-          "type": "string"
-        },
-        "InternetMaxBandwidthIn": {
-          "type": "integer"
-        },
-        "ZoneId": {
-          "type": "string"
-        },
-        "AutoRenew": {
-          "type": "string"
-        },
-        "InternetChargeType": {
-          "type": "string"
-        },
-        "VSwitchId": {
-          "type": "string"
-        },
-        "SpotStrategy": {
-          "type": "string"
-        },
-        "VpcId": {
-          "type": "string"
-        },
-        "IoOptimized": {
-          "type": "string"
-        },
-        "AutoRenewPeriod": {
-          "type": "number"
-        },
-        "InternetMaxBandwidthOut": {
-          "type": "integer"
         },
         "PrivateIpAddress": {
-          "type": "string"
-        },
-        "SpotPriceLimit": {
-          "type": "string"
-        },
-        "KeyPairName": {
-          "type": "string"
-        },
-        "InstanceName": {
-          "type": "string"
-        },
-        "RamRoleName": {
-          "type": "string"
-        },
-        "DedicatedHostId": {
           "type": "string"
         },
         "Description": {
           "type": "string"
         },
-        "SystemDiskSize": {
-          "type": "number"
+        "ResourceGroupId": {
+          "type": "string"
         },
         "DiskMappings": {
           "type": "array"
         },
-        "ResourceGroupId": {
-          "type": "string"
-        },
-        "AllocatePublicIP": {
-          "type": "boolean"
-        },
         "UserData": {
           "type": "string"
         },
-        "HostName": {
-          "type": "string"
-        },
-        "InstanceType": {
-          "type": "string"
-        },
-        "Tags": {
-          "type": "array"
-        },
-        "HpcClusterId": {
-          "type": "string"
+        "SystemDiskSize": {
+          "type": "number"
         },
         "SystemDiskDescription": {
-          "type": "string"
-        },
-        "SystemDiskDiskName": {
-          "type": "string"
-        },
-        "SystemDiskCategory": {
-          "type": "string"
-        },
-        "DeletionProtection": {
-          "type": "boolean"
-        },
-        "PeriodUnit": {
           "type": "string"
         },
         "InstanceChargeType": {
           "type": "string"
         },
+        "AutoRenew": {
+          "type": "string"
+        },
+        "RamRoleName": {
+          "type": "string"
+        },
+        "SystemDiskPerformanceLevel": {
+          "type": "string"
+        },
+        "ImageId": {
+          "type": "string"
+        },
+        "SystemDiskDiskName": {
+          "type": "string"
+        },
+        "SpotPriceLimit": {
+          "type": "string"
+        },
+        "InstanceType": {
+          "type": "string"
+        },
+        "AllocatePublicIP": {
+          "type": "boolean"
+        },
+        "Tags": {
+          "type": "array"
+        },
+        "HostName": {
+          "type": "string"
+        },
+        "SpotStrategy": {
+          "type": "string"
+        },
+        "Password": {
+          "type": "string"
+        },
+        "AutoRenewPeriod": {
+          "type": "number"
+        },
+        "KeyPairName": {
+          "type": "string"
+        },
+        "IoOptimized": {
+          "type": "string"
+        },
+        "ZoneId": {
+          "type": "string"
+        },
+        "HpcClusterId": {
+          "type": "string"
+        },
+        "VSwitchId": {
+          "type": "string"
+        },
+        "SecurityGroupId": {
+          "type": "string"
+        },
+        "Period": {
+          "type": "number"
+        },
+        "DeletionProtection": {
+          "type": "boolean"
+        },
+        "InternetChargeType": {
+          "type": "string"
+        },
+        "SystemDiskCategory": {
+          "type": "string"
+        },
+        "InstanceName": {
+          "type": "string"
+        },
         "DeploymentSetId": {
+          "type": "string"
+        },
+        "InternetMaxBandwidthOut": {
+          "type": "integer"
+        },
+        "VpcId": {
+          "type": "string"
+        },
+        "InternetMaxBandwidthIn": {
+          "type": "integer"
+        },
+        "PeriodUnit": {
           "type": "string"
         }
       },
       "required": [
-        "SecurityGroupId",
         "ImageId",
-        "InstanceType"
+        "InstanceType",
+        "SecurityGroupId"
       ],
       "additionalProperties": false,
       "document": {

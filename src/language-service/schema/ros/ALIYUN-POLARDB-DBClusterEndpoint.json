@@ -11,23 +11,23 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "EndpointType": {
+        "AutoAddNewNodes": {
           "type": "string"
         },
-        "AutoAddNewNodes": {
+        "DBClusterId": {
+          "type": "string"
+        },
+        "EndpointType": {
           "type": "string"
         },
         "ReadWriteMode": {
           "type": "string"
         },
-        "Nodes": {
-          "type": "array"
-        },
-        "DBClusterId": {
-          "type": "string"
-        },
         "EndpointConfig": {
           "type": "object"
+        },
+        "Nodes": {
+          "type": "array"
         }
       },
       "required": [

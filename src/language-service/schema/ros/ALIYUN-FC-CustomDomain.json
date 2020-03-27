@@ -11,19 +11,19 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "RouteConfig": {
-          "type": "object"
-        },
-        "DomainName": {
+        "ApiVersion": {
           "type": "string"
         },
         "CertConfig": {
           "type": "object"
         },
-        "Protocol": {
+        "DomainName": {
           "type": "string"
         },
-        "ApiVersion": {
+        "RouteConfig": {
+          "type": "object"
+        },
+        "Protocol": {
           "type": "string"
         }
       },

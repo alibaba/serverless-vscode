@@ -11,7 +11,16 @@
     "Properties": {
       "type": "object",
       "properties": {
+        "Order": {
+          "type": "object"
+        },
         "Description": {
+          "type": "string"
+        },
+        "VSwitchId": {
+          "type": "string"
+        },
+        "OssBucket": {
           "type": "string"
         },
         "ClusterName": {
@@ -19,22 +28,13 @@
         },
         "OrderId": {
           "type": "string"
-        },
-        "Order": {
-          "type": "object"
-        },
-        "OssBucket": {
-          "type": "string"
-        },
-        "VSwitchId": {
-          "type": "string"
         }
       },
       "required": [
         "Description",
-        "ClusterName",
+        "VSwitchId",
         "OssBucket",
-        "VSwitchId"
+        "ClusterName"
       ],
       "additionalProperties": false,
       "document": {

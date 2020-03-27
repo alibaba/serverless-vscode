@@ -11,16 +11,16 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "KeyId": {
+        "AliasName": {
           "type": "string"
         },
-        "AliasName": {
+        "KeyId": {
           "type": "string"
         }
       },
       "required": [
-        "KeyId",
-        "AliasName"
+        "AliasName",
+        "KeyId"
       ],
       "additionalProperties": false,
       "document": {

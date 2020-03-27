@@ -11,24 +11,24 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "ServerCertificateId": {
-          "type": "string"
+        "ListenerPort": {
+          "type": "integer"
         },
-        "Domain": {
+        "ServerCertificateId": {
           "type": "string"
         },
         "LoadBalancerId": {
           "type": "string"
         },
-        "ListenerPort": {
-          "type": "integer"
+        "Domain": {
+          "type": "string"
         }
       },
       "required": [
+        "ListenerPort",
         "ServerCertificateId",
-        "Domain",
         "LoadBalancerId",
-        "ListenerPort"
+        "Domain"
       ],
       "additionalProperties": false,
       "document": {

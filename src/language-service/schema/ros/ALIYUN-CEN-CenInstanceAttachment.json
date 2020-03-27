@@ -11,6 +11,12 @@
     "Properties": {
       "type": "object",
       "properties": {
+        "ChildInstanceType": {
+          "type": "string"
+        },
+        "CenId": {
+          "type": "string"
+        },
         "ChildInstanceOwnerId": {
           "type": "integer"
         },
@@ -19,19 +25,13 @@
         },
         "ChildInstanceRegionId": {
           "type": "string"
-        },
-        "CenId": {
-          "type": "string"
-        },
-        "ChildInstanceType": {
-          "type": "string"
         }
       },
       "required": [
-        "ChildInstanceId",
-        "ChildInstanceRegionId",
+        "ChildInstanceType",
         "CenId",
-        "ChildInstanceType"
+        "ChildInstanceId",
+        "ChildInstanceRegionId"
       ],
       "additionalProperties": false,
       "document": {

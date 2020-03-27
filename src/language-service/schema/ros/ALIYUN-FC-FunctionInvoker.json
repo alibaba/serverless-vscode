@@ -11,8 +11,8 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "Async": {
-          "type": "boolean"
+        "FunctionName": {
+          "type": "string"
         },
         "ExecuteVersion": {
           "type": "integer"
@@ -20,19 +20,19 @@
         "ServiceName": {
           "type": "string"
         },
+        "Async": {
+          "type": "boolean"
+        },
         "Event": {
           "type": "string"
         },
         "Qualifier": {
           "type": "string"
-        },
-        "FunctionName": {
-          "type": "string"
         }
       },
       "required": [
-        "ServiceName",
-        "FunctionName"
+        "FunctionName",
+        "ServiceName"
       ],
       "additionalProperties": false,
       "document": {

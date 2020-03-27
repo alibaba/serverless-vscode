@@ -11,26 +11,26 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "Name": {
+        "SourceIp": {
           "type": "string"
         },
         "Lang": {
           "type": "string"
         },
+        "Cert": {
+          "type": "string"
+        },
         "Key": {
           "type": "string"
         },
-        "SourceIp": {
-          "type": "string"
-        },
-        "Cert": {
+        "Name": {
           "type": "string"
         }
       },
       "required": [
-        "Name",
+        "Cert",
         "Key",
-        "Cert"
+        "Name"
       ],
       "additionalProperties": false,
       "document": {

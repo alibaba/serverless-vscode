@@ -14,14 +14,14 @@
         "Description": {
           "type": "string"
         },
-        "Enable": {
-          "type": "boolean"
+        "PendingWindowInDays": {
+          "type": "integer"
         },
         "KeyUsage": {
           "type": "string"
         },
-        "PendingWindowInDays": {
-          "type": "integer"
+        "Enable": {
+          "type": "boolean"
         }
       },
       "required": [],

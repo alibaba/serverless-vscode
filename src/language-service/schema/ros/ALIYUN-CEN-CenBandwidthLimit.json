@@ -11,9 +11,6 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "LocalRegionId": {
-          "type": "string"
-        },
         "OppositeRegionId": {
           "type": "string"
         },
@@ -22,13 +19,16 @@
         },
         "BandwidthLimit": {
           "type": "integer"
+        },
+        "LocalRegionId": {
+          "type": "string"
         }
       },
       "required": [
-        "LocalRegionId",
         "OppositeRegionId",
         "CenId",
-        "BandwidthLimit"
+        "BandwidthLimit",
+        "LocalRegionId"
       ],
       "additionalProperties": false,
       "document": {

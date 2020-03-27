@@ -11,6 +11,15 @@
     "Properties": {
       "type": "object",
       "properties": {
+        "ChildInstanceType": {
+          "type": "string"
+        },
+        "CenId": {
+          "type": "string"
+        },
+        "DestinationCidrBlock": {
+          "type": "string"
+        },
         "ChildInstanceRouteTableId": {
           "type": "string"
         },
@@ -19,24 +28,15 @@
         },
         "ChildInstanceRegionId": {
           "type": "string"
-        },
-        "DestinationCidrBlock": {
-          "type": "string"
-        },
-        "CenId": {
-          "type": "string"
-        },
-        "ChildInstanceType": {
-          "type": "string"
         }
       },
       "required": [
+        "ChildInstanceType",
+        "CenId",
+        "DestinationCidrBlock",
         "ChildInstanceRouteTableId",
         "ChildInstanceId",
-        "ChildInstanceRegionId",
-        "DestinationCidrBlock",
-        "CenId",
-        "ChildInstanceType"
+        "ChildInstanceRegionId"
       ],
       "additionalProperties": false,
       "document": {

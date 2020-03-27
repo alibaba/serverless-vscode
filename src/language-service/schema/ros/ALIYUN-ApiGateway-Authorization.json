@@ -11,16 +11,16 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "StageName": {
-          "type": "string"
-        },
         "Description": {
           "type": "string"
         },
-        "AppIds": {
-          "type": "array"
+        "StageName": {
+          "type": "string"
         },
         "ApiIds": {
+          "type": "array"
+        },
+        "AppIds": {
           "type": "array"
         },
         "GroupId": {
@@ -29,8 +29,8 @@
       },
       "required": [
         "StageName",
-        "AppIds",
         "ApiIds",
+        "AppIds",
         "GroupId"
       ],
       "additionalProperties": false,

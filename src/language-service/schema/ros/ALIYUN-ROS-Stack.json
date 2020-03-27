@@ -11,11 +11,11 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "Parameters": {
-          "type": "object"
-        },
         "TemplateURL": {
           "type": "string"
+        },
+        "Parameters": {
+          "type": "object"
         },
         "TimeoutMins": {
           "type": "number"

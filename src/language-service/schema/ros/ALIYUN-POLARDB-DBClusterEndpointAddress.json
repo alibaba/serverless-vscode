@@ -11,22 +11,22 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "ConnectionStringPrefix": {
-          "type": "string"
-        },
-        "NetType": {
+        "DBEndpointId": {
           "type": "string"
         },
         "DBClusterId": {
           "type": "string"
         },
-        "DBEndpointId": {
+        "ConnectionStringPrefix": {
+          "type": "string"
+        },
+        "NetType": {
           "type": "string"
         }
       },
       "required": [
-        "DBClusterId",
-        "DBEndpointId"
+        "DBEndpointId",
+        "DBClusterId"
       ],
       "additionalProperties": false,
       "document": {

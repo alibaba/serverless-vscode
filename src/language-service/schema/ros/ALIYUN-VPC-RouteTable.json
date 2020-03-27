@@ -14,10 +14,10 @@
         "Description": {
           "type": "string"
         },
-        "RouteTableName": {
+        "VpcId": {
           "type": "string"
         },
-        "VpcId": {
+        "RouteTableName": {
           "type": "string"
         }
       },

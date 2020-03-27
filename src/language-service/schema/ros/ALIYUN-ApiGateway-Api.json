@@ -11,66 +11,69 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "ConstParameters": {
-          "type": "array"
-        },
-        "ErrorCodeSamples": {
-          "type": "array"
-        },
-        "Description": {
-          "type": "string"
-        },
-        "ApiName": {
-          "type": "string"
-        },
-        "RequestParameters": {
-          "type": "array"
-        },
-        "GroupId": {
-          "type": "string"
-        },
-        "FailResultSample": {
-          "type": "string"
-        },
-        "SystemParameters": {
-          "type": "array"
-        },
-        "ServiceParameters": {
-          "type": "array"
-        },
-        "ServiceParametersMap": {
-          "type": "array"
-        },
-        "ServiceConfig": {
-          "type": "object"
-        },
-        "OpenIdConnectConfig": {
-          "type": "object"
-        },
         "RequestConfig": {
           "type": "object"
         },
-        "Visibility": {
-          "type": "string"
-        },
-        "AuthType": {
+        "Description": {
           "type": "string"
         },
         "ResultSample": {
           "type": "string"
         },
+        "ApiName": {
+          "type": "string"
+        },
         "ResultType": {
+          "type": "string"
+        },
+        "FailResultSample": {
+          "type": "string"
+        },
+        "ErrorCodeSamples": {
+          "type": "array"
+        },
+        "ServiceParametersMap": {
+          "type": "array"
+        },
+        "GroupId": {
+          "type": "string"
+        },
+        "RequestParameters": {
+          "type": "array"
+        },
+        "AppCodeAuthType": {
+          "type": "string"
+        },
+        "ServiceConfig": {
+          "type": "object"
+        },
+        "ConstParameters": {
+          "type": "array"
+        },
+        "SystemParameters": {
+          "type": "array"
+        },
+        "OpenIdConnectConfig": {
+          "type": "object"
+        },
+        "Visibility": {
+          "type": "string"
+        },
+        "ServiceParameters": {
+          "type": "array"
+        },
+        "AuthType": {
           "type": "string"
         }
       },
       "required": [
+        "RequestConfig",
+        "ResultSample",
         "ApiName",
+        "ResultType",
         "GroupId",
         "ServiceConfig",
-        "RequestConfig",
-        "Visibility",
-        "ResultSample",
-        "ResultType"
+        "Visibility"
       ],
       "additionalProperties": false,
       "document": {

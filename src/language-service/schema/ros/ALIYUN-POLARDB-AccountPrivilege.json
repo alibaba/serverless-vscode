@@ -14,21 +14,21 @@
         "AccountPrivilege": {
           "type": "string"
         },
-        "AccountName": {
-          "type": "string"
-        },
         "DBClusterId": {
           "type": "string"
         },
         "DBName": {
           "type": "string"
+        },
+        "AccountName": {
+          "type": "string"
         }
       },
       "required": [
         "AccountPrivilege",
-        "AccountName",
         "DBClusterId",
-        "DBName"
+        "DBName",
+        "AccountName"
       ],
       "additionalProperties": false,
       "document": {

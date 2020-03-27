@@ -11,22 +11,19 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "Protocols": {
-          "type": "string"
-        },
-        "Region": {
-          "type": "string"
-        },
-        "HttpsRedirect": {
+        "HttpToUserIp": {
           "type": "integer"
         },
-        "HttpsPort": {
-          "type": "string"
-        },
-        "Domain": {
-          "type": "string"
-        },
         "HttpPort": {
+          "type": "string"
+        },
+        "IsAccessProduct": {
+          "type": "integer"
+        },
+        "RsType": {
+          "type": "integer"
+        },
+        "Protocols": {
           "type": "string"
         },
         "InstanceId": {
@@ -35,24 +32,27 @@
         "SourceIps": {
           "type": "string"
         },
+        "HttpsRedirect": {
+          "type": "integer"
+        },
+        "Region": {
+          "type": "string"
+        },
+        "Domain": {
+          "type": "string"
+        },
         "LoadBalancing": {
           "type": "integer"
         },
-        "HttpToUserIp": {
-          "type": "integer"
-        },
-        "IsAccessProduct": {
-          "type": "integer"
-        },
-        "RsType": {
-          "type": "integer"
+        "HttpsPort": {
+          "type": "string"
         }
       },
       "required": [
+        "IsAccessProduct",
         "Protocols",
-        "Domain",
         "InstanceId",
-        "IsAccessProduct"
+        "Domain"
       ],
       "additionalProperties": false,
       "document": {

@@ -11,16 +11,16 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "Vpcs": {
-          "type": "array"
-        },
         "InstanceName": {
           "type": "string"
+        },
+        "Vpcs": {
+          "type": "array"
         }
       },
       "required": [
-        "Vpcs",
-        "InstanceName"
+        "InstanceName",
+        "Vpcs"
       ],
       "additionalProperties": false,
       "document": {

@@ -11,55 +11,55 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "DBInstanceClass": {
-          "type": "string"
-        },
-        "DBInstanceId": {
-          "type": "string"
-        },
-        "ResourceGroupId": {
-          "type": "string"
-        },
-        "ZoneId": {
-          "type": "string"
-        },
-        "DBInstanceDescription": {
-          "type": "string"
-        },
-        "DBInstanceStorage": {
-          "type": "integer"
-        },
-        "VSwitchId": {
-          "type": "string"
-        },
-        "Tags": {
-          "type": "object"
-        },
         "Category": {
-          "type": "string"
-        },
-        "VPCId": {
-          "type": "string"
-        },
-        "PrivateIpAddress": {
           "type": "string"
         },
         "EngineVersion": {
           "type": "string"
         },
-        "DBInstanceStorageType": {
+        "PrivateIpAddress": {
+          "type": "string"
+        },
+        "ZoneId": {
+          "type": "string"
+        },
+        "ResourceGroupId": {
+          "type": "string"
+        },
+        "VPCId": {
+          "type": "string"
+        },
+        "DBInstanceClass": {
+          "type": "string"
+        },
+        "VSwitchId": {
           "type": "string"
         },
         "PayType": {
           "type": "string"
+        },
+        "DBInstanceStorageType": {
+          "type": "string"
+        },
+        "DBInstanceId": {
+          "type": "string"
+        },
+        "DBInstanceStorage": {
+          "type": "integer"
+        },
+        "DBInstanceDescription": {
+          "type": "string"
+        },
+        "Tags": {
+          "type": "object"
         }
       },
       "required": [
+        "EngineVersion",
+        "ZoneId",
         "DBInstanceClass",
         "DBInstanceId",
-        "ZoneId",
-        "DBInstanceStorage",
-        "EngineVersion"
+        "DBInstanceStorage"
       ],
       "additionalProperties": false,
       "document": {

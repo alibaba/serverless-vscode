@@ -11,13 +11,13 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "DBInstanceIPArrayName": {
-          "type": "string"
-        },
         "DBInstanceIPArrayAttribute": {
           "type": "string"
         },
         "DBInstanceId": {
+          "type": "string"
+        },
+        "DBInstanceIPArrayName": {
           "type": "string"
         }
       },

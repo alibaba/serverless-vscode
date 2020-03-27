@@ -11,16 +11,10 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "AccountPrivilege": {
-          "type": "string"
-        },
         "AccountDescription": {
           "type": "string"
         },
-        "AccountPassword": {
-          "type": "string"
-        },
-        "AccountName": {
+        "AccountPrivilege": {
           "type": "string"
         },
         "DBClusterId": {
@@ -31,12 +25,18 @@
         },
         "AccountType": {
           "type": "string"
+        },
+        "AccountName": {
+          "type": "string"
+        },
+        "AccountPassword": {
+          "type": "string"
         }
       },
       "required": [
-        "AccountPassword",
+        "DBClusterId",
         "AccountName",
-        "DBClusterId"
+        "AccountPassword"
       ],
       "additionalProperties": false,
       "document": {

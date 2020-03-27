@@ -11,11 +11,14 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "Tags": {
+        "Policy": {
           "type": "object"
         },
-        "RefererConfiguration": {
+        "CORSConfiguration": {
           "type": "object"
+        },
+        "DeletionForce": {
+          "type": "boolean"
         },
         "BucketName": {
           "type": "string"
@@ -23,28 +26,25 @@
         "StorageClass": {
           "type": "string"
         },
-        "Policy": {
-          "type": "object"
-        },
-        "DeletionForce": {
-          "type": "boolean"
-        },
-        "AccessControl": {
-          "type": "string"
-        },
-        "ServerSideEncryptionConfiguration": {
+        "LoggingConfiguration": {
           "type": "object"
         },
         "WebsiteConfiguration": {
           "type": "object"
         },
-        "LoggingConfiguration": {
-          "type": "object"
-        },
-        "CORSConfiguration": {
+        "RefererConfiguration": {
           "type": "object"
         },
         "LifecycleConfiguration": {
+          "type": "object"
+        },
+        "ServerSideEncryptionConfiguration": {
+          "type": "object"
+        },
+        "AccessControl": {
+          "type": "string"
+        },
+        "Tags": {
           "type": "object"
         }
       },

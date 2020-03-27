@@ -11,32 +11,32 @@
     "Properties": {
       "type": "object",
       "properties": {
+        "SlsProjectArn": {
+          "type": "string"
+        },
         "RoleName": {
-          "type": "string"
-        },
-        "Name": {
-          "type": "string"
-        },
-        "OssBucketName": {
-          "type": "string"
-        },
-        "OssKeyPrefix": {
           "type": "string"
         },
         "EventRW": {
           "type": "string"
         },
+        "OssKeyPrefix": {
+          "type": "string"
+        },
+        "OssBucketName": {
+          "type": "string"
+        },
         "SlsWriteRoleArn": {
           "type": "string"
         },
-        "SlsProjectArn": {
+        "Name": {
           "type": "string"
         }
       },
       "required": [
         "RoleName",
-        "Name",
-        "OssBucketName"
+        "OssBucketName",
+        "Name"
       ],
       "additionalProperties": false,
       "document": {

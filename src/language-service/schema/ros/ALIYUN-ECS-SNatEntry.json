@@ -11,20 +11,20 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "SNatIp": {
-          "type": "string"
-        },
         "SourceVSwitchId": {
           "type": "string"
         },
         "SNatTableId": {
           "type": "string"
+        },
+        "SNatIp": {
+          "type": "string"
         }
       },
       "required": [
-        "SNatIp",
         "SourceVSwitchId",
-        "SNatTableId"
+        "SNatTableId",
+        "SNatIp"
       ],
       "additionalProperties": false,
       "document": {

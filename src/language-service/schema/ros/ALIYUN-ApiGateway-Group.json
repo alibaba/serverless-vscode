@@ -11,10 +11,13 @@
     "Properties": {
       "type": "object",
       "properties": {
+        "GroupName": {
+          "type": "string"
+        },
         "Description": {
           "type": "string"
         },
-        "GroupName": {
+        "InstanceId": {
           "type": "string"
         }
       },

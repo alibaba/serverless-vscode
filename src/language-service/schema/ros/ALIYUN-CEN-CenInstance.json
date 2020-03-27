@@ -11,10 +11,10 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "Name": {
+        "Description": {
           "type": "string"
         },
-        "Description": {
+        "Name": {
           "type": "string"
         }
       },

@@ -11,10 +11,10 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "SecurityIps": {
+        "SecurityIpGroupAttribute": {
           "type": "string"
         },
-        "SecurityIpGroupAttribute": {
+        "SecurityIps": {
           "type": "string"
         },
         "InstanceId": {

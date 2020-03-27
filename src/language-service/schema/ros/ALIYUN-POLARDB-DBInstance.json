@@ -11,10 +11,10 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "AccountPrivilege": {
+        "CharacterSetName": {
           "type": "string"
         },
-        "AccountName": {
+        "AccountPrivilege": {
           "type": "string"
         },
         "DBDescription": {
@@ -26,14 +26,14 @@
         "DBName": {
           "type": "string"
         },
-        "CharacterSetName": {
+        "AccountName": {
           "type": "string"
         }
       },
       "required": [
+        "CharacterSetName",
         "DBClusterId",
-        "DBName",
-        "CharacterSetName"
+        "DBName"
       ],
       "additionalProperties": false,
       "document": {

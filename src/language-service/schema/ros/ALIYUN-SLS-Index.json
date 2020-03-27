@@ -11,26 +11,26 @@
     "Properties": {
       "type": "object",
       "properties": {
+        "LogstoreName": {
+          "type": "string"
+        },
         "ProjectName": {
           "type": "string"
         },
         "KeyIndices": {
           "type": "array"
         },
-        "LogReduce": {
-          "type": "boolean"
-        },
         "FullTextIndex": {
           "type": "object"
         },
-        "LogstoreName": {
-          "type": "string"
+        "LogReduce": {
+          "type": "boolean"
         }
       },
       "required": [
+        "LogstoreName",
         "ProjectName",
-        "FullTextIndex",
-        "LogstoreName"
+        "FullTextIndex"
       ],
       "additionalProperties": false,
       "document": {

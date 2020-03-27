@@ -11,16 +11,16 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "NotificationArn": {
+        "LifecycleHookName": {
           "type": "string"
         },
-        "LifecycleTransition": {
+        "NotificationArn": {
           "type": "string"
         },
         "ScalingGroupId": {
           "type": "string"
         },
-        "DefaultResult": {
+        "LifecycleTransition": {
           "type": "string"
         },
         "HeartbeatTimeout": {
@@ -29,13 +29,13 @@
         "NotificationMetadata": {
           "type": "string"
         },
-        "LifecycleHookName": {
+        "DefaultResult": {
           "type": "string"
         }
       },
       "required": [
-        "LifecycleTransition",
-        "ScalingGroupId"
+        "ScalingGroupId",
+        "LifecycleTransition"
       ],
       "additionalProperties": false,
       "document": {

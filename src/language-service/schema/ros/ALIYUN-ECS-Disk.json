@@ -11,29 +11,50 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "Tags": {
-          "type": "array"
-        },
         "Description": {
+          "type": "string"
+        },
+        "KMSKeyId": {
           "type": "string"
         },
         "ResourceGroupId": {
           "type": "string"
         },
-        "SnapshotId": {
-          "type": "string"
-        },
         "ZoneId": {
           "type": "string"
         },
-        "DiskName": {
-          "type": "string"
+        "Encrypted": {
+          "type": "boolean"
         },
-        "DiskCategory": {
+        "PerformanceLevel": {
           "type": "string"
         },
         "Size": {
           "type": "integer"
+        },
+        "DeleteAutoSnapshot": {
+          "type": "boolean"
+        },
+        "DiskCategory": {
+          "type": "string"
+        },
+        "AutoSnapshotPolicyId": {
+          "type": "string"
+        },
+        "StorageSetPartitionNumber": {
+          "type": "integer"
+        },
+        "DiskName": {
+          "type": "string"
+        },
+        "SnapshotId": {
+          "type": "string"
+        },
+        "StorageSetId": {
+          "type": "string"
+        },
+        "Tags": {
+          "type": "array"
         }
       },
       "required": [

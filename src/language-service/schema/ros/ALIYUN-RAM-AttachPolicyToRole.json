@@ -11,20 +11,20 @@
     "Properties": {
       "type": "object",
       "properties": {
+        "PolicyType": {
+          "type": "string"
+        },
         "RoleName": {
           "type": "string"
         },
         "PolicyName": {
           "type": "string"
-        },
-        "PolicyType": {
-          "type": "string"
         }
       },
       "required": [
+        "PolicyType",
         "RoleName",
-        "PolicyName",
-        "PolicyType"
+        "PolicyName"
       ],
       "additionalProperties": false,
       "document": {

@@ -11,11 +11,11 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "Count": {
-          "type": "integer"
-        },
         "Mode": {
           "type": "string"
+        },
+        "Count": {
+          "type": "integer"
         }
       },
       "required": [],

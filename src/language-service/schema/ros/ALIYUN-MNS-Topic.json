@@ -14,11 +14,11 @@
         "MaximumMessageSize": {
           "type": "integer"
         },
-        "TopicName": {
-          "type": "string"
-        },
         "LoggingEnabled": {
           "type": "boolean"
+        },
+        "TopicName": {
+          "type": "string"
         }
       },
       "required": [

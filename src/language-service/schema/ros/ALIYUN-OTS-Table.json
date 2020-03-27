@@ -11,10 +11,16 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "Columns": {
-          "type": "array"
+        "InstanceName": {
+          "type": "string"
+        },
+        "TableName": {
+          "type": "string"
         },
         "TimeToLive": {
+          "type": "integer"
+        },
+        "MaxVersions": {
           "type": "integer"
         },
         "SecondaryIndices": {
@@ -23,26 +29,20 @@
         "DeviationCellVersionInSec": {
           "type": "integer"
         },
-        "TableName": {
-          "type": "string"
-        },
         "PrimaryKey": {
           "type": "array"
         },
-        "MaxVersions": {
-          "type": "integer"
+        "Columns": {
+          "type": "array"
         },
         "ReservedThroughput": {
           "type": "object"
-        },
-        "InstanceName": {
-          "type": "string"
         }
       },
       "required": [
+        "InstanceName",
         "TableName",
-        "PrimaryKey",
-        "InstanceName"
+        "PrimaryKey"
       ],
       "additionalProperties": false,
       "document": {

@@ -11,31 +11,46 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "LoadBalancerName": {
-          "type": "string"
-        },
         "ResourceGroupId": {
-          "type": "string"
-        },
-        "VSwitchId": {
-          "type": "string"
-        },
-        "InternetChargeType": {
-          "type": "string"
-        },
-        "AutoPay": {
-          "type": "boolean"
-        },
-        "VpcId": {
           "type": "string"
         },
         "PricingCycle": {
           "type": "string"
         },
+        "VSwitchId": {
+          "type": "string"
+        },
+        "Duration": {
+          "type": "number"
+        },
+        "DeletionProtection": {
+          "type": "boolean"
+        },
+        "AutoPay": {
+          "type": "boolean"
+        },
+        "PayType": {
+          "type": "string"
+        },
         "SlaveZoneId": {
           "type": "string"
         },
+        "InternetChargeType": {
+          "type": "string"
+        },
         "LoadBalancerSpec": {
+          "type": "string"
+        },
+        "LoadBalancerName": {
+          "type": "string"
+        },
+        "VpcId": {
+          "type": "string"
+        },
+        "Bandwidth": {
+          "type": "integer"
+        },
+        "AddressType": {
           "type": "string"
         },
         "Tags": {
@@ -43,21 +58,6 @@
         },
         "MasterZoneId": {
           "type": "string"
-        },
-        "Duration": {
-          "type": "number"
-        },
-        "AddressType": {
-          "type": "string"
-        },
-        "DeletionProtection": {
-          "type": "boolean"
-        },
-        "PayType": {
-          "type": "string"
-        },
-        "Bandwidth": {
-          "type": "integer"
         }
       },
       "required": [],

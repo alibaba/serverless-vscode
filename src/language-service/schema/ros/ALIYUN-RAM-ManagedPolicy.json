@@ -11,25 +11,25 @@
     "Properties": {
       "type": "object",
       "properties": {
+        "Description": {
+          "type": "string"
+        },
         "Groups": {
           "type": "array"
         },
-        "Users": {
-          "type": "array"
-        },
-        "Description": {
+        "PolicyName": {
           "type": "string"
         },
         "PolicyDocumentUnchecked": {
           "type": "object"
         },
-        "PolicyName": {
-          "type": "string"
-        },
         "PolicyDocument": {
           "type": "object"
         },
         "Roles": {
+          "type": "array"
+        },
+        "Users": {
           "type": "array"
         }
       },

@@ -11,25 +11,25 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "CertificateName": {
-          "type": "string"
-        },
-        "AliCloudCertificateId": {
-          "type": "string"
-        },
-        "ResourceGroupId": {
-          "type": "string"
-        },
         "CertificateType": {
           "type": "string"
         },
-        "Certificate": {
+        "AliCloudCertificateName": {
           "type": "string"
         },
         "PrivateKey": {
           "type": "string"
         },
-        "AliCloudCertificateName": {
+        "ResourceGroupId": {
+          "type": "string"
+        },
+        "CertificateName": {
+          "type": "string"
+        },
+        "Certificate": {
+          "type": "string"
+        },
+        "AliCloudCertificateId": {
           "type": "string"
         }
       },

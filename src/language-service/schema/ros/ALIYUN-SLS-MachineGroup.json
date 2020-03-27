@@ -11,22 +11,22 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "GroupType": {
-          "type": "string"
-        },
         "MachineList": {
           "type": "array"
-        },
-        "ProjectName": {
-          "type": "string"
         },
         "GroupName": {
           "type": "string"
         },
-        "GroupAttribute": {
+        "GroupType": {
+          "type": "string"
+        },
+        "ProjectName": {
           "type": "string"
         },
         "MachineIdentifyType": {
+          "type": "string"
+        },
+        "GroupAttribute": {
           "type": "string"
         }
       },

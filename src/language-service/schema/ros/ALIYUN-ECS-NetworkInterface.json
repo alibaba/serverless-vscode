@@ -11,22 +11,22 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "SecurityGroupId": {
-          "type": "string"
-        },
         "Description": {
           "type": "string"
         },
         "ResourceGroupId": {
           "type": "string"
         },
+        "SecurityGroupId": {
+          "type": "string"
+        },
+        "VSwitchId": {
+          "type": "string"
+        },
         "NetworkInterfaceName": {
           "type": "string"
         },
         "PrimaryIpAddress": {
-          "type": "string"
-        },
-        "VSwitchId": {
           "type": "string"
         }
       },

@@ -11,34 +11,34 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "Description": {
-          "type": "string"
+        "BandwidthPackage": {
+          "type": "array"
         },
-        "Spec": {
+        "Description": {
           "type": "string"
         },
         "DeletionForce": {
           "type": "boolean"
         },
+        "VpcId": {
+          "type": "string"
+        },
         "NatGatewayName": {
+          "type": "string"
+        },
+        "VSwitchId": {
           "type": "string"
         },
         "DeletionProtection": {
           "type": "boolean"
         },
-        "BandwidthPackage": {
-          "type": "array"
-        },
-        "VSwitchId": {
-          "type": "string"
-        },
-        "VpcId": {
+        "Spec": {
           "type": "string"
         }
       },
       "required": [
-        "VSwitchId",
-        "VpcId"
+        "VpcId",
+        "VSwitchId"
       ],
       "additionalProperties": false,
       "document": {

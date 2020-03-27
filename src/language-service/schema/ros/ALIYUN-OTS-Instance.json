@@ -11,8 +11,8 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "Tags": {
-          "type": "array"
+        "InstanceName": {
+          "type": "string"
         },
         "Description": {
           "type": "string"
@@ -23,8 +23,8 @@
         "ClusterType": {
           "type": "string"
         },
-        "InstanceName": {
-          "type": "string"
+        "Tags": {
+          "type": "array"
         }
       },
       "required": [

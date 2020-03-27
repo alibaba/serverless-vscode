@@ -11,23 +11,23 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "ServiceOn": {
-          "type": "integer"
+        "InstanceId": {
+          "type": "string"
         },
         "Region": {
           "type": "string"
         },
-        "Domain": {
-          "type": "string"
+        "ServiceOn": {
+          "type": "integer"
         },
-        "InstanceId": {
+        "Domain": {
           "type": "string"
         }
       },
       "required": [
+        "InstanceId",
         "ServiceOn",
-        "Domain",
-        "InstanceId"
+        "Domain"
       ],
       "additionalProperties": false,
       "document": {

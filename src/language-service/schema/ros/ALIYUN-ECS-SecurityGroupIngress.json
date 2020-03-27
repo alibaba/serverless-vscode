@@ -11,19 +11,7 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "SourceCidrIp": {
-          "type": "string"
-        },
-        "IpProtocol": {
-          "type": "string"
-        },
-        "SecurityGroupId": {
-          "type": "string"
-        },
-        "Description": {
-          "type": "string"
-        },
-        "NicType": {
+        "SourceGroupId": {
           "type": "string"
         },
         "Policy": {
@@ -32,20 +20,36 @@
         "PortRange": {
           "type": "string"
         },
-        "SourceGroupId": {
+        "Description": {
           "type": "string"
         },
-        "Ipv6SourceCidrIp": {
+        "SourcePortRange": {
+          "type": "string"
+        },
+        "Priority": {
+          "type": "integer"
+        },
+        "SecurityGroupId": {
+          "type": "string"
+        },
+        "SourceCidrIp": {
           "type": "string"
         },
         "SourceGroupOwnerId": {
           "type": "string"
         },
-        "Priority": {
-          "type": "integer"
+        "IpProtocol": {
+          "type": "string"
+        },
+        "Ipv6SourceCidrIp": {
+          "type": "string"
+        },
+        "NicType": {
+          "type": "string"
         }
       },
       "required": [
+        "PortRange",
         "IpProtocol"
       ],
       "additionalProperties": false,
