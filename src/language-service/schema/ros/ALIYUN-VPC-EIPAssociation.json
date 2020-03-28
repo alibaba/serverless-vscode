@@ -11,16 +11,16 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "InstanceId": {
-          "type": "string"
-        },
         "PrivateIpAddress": {
           "type": "string"
         },
-        "AllocationId": {
+        "InstanceId": {
           "type": "string"
         },
         "Mode": {
+          "type": "string"
+        },
+        "AllocationId": {
           "type": "string"
         }
       },

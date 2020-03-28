@@ -11,13 +11,13 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "Comments": {
+        "GroupName": {
           "type": "string"
         },
         "Policies": {
           "type": "array"
         },
-        "GroupName": {
+        "Comments": {
           "type": "string"
         }
       },

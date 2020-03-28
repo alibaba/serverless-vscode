@@ -11,25 +11,25 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "SourceCidrIp": {
-          "type": "string"
-        },
         "UserAccessType": {
-          "type": "string"
-        },
-        "AccessGroupName": {
-          "type": "string"
-        },
-        "RWAccessType": {
           "type": "string"
         },
         "Priority": {
           "type": "integer"
+        },
+        "AccessGroupName": {
+          "type": "string"
+        },
+        "SourceCidrIp": {
+          "type": "string"
+        },
+        "RWAccessType": {
+          "type": "string"
         }
       },
       "required": [
-        "SourceCidrIp",
-        "AccessGroupName"
+        "AccessGroupName",
+        "SourceCidrIp"
       ],
       "additionalProperties": false,
       "document": {

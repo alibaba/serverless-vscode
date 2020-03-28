@@ -11,13 +11,13 @@
     "Properties": {
       "type": "object",
       "properties": {
+        "OnUnableToRedeployFailedInstance": {
+          "type": "string"
+        },
         "Description": {
           "type": "string"
         },
         "DeploymentSetName": {
-          "type": "string"
-        },
-        "OnUnableToRedeployFailedInstance": {
           "type": "string"
         }
       },

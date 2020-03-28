@@ -11,37 +11,37 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "EnableTracking": {
+        "LogstoreName": {
+          "type": "string"
+        },
+        "PreserveStorage": {
           "type": "boolean"
         },
         "ProjectName": {
           "type": "string"
         },
-        "ShardCount": {
-          "type": "integer"
-        },
         "AppendMeta": {
-          "type": "boolean"
-        },
-        "AutoSplit": {
-          "type": "boolean"
-        },
-        "PreserveStorage": {
           "type": "boolean"
         },
         "MaxSplitShard": {
           "type": "integer"
         },
-        "LogstoreName": {
-          "type": "string"
+        "AutoSplit": {
+          "type": "boolean"
+        },
+        "EnableTracking": {
+          "type": "boolean"
         },
         "TTL": {
+          "type": "integer"
+        },
+        "ShardCount": {
           "type": "integer"
         }
       },
       "required": [
-        "ProjectName",
-        "LogstoreName"
+        "LogstoreName",
+        "ProjectName"
       ],
       "additionalProperties": false,
       "document": {

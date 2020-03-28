@@ -11,91 +11,91 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "Period": {
-          "type": "integer"
-        },
-        "AllocatePublicConnection": {
-          "type": "boolean"
-        },
-        "DBMappings": {
-          "type": "array"
-        },
         "PeriodType": {
-          "type": "string"
-        },
-        "ZoneId": {
-          "type": "string"
-        },
-        "ConnectionMode": {
-          "type": "string"
-        },
-        "VSwitchId": {
-          "type": "string"
-        },
-        "VpcId": {
-          "type": "string"
-        },
-        "Engine": {
           "type": "string"
         },
         "PrivateIpAddress": {
           "type": "string"
         },
-        "EngineVersion": {
-          "type": "string"
-        },
-        "MasterUserType": {
-          "type": "string"
-        },
-        "BackupRetentionPeriod": {
-          "type": "number"
-        },
-        "PayType": {
+        "ResourceGroupId": {
           "type": "string"
         },
         "DBInstanceNetType": {
           "type": "string"
         },
-        "DBInstanceClass": {
-          "type": "string"
+        "PreferredBackupPeriod": {
+          "type": "array"
         },
-        "ResourceGroupId": {
-          "type": "string"
-        },
-        "DBInstanceDescription": {
+        "SecurityIPList": {
           "type": "string"
         },
         "DBInstanceStorage": {
           "type": "integer"
         },
-        "MasterUserPassword": {
-          "type": "string"
-        },
-        "Tags": {
-          "type": "object"
-        },
-        "MasterUsername": {
-          "type": "string"
-        },
-        "PreferredBackupPeriod": {
+        "DBMappings": {
           "type": "array"
         },
         "MultiAZ": {
           "type": "boolean"
         },
+        "Engine": {
+          "type": "string"
+        },
+        "DBInstanceDescription": {
+          "type": "string"
+        },
+        "Tags": {
+          "type": "object"
+        },
+        "EngineVersion": {
+          "type": "string"
+        },
+        "ZoneId": {
+          "type": "string"
+        },
+        "DBInstanceClass": {
+          "type": "string"
+        },
+        "AllocatePublicConnection": {
+          "type": "boolean"
+        },
         "PreferredBackupTime": {
           "type": "string"
         },
-        "SecurityIPList": {
+        "VSwitchId": {
           "type": "string"
+        },
+        "Period": {
+          "type": "integer"
+        },
+        "PayType": {
+          "type": "string"
+        },
+        "MasterUserPassword": {
+          "type": "string"
+        },
+        "MasterUserType": {
+          "type": "string"
+        },
+        "VpcId": {
+          "type": "string"
+        },
+        "MasterUsername": {
+          "type": "string"
+        },
+        "ConnectionMode": {
+          "type": "string"
+        },
+        "BackupRetentionPeriod": {
+          "type": "number"
         }
       },
       "required": [
+        "SecurityIPList",
+        "DBInstanceStorage",
         "Engine",
         "EngineVersion",
-        "DBInstanceClass",
-        "DBInstanceStorage",
-        "SecurityIPList"
+        "DBInstanceClass"
       ],
       "additionalProperties": false,
       "document": {

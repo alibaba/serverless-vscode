@@ -11,67 +11,7 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "Period": {
-          "type": "number"
-        },
-        "SecurityGroupId": {
-          "type": "string"
-        },
-        "ImageId": {
-          "type": "string"
-        },
-        "MinAmount": {
-          "type": "integer"
-        },
-        "Password": {
-          "type": "string"
-        },
-        "InternetMaxBandwidthIn": {
-          "type": "integer"
-        },
-        "SystemDiskAutoSnapshotPolicyId": {
-          "type": "string"
-        },
         "PeriodType": {
-          "type": "string"
-        },
-        "ZoneId": {
-          "type": "string"
-        },
-        "AutoRenew": {
-          "type": "string"
-        },
-        "SourceInstanceId": {
-          "type": "string"
-        },
-        "LaunchTemplateName": {
-          "type": "string"
-        },
-        "AutoRenewPeriod": {
-          "type": "number"
-        },
-        "LaunchTemplateVersion": {
-          "type": "string"
-        },
-        "InternetMaxBandwidthOut": {
-          "type": "integer"
-        },
-        "LaunchTemplateId": {
-          "type": "string"
-        },
-        "EniMappings": {
-          "type": "array"
-        },
-        "KeyPairName": {
-          "type": "string"
-        },
-        "MaxAmount": {
-          "type": "integer"
-        },
-        "InstanceName": {
-          "type": "string"
-        },
-        "RamRoleName": {
           "type": "string"
         },
         "Description": {
@@ -80,34 +20,94 @@
         "DiskMappings": {
           "type": "array"
         },
-        "Tags": {
-          "type": "array"
-        },
-        "HpcClusterId": {
+        "SystemDiskDescription": {
           "type": "string"
         },
-        "SystemDiskDescription": {
+        "AutoRenew": {
+          "type": "string"
+        },
+        "SourceInstanceId": {
+          "type": "string"
+        },
+        "MaxAmount": {
+          "type": "integer"
+        },
+        "SystemDiskAutoSnapshotPolicyId": {
+          "type": "string"
+        },
+        "RamRoleName": {
+          "type": "string"
+        },
+        "MinAmount": {
+          "type": "integer"
+        },
+        "ImageId": {
           "type": "string"
         },
         "SystemDiskDiskName": {
           "type": "string"
         },
+        "Tags": {
+          "type": "array"
+        },
+        "Password": {
+          "type": "string"
+        },
+        "AutoRenewPeriod": {
+          "type": "number"
+        },
+        "KeyPairName": {
+          "type": "string"
+        },
+        "LaunchTemplateName": {
+          "type": "string"
+        },
+        "ZoneId": {
+          "type": "string"
+        },
+        "HpcClusterId": {
+          "type": "string"
+        },
+        "SecurityGroupId": {
+          "type": "string"
+        },
+        "Period": {
+          "type": "number"
+        },
+        "LaunchTemplateId": {
+          "type": "string"
+        },
         "SystemDiskCategory": {
           "type": "string"
         },
-        "PeriodUnit": {
+        "EniMappings": {
+          "type": "array"
+        },
+        "InstanceName": {
           "type": "string"
         },
         "DeploymentSetId": {
           "type": "string"
+        },
+        "InternetMaxBandwidthOut": {
+          "type": "integer"
+        },
+        "InternetMaxBandwidthIn": {
+          "type": "integer"
+        },
+        "LaunchTemplateVersion": {
+          "type": "string"
+        },
+        "PeriodUnit": {
+          "type": "string"
         }
       },
       "required": [
-        "Period",
-        "MinAmount",
         "PeriodType",
         "SourceInstanceId",
-        "MaxAmount"
+        "MaxAmount",
+        "MinAmount",
+        "Period"
       ],
       "additionalProperties": false,
       "document": {

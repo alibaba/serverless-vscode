@@ -11,22 +11,31 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "Period": {
-          "type": "number"
+        "OppositeInterfaceOwnerId": {
+          "type": "string"
         },
         "Description": {
           "type": "string"
         },
-        "Spec": {
+        "OppositeRouterId": {
           "type": "string"
         },
-        "OppositeInterfaceOwnerId": {
+        "OppositeRegionId": {
           "type": "string"
         },
-        "OppositeAccessPointId": {
+        "InstanceChargeType": {
           "type": "string"
         },
-        "HealthCheckTargetIp": {
+        "PricingCycle": {
+          "type": "string"
+        },
+        "HealthCheckSourceIp": {
+          "type": "string"
+        },
+        "Period": {
+          "type": "number"
+        },
+        "RouterId": {
           "type": "string"
         },
         "AutoPay": {
@@ -35,34 +44,25 @@
         "Name": {
           "type": "string"
         },
-        "PricingCycle": {
-          "type": "string"
-        },
-        "RouterType": {
+        "Role": {
           "type": "string"
         },
         "OppositeRouterType": {
           "type": "string"
         },
-        "OppositeRouterId": {
-          "type": "string"
-        },
-        "RouterId": {
-          "type": "string"
-        },
-        "OppositeRegionId": {
-          "type": "string"
-        },
-        "Role": {
-          "type": "string"
-        },
-        "InstanceChargeType": {
-          "type": "string"
-        },
-        "HealthCheckSourceIp": {
+        "RouterType": {
           "type": "string"
         },
         "AccessPointId": {
+          "type": "string"
+        },
+        "OppositeAccessPointId": {
+          "type": "string"
+        },
+        "Spec": {
+          "type": "string"
+        },
+        "HealthCheckTargetIp": {
           "type": "string"
         }
       },

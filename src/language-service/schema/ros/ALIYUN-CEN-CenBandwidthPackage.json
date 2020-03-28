@@ -11,32 +11,32 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "Name": {
-          "type": "string"
-        },
-        "PricingCycle": {
-          "type": "string"
-        },
-        "Period": {
-          "type": "integer"
-        },
         "Description": {
-          "type": "string"
-        },
-        "GeographicRegionBId": {
           "type": "string"
         },
         "BandwidthPackageChargeType": {
           "type": "string"
         },
+        "GeographicRegionBId": {
+          "type": "string"
+        },
         "GeographicRegionAId": {
           "type": "string"
+        },
+        "PricingCycle": {
+          "type": "string"
+        },
+        "Bandwidth": {
+          "type": "integer"
+        },
+        "Period": {
+          "type": "integer"
         },
         "AutoPay": {
           "type": "boolean"
         },
-        "Bandwidth": {
-          "type": "integer"
+        "Name": {
+          "type": "string"
         }
       },
       "required": [

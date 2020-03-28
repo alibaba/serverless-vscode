@@ -11,20 +11,20 @@
     "Properties": {
       "type": "object",
       "properties": {
+        "SignatureSecret": {
+          "type": "string"
+        },
         "SignatureName": {
           "type": "string"
         },
         "SignatureKey": {
           "type": "string"
-        },
-        "SignatureSecret": {
-          "type": "string"
         }
       },
       "required": [
+        "SignatureSecret",
         "SignatureName",
-        "SignatureKey",
-        "SignatureSecret"
+        "SignatureKey"
       ],
       "additionalProperties": false,
       "document": {

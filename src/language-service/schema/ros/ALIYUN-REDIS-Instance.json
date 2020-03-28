@@ -11,13 +11,16 @@
     "Properties": {
       "type": "object",
       "properties": {
+        "InstanceName": {
+          "type": "string"
+        },
+        "EngineVersion": {
+          "type": "string"
+        },
+        "VpcId": {
+          "type": "string"
+        },
         "EvictionPolicy": {
-          "type": "string"
-        },
-        "InstanceClass": {
-          "type": "string"
-        },
-        "Password": {
           "type": "string"
         },
         "ZoneId": {
@@ -26,16 +29,16 @@
         "Capacity": {
           "type": "integer"
         },
-        "EngineVersion": {
-          "type": "string"
-        },
         "VSwitchId": {
           "type": "string"
         },
-        "InstanceName": {
+        "InstanceClass": {
           "type": "string"
         },
-        "VpcId": {
+        "VpcPasswordFree": {
+          "type": "boolean"
+        },
+        "Password": {
           "type": "string"
         }
       },

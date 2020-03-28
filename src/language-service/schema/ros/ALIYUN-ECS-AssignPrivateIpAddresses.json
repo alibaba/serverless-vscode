@@ -11,11 +11,11 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "PrivateIpAddresses": {
-          "type": "array"
-        },
         "SecondaryPrivateIpAddressCount": {
           "type": "integer"
+        },
+        "PrivateIpAddresses": {
+          "type": "array"
         },
         "NetworkInterfaceId": {
           "type": "string"

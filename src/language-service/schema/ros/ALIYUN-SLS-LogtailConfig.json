@@ -11,26 +11,26 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "ProjectName": {
-          "type": "string"
-        },
         "LogtailConfigName": {
           "type": "string"
         },
-        "CloneFrom": {
-          "type": "object"
+        "LogstoreName": {
+          "type": "string"
+        },
+        "ProjectName": {
+          "type": "string"
         },
         "RawConfigData": {
           "type": "object"
         },
-        "LogstoreName": {
-          "type": "string"
+        "CloneFrom": {
+          "type": "object"
         }
       },
       "required": [
-        "ProjectName",
         "LogtailConfigName",
-        "LogstoreName"
+        "LogstoreName",
+        "ProjectName"
       ],
       "additionalProperties": false,
       "document": {

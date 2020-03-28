@@ -11,11 +11,11 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "TemplateVersion": {
+        "ParentExecutionId": {
           "type": "string"
         },
-        "TemplateName": {
-          "type": "string"
+        "ResourceOptions": {
+          "type": "object"
         },
         "Parameters": {
           "type": "object"
@@ -23,13 +23,13 @@
         "SafetyCheck": {
           "type": "string"
         },
-        "ParentExecutionId": {
+        "Mode": {
           "type": "string"
         },
-        "ResourceOptions": {
-          "type": "object"
+        "TemplateName": {
+          "type": "string"
         },
-        "Mode": {
+        "TemplateVersion": {
           "type": "string"
         }
       },

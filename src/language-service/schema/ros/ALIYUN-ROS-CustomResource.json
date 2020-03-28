@@ -11,11 +11,11 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "Parameters": {
-          "type": "object"
-        },
         "ServiceToken": {
           "type": "string"
+        },
+        "Parameters": {
+          "type": "object"
         },
         "Timeout": {
           "type": "number"

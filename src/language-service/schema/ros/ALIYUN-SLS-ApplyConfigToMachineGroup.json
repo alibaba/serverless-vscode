@@ -11,13 +11,13 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "ProjectName": {
-          "type": "string"
-        },
         "GroupName": {
           "type": "string"
         },
         "ConfigName": {
+          "type": "string"
+        },
+        "ProjectName": {
           "type": "string"
         }
       },

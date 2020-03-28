@@ -11,16 +11,16 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "InstanceIdList": {
+        "NetworkInterfaceList": {
           "type": "array"
-        },
-        "SecurityGroupId": {
-          "type": "string"
         },
         "InstanceId": {
           "type": "string"
         },
-        "NetworkInterfaceList": {
+        "SecurityGroupId": {
+          "type": "string"
+        },
+        "InstanceIdList": {
           "type": "array"
         }
       },

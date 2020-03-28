@@ -11,19 +11,19 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "MasterSlaveBackendServers": {
-          "type": "array"
+        "LoadBalancerId": {
+          "type": "string"
         },
         "MasterSlaveServerGroupName": {
           "type": "string"
         },
-        "LoadBalancerId": {
-          "type": "string"
+        "MasterSlaveBackendServers": {
+          "type": "array"
         }
       },
       "required": [
-        "MasterSlaveBackendServers",
-        "LoadBalancerId"
+        "LoadBalancerId",
+        "MasterSlaveBackendServers"
       ],
       "additionalProperties": false,
       "document": {

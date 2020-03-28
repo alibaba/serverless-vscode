@@ -11,25 +11,10 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "RenewalStatus": {
-          "type": "string"
-        },
-        "Period": {
+        "AutoRenewPeriod": {
           "type": "integer"
         },
-        "DBVersion": {
-          "type": "string"
-        },
         "CloneDataPoint": {
-          "type": "string"
-        },
-        "DBClusterDescription": {
-          "type": "string"
-        },
-        "CreationOption": {
-          "type": "string"
-        },
-        "SourceResourceId": {
           "type": "string"
         },
         "ZoneId": {
@@ -38,19 +23,16 @@
         "VSwitchId": {
           "type": "string"
         },
-        "VpcId": {
+        "RenewalStatus": {
           "type": "string"
         },
-        "ClusterNetworkType": {
+        "DBClusterDescription": {
           "type": "string"
         },
-        "MaintainTime": {
-          "type": "string"
-        },
-        "AutoRenewPeriod": {
+        "Period": {
           "type": "integer"
         },
-        "DBNodeClass": {
+        "SourceResourceId": {
           "type": "string"
         },
         "DBType": {
@@ -58,13 +40,31 @@
         },
         "PayType": {
           "type": "string"
+        },
+        "CreationOption": {
+          "type": "string"
+        },
+        "DBNodeClass": {
+          "type": "string"
+        },
+        "DBVersion": {
+          "type": "string"
+        },
+        "ClusterNetworkType": {
+          "type": "string"
+        },
+        "VpcId": {
+          "type": "string"
+        },
+        "MaintainTime": {
+          "type": "string"
         }
       },
       "required": [
-        "DBVersion",
-        "DBNodeClass",
         "DBType",
-        "PayType"
+        "PayType",
+        "DBNodeClass",
+        "DBVersion"
       ],
       "additionalProperties": false,
       "document": {

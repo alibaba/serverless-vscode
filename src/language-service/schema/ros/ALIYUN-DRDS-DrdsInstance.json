@@ -11,32 +11,32 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "PricingCycle": {
+        "Type": {
           "type": "string"
         },
         "Description": {
           "type": "string"
         },
-        "Quantity": {
-          "type": "integer"
-        },
-        "Type": {
-          "type": "string"
-        },
-        "Duration": {
-          "type": "integer"
-        },
-        "InstanceSeries": {
-          "type": "string"
-        },
-        "VswitchId": {
-          "type": "string"
-        },
-        "Specification": {
+        "VpcId": {
           "type": "string"
         },
         "ZoneId": {
           "type": "string"
+        },
+        "PricingCycle": {
+          "type": "string"
+        },
+        "InstanceSeries": {
+          "type": "string"
+        },
+        "Quantity": {
+          "type": "integer"
+        },
+        "Specification": {
+          "type": "string"
+        },
+        "Duration": {
+          "type": "integer"
         },
         "IsAutoRenew": {
           "type": "boolean"
@@ -44,17 +44,17 @@
         "PayType": {
           "type": "string"
         },
-        "VpcId": {
+        "VswitchId": {
           "type": "string"
         }
       },
       "required": [
-        "Description",
-        "Quantity",
         "Type",
-        "InstanceSeries",
-        "Specification",
+        "Description",
         "ZoneId",
+        "InstanceSeries",
+        "Quantity",
+        "Specification",
         "PayType"
       ],
       "additionalProperties": false,

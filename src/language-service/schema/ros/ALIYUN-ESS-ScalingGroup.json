@@ -11,50 +11,62 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "DefaultCooldown": {
-          "type": "integer"
-        },
-        "RemovalPolicys": {
+        "VSwitchIds": {
           "type": "array"
         },
-        "MultiAZPolicy": {
+        "InstanceId": {
+          "type": "string"
+        },
+        "NotificationConfigurations": {
+          "type": "array"
+        },
+        "VSwitchId": {
+          "type": "string"
+        },
+        "LoadBalancerIds": {
+          "type": "array"
+        },
+        "DesiredCapacity": {
+          "type": "integer"
+        },
+        "GroupDeletionProtection": {
+          "type": "boolean"
+        },
+        "LaunchTemplateId": {
           "type": "string"
         },
         "MaxSize": {
           "type": "integer"
         },
-        "VSwitchId": {
+        "ScalingGroupName": {
           "type": "string"
         },
-        "ScalingGroupName": {
+        "MinSize": {
+          "type": "integer"
+        },
+        "DefaultCooldown": {
+          "type": "integer"
+        },
+        "StandbyInstances": {
+          "type": "array"
+        },
+        "LaunchTemplateVersion": {
+          "type": "string"
+        },
+        "MultiAZPolicy": {
           "type": "string"
         },
         "ProtectedInstances": {
           "type": "array"
         },
-        "HealthCheckType": {
-          "type": "string"
-        },
-        "VSwitchIds": {
+        "RemovalPolicys": {
           "type": "array"
-        },
-        "GroupDeletionProtection": {
-          "type": "boolean"
         },
         "DBInstanceIds": {
           "type": "array"
         },
-        "LoadBalancerIds": {
-          "type": "array"
-        },
-        "StandbyInstances": {
-          "type": "array"
-        },
-        "NotificationConfigurations": {
-          "type": "array"
-        },
-        "MinSize": {
-          "type": "integer"
+        "HealthCheckType": {
+          "type": "string"
         }
       },
       "required": [

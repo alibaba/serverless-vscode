@@ -11,13 +11,13 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "Tags": {
-          "type": "array"
-        },
-        "SecurityGroupName": {
+        "Description": {
           "type": "string"
         },
-        "Description": {
+        "VpcId": {
+          "type": "string"
+        },
+        "SecurityGroupName": {
           "type": "string"
         },
         "ResourceGroupId": {
@@ -29,11 +29,11 @@
         "SecurityGroupIngress": {
           "type": "array"
         },
-        "SecurityGroupEgress": {
+        "Tags": {
           "type": "array"
         },
-        "VpcId": {
-          "type": "string"
+        "SecurityGroupEgress": {
+          "type": "array"
         }
       },
       "required": [],

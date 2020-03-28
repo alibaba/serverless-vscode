@@ -11,19 +11,13 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "Period": {
-          "type": "number"
+        "BackendServerWeight": {
+          "type": "integer"
         },
-        "SecurityGroupId": {
-          "type": "string"
-        },
-        "ImageId": {
+        "KeyPairName": {
           "type": "string"
         },
         "Description": {
-          "type": "string"
-        },
-        "Password": {
           "type": "string"
         },
         "DiskMappings": {
@@ -32,34 +26,22 @@
         "ResourceGroupId": {
           "type": "string"
         },
-        "InternetMaxBandwidthIn": {
-          "type": "integer"
-        },
         "ZoneId": {
           "type": "string"
         },
-        "SourceInstanceId": {
+        "InstanceChargeType": {
           "type": "string"
         },
-        "SpotStrategy": {
+        "SecurityGroupId": {
           "type": "string"
         },
-        "Tags": {
-          "type": "array"
-        },
-        "BackendServerWeight": {
-          "type": "integer"
-        },
-        "SpotPriceLimit": {
-          "type": "string"
+        "Period": {
+          "type": "number"
         },
         "DeletionProtection": {
           "type": "boolean"
         },
-        "KeyPairName": {
-          "type": "string"
-        },
-        "InstanceChargeType": {
+        "SourceInstanceId": {
           "type": "string"
         },
         "LoadBalancerIdToAttach": {
@@ -69,6 +51,24 @@
           "type": "string"
         },
         "RamRoleName": {
+          "type": "string"
+        },
+        "InternetMaxBandwidthIn": {
+          "type": "integer"
+        },
+        "ImageId": {
+          "type": "string"
+        },
+        "SpotPriceLimit": {
+          "type": "string"
+        },
+        "Tags": {
+          "type": "array"
+        },
+        "SpotStrategy": {
+          "type": "string"
+        },
+        "Password": {
           "type": "string"
         }
       },

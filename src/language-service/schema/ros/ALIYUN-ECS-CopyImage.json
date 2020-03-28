@@ -11,28 +11,28 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "ImageId": {
-          "type": "string"
-        },
-        "DestinationImageName": {
-          "type": "string"
-        },
-        "Tag": {
-          "type": "array"
-        },
         "DestinationRegionId": {
+          "type": "string"
+        },
+        "Encrypted": {
+          "type": "boolean"
+        },
+        "ImageId": {
           "type": "string"
         },
         "DestinationDescription": {
           "type": "string"
         },
-        "Encrypted": {
-          "type": "boolean"
+        "Tag": {
+          "type": "array"
+        },
+        "DestinationImageName": {
+          "type": "string"
         }
       },
       "required": [
-        "ImageId",
-        "DestinationRegionId"
+        "DestinationRegionId",
+        "ImageId"
       ],
       "additionalProperties": false,
       "document": {

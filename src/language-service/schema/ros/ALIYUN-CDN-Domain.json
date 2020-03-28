@@ -14,28 +14,28 @@
         "CheckUrl": {
           "type": "string"
         },
-        "CdnType": {
+        "ResourceGroupId": {
           "type": "string"
         },
-        "ResourceGroupId": {
+        "Scope": {
           "type": "string"
         },
         "DomainName": {
           "type": "string"
         },
-        "Sources": {
+        "CdnType": {
           "type": "string"
         },
         "TopLevelDomain": {
           "type": "string"
         },
-        "Scope": {
+        "Sources": {
           "type": "string"
         }
       },
       "required": [
-        "CdnType",
-        "DomainName"
+        "DomainName",
+        "CdnType"
       ],
       "additionalProperties": false,
       "document": {

@@ -11,22 +11,22 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "ScalingConfigurationId": {
-          "type": "string"
-        },
         "ScalingRuleArisExecuteVersion": {
           "type": "integer"
-        },
-        "InstanceIds": {
-          "type": "array"
-        },
-        "RemoveInstanceIds": {
-          "type": "array"
         },
         "ScalingGroupId": {
           "type": "string"
         },
         "ScalingRuleAris": {
+          "type": "array"
+        },
+        "RemoveInstanceIds": {
+          "type": "array"
+        },
+        "ScalingConfigurationId": {
+          "type": "string"
+        },
+        "InstanceIds": {
           "type": "array"
         }
       },

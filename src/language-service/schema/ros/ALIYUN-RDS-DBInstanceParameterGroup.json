@@ -14,10 +14,10 @@
         "Parameters": {
           "type": "array"
         },
-        "Forcerestart": {
+        "DBInstanceId": {
           "type": "string"
         },
-        "DBInstanceId": {
+        "Forcerestart": {
           "type": "string"
         }
       },

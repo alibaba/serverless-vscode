@@ -11,35 +11,35 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "Name": {
-          "type": "string"
-        },
-        "Period": {
-          "type": "integer"
-        },
-        "Description": {
-          "type": "string"
-        },
         "EnableIpsec": {
           "type": "boolean"
         },
         "EnableSsl": {
           "type": "boolean"
         },
+        "SslConnections": {
+          "type": "integer"
+        },
+        "Description": {
+          "type": "string"
+        },
+        "VpcId": {
+          "type": "string"
+        },
         "InstanceChargeType": {
           "type": "string"
         },
-        "SslConnections": {
+        "Bandwidth": {
+          "type": "integer"
+        },
+        "Period": {
           "type": "integer"
         },
         "AutoPay": {
           "type": "boolean"
         },
-        "VpcId": {
+        "Name": {
           "type": "string"
-        },
-        "Bandwidth": {
-          "type": "integer"
         }
       },
       "required": [

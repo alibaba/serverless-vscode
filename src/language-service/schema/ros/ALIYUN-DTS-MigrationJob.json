@@ -11,23 +11,23 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "SourceEndpoint": {
-          "type": "object"
+        "MigrationObject": {
+          "type": "array"
         },
         "DestinationEndpoint": {
           "type": "object"
         },
-        "MigrationMode": {
+        "MigrationJobClass": {
+          "type": "string"
+        },
+        "SourceEndpoint": {
           "type": "object"
         },
         "MigrationJobName": {
           "type": "string"
         },
-        "MigrationObject": {
-          "type": "array"
-        },
-        "MigrationJobClass": {
-          "type": "string"
+        "MigrationMode": {
+          "type": "object"
         }
       },
       "required": [

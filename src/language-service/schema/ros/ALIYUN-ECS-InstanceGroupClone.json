@@ -11,80 +11,8 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "SecurityGroupId": {
-          "type": "string"
-        },
-        "ImageId": {
-          "type": "string"
-        },
-        "Ipv6AddressCount": {
-          "type": "integer"
-        },
-        "Password": {
-          "type": "string"
-        },
-        "InternetMaxBandwidthIn": {
-          "type": "integer"
-        },
-        "SystemDiskAutoSnapshotPolicyId": {
-          "type": "string"
-        },
-        "ZoneId": {
-          "type": "string"
-        },
-        "AutoRenew": {
-          "type": "string"
-        },
-        "SourceInstanceId": {
-          "type": "string"
-        },
-        "SpotStrategy": {
-          "type": "string"
-        },
-        "LaunchTemplateName": {
-          "type": "string"
-        },
-        "AutoRenewPeriod": {
-          "type": "number"
-        },
-        "LaunchTemplateVersion": {
-          "type": "string"
-        },
-        "InternetMaxBandwidthOut": {
-          "type": "integer"
-        },
-        "LaunchTemplateId": {
-          "type": "string"
-        },
-        "SpotPriceLimit": {
-          "type": "string"
-        },
-        "EniMappings": {
-          "type": "array"
-        },
-        "AutoReleaseTime": {
-          "type": "string"
-        },
-        "KeyPairName": {
-          "type": "string"
-        },
-        "MaxAmount": {
-          "type": "integer"
-        },
-        "LoadBalancerIdToAttach": {
-          "type": "string"
-        },
-        "InstanceName": {
-          "type": "string"
-        },
-        "RamRoleName": {
-          "type": "string"
-        },
         "Description": {
           "type": "string"
-        },
-        "Ipv6Addresses": {
-          "type": "array"
         },
         "ResourceGroupId": {
           "type": "string"
@@ -92,31 +20,106 @@
         "DiskMappings": {
           "type": "array"
         },
-        "Tags": {
-          "type": "array"
-        },
-        "HpcClusterId": {
+        "SystemDiskDescription": {
           "type": "string"
         },
-        "SystemDiskDescription": {
+        "AutoRenew": {
+          "type": "string"
+        },
+        "Ipv6Addresses": {
+          "type": "array"
+        },
+        "SourceInstanceId": {
+          "type": "string"
+        },
+        "MaxAmount": {
+          "type": "integer"
+        },
+        "SystemDiskAutoSnapshotPolicyId": {
+          "type": "string"
+        },
+        "RamRoleName": {
+          "type": "string"
+        },
+        "Ipv6AddressCount": {
+          "type": "integer"
+        },
+        "ImageId": {
+          "type": "string"
+        },
+        "SpotPriceLimit": {
           "type": "string"
         },
         "SystemDiskDiskName": {
           "type": "string"
         },
+        "Tags": {
+          "type": "array"
+        },
+        "SpotStrategy": {
+          "type": "string"
+        },
+        "Password": {
+          "type": "string"
+        },
+        "AutoRenewPeriod": {
+          "type": "number"
+        },
         "BackendServerWeight": {
           "type": "integer"
+        },
+        "KeyPairName": {
+          "type": "string"
+        },
+        "LaunchTemplateName": {
+          "type": "string"
+        },
+        "ZoneId": {
+          "type": "string"
+        },
+        "HpcClusterId": {
+          "type": "string"
+        },
+        "SecurityGroupId": {
+          "type": "string"
+        },
+        "Period": {
+          "type": "number"
+        },
+        "LaunchTemplateId": {
+          "type": "string"
         },
         "DeletionProtection": {
           "type": "boolean"
         },
+        "LoadBalancerIdToAttach": {
+          "type": "string"
+        },
         "SystemDiskCategory": {
+          "type": "string"
+        },
+        "EniMappings": {
+          "type": "array"
+        },
+        "InstanceName": {
+          "type": "string"
+        },
+        "DeploymentSetId": {
+          "type": "string"
+        },
+        "InternetMaxBandwidthOut": {
+          "type": "integer"
+        },
+        "InternetMaxBandwidthIn": {
+          "type": "integer"
+        },
+        "LaunchTemplateVersion": {
           "type": "string"
         },
         "PeriodUnit": {
           "type": "string"
         },
-        "DeploymentSetId": {
+        "AutoReleaseTime": {
           "type": "string"
         }
       },

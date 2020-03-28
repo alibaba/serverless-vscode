@@ -11,16 +11,16 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "AlarmTaskId": {
-          "type": "string"
-        },
         "Enable": {
           "type": "boolean"
+        },
+        "AlarmTaskId": {
+          "type": "string"
         }
       },
       "required": [
-        "AlarmTaskId",
-        "Enable"
+        "Enable",
+        "AlarmTaskId"
       ],
       "additionalProperties": false,
       "document": {

@@ -11,51 +11,51 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "Period": {
-          "type": "integer"
+        "ComparisonOperator": {
+          "type": "string"
         },
         "Description": {
           "type": "string"
         },
-        "Statistics": {
+        "ScalingGroupId": {
           "type": "string"
         },
         "MetricType": {
           "type": "string"
         },
-        "GroupId": {
-          "type": "integer"
-        },
         "EvaluationCount": {
           "type": "integer"
         },
-        "Name": {
-          "type": "string"
-        },
-        "MetricName": {
-          "type": "string"
-        },
-        "Threshold": {
-          "type": "number"
-        },
-        "AlarmAction": {
-          "type": "array"
-        },
-        "ScalingGroupId": {
-          "type": "string"
+        "Period": {
+          "type": "integer"
         },
         "Dimensions": {
           "type": "array"
         },
-        "ComparisonOperator": {
+        "Statistics": {
           "type": "string"
+        },
+        "Name": {
+          "type": "string"
+        },
+        "GroupId": {
+          "type": "integer"
+        },
+        "MetricName": {
+          "type": "string"
+        },
+        "AlarmAction": {
+          "type": "array"
+        },
+        "Threshold": {
+          "type": "number"
         }
       },
       "required": [
+        "ScalingGroupId",
         "MetricName",
-        "Threshold",
         "AlarmAction",
-        "ScalingGroupId"
+        "Threshold"
       ],
       "additionalProperties": false,
       "document": {

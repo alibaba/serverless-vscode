@@ -11,29 +11,29 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "SubscriptionName": {
-          "type": "string"
-        },
-        "FilterTag": {
-          "type": "string"
-        },
-        "TopicName": {
-          "type": "string"
-        },
-        "NotifyContentFormat": {
-          "type": "string"
-        },
         "Endpoint": {
           "type": "string"
         },
         "NotifyStrategy": {
           "type": "string"
+        },
+        "NotifyContentFormat": {
+          "type": "string"
+        },
+        "FilterTag": {
+          "type": "string"
+        },
+        "SubscriptionName": {
+          "type": "string"
+        },
+        "TopicName": {
+          "type": "string"
         }
       },
       "required": [
+        "Endpoint",
         "SubscriptionName",
-        "TopicName",
-        "Endpoint"
+        "TopicName"
       ],
       "additionalProperties": false,
       "document": {

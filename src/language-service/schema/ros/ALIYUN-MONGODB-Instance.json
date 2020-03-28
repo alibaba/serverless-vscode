@@ -11,73 +11,76 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "ChargeType": {
-          "type": "string"
-        },
-        "Period": {
-          "type": "integer"
-        },
-        "DBInstanceClass": {
-          "type": "string"
-        },
-        "ResourceGroupId": {
-          "type": "string"
-        },
         "CouponNo": {
-          "type": "string"
-        },
-        "DatabaseNames": {
-          "type": "string"
-        },
-        "ZoneId": {
-          "type": "string"
-        },
-        "DBInstanceDescription": {
-          "type": "string"
-        },
-        "AutoRenew": {
-          "type": "boolean"
-        },
-        "DBInstanceStorage": {
-          "type": "integer"
-        },
-        "VSwitchId": {
-          "type": "string"
-        },
-        "VpcId": {
-          "type": "string"
-        },
-        "BackupId": {
-          "type": "string"
-        },
-        "RestoreTime": {
-          "type": "string"
-        },
-        "ReplicationFactor": {
-          "type": "integer"
-        },
-        "NetworkType": {
           "type": "string"
         },
         "BusinessInfo": {
           "type": "string"
         },
+        "EngineVersion": {
+          "type": "string"
+        },
         "ReadonlyReplicas": {
+          "type": "integer"
+        },
+        "ResourceGroupId": {
+          "type": "string"
+        },
+        "ReplicationFactor": {
+          "type": "integer"
+        },
+        "ZoneId": {
+          "type": "string"
+        },
+        "DBInstanceClass": {
+          "type": "string"
+        },
+        "AutoRenew": {
+          "type": "boolean"
+        },
+        "VSwitchId": {
+          "type": "string"
+        },
+        "Period": {
           "type": "integer"
         },
         "SecurityIPArray": {
           "type": "string"
         },
+        "BackupId": {
+          "type": "string"
+        },
+        "VpcPasswordFree": {
+          "type": "boolean"
+        },
+        "StorageEngine": {
+          "type": "string"
+        },
         "AccountPassword": {
           "type": "string"
         },
-        "StorageEngine": {
+        "RestoreTime": {
+          "type": "string"
+        },
+        "VpcId": {
+          "type": "string"
+        },
+        "ChargeType": {
+          "type": "string"
+        },
+        "NetworkType": {
+          "type": "string"
+        },
+        "DBInstanceStorage": {
+          "type": "integer"
+        },
+        "DatabaseNames": {
           "type": "string"
         },
         "SrcDBInstanceId": {
           "type": "string"
         },
-        "EngineVersion": {
+        "DBInstanceDescription": {
           "type": "string"
         }
       },

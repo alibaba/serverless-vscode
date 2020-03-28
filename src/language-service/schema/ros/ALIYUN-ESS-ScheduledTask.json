@@ -11,37 +11,37 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "LaunchExpirationTime": {
-          "type": "integer"
-        },
         "Description": {
-          "type": "string"
-        },
-        "RecurrenceType": {
-          "type": "string"
-        },
-        "RecurrenceEndTime": {
-          "type": "string"
-        },
-        "TaskEnabled": {
-          "type": "boolean"
-        },
-        "ScheduledAction": {
-          "type": "string"
-        },
-        "ScheduledTaskName": {
           "type": "string"
         },
         "LaunchTime": {
           "type": "string"
         },
+        "RecurrenceType": {
+          "type": "string"
+        },
+        "ScheduledTaskName": {
+          "type": "string"
+        },
+        "ScheduledAction": {
+          "type": "string"
+        },
+        "RecurrenceEndTime": {
+          "type": "string"
+        },
         "RecurrenceValue": {
           "type": "string"
+        },
+        "TaskEnabled": {
+          "type": "boolean"
+        },
+        "LaunchExpirationTime": {
+          "type": "integer"
         }
       },
       "required": [
-        "ScheduledAction",
-        "LaunchTime"
+        "LaunchTime",
+        "ScheduledAction"
       ],
       "additionalProperties": false,
       "document": {

@@ -11,32 +11,32 @@
     "Properties": {
       "type": "object",
       "properties": {
+        "Description": {
+          "type": "string"
+        },
         "TrafficControlUnit": {
           "type": "string"
         },
-        "Description": {
+        "TrafficControlName": {
+          "type": "string"
+        },
+        "AppDefault": {
           "type": "string"
         },
         "Special": {
           "type": "array"
         },
-        "ApiDefault": {
-          "type": "integer"
-        },
-        "TrafficControlName": {
-          "type": "string"
-        },
         "UserDefault": {
           "type": "string"
         },
-        "AppDefault": {
-          "type": "string"
+        "ApiDefault": {
+          "type": "integer"
         }
       },
       "required": [
         "TrafficControlUnit",
-        "ApiDefault",
-        "TrafficControlName"
+        "TrafficControlName",
+        "ApiDefault"
       ],
       "additionalProperties": false,
       "document": {

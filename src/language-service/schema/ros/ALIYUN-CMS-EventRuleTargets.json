@@ -11,16 +11,13 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "WebhookParameters": {
+        "ContactParameters": {
           "type": "array"
         },
         "SlsParameters": {
           "type": "array"
         },
-        "ContactParameters": {
-          "type": "array"
-        },
-        "MnsParameters": {
+        "WebhookParameters": {
           "type": "array"
         },
         "FcParameters": {
@@ -28,6 +25,9 @@
         },
         "RuleName": {
           "type": "string"
+        },
+        "MnsParameters": {
+          "type": "array"
         }
       },
       "required": [

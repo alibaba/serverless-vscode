@@ -11,34 +11,16 @@
     "Properties": {
       "type": "object",
       "properties": {
+        "Destination": {
+          "type": "string"
+        },
         "ApplicationName": {
           "type": "string"
         },
         "Description": {
           "type": "string"
         },
-        "DestinationType": {
-          "type": "string"
-        },
-        "NewOrder": {
-          "type": "integer"
-        },
         "SourceType": {
-          "type": "string"
-        },
-        "Proto": {
-          "type": "string"
-        },
-        "Direction": {
-          "type": "string"
-        },
-        "DestPortType": {
-          "type": "string"
-        },
-        "Source": {
-          "type": "string"
-        },
-        "DestPortGroup": {
           "type": "string"
         },
         "DestPort": {
@@ -47,24 +29,42 @@
         "AclAction": {
           "type": "string"
         },
+        "DestinationType": {
+          "type": "string"
+        },
+        "Direction": {
+          "type": "string"
+        },
+        "Source": {
+          "type": "string"
+        },
+        "DestPortType": {
+          "type": "string"
+        },
+        "Proto": {
+          "type": "string"
+        },
         "RegionId": {
           "type": "string"
         },
-        "Destination": {
+        "NewOrder": {
+          "type": "integer"
+        },
+        "DestPortGroup": {
           "type": "string"
         }
       },
       "required": [
+        "Destination",
         "ApplicationName",
         "Description",
-        "DestinationType",
-        "NewOrder",
         "SourceType",
-        "Proto",
+        "AclAction",
+        "DestinationType",
         "Direction",
         "Source",
-        "AclAction",
-        "Destination"
+        "Proto",
+        "NewOrder"
       ],
       "additionalProperties": false,
       "document": {

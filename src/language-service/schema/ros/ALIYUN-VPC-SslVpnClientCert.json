@@ -11,10 +11,10 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "Name": {
+        "SslVpnServerId": {
           "type": "string"
         },
-        "SslVpnServerId": {
+        "Name": {
           "type": "string"
         }
       },

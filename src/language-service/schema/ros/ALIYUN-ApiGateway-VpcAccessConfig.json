@@ -11,24 +11,24 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "Name": {
+        "VpcId": {
+          "type": "string"
+        },
+        "InstanceId": {
           "type": "string"
         },
         "Port": {
           "type": "integer"
         },
-        "InstanceId": {
-          "type": "string"
-        },
-        "VpcId": {
+        "Name": {
           "type": "string"
         }
       },
       "required": [
-        "Name",
-        "Port",
+        "VpcId",
         "InstanceId",
-        "VpcId"
+        "Port",
+        "Name"
       ],
       "additionalProperties": false,
       "document": {

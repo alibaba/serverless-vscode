@@ -11,76 +11,40 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "SecurityGroupId": {
+        "Description": {
           "type": "string"
         },
-        "ImageId": {
-          "type": "string"
-        },
-        "NetworkInterfaces": {
+        "DiskMappings": {
           "type": "array"
         },
-        "InternetMaxBandwidthIn": {
-          "type": "integer"
+        "SystemDiskSize": {
+          "type": "number"
         },
-        "ZoneId": {
+        "UserData": {
           "type": "string"
         },
-        "VSwitchId": {
+        "SystemDiskDescription": {
           "type": "string"
         },
-        "InternetChargeType": {
-          "type": "string"
+        "TemplateTags": {
+          "type": "array"
         },
-        "SpotStrategy": {
-          "type": "string"
-        },
-        "LaunchTemplateName": {
-          "type": "string"
-        },
-        "IoOptimized": {
+        "RamRoleName": {
           "type": "string"
         },
         "NetworkType": {
           "type": "string"
         },
-        "InternetMaxBandwidthOut": {
-          "type": "integer"
-        },
-        "SpotPriceLimit": {
-          "type": "string"
-        },
-        "AutoReleaseTime": {
-          "type": "string"
-        },
-        "KeyPairName": {
-          "type": "string"
-        },
-        "InstanceName": {
-          "type": "string"
-        },
-        "VersionDescription": {
-          "type": "string"
-        },
-        "RamRoleName": {
-          "type": "string"
-        },
-        "Description": {
-          "type": "string"
-        },
-        "SystemDiskSize": {
-          "type": "number"
-        },
-        "DiskMappings": {
+        "NetworkInterfaces": {
           "type": "array"
         },
-        "UserData": {
+        "ImageId": {
           "type": "string"
         },
-        "SecurityEnhancementStrategy": {
+        "SystemDiskDiskName": {
           "type": "string"
         },
-        "HostName": {
+        "SpotPriceLimit": {
           "type": "string"
         },
         "InstanceType": {
@@ -89,16 +53,52 @@
         "Tags": {
           "type": "array"
         },
-        "TemplateTags": {
-          "type": "array"
-        },
-        "SystemDiskDescription": {
+        "HostName": {
           "type": "string"
         },
-        "SystemDiskDiskName": {
+        "SpotStrategy": {
+          "type": "string"
+        },
+        "KeyPairName": {
+          "type": "string"
+        },
+        "LaunchTemplateName": {
+          "type": "string"
+        },
+        "IoOptimized": {
+          "type": "string"
+        },
+        "VersionDescription": {
+          "type": "string"
+        },
+        "ZoneId": {
+          "type": "string"
+        },
+        "VSwitchId": {
+          "type": "string"
+        },
+        "SecurityGroupId": {
+          "type": "string"
+        },
+        "InternetChargeType": {
           "type": "string"
         },
         "SystemDiskCategory": {
+          "type": "string"
+        },
+        "InstanceName": {
+          "type": "string"
+        },
+        "InternetMaxBandwidthOut": {
+          "type": "integer"
+        },
+        "InternetMaxBandwidthIn": {
+          "type": "integer"
+        },
+        "SecurityEnhancementStrategy": {
+          "type": "string"
+        },
+        "AutoReleaseTime": {
           "type": "string"
         }
       },

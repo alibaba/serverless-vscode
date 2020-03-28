@@ -11,39 +11,39 @@
     "Properties": {
       "type": "object",
       "properties": {
+        "LocalSubnet": {
+          "type": "string"
+        },
+        "EffectImmediately": {
+          "type": "boolean"
+        },
+        "RemoteSubnet": {
+          "type": "string"
+        },
         "CustomerGatewayId": {
           "type": "string"
         },
-        "Name": {
-          "type": "string"
-        },
-        "RemoteSubnet": {
+        "VpnGatewayId": {
           "type": "string"
         },
         "IpsecConfig": {
           "type": "object"
         },
-        "EffectImmediately": {
-          "type": "boolean"
-        },
-        "VpnGatewayId": {
-          "type": "string"
-        },
-        "LocalSubnet": {
-          "type": "string"
+        "HealthCheckConfig": {
+          "type": "object"
         },
         "IkeConfig": {
           "type": "object"
         },
-        "HealthCheckConfig": {
-          "type": "object"
+        "Name": {
+          "type": "string"
         }
       },
       "required": [
-        "CustomerGatewayId",
+        "LocalSubnet",
         "RemoteSubnet",
-        "VpnGatewayId",
-        "LocalSubnet"
+        "CustomerGatewayId",
+        "VpnGatewayId"
       ],
       "additionalProperties": false,
       "document": {

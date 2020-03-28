@@ -11,13 +11,16 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "Device": {
-          "type": "string"
-        },
         "InstanceId": {
           "type": "string"
         },
+        "Device": {
+          "type": "string"
+        },
         "DeleteWithInstance": {
+          "type": "boolean"
+        },
+        "DeleteAutoSnapshot": {
           "type": "boolean"
         },
         "DiskId": {

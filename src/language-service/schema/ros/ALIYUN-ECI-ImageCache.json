@@ -11,16 +11,19 @@
     "Properties": {
       "type": "object",
       "properties": {
+        "ResourceGroupId": {
+          "type": "string"
+        },
         "SecurityGroupId": {
           "type": "string"
         },
-        "ImageCacheName": {
+        "VSwitchId": {
           "type": "string"
         },
         "ImageRegistryCredential": {
           "type": "array"
         },
-        "ResourceGroupId": {
+        "ImageCacheName": {
           "type": "string"
         },
         "Image": {
@@ -28,16 +31,13 @@
         },
         "EipInstanceId": {
           "type": "string"
-        },
-        "VSwitchId": {
-          "type": "string"
         }
       },
       "required": [
         "SecurityGroupId",
+        "VSwitchId",
         "ImageCacheName",
-        "Image",
-        "VSwitchId"
+        "Image"
       ],
       "additionalProperties": false,
       "document": {

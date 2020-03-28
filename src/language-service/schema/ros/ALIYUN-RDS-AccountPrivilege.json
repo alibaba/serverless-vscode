@@ -17,18 +17,18 @@
         "DBInstanceId": {
           "type": "string"
         },
-        "AccountName": {
+        "DBName": {
           "type": "string"
         },
-        "DBName": {
+        "AccountName": {
           "type": "string"
         }
       },
       "required": [
         "AccountPrivilege",
         "DBInstanceId",
-        "AccountName",
-        "DBName"
+        "DBName",
+        "AccountName"
       ],
       "additionalProperties": false,
       "document": {

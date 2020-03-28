@@ -11,23 +11,14 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "Period": {
+        "AutoRenewPeriod": {
           "type": "number"
-        },
-        "ChargeType": {
-          "type": "string"
-        },
-        "NetworkAttributesUdpTimeout": {
-          "type": "integer"
         },
         "Description": {
           "type": "string"
         },
-        "Quantity": {
+        "NetworkAttributesSlbUdpTimeout": {
           "type": "integer"
-        },
-        "AutoPlacement": {
-          "type": "string"
         },
         "ResourceGroupId": {
           "type": "string"
@@ -35,17 +26,20 @@
         "ZoneId": {
           "type": "string"
         },
+        "NetworkAttributesUdpTimeout": {
+          "type": "integer"
+        },
         "AutoRenew": {
           "type": "string"
         },
-        "Tags": {
-          "type": "array"
+        "AutoPlacement": {
+          "type": "string"
         },
-        "AutoRenewPeriod": {
-          "type": "number"
-        },
-        "NetworkAttributesSlbUdpTimeout": {
+        "Quantity": {
           "type": "integer"
+        },
+        "Period": {
+          "type": "number"
         },
         "DedicatedHostType": {
           "type": "string"
@@ -53,13 +47,19 @@
         "DedicatedHostName": {
           "type": "string"
         },
+        "ChargeType": {
+          "type": "string"
+        },
         "ActionOnMaintenance": {
           "type": "string"
         },
-        "AutoReleaseTime": {
-          "type": "string"
+        "Tags": {
+          "type": "array"
         },
         "PeriodUnit": {
+          "type": "string"
+        },
+        "AutoReleaseTime": {
           "type": "string"
         }
       },

@@ -11,41 +11,42 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "IpProtocol": {
-          "type": "string"
-        },
-        "SecurityGroupId": {
-          "type": "string"
-        },
-        "DestCidrIp": {
-          "type": "string"
-        },
-        "Description": {
-          "type": "string"
-        },
-        "NicType": {
-          "type": "string"
-        },
         "Policy": {
           "type": "string"
         },
         "PortRange": {
           "type": "string"
         },
-        "DestGroupId": {
+        "Description": {
           "type": "string"
         },
-        "Ipv6DestCidrIp": {
+        "Priority": {
+          "type": "integer"
+        },
+        "SecurityGroupId": {
           "type": "string"
         },
         "DestGroupOwnerId": {
           "type": "string"
         },
-        "Priority": {
-          "type": "integer"
+        "IpProtocol": {
+          "type": "string"
+        },
+        "DestCidrIp": {
+          "type": "string"
+        },
+        "NicType": {
+          "type": "string"
+        },
+        "Ipv6DestCidrIp": {
+          "type": "string"
+        },
+        "DestGroupId": {
+          "type": "string"
         }
       },
       "required": [
+        "PortRange",
         "IpProtocol"
       ],
       "additionalProperties": false,

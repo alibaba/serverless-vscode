@@ -14,29 +14,29 @@
         "ImageName": {
           "type": "string"
         },
+        "SnapshotId": {
+          "type": "string"
+        },
         "Description": {
           "type": "string"
         },
-        "DiskDeviceMapping": {
-          "type": "array"
-        },
-        "Tag": {
-          "type": "array"
+        "Platform": {
+          "type": "string"
         },
         "ResourceGroupId": {
-          "type": "string"
-        },
-        "InstanceId": {
-          "type": "string"
-        },
-        "SnapshotId": {
           "type": "string"
         },
         "Architecture": {
           "type": "string"
         },
-        "Platform": {
+        "InstanceId": {
           "type": "string"
+        },
+        "Tag": {
+          "type": "array"
+        },
+        "DiskDeviceMapping": {
+          "type": "array"
         }
       },
       "required": [],

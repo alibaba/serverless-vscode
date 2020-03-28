@@ -14,14 +14,23 @@
         "LoadBalancerName": {
           "type": "string"
         },
-        "BackendServers": {
-          "type": "array"
+        "SourceLoadBalancerId": {
+          "type": "string"
         },
         "ResourceGroupId": {
           "type": "string"
         },
-        "SourceLoadBalancerId": {
+        "TagsPolicy": {
           "type": "string"
+        },
+        "VSwitchId": {
+          "type": "string"
+        },
+        "BackendServers": {
+          "type": "array"
+        },
+        "Tags": {
+          "type": "array"
         },
         "BackendServersPolicy": {
           "type": "string"

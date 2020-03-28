@@ -11,16 +11,10 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "NetworkType": {
+        "InstanceName": {
           "type": "string"
         },
-        "PrivateIpAddr": {
-          "type": "string"
-        },
-        "SecurityIPArray": {
-          "type": "string"
-        },
-        "Password": {
+        "VpcId": {
           "type": "string"
         },
         "ZoneId": {
@@ -29,19 +23,25 @@
         "Capacity": {
           "type": "integer"
         },
+        "NetworkType": {
+          "type": "string"
+        },
+        "PrivateIpAddr": {
+          "type": "string"
+        },
         "VSwitchId": {
           "type": "string"
         },
-        "InstanceName": {
+        "SecurityIPArray": {
           "type": "string"
         },
-        "VpcId": {
+        "Password": {
           "type": "string"
         }
       },
       "required": [
-        "Password",
-        "Capacity"
+        "Capacity",
+        "Password"
       ],
       "additionalProperties": false,
       "document": {

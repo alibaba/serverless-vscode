@@ -11,10 +11,10 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "Description": {
+        "AccessGroupType": {
           "type": "string"
         },
-        "AccessGroupType": {
+        "Description": {
           "type": "string"
         },
         "AccessGroupName": {

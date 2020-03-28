@@ -11,8 +11,14 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "TriggerConfig": {
-          "type": "object"
+        "FunctionName": {
+          "type": "string"
+        },
+        "TriggerType": {
+          "type": "string"
+        },
+        "TriggerName": {
+          "type": "string"
         },
         "SourceArn": {
           "type": "string"
@@ -20,28 +26,22 @@
         "ServiceName": {
           "type": "string"
         },
-        "TriggerName": {
+        "TriggerConfig": {
+          "type": "object"
+        },
+        "InvocationRole": {
           "type": "string"
         },
         "Qualifier": {
           "type": "string"
-        },
-        "FunctionName": {
-          "type": "string"
-        },
-        "TriggerType": {
-          "type": "string"
-        },
-        "InvocationRole": {
-          "type": "string"
         }
       },
       "required": [
-        "TriggerConfig",
-        "ServiceName",
-        "TriggerName",
         "FunctionName",
-        "TriggerType"
+        "TriggerType",
+        "TriggerName",
+        "ServiceName",
+        "TriggerConfig"
       ],
       "additionalProperties": false,
       "document": {

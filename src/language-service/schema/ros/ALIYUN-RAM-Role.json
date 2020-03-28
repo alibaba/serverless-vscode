@@ -14,11 +14,11 @@
         "RoleName": {
           "type": "string"
         },
-        "Policies": {
-          "type": "array"
-        },
         "Description": {
           "type": "string"
+        },
+        "Policies": {
+          "type": "array"
         },
         "AssumeRolePolicyDocument": {
           "type": "object"

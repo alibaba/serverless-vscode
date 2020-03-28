@@ -11,124 +11,130 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "Period": {
-          "type": "integer"
+        "BootstrapAction": {
+          "type": "array"
         },
-        "SecurityGroupId": {
+        "SecurityGroupName": {
           "type": "string"
         },
         "Config": {
           "type": "array"
         },
-        "InstanceGeneration": {
-          "type": "string"
-        },
-        "OptionSoftWareList": {
-          "type": "array"
-        },
-        "EmrVer": {
-          "type": "string"
-        },
-        "DepositType": {
-          "type": "string"
-        },
-        "SshEnable": {
-          "type": "boolean"
-        },
-        "ZoneId": {
-          "type": "string"
-        },
         "AutoRenew": {
-          "type": "boolean"
-        },
-        "MasterPwd": {
-          "type": "string"
-        },
-        "VSwitchId": {
-          "type": "string"
-        },
-        "VpcId": {
-          "type": "string"
-        },
-        "IoOptimized": {
           "type": "boolean"
         },
         "HostGroup": {
           "type": "array"
         },
-        "KeyPairName": {
-          "type": "string"
-        },
-        "ChargeType": {
-          "type": "string"
-        },
-        "InitCustomHiveMetaDB": {
-          "type": "boolean"
-        },
-        "MachineType": {
-          "type": "string"
-        },
-        "UseLocalMetaDb": {
-          "type": "boolean"
-        },
-        "RelatedClusterId": {
-          "type": "string"
-        },
-        "WhiteListType": {
-          "type": "string"
-        },
-        "Configurations": {
-          "type": "string"
-        },
-        "BootstrapAction": {
+        "UserInfo": {
           "type": "array"
         },
-        "EasEnable": {
+        "HighAvailabilityEnable": {
           "type": "boolean"
         },
         "Name": {
           "type": "string"
         },
+        "OptionSoftWareList": {
+          "type": "array"
+        },
+        "MasterPwd": {
+          "type": "string"
+        },
+        "SshEnable": {
+          "type": "boolean"
+        },
         "UseCustomHiveMetaDB": {
           "type": "boolean"
-        },
-        "HighAvailabilityEnable": {
-          "type": "boolean"
-        },
-        "SecurityGroupName": {
-          "type": "string"
         },
         "IsOpenPublicIp": {
           "type": "boolean"
         },
-        "LogPath": {
-          "type": "string"
-        },
-        "UserInfo": {
-          "type": "array"
-        },
-        "ClusterType": {
-          "type": "string"
-        },
-        "NetType": {
+        "Configurations": {
           "type": "string"
         },
         "AuthorizeContent": {
           "type": "string"
         },
+        "NetType": {
+          "type": "string"
+        },
         "UserDefinedEmrEcsRole": {
           "type": "string"
+        },
+        "UseLocalMetaDb": {
+          "type": "boolean"
+        },
+        "KeyPairName": {
+          "type": "string"
+        },
+        "IoOptimized": {
+          "type": "boolean"
+        },
+        "ZoneId": {
+          "type": "string"
+        },
+        "VSwitchId": {
+          "type": "string"
+        },
+        "SecurityGroupId": {
+          "type": "string"
+        },
+        "MachineType": {
+          "type": "string"
+        },
+        "DepositType": {
+          "type": "string"
+        },
+        "MetaStoreType": {
+          "type": "string"
+        },
+        "Period": {
+          "type": "integer"
+        },
+        "EmrVer": {
+          "type": "string"
+        },
+        "ClusterType": {
+          "type": "string"
+        },
+        "EasEnable": {
+          "type": "boolean"
+        },
+        "RelatedClusterId": {
+          "type": "string"
+        },
+        "VpcId": {
+          "type": "string"
+        },
+        "ChargeType": {
+          "type": "string"
+        },
+        "WhiteListType": {
+          "type": "string"
+        },
+        "MetaStoreConf": {
+          "type": "string"
+        },
+        "InstanceGeneration": {
+          "type": "string"
+        },
+        "LogPath": {
+          "type": "string"
+        },
+        "InitCustomHiveMetaDB": {
+          "type": "boolean"
         }
       },
       "required": [
-        "EmrVer",
-        "ZoneId",
         "HostGroup",
-        "ChargeType",
-        "UseLocalMetaDb",
         "Name",
+        "NetType",
+        "UseLocalMetaDb",
+        "ZoneId",
+        "EmrVer",
         "ClusterType",
-        "NetType"
+        "ChargeType"
       ],
       "additionalProperties": false,
       "document": {

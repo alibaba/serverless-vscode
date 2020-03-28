@@ -14,23 +14,23 @@
         "DelaySeconds": {
           "type": "integer"
         },
+        "PollingWaitSeconds": {
+          "type": "integer"
+        },
         "MessageRetentionPeriod": {
           "type": "integer"
         },
         "MaximumMessageSize": {
           "type": "integer"
         },
-        "QueueName": {
-          "type": "string"
-        },
         "VisibilityTimeout": {
           "type": "integer"
         },
+        "QueueName": {
+          "type": "string"
+        },
         "LoggingEnabled": {
           "type": "boolean"
-        },
-        "PollingWaitSeconds": {
-          "type": "integer"
         }
       },
       "required": [

@@ -11,28 +11,28 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "Name": {
+        "SslConfig": {
+          "type": "object"
+        },
+        "Description": {
+          "type": "string"
+        },
+        "GreConfig": {
+          "type": "array"
+        },
+        "UisProtocol": {
           "type": "string"
         },
         "UisNodeId": {
           "type": "string"
         },
-        "Description": {
+        "Name": {
           "type": "string"
-        },
-        "SslConfig": {
-          "type": "object"
-        },
-        "UisProtocol": {
-          "type": "string"
-        },
-        "GreConfig": {
-          "type": "array"
         }
       },
       "required": [
-        "UisNodeId",
-        "UisProtocol"
+        "UisProtocol",
+        "UisNodeId"
       ],
       "additionalProperties": false,
       "document": {

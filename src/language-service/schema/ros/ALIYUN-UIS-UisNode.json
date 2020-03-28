@@ -11,30 +11,30 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "Name": {
-          "type": "string"
-        },
         "Description": {
           "type": "string"
         },
-        "UisNodeAreaId": {
+        "UisId": {
           "type": "string"
         },
         "IpAddrsNum": {
           "type": "integer"
         },
-        "UisId": {
-          "type": "string"
-        },
         "UisNodeBandwidth": {
           "type": "integer"
+        },
+        "UisNodeAreaId": {
+          "type": "string"
+        },
+        "Name": {
+          "type": "string"
         }
       },
       "required": [
-        "UisNodeAreaId",
-        "IpAddrsNum",
         "UisId",
-        "UisNodeBandwidth"
+        "IpAddrsNum",
+        "UisNodeBandwidth",
+        "UisNodeAreaId"
       ],
       "additionalProperties": false,
       "document": {

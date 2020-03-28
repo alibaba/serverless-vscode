@@ -14,10 +14,10 @@
         "ZoneName": {
           "type": "string"
         },
-        "Remark": {
+        "ProxyPattern": {
           "type": "string"
         },
-        "ProxyPattern": {
+        "Remark": {
           "type": "string"
         }
       },

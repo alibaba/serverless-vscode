@@ -14,23 +14,23 @@
         "DiskIds": {
           "type": "array"
         },
-        "AutoSnapshotPolicyName": {
-          "type": "string"
+        "TimePoints": {
+          "type": "array"
         },
         "RetentionDays": {
           "type": "integer"
         },
-        "TimePoints": {
-          "type": "array"
-        },
         "RepeatWeekdays": {
           "type": "array"
+        },
+        "AutoSnapshotPolicyName": {
+          "type": "string"
         }
       },
       "required": [
         "DiskIds",
-        "RetentionDays",
         "TimePoints",
+        "RetentionDays",
         "RepeatWeekdays"
       ],
       "additionalProperties": false,

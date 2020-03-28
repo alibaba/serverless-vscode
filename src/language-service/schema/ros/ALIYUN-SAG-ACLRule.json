@@ -11,45 +11,45 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "IpProtocol": {
-          "type": "string"
-        },
-        "SourceCidr": {
+        "Policy": {
           "type": "string"
         },
         "Description": {
           "type": "string"
         },
+        "DestCidr": {
+          "type": "string"
+        },
         "SourcePortRange": {
           "type": "string"
+        },
+        "SourceCidr": {
+          "type": "string"
+        },
+        "Priority": {
+          "type": "integer"
         },
         "AclId": {
           "type": "string"
         },
-        "Policy": {
+        "IpProtocol": {
           "type": "string"
         },
         "DestPortRange": {
           "type": "string"
         },
-        "DestCidr": {
-          "type": "string"
-        },
         "Direction": {
           "type": "string"
-        },
-        "Priority": {
-          "type": "integer"
         }
       },
       "required": [
-        "IpProtocol",
-        "SourceCidr",
-        "SourcePortRange",
-        "AclId",
         "Policy",
-        "DestPortRange",
         "DestCidr",
+        "SourcePortRange",
+        "SourceCidr",
+        "AclId",
+        "IpProtocol",
+        "DestPortRange",
         "Direction"
       ],
       "additionalProperties": false,

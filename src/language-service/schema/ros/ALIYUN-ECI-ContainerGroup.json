@@ -11,38 +11,26 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "SecurityGroupId": {
-          "type": "string"
-        },
-        "RestartPolicy": {
-          "type": "string"
-        },
-        "InitContainer": {
-          "type": "array"
-        },
-        "Volume": {
-          "type": "array"
-        },
-        "ImageRegistryCredential": {
-          "type": "array"
-        },
-        "DnsConfig": {
-          "type": "object"
-        },
         "HostAliase": {
           "type": "array"
-        },
-        "EipInstanceId": {
-          "type": "string"
         },
         "ZoneId": {
           "type": "string"
         },
-        "ContainerGroupName": {
+        "SecurityContextSysctl": {
+          "type": "array"
+        },
+        "Memory": {
+          "type": "number"
+        },
+        "SecurityGroupId": {
           "type": "string"
         },
         "VSwitchId": {
           "type": "string"
+        },
+        "InitContainer": {
+          "type": "array"
         },
         "SlsEnable": {
           "type": "boolean"
@@ -50,26 +38,38 @@
         "Cpu": {
           "type": "number"
         },
-        "Memory": {
-          "type": "number"
+        "RestartPolicy": {
+          "type": "string"
+        },
+        "EipInstanceId": {
+          "type": "string"
+        },
+        "ContainerGroupName": {
+          "type": "string"
+        },
+        "Container": {
+          "type": "array"
         },
         "ImageSnapshotId": {
           "type": "string"
         },
+        "DnsConfig": {
+          "type": "object"
+        },
+        "Volume": {
+          "type": "array"
+        },
+        "ImageRegistryCredential": {
+          "type": "array"
+        },
         "Tag": {
-          "type": "array"
-        },
-        "SecurityContextSysctl": {
-          "type": "array"
-        },
-        "Container": {
           "type": "array"
         }
       },
       "required": [
         "SecurityGroupId",
-        "ContainerGroupName",
         "VSwitchId",
+        "ContainerGroupName",
         "Container"
       ],
       "additionalProperties": false,

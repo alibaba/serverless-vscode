@@ -11,16 +11,13 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "IpProtocol": {
+        "ExternalPort": {
           "type": "string"
         },
         "ExternalIp": {
           "type": "string"
         },
-        "ForwardTableId": {
-          "type": "string"
-        },
-        "ExternalPort": {
+        "IpProtocol": {
           "type": "string"
         },
         "InternalPort": {
@@ -28,15 +25,18 @@
         },
         "InternalIp": {
           "type": "string"
+        },
+        "ForwardTableId": {
+          "type": "string"
         }
       },
       "required": [
-        "IpProtocol",
-        "ExternalIp",
-        "ForwardTableId",
         "ExternalPort",
+        "ExternalIp",
+        "IpProtocol",
         "InternalPort",
-        "InternalIp"
+        "InternalIp",
+        "ForwardTableId"
       ],
       "additionalProperties": false,
       "document": {

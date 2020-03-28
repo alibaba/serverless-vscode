@@ -14,10 +14,10 @@
         "AclEntrys": {
           "type": "array"
         },
-        "AclName": {
+        "AddressIPVersion": {
           "type": "string"
         },
-        "AddressIPVersion": {
+        "AclName": {
           "type": "string"
         }
       },

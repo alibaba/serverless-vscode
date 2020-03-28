@@ -11,22 +11,22 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "Groups": {
-          "type": "array"
+        "UserName": {
+          "type": "string"
         },
         "Policies": {
           "type": "array"
         },
-        "UserName": {
+        "Groups": {
+          "type": "array"
+        },
+        "DisplayName": {
           "type": "string"
         },
         "LoginProfile": {
           "type": "object"
         },
         "MobilePhone": {
-          "type": "string"
-        },
-        "DisplayName": {
           "type": "string"
         }
       },

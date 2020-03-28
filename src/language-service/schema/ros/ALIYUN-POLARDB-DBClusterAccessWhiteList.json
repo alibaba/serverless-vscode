@@ -11,10 +11,10 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "DBClusterIPArrayName": {
+        "SecurityIps": {
           "type": "string"
         },
-        "SecurityIps": {
+        "DBClusterIPArrayName": {
           "type": "string"
         },
         "DBClusterId": {

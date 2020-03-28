@@ -11,22 +11,22 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "InstanceIds": {
-          "type": "array"
-        },
-        "CommandId": {
-          "type": "string"
+        "Timed": {
+          "type": "boolean"
         },
         "Frequency": {
           "type": "string"
         },
-        "Timed": {
-          "type": "boolean"
+        "CommandId": {
+          "type": "string"
+        },
+        "InstanceIds": {
+          "type": "array"
         }
       },
       "required": [
-        "InstanceIds",
-        "CommandId"
+        "CommandId",
+        "InstanceIds"
       ],
       "additionalProperties": false,
       "document": {

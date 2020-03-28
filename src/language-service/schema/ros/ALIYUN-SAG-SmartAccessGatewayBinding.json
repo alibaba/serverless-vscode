@@ -11,16 +11,16 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "SmartAGId": {
+        "CcnId": {
           "type": "string"
         },
-        "CcnId": {
+        "SmartAGId": {
           "type": "string"
         }
       },
       "required": [
-        "SmartAGId",
-        "CcnId"
+        "CcnId",
+        "SmartAGId"
       ],
       "additionalProperties": false,
       "document": {

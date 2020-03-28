@@ -11,29 +11,29 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "NetworkType": {
-          "type": "string"
-        },
-        "FileSystemId": {
-          "type": "string"
-        },
         "Status": {
           "type": "string"
         },
-        "AccessGroupName": {
+        "VpcId": {
+          "type": "string"
+        },
+        "NetworkType": {
           "type": "string"
         },
         "VSwitchId": {
           "type": "string"
         },
-        "VpcId": {
+        "AccessGroupName": {
+          "type": "string"
+        },
+        "FileSystemId": {
           "type": "string"
         }
       },
       "required": [
         "NetworkType",
-        "FileSystemId",
-        "AccessGroupName"
+        "AccessGroupName",
+        "FileSystemId"
       ],
       "additionalProperties": false,
       "document": {

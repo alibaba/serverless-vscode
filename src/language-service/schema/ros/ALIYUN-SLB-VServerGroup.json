@@ -11,20 +11,20 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "BackendServers": {
-          "type": "array"
+        "VServerGroupName": {
+          "type": "string"
         },
         "LoadBalancerId": {
           "type": "string"
         },
-        "VServerGroupName": {
-          "type": "string"
+        "BackendServers": {
+          "type": "array"
         }
       },
       "required": [
-        "BackendServers",
+        "VServerGroupName",
         "LoadBalancerId",
-        "VServerGroupName"
+        "BackendServers"
       ],
       "additionalProperties": false,
       "document": {

@@ -11,35 +11,35 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "Name": {
-          "type": "string"
-        },
-        "Port": {
-          "type": "integer"
-        },
-        "VpnGatewayId": {
-          "type": "string"
-        },
-        "ClientIpPool": {
-          "type": "string"
-        },
-        "Cipher": {
-          "type": "string"
-        },
-        "Proto": {
-          "type": "string"
-        },
         "Compress": {
           "type": "boolean"
         },
         "LocalSubnet": {
           "type": "string"
+        },
+        "ClientIpPool": {
+          "type": "string"
+        },
+        "Proto": {
+          "type": "string"
+        },
+        "VpnGatewayId": {
+          "type": "string"
+        },
+        "Port": {
+          "type": "integer"
+        },
+        "Cipher": {
+          "type": "string"
+        },
+        "Name": {
+          "type": "string"
         }
       },
       "required": [
-        "VpnGatewayId",
+        "LocalSubnet",
         "ClientIpPool",
-        "LocalSubnet"
+        "VpnGatewayId"
       ],
       "additionalProperties": false,
       "document": {

@@ -11,10 +11,10 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "ResourceGroupId": {
+        "KeyPairName": {
           "type": "string"
         },
-        "KeyPairName": {
+        "ResourceGroupId": {
           "type": "string"
         },
         "PublicKeyBody": {

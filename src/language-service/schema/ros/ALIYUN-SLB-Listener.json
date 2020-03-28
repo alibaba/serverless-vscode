@@ -14,61 +14,64 @@
         "RequestTimeout": {
           "type": "integer"
         },
-        "AclStatus": {
-          "type": "string"
-        },
-        "Persistence": {
-          "type": "object"
-        },
-        "AclType": {
-          "type": "string"
+        "ListenerPort": {
+          "type": "integer"
         },
         "VServerGroupId": {
-          "type": "string"
-        },
-        "HealthCheck": {
-          "type": "object"
-        },
-        "LoadBalancerId": {
           "type": "string"
         },
         "CACertificateId": {
           "type": "string"
         },
-        "ListenerPort": {
-          "type": "integer"
-        },
-        "ServerCertificateId": {
+        "Scheduler": {
           "type": "string"
         },
         "AclId": {
           "type": "string"
         },
-        "Scheduler": {
-          "type": "string"
-        },
-        "HttpConfig": {
+        "HealthCheck": {
           "type": "object"
         },
         "IdleTimeout": {
           "type": "integer"
         },
-        "Protocol": {
+        "LoadBalancerId": {
           "type": "string"
         },
         "BackendServerPort": {
           "type": "integer"
         },
+        "Persistence": {
+          "type": "object"
+        },
+        "AclStatus": {
+          "type": "string"
+        },
         "Bandwidth": {
           "type": "integer"
+        },
+        "MasterSlaveServerGroupId": {
+          "type": "string"
+        },
+        "ServerCertificateId": {
+          "type": "string"
+        },
+        "HttpConfig": {
+          "type": "object"
+        },
+        "AclType": {
+          "type": "string"
+        },
+        "Protocol": {
+          "type": "string"
         }
       },
       "required": [
-        "LoadBalancerId",
         "ListenerPort",
-        "Protocol",
+        "LoadBalancerId",
         "BackendServerPort",
-        "Bandwidth"
+        "Bandwidth",
+        "Protocol"
       ],
       "additionalProperties": false,
       "document": {

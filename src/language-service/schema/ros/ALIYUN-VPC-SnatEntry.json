@@ -11,22 +11,22 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "SnatTableId": {
-          "type": "string"
-        },
-        "SnatIp": {
-          "type": "string"
-        },
         "SnatEntryName": {
           "type": "string"
         },
         "SourceVSwitchIds": {
           "type": "array"
+        },
+        "SnatIp": {
+          "type": "string"
+        },
+        "SnatTableId": {
+          "type": "string"
         }
       },
       "required": [
-        "SnatTableId",
-        "SnatIp"
+        "SnatIp",
+        "SnatTableId"
       ],
       "additionalProperties": false,
       "document": {

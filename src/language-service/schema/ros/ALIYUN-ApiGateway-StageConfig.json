@@ -11,19 +11,19 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "StageName": {
-          "type": "string"
-        },
         "Variables": {
           "type": "object"
+        },
+        "StageName": {
+          "type": "string"
         },
         "GroupId": {
           "type": "string"
         }
       },
       "required": [
-        "StageName",
         "Variables",
+        "StageName",
         "GroupId"
       ],
       "additionalProperties": false,

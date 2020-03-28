@@ -11,28 +11,28 @@
     "Properties": {
       "type": "object",
       "properties": {
-        "NetworkType": {
+        "Description": {
+          "type": "string"
+        },
+        "VpcId": {
           "type": "string"
         },
         "SecurityGroupName": {
           "type": "string"
         },
-        "Description": {
+        "ResourceGroupId": {
           "type": "string"
         },
         "DestinationRegionId": {
           "type": "string"
         },
-        "SourceSecurityGroupId": {
-          "type": "string"
-        },
-        "ResourceGroupId": {
+        "NetworkType": {
           "type": "string"
         },
         "SecurityGroupType": {
           "type": "string"
         },
-        "VpcId": {
+        "SourceSecurityGroupId": {
           "type": "string"
         }
       },
