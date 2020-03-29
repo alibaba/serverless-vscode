@@ -2,6 +2,15 @@
 
 所有对 "Aliyun Serverless" 插件的更改都将记录在这个文件中。
 
+## 1.27.4 - 2020-03-29
+### Added
+1. template.yml 模板文件语法提示同步最新 ROS Schema
+2. 优化插件有时导致 CPU 过载的现象
+   - 通过配置 `aliyun.fc.single.template.mode` 选择使用单/多模板文件模式
+   - 通过配置 `aliyun.fc.multi.templates.path` 选择多模板文件模式下支持的模板文件
+   - 单模板文件模式下, 本地资源树以及语法提示功能只针对 template.(yml|yaml)
+   - 多模板文件模式下, 本地资源树以及语法提示功能支持用户配置的(相对/绝对)模板文件路径
+
 ## 1.27.3 - 2020-03-22
 ### Fixed
 1. 更新本地调试时自动检测的 C# extension 名称
