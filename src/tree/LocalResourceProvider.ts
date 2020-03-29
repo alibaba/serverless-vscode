@@ -1,13 +1,13 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
-import * as util from 'util';
-import * as glob from 'glob';
+import * as fs from 'fs-extra';
 import {
   ALIYUN_SERVERLESS_SERVICE_TYPE,
   ALIYUN_SERVERLESS_FUNCTION_TYPE,
   serverlessCommands,
   ALIYUN_SERVERLESS_EVENT_TYPES,
   ALIYUN_SERVERLESS_FLOW_TYPE,
+  serverlessConfigs,
 } from '../utils/constants';
 import {
   Resource,
@@ -21,8 +21,6 @@ import {
 } from '../models/resource';
 import { templateChangeEventEmitter } from '../models/events';
 import { TemplateService } from '../services/TemplateService';
-
-const findFile = util.promisify(glob);
 
 export class LocalResourceProvider implements vscode.TreeDataProvider<Resource> {
   _onDidChangeTreeData: vscode.EventEmitter<Resource | undefined> = new vscode.EventEmitter<Resource | undefined>();
@@ -54,12 +52,27 @@ export class LocalResourceProvider implements vscode.TreeDataProvider<Resource> 
     }
 
     if (!element) {
-      const files = await findFile('**/template.?(packaged.){yml,yaml}', {
-        cwd: this.workspaceRoot,
-        ignore: [
-          '**/node_modules/**/template.{yml,yaml}',
-        ],
-      })
+      const singleMode = <boolean>vscode.workspace.getConfiguration()
+        .get(serverlessConfigs.ALIYUN_FC_SINGLE_TEMPLATE_MODE);
+      let files: string[] = [];
+      if (singleMode) {
+        for (const template of ['template.yml', 'template.yaml']) {
+          const templatePath = path.resolve(this.workspaceRoot, template);
+          if (await fs.pathExists(templatePath)) {
+            files.push(templatePath);
+            break;
+          }
+        }
+      } else {
+        const templates = <string[]>vscode.workspace.getConfiguration()
+          .get(serverlessConfigs.ALIYUN_FC_MULTI_TEMPLATES_PATH);
+        for (const template of templates) {
+          const templatePath = path.isAbsolute(template) ? template : path.resolve(this.workspaceRoot, template);
+          if (await fs.pathExists(templatePath)) {
+            files.push(templatePath);
+          }
+        }
+      }
       if (!files || !files.length) {
         return [];
       }

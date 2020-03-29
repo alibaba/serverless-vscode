@@ -242,6 +242,8 @@ export namespace serverlessConfigs {
   export const ALIYUN_FC_IMPORT_BASE_PATH = 'aliyun.fc.import.base.path';
   export const ALIYUN_FC_CREATEFUNCTION_CODEURI_PREFIX = 'aliyun.fc.createFunction.codeUri.prefix';
   export const ALIYUN_FC_FUN_DEPLOY_ASSUMEYES = 'aliyun.fc.fun.deploy.assumeYes';
+  export const ALIYUN_FC_SINGLE_TEMPLATE_MODE = 'aliyun.fc.single.template.mode';
+  export const ALIYUN_FC_MULTI_TEMPLATES_PATH = 'aliyun.fc.multi.templates.path';
 }
 
 export const SERVERLESS_EXTENTION_DOCUMENTATION_URL =

@@ -1,4 +1,6 @@
 import * as vscode from 'vscode';
+import * as path from 'path';
+import { serverlessConfigs } from './constants';
 
 const rosRegExp = /"?'?ROSTemplateFormatVersion"?'?:\s*"?'?2015-09-01"?'?/
 const transformRegExp = /"?'?Transform"?'?:\s*"?'?Aliyun::Serverless-2018-04-03"?'?/
@@ -14,6 +16,29 @@ export function isSupportedDocument(document: vscode.TextDocument): boolean {
   if (isTemplateYaml(document)) {
     const textDocument = document.getText();
     return rosRegExp.test(textDocument);
+  }
+  return false;
+}
+
+
+export function isSupportedROSDocument(document: vscode.TextDocument): boolean {
+  if (!isYamlFile(document)) {
+    return false;
+  }
+  const singleMode = <boolean>vscode.workspace.getConfiguration()
+    .get(serverlessConfigs.ALIYUN_FC_SINGLE_TEMPLATE_MODE);
+  const templates = singleMode
+    ? ['template.yml', 'template.yaml']
+    :  <string[]>vscode.workspace.getConfiguration()
+      .get(serverlessConfigs.ALIYUN_FC_MULTI_TEMPLATES_PATH);
+  const files: string[] = [];
+  for (const template of templates) {
+    const fileName = path.isAbsolute(template)
+      ? template
+      : path.resolve(vscode.workspace.rootPath as string, template);
+    if (fileName === document.fileName && rosRegExp.test(document.getText())) {
+      return true;
+    }
   }
   return false;
 }

@@ -47,7 +47,7 @@ import { reportIssue } from './commands/reportIssue';
 import { viewQuickStart } from './commands/viewQuickStart';
 import { showUpdateNotification } from './commands/showUpdateNotification';
 import { referRuntimeLib } from './commands/referRuntimeLib';
-import { isTemplateYaml } from './utils/document';
+import { isSupportedROSDocument } from './utils/document';
 import { templateChangeEventEmitter } from './models/events';
 import { ROSTemplateHoverProvider } from './hovers/ROSTemplateHoverProvider';
 import { FlowDefinitionHoverProvider } from './hovers/FlowDefinitionHoverProvider';
@@ -180,7 +180,7 @@ export function activate(context: vscode.ExtensionContext) {
     new FunfileCompletionProvider(),
   );
 
-  const flowDefinitionSelector = { pattern: '**/*.{yml,yaml}' };
+  const flowDefinitionSelector = { pattern: '**/*.flow.{yml,yaml}' };
   vscode.languages.registerCompletionItemProvider(
     flowDefinitionSelector,
     new FlowDefinitionCompletionProvider(),
@@ -193,7 +193,7 @@ export function activate(context: vscode.ExtensionContext) {
 
   vscode.workspace.onDidChangeTextDocument((event) => {
     const document = event.document;
-    if (isTemplateYaml(document) && !document.isDirty) {
+    if (isSupportedROSDocument(document) && !document.isDirty) {
       templateChangeEventEmitter.fire();
     }
   })

@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import * as Yaml from 'yaml-ast-parser';
 import { ext } from '../extensionVariables';
-import { isSupportedDocument, isPartialTpl } from '../utils/document';
+import { isSupportedROSDocument, isPartialTpl } from '../utils/document';
 import { ASTNode } from '../parser/ASTNode';
 import { buildAstRecursively } from '../parser/parser';
 import { JSONSchemaService } from '../language-service/services/jsonSchemaService';
@@ -35,7 +35,7 @@ export class ROSTemplateDiagnosticsProvider {
     if (!document) {
       return;
     }
-    if (!isSupportedDocument(document) ||
+    if (!isSupportedROSDocument(document) ||
       disableValidationMarker.test(document.lineAt(0).text) ||
       isPartialTpl(document)
     ) {
