@@ -21,6 +21,7 @@ import {
 } from '../models/resource';
 import { templateChangeEventEmitter } from '../models/events';
 import { TemplateService } from '../services/TemplateService';
+import { getTemplateFiles } from '../utils/template';
 
 export class LocalResourceProvider implements vscode.TreeDataProvider<Resource> {
   _onDidChangeTreeData: vscode.EventEmitter<Resource | undefined> = new vscode.EventEmitter<Resource | undefined>();
@@ -52,27 +53,7 @@ export class LocalResourceProvider implements vscode.TreeDataProvider<Resource> 
     }
 
     if (!element) {
-      const singleMode = <boolean>vscode.workspace.getConfiguration()
-        .get(serverlessConfigs.ALIYUN_FC_SINGLE_TEMPLATE_MODE);
-      let files: string[] = [];
-      if (singleMode) {
-        for (const template of ['template.yml', 'template.yaml']) {
-          const templatePath = path.resolve(this.workspaceRoot, template);
-          if (await fs.pathExists(templatePath)) {
-            files.push(templatePath);
-            break;
-          }
-        }
-      } else {
-        const templates = <string[]>vscode.workspace.getConfiguration()
-          .get(serverlessConfigs.ALIYUN_FC_MULTI_TEMPLATES_PATH);
-        for (const template of templates) {
-          const templatePath = path.isAbsolute(template) ? template : path.resolve(this.workspaceRoot, template);
-          if (await fs.pathExists(templatePath)) {
-            files.push(templatePath);
-          }
-        }
-      }
+      let files: string[] = await getTemplateFiles();
       if (!files || !files.length) {
         return [];
       }

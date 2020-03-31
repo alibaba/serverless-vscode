@@ -1,7 +1,5 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
-import * as util from 'util';
-import * as glob from 'glob';
 import { ext } from '../extensionVariables';
 import { templateChangeEventEmitter } from '../models/events';
 import { ALIYUN_SERVERLESS_SERVICE_TYPE, ALIYUN_SERVERLESS_FUNCTION_TYPE } from '../utils/constants';
@@ -11,8 +9,7 @@ import { SeverlessLensDebugItem } from './ServerlessLensDebugItem';
 import { FunctionResource } from '../models/resource';
 import { ServerlessLensConfigItem } from './ServerlessLensConfigItem';
 import { FunctionComputeLensLocalInvokePanelItem } from './FunctionComputeLensLocalInvokePanelItem';
-
-const findFile = util.promisify(glob);
+import { getTemplateFiles } from '../utils/template';
 
 interface FunctionInfo {
   serviceName: string,
@@ -43,9 +40,7 @@ class FunctionInfoDict {
     if (!ext.cwd) {
       return;
     }
-    const files = await findFile('**/template.{yml,yaml}', {
-      cwd: ext.cwd,
-    });
+    const files = await getTemplateFiles();
     if (!files || !files.length) {
       return;
     }
