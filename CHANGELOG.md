@@ -2,6 +2,12 @@
 
 所有对 "Aliyun Serverless" 插件的更改都将记录在这个文件中。
 
+## 1.27.5 - 2020-03-31
+### Added
+1. 本地调试支持 java runtime 的 HTTP Trigger
+2. 提供 `aliyun.fc.local.debug.python.waitingTime` 以及 `aliyun.fc.local.debug.java.waitingTime` 配置参数, 分别用于配置 python 以及 java runtime 在本地调试时等待 Debugger 连接的时间
+3. 优化函数入口文件添加本地执行 `Local Run` 与本地调试 `Local Debug` 快捷入口的前置检测时间。
+
 ## 1.27.4 - 2020-03-29
 ### Added
 1. template.yml 模板文件语法提示同步最新 ROS Schema
