@@ -175,6 +175,7 @@ class LocalDebugManager {
 }
 
 abstract class AbstractLocalDebugHelper {
+  abstract getLanguage(): string;
   abstract async checkDebugExtensionInstalled(): Promise<boolean>;
   abstract async generateDefaultDebugConfiguration(
     serviceName: string,
@@ -274,6 +275,17 @@ abstract class AbstractLocalDebugHelper {
     }
     return terminal;
   }
+
+  async waitConfiguredTime(): Promise<void> {
+    const timeout: number = <number> vscode.workspace.getConfiguration()
+      .get(`aliyun.fc.local.debug.${this.getLanguage()}.waitingTime`);
+    if (timeout) {
+      await new Promise((resolve) => { setTimeout(() => {
+        resolve();
+      }, timeout); });
+    }
+  }
+
   async getInstalledExtensions(): Promise<string> {
     return await cpUtils.executeCommand(undefined, undefined, 'code', '--list-extensions');
   }
@@ -289,6 +301,9 @@ abstract class AbstractLocalDebugHelper {
 }
 
 class NodejsLocalDebugHelper extends AbstractLocalDebugHelper {
+  getLanguage(): string {
+    return 'nodejs';
+  }
   async checkDebugExtensionInstalled(): Promise<boolean> {
     return true;
   }
@@ -316,6 +331,9 @@ class NodejsLocalDebugHelper extends AbstractLocalDebugHelper {
 }
 
 class PythonLocalDebugHelper extends AbstractLocalDebugHelper {
+  getLanguage(): string {
+    return 'python';
+  }
   async checkDebugExtensionInstalled(): Promise<boolean> {
     if (!autoCheckPythonDebugger) {
       return true;
@@ -382,15 +400,16 @@ class PythonLocalDebugHelper extends AbstractLocalDebugHelper {
       return;
     }
     await waitUntilContainerStarted(configuration.port);
-    await new Promise((resolve) => { setTimeout(() => {
-      resolve();
-    }, 2000); });
+    await this.waitConfiguredTime();
     await vscode.debug.startDebugging(undefined, configuration);
     terminal.show();
   }
 }
 
 class PhpLocalDebugHelper extends AbstractLocalDebugHelper {
+  getLanguage(): string {
+    return 'php';
+  }
   async checkDebugExtensionInstalled(): Promise<boolean> {
     if (!autoCheckPhpDebugger) {
       return true;
@@ -459,6 +478,9 @@ class PhpLocalDebugHelper extends AbstractLocalDebugHelper {
 }
 
 class JavaLocalDebugHelper extends AbstractLocalDebugHelper {
+  getLanguage(): string {
+    return 'java';
+  }
   async checkDebugExtensionInstalled(): Promise<boolean> {
     if (!autoCheckJavaDebugger) {
       return true;
@@ -503,9 +525,6 @@ class JavaLocalDebugHelper extends AbstractLocalDebugHelper {
     debugPort?: number,
     reuse?: boolean,
   ) {
-    if (hasHttpTrigger) {
-      throw new Error('Java HTTP trigger debug will be supported soon.');
-    }
     const terminal: vscode.Terminal = this.executeFunLocal(
       serviceName,
       functionName,
@@ -519,15 +538,16 @@ class JavaLocalDebugHelper extends AbstractLocalDebugHelper {
       return;
     }
     await waitUntilContainerStarted(configuration.port);
-    await new Promise((resolve) => { setTimeout(() => {
-      resolve();
-    }, 2000); });
+    await this.waitConfiguredTime();
     await vscode.debug.startDebugging(undefined, configuration);
     terminal.show();
   }
 }
 
 class DotnetLocalDebugHelper extends AbstractLocalDebugHelper {
+  getLanguage(): string {
+    return 'dotnet';
+  }
   async checkDebugExtensionInstalled(): Promise<boolean> {
     if (!autoCheckDotnetDebugger) {
       return true;

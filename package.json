@@ -116,6 +116,14 @@
             "template.yml"
           ]
         },
+        "aliyun.fc.local.debug.python.waitingTime": {
+          "type": "number",
+          "default": 3000
+        },
+        "aliyun.fc.local.debug.java.waitingTime": {
+          "type": "number",
+          "default": 2000
+        },
         "aliyun.fnf.remoteResource.enable": {
           "type": "boolean",
           "default": true
