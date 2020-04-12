@@ -103,6 +103,9 @@
         "resourceArn": {
           "type": "string"
         },
+        "action": {
+          "type": "string"
+        },
         "retry": {
           "$ref": "#/definitions/Aliyun::FunctionFlow::Step::Retry"
         },

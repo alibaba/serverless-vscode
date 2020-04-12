@@ -2,6 +2,11 @@
 
 所有对 "Aliyun Serverless" 插件的更改都将记录在这个文件中。
 
+## 1.27.6 - 2020-04-12
+### Added
+1. 更新函数工作流的语法智能提示 Schema
+2. 更新依赖 Fun 的版本为 3.6.8
+
 ## 1.27.5 - 2020-03-31
 ### Added
 1. 本地调试支持 java runtime 的 HTTP Trigger
