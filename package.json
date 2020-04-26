@@ -4,7 +4,7 @@
   "publisher": "aliyun",
   "icon": "media/aliyun-serverless-extension.png",
   "description": "Aliyun Function Compute extension. Lets you develop your serverless application of Aliyun within VSCode.",
-  "version": "1.27.7",
+  "version": "1.27.8",
   "engines": {
     "vscode": "^1.31.0"
   },
@@ -107,13 +107,15 @@
         },
         "aliyun.fc.single.template.mode": {
           "type": "boolean",
-          "default": "true",
+          "default": false,
           "description": "Whether use single template mode. If this mode is enabled, only template.(yml|yaml) will be detected"
         },
         "aliyun.fc.multi.templates.path": {
           "type": "array",
           "default": [
-            "template.yml"
+            "template.yml",
+            "template.yaml",
+            ".fun/build/artifacts/template.yml"
           ]
         },
         "aliyun.fc.local.debug.python.waitingTime": {
@@ -731,7 +733,7 @@
   "dependencies": {
     "@alicloud/fc2": "^2.1.0",
     "@alicloud/fnf-2019-03-15": "^1.1.0",
-    "@alicloud/fun": "3.6.9",
+    "@alicloud/fun": "3.6.11",
     "@types/js-yaml": "^3.12.1",
     "@typescript-eslint/eslint-plugin": "^1.11.0",
     "@typescript-eslint/parser": "^1.11.0",
