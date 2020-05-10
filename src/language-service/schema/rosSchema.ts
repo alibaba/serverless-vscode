@@ -124,7 +124,7 @@ export const rosSchema = {
                       }
                     }
                   },
-                  "required": ["UserId", "GroupId", "MountPoints"],
+                  "required": ["UserId", "GroupId"],
                   "additionalProperties": false
                 }
               ],
