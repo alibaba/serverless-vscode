@@ -289,7 +289,7 @@ export const ALIYUN_SERVERLESS_LOG_LOGSTORE_TYPE = 'Aliyun::Serverless::Log::Log
 export const ALIYUN_SERVERLESS_MNSTOPIC_TYPE = 'Aliyun::Serverless::MNSTopic';
 export const ALIYUN_SERVERLESS_FLOW_TYPE = 'Aliyun::Serverless::Flow';
 
-export const ALIYUN_SERVERLESS_TRIGGES_TIMERR_TYPE = 'Timer';
+export const ALIYUN_SERVERLESS_TRIGGERS_TIMERR_TYPE = 'Timer';
 export const ALIYUN_SERVERLESS_TRIGGERS_HTTP_TYPE = 'HTTP';
 export const ALIYUN_SERVERLESS_TRIGGERS_LOG_TYPE = 'Log';
 export const ALIYUN_SERVERLESS_TRIGGERS_OSS_TYPE = 'OSS';
