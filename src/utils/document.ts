@@ -58,7 +58,7 @@ export function isPartialTpl(document: vscode.TextDocument): boolean {
 export function isFlowDefinitionDocument(document: vscode.TextDocument): boolean {
   if (isYamlFile(document)) {
     const textDocument = document.getText();
-    return flowVersionRegExp.test(textDocument) && flowTypeRegExp.test(textDocument);
+    return flowTypeRegExp.test(textDocument);
   }
   return false;
 }
