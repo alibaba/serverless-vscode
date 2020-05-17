@@ -2,6 +2,10 @@
 
 所有对 "Aliyun Serverless" 插件的更改都将记录在这个文件中。
 
+## 1.27.11 - 2020-05-17
+### Added
+1. 针对流程定义文件优化语法提示触发检测方式
+
 ## 1.27.10 - 2020-05-10
 ### Fixed
 1. 修复 Aliyun::Serverless::Service 的 NasConfig Schema 校验
