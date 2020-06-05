@@ -8,13 +8,25 @@ import { FC_REGIONS, serverlessCommands } from '../utils/constants';
 import { isPathExists, createFile } from '../utils/file';
 import { MultiStepInput } from '../ui/MultiStepInput';
 import { recordPageView } from '../utils/visitor';
+import { getConfig } from '../utils/config';
 
 const readFile = util.promisify(fs.readFile);
 const writeFile = util.promisify(fs.writeFile);
 
+function isTrue(value: any) {
+  return value === 'true' || value === true;
+}
+
 export function switchRegion(context: vscode.ExtensionContext) {
   context.subscriptions.push(vscode.commands.registerCommand(serverlessCommands.SWITCH_REGION.id, async () => {
     recordPageView('/switchRegion');
+
+    const profile = await getConfig();
+    if (!isTrue(profile.enableCustomEndpoint)) {
+      vscode.window.showInformationMessage('Unavailable!');
+      return;
+    }
+
     await process(context).catch(vscode.window.showErrorMessage);
   }));
 }

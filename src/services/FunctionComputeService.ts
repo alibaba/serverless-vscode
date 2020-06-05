@@ -19,6 +19,7 @@ export class FunctionComputeService extends BaseService {
         accessKeySecret: this.getAccessKeySecret(),
         region: this.getRegion(),
         timeout: this.getTimeout(),
+        endpoint: this.getEndPoint()
       });
     } catch (ex) {
       output(ex.message);

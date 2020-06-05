@@ -50,4 +50,11 @@ export class BaseService {
     }
     return Number(timeout) * 1000;
   }
+
+  getEndPoint(): string | undefined {
+    const config = getConfig();
+    const enable = config.enableCustomEndpoint === true || config.enableCustomEndpoint === 'true';
+    const endpoint = config.fcEndpoint ? config.fcEndpoint : (enable ? config.endpoint : undefined);
+    return endpoint;
+  }
 }
