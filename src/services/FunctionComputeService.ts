@@ -4,7 +4,6 @@ import { BaseService } from './BaseService';
 
 const FCClient = require('@alicloud/fc2');
 
-
 const output = primaryAccountPromptDecorator(
   enableServicePromptDecorator(
     permissionPromptDecorator(error)
@@ -122,7 +121,7 @@ export class FunctionComputeService extends BaseService {
     return {
       functions,
       nextToken: newNextToken,
-    }
+    };
   }
 
   async invokeFunction(serviceName: string, functionName: string, event: string) {
@@ -168,7 +167,7 @@ export class FunctionComputeService extends BaseService {
     return {
       triggers,
       nextToken: newNextToken,
-    }
+    };
   }
 
   async getService(serviceName: string) {
@@ -229,7 +228,7 @@ function permissionPromptDecorator(output: (msg: string) => void) {
 You can create the above permission policies and grant current user.
 https://ram.console.aliyun.com/policies/new
 =====`);
-  }
+  };
 }
 
 function enableServicePromptDecorator(output: (msg: string) => void) {
@@ -246,7 +245,7 @@ To view Resource Panel you should enable Function Compute service.
 http://fc.console.aliyun.com/
 =====`);
     }
-  }
+  };
 }
 
 function primaryAccountPromptDecorator(output: (msg: string) => void) {
@@ -264,5 +263,5 @@ You can only use the primary account id, whether or not you use a sub-account or
 You can get primary account ID on this page https://account.console.aliyun.com/#/secure .
 =====`);
     }
-  }
+  };
 }

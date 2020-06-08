@@ -8,7 +8,8 @@ export class BaseService {
     }
     let { endpoint } = config;
     endpoint = (<string>endpoint).replace('https://', '');
-    return (<string>endpoint).substring(0, (<string>endpoint).indexOf('.'));
+    const accountId = (<string>endpoint).substring(0, (<string>endpoint).indexOf('.'));
+    return accountId ? accountId : 'accountId';
   }
 
   getRegion(): string | undefined {
@@ -18,13 +19,14 @@ export class BaseService {
     }
     let { endpoint } = config;
     endpoint = (<string>endpoint).substring((<string>endpoint).indexOf('.') + 1);
-    return (<string>endpoint).substring(0, (<string>endpoint).indexOf('.'));
+    const region = (<string>endpoint).substring(0, (<string>endpoint).indexOf('.'));
+    return region ? region : 'cn-hangzhou';
   }
 
   getAccessKeyId(): string | undefined {
     const config = getConfig();
     if (!config || !config.access_key_id) {
-      return;
+      return 'accessKeyID';
     }
     let { access_key_id } = config;
     return access_key_id;
@@ -33,7 +35,7 @@ export class BaseService {
   getAccessKeySecret(): string | undefined {
     const config = getConfig();
     if (!config || !config.access_key_secret) {
-      return;
+      return 'accessKeySecret';
     }
     let { access_key_secret } = config;
     return access_key_secret;
@@ -53,8 +55,8 @@ export class BaseService {
 
   getEndPoint(): string | undefined {
     const config = getConfig();
-    const enable = config.enableCustomEndpoint === true || config.enableCustomEndpoint === 'true';
-    const endpoint = config.fcEndpoint ? config.fcEndpoint : (enable ? config.endpoint : undefined);
-    return endpoint;
+    const { endpoint, enable_custom_endpoint } = config;
+    const enable = (enable_custom_endpoint === true || enable_custom_endpoint === 'true');
+    return enable ? endpoint : undefined;
   }
 }
