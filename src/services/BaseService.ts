@@ -1,4 +1,4 @@
-import { getConfig } from '../utils/config';
+import { getConfig, extractAccountId, extractRegion } from '../utils/config';
 
 export class BaseService {
   getAccountId(): string | undefined {
@@ -6,9 +6,7 @@ export class BaseService {
     if (!config || !config.endpoint) {
       return;
     }
-    let { endpoint } = config;
-    endpoint = (<string>endpoint).replace('https://', '');
-    const accountId = (<string>endpoint).substring(0, (<string>endpoint).indexOf('.'));
+    const accountId = extractAccountId(config.endpoint);
     return accountId ? accountId : 'accountId';
   }
 
@@ -17,9 +15,7 @@ export class BaseService {
     if (!config || !config.endpoint) {
       return;
     }
-    let { endpoint } = config;
-    endpoint = (<string>endpoint).substring((<string>endpoint).indexOf('.') + 1);
-    const region = (<string>endpoint).substring(0, (<string>endpoint).indexOf('.'));
+    const region = extractRegion(config.endpoint);
     return region ? region : 'cn-hangzhou';
   }
 
