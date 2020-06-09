@@ -23,7 +23,7 @@ export function switchRegion(context: vscode.ExtensionContext) {
 
     const profile = await getConfig();
     if (!isTrue(profile.enableCustomEndpoint)) {
-      vscode.window.showInformationMessage('Unavailable!');
+      vscode.window.showInformationMessage('Region is not available because you have configured custom endpoint!');
       return;
     }
 
