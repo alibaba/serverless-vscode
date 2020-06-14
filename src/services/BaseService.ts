@@ -1,4 +1,4 @@
-import { getConfig } from '../utils/config';
+import { getConfig, extractAccountId, extractRegion } from '../utils/config';
 
 export class BaseService {
   getAccountId(): string | undefined {
@@ -6,9 +6,8 @@ export class BaseService {
     if (!config || !config.endpoint) {
       return;
     }
-    let { endpoint } = config;
-    endpoint = (<string>endpoint).replace('https://', '');
-    return (<string>endpoint).substring(0, (<string>endpoint).indexOf('.'));
+    const accountId = extractAccountId(config.endpoint);
+    return accountId ? accountId : 'accountId';
   }
 
   getRegion(): string | undefined {
@@ -16,15 +15,14 @@ export class BaseService {
     if (!config || !config.endpoint) {
       return;
     }
-    let { endpoint } = config;
-    endpoint = (<string>endpoint).substring((<string>endpoint).indexOf('.') + 1);
-    return (<string>endpoint).substring(0, (<string>endpoint).indexOf('.'));
+    const region = extractRegion(config.endpoint);
+    return region ? region : 'cn-hangzhou';
   }
 
   getAccessKeyId(): string | undefined {
     const config = getConfig();
     if (!config || !config.access_key_id) {
-      return;
+      return 'accessKeyID';
     }
     let { access_key_id } = config;
     return access_key_id;
@@ -33,7 +31,7 @@ export class BaseService {
   getAccessKeySecret(): string | undefined {
     const config = getConfig();
     if (!config || !config.access_key_secret) {
-      return;
+      return 'accessKeySecret';
     }
     let { access_key_secret } = config;
     return access_key_secret;
@@ -49,5 +47,12 @@ export class BaseService {
       return 60000; // default is 60s
     }
     return Number(timeout) * 1000;
+  }
+
+  getEndPoint(): string | undefined {
+    const config = getConfig();
+    const { endpoint, enable_custom_endpoint } = config;
+    const enable = (enable_custom_endpoint === true || enable_custom_endpoint === 'true');
+    return enable ? endpoint : undefined;
   }
 }

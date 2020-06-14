@@ -3,6 +3,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as os from 'os';
 import * as yaml from 'js-yaml';
+import * as _ from 'lodash';
 
 const configFilePath = path.join(os.homedir(), '.fcli', 'config.yaml');
 
@@ -16,15 +17,26 @@ export function getConfig() {
   return config;
 }
 
+function extract(regex: any, endpoint: string) {
+  var matchs = endpoint.match(regex);
+  if (matchs) {
+    return matchs[1];
+  }
+  return null;
+}
+
+export function extractAccountId(endpoint: string) {
+  return extract(/^https?:\/\/([^.]+)\..+$/, endpoint);
+}
+
+export function extractRegion(endpoint: string) {
+  return extract(/^https?:\/\/[^.]+\.([^.]+)\..+$/, endpoint);
+}
+
 export function getRegionId() {
   const config = getConfig();
-  let regionId = 'cn-shanghai';
-  if (config) {
-    let { endpoint } = config;
-    endpoint = (<string>endpoint).substring((<string>endpoint).indexOf('.') + 1);
-    regionId = (<string>endpoint).substring(0, (<string>endpoint).indexOf('.'));
-  }
-  return regionId;
+  if(_.isEmpty(config)) { return 'cn-shanghai'; }
+  return extractRegion(config.endpoint);
 }
 
 export function convertAccountInfoToConfig(state: any) {
