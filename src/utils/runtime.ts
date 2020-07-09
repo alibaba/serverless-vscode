@@ -7,7 +7,7 @@ import { ncp } from 'ncp';
 const cp = util.promisify(ncp);
 
 const supportedRuntimes =
-  ['nodejs6', 'nodejs8', 'nodejs10', 'python2.7', 'python3', 'php7.2', 'java8', 'dotnetcore2.1'];
+  ['nodejs6', 'nodejs8', 'nodejs10', 'nodejs12', 'python2.7', 'python3', 'php7.2', 'java8', 'dotnetcore2.1'];
 const types = ['NORMAL', 'HTTP'];
 
 export function getSupportedRuntimes() {
