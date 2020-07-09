@@ -731,7 +731,7 @@
     "vscode": "^1.1.28"
   },
   "dependencies": {
-    "@alicloud/fc2": "^2.1.0",
+    "@alicloud/fc2": "^2.2.1",
     "@alicloud/fnf-2019-03-15": "^1.1.0",
     "@alicloud/fun": "3.6.13",
     "@types/js-yaml": "^3.12.1",
