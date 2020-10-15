@@ -2,6 +2,10 @@
 
 所有对 "Aliyun Serverless" 插件的更改都将记录在这个文件中。
 
+## 1.27.13 - 2020-10-15
+### Fixed
+1. 支持配置自定义 endpoint 的 Issue
+
 ## 1.27.12 - 2020-07-09
 ### Added
 1. 支持 Nodejs12 Runtime
