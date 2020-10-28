@@ -183,7 +183,33 @@ export const rosSchema = {
             },
             "Runtime": {
               "type": "string",
-              "enum": ["nodejs6", "nodejs8", "nodejs10", "nodejs12", "python2.7", "python3", "java8", "php7.2", "dotnetcore2.1", "custom"]
+              "enum": ["nodejs6", "nodejs8", "nodejs10", "nodejs12", "python2.7", "python3", "java8", "java11", "php7.2", "dotnetcore2.1", "custom"]
+            },
+            "AsyncConfiguration": {
+              "type": "object",
+              "properties": {
+                "Destination": {
+                  "type": "object",
+                  "properties": {
+                    "OnSuccess": {
+                      "type": "string"
+                    },
+                    "OnFailure": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "MaxAsyncEventAgeInSeconds": {
+                  "type": "integer"
+                },
+                "MaxAsyncRetryAttempts": {
+                  "type": "integer"
+                }
+              }
+            },
+            "InstanceType": {
+              "type": "string",
+              "enum": ["e1", "c1"]
             },
             "CodeUri": {
               "type": "string"
