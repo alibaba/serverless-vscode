@@ -64,8 +64,13 @@ export class ObjectASTNode extends ASTNode {
       seenKeys[key] = node.value;
       unprocessedProperties.push(key);
     });
-    if (Array.isArray(schema.required)) {
-      schema.required.forEach((propertyName: string) => {
+
+    let required = schema.required;
+    if (schema.required instanceof Function) {
+      required = schema.required(seenKeys);
+    }
+    if (Array.isArray(required)) {
+      required.forEach((propertyName: string) => {
         if (!seenKeys[propertyName]) {
           const key =
             this.parent &&

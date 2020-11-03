@@ -183,7 +183,51 @@ export const rosSchema = {
             },
             "Runtime": {
               "type": "string",
-              "enum": ["nodejs6", "nodejs8", "nodejs10", "nodejs12", "python2.7", "python3", "java8", "php7.2", "dotnetcore2.1", "custom"]
+              "enum": ["nodejs6", "nodejs8", "nodejs10", "nodejs12", "python2.7", "python3", "java8", "java11", "php7.2", "dotnetcore2.1", "custom", "custom-container"]
+            },
+            "AsyncConfiguration": {
+              "type": "object",
+              "properties": {
+                "Destination": {
+                  "type": "object",
+                  "properties": {
+                    "OnSuccess": {
+                      "type": "string"
+                    },
+                    "OnFailure": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "MaxAsyncEventAgeInSeconds": {
+                  "type": "integer"
+                },
+                "MaxAsyncRetryAttempts": {
+                  "type": "integer"
+                }
+              }
+            },
+            "CAPort": {
+              "type": "integer"
+            },
+            "CustomContainerConfig": {
+              "type": "object",
+              "properties": {
+                "Args": {
+                  "type": "string"
+                },
+                "Command": {
+                  "type": "string"
+                },
+                "Image": {
+                  "type": "string"
+                }
+              },
+              "required": ["Image"]
+            },
+            "InstanceType": {
+              "type": "string",
+              "enum": ["e1", "c1"]
             },
             "CodeUri": {
               "type": "string"
@@ -208,7 +252,8 @@ export const rosSchema = {
                 1344, 1408, 1472, 1536, 1600, 1664, 1728, 1792,
                 1856, 1920, 1984, 2048, 2112, 2176, 2240, 2304,
                 2368, 2432, 2496, 2560, 2624, 2688, 2752, 2816,
-                2880, 2944, 3008, 3072
+                2880, 2944, 3008, 3072,
+                4096, 8192, 16384, 32768
               ],
               "insertText": MEMORYSIZE_INSERT_TEXT,
             },
@@ -216,7 +261,12 @@ export const rosSchema = {
               "type": "integer"
             }
           },
-          "required": ["Handler", "Runtime", "CodeUri"],
+          "required": (data: any) => {
+            if (data.Runtime && data.Runtime.value === "custom-container") {
+              return ["Runtime", "Handler", "CustomContainerConfig"];
+            }
+            return ["Handler", "Runtime", "CodeUri"];
+          },
           "additionalProperties": false,
           "document": {
             "default": "https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03.md#aliyunserverlessfunction",
