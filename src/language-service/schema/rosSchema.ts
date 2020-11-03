@@ -263,7 +263,7 @@ export const rosSchema = {
           },
           "required": (data: any) => {
             if (data.Runtime && data.Runtime.value === "custom-container") {
-              return ["Runtime", "CustomContainerConfig"];
+              return ["Runtime", "Handler", "CustomContainerConfig"];
             }
             return ["Handler", "Runtime", "CodeUri"];
           },
