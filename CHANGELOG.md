@@ -2,58 +2,87 @@
 
 所有对 "Aliyun Serverless" 插件的更改都将记录在这个文件中。
 
-## 1.27.14 - 2020-11-02
+## 1.27.15 - 2020-11-12
+
 ### Fixed
-1. 新增region：成都、伦敦、吉隆坡
+
+1. 新增英文版 README 并作为默认
+
+## 1.27.14 - 2020-11-02
+
+### Fixed
+
+1. 新增 region：成都、伦敦、吉隆坡
 2. 异步配置、大规格实例、镜像配置支持校验
 
 ## 1.27.13 - 2020-10-15
+
 ### Fixed
+
 1. 支持配置自定义 endpoint 的 Issue
 
 ## 1.27.12 - 2020-07-09
+
 ### Added
+
 1. 支持 Nodejs12 Runtime
 2. 支持配置自定义 endpoint
 
 ## 1.27.11 - 2020-05-17
+
 ### Added
+
 1. 针对流程定义文件优化语法提示触发检测方式
 
 ## 1.27.10 - 2020-05-10
+
 ### Fixed
+
 1. 修复 Aliyun::Serverless::Service 的 NasConfig Schema 校验
 2. 内置的 fun 版本升级为 v3.6.13
 
 ## 1.27.9 - 2020-05-03
+
 ### Fixed
+
 1. 修复安全漏洞，https-proxy-agent 升级为 2.2.4。
 
 ## 1.27.8 - 2020-04-26
+
 ### Added
+
 1. 默认启用多模板文件模式，支持自动检测 fun build 构建出的模板文件。
 2. 内置的 fun 版本升级为 v3.6.11。
 
 ## 1.27.7 - 2020-04-16
+
 ### Added
+
 1. 更新函数工作流的语法智能提示 Schema
 
 ### Fixed
+
 1. 修复 win 平台调用 fun 显示错误签名的问题
 
 ## 1.27.6 - 2020-04-12
+
 ### Added
+
 1. 更新函数工作流的语法智能提示 Schema
 2. 更新依赖 Fun 的版本为 3.6.8
 
 ## 1.27.5 - 2020-03-31
+
 ### Added
+
 1. 本地调试支持 java runtime 的 HTTP Trigger
 2. 提供 `aliyun.fc.local.debug.python.waitingTime` 以及 `aliyun.fc.local.debug.java.waitingTime` 配置参数, 分别用于配置 python 以及 java runtime 在本地调试时等待 Debugger 连接的时间
 3. 优化函数入口文件添加本地执行 `Local Run` 与本地调试 `Local Debug` 快捷入口的前置检测时间。
 
 ## 1.27.4 - 2020-03-29
+
 ### Added
+
 1. template.yml 模板文件语法提示同步最新 ROS Schema
 2. 优化插件有时导致 CPU 过载的现象
    - 通过配置 `aliyun.fc.single.template.mode` 选择使用单/多模板文件模式
@@ -62,23 +91,33 @@
    - 多模板文件模式下, 本地资源树以及语法提示功能支持用户配置的(相对/绝对)模板文件路径
 
 ## 1.27.3 - 2020-03-22
+
 ### Fixed
+
 1. 更新本地调试时自动检测的 C# extension 名称
 
 ## 1.27.2 - 2020-03-15
+
 ### Added
+
 1. 更新函数工作流流程定义文件的语法提示，支持 `retry` 中关于 `maxIntervalSeconds` 的相关配置。
 
 ## 1.27.1 - 2020-03-04
+
 ### Fixed
+
 1. 修复函数工作流本地可视化在遇到 Custom Tag 时无法显示的 Issue。
 
 ## 1.27.0 - 2020-03-01
+
 ### Added
+
 1. 优化本地资源树的结构。取消解析倚赖包中的 template.yml 模版文件，提高资源树加载速度。
 
 ## 1.26.0 - 2020-02-23
+
 ### Added
+
 1. 支持通过 `aliyun.fc.fun.deploy.assumeYes` 配置，自定义在插件部署时是否需要人工与 Fun 交互
 2. 本地资源面板树支持解析 fun package 后生成的 `template.packaged.yml` 文件
 3. 模版文件语法提示增强
@@ -87,7 +126,9 @@
    - 补充 `Aliyun::Serverless::Log` 下 `Aliyun::Serverless::Log::Logstore` 的配置描述
 
 ## 1.25.0 - 2020-02-16
+
 ### Added
+
 1. 支持 dotnetcore2.1 运行时
    - 支持初始化 Event/HTTP Trigger 函数
      ![](https://img.alicdn.com/tfs/TB1B2zyvUH1gK0jSZSyXXXtlpXa-1376-818.gif)
@@ -98,16 +139,22 @@
    - 入口文件提供快捷访问 Local Run/Debug 以及 Invoke Panel
 
 ## 1.24.0 - 2020-01-19
+
 ### Added
+
 1. 优化配置账号未设置主账号 AccountID 时 Output 面板输出的信息提示。
 
 ## 1.23.0 - 2020-01-12
+
 ### Added
+
 1. 模版文件 template.yml 提供有关于 ROS Parameter 的语法提示(自动补全、错误校验、悬浮提示)。
 2. 模版文件 template.yml 支持通过 `# disable-validation` 标记禁用错误校验。
 
 ## 1.22.0 - 2020-01-04
+
 ### Added
+
 1. 模版文件 template.yml 语法提示增强
    - 语法提示支持从 template.yml 文件拓展为 yml 文件。
    - 模版文件 `Aliyun::Serverless::Service` 资源下的 NasConfig 支持 Auto 属性配置。
@@ -119,7 +166,9 @@
 3. 优化当 PATH 中未安装 `code` 命令时本地调试的行为。
 
 ## 1.21.0 - 2019-12-27
+
 ### Added
+
 1. 模版文件 template.yml 提供针对 ROS 资源的语法提示
    - 提供模版文件 template.yml 内 ROS 资源创建的自动补全
    - 提供模版文件 template.yml 内 ROS 资源属性的自动补全
@@ -129,7 +178,9 @@
 ![](https://img.alicdn.com/tfs/TB1sEMTrVY7gK0jSZKzXXaikpXa-1856-998.gif)
 
 ## 1.20.0 - 2019-12-20
+
 ### Added
+
 1. 新增针对函数计算 java8 runtime 的支持
    - 支持初始化 java8 runtime 项目
    - 支持创建 java8 runtime 的 Event Trigger 函数
@@ -150,7 +201,9 @@
 ![](https://img.alicdn.com/tfs/TB19faLroY1gK0jSZFMXXaWcVXa-1857-998.gif)
 
 ## 1.19.0 - 2019-12-06
+
 ### Added
+
 1. 模版文件 template.yml 提供当前所在位置的层级面包屑
    - 单击模版文件中的任意位置，将会在文件顶部以面包屑的形式显示出所在位置的层级。
    - 提供文件内容结构树，单击文件顶部面包屑中的任意块会展开当前文件内容的结构树。
@@ -171,11 +224,14 @@
 ![](https://github.com/alibaba/serverless-vscode/blob/master/media/changelog/v1.19.0/fcConsole.gif?raw=true)
 
 ### Fixed
+
 1. 修复 Posix 平台中 Fun 的 shell 脚本执行报错的 Issue。
 2. 修复模版文件 template.yml 中对于 ROS 模版的输出(Outputs)以及参数(Parameters)语法的基本支持。
 
 ## 1.18.0 - 2019-11-29
+
 ### Added
+
 1. 远端资源信息面板增强
    - 服务信息面板优化，提供函数列表，单击函数名称可访问相应的函数信息面板。
    - 函数信息面板优化，提供触发器列表，单击触发器名称可访问相应的触发器信息面板。
@@ -198,7 +254,9 @@
 ![](https://github.com/alibaba/serverless-vscode/blob/master/media/changelog/v1.18.0/instanceConcurrency.gif?raw=true)
 
 ## 1.17.1 - 2019-11-21
+
 ### Added
+
 1. 优化 Function Flow 远端资源树。
    - 用户未开通时提供跳转到 Function Flow 控制台的菜单项。
    - 在未支持区域加载 Function Flow 远端资源树将提供跳转控制台的菜单项。
@@ -215,22 +273,25 @@
    - 提供 Java8 Runtime 函数调试时的 Debugger 插件检测。
 
 ### Other
+
 1. 修复 Win7 环境下安装了 Docker Toolbox 无法正确激活插件的 Issue。
 2. 修复在 Remote SSH 场景下未安装 VSCode 本地调试报错的 Issue。
 
 ## 1.16.0 - 2019-11-15
+
 ### Added
+
 1. 支持本地 Function Flow 定义文件的可视化展示。
    - 在本地 Flow 定义文件中点击右上角的 Function Flow 图标，将会在新面板中呈现流程的可视化展示。
    - 修改 Flow 定义文件内容，点击面板中的刷新按钮，可看到定义更新后的可视化。
 
-![](https://github.com/alibaba/serverless-vscode/blob/master/media/changelog/v1.16.0/localGraph.gif?raw=true)  
+![](https://github.com/alibaba/serverless-vscode/blob/master/media/changelog/v1.16.0/localGraph.gif?raw=true)
 
 2. Function Flow 云端资源信息面板增强。
    - 提供流程与执行基本信息中有关于流程定义的可视化展示。
    - 执行事件历史列表提供执行步骤详情。(单击执行事件列表中的某一行即可看到对应的执行步骤详情)
 
-![](https://github.com/alibaba/serverless-vscode/blob/master/media/changelog/v1.16.0/remoteGraph.gif?raw=true)  
+![](https://github.com/alibaba/serverless-vscode/blob/master/media/changelog/v1.16.0/remoteGraph.gif?raw=true)
 
 3. 本地调用使用的 Event 文件归结到 .vscode 目录下，避免 Event 测试文件被提交到函数代码目录。远端调用复用本地调用配置。
 4. 提供远端调用面板，在云端资源列表中单击函数名称可访问相应的调用面板。
@@ -238,10 +299,12 @@
    - 提供 Event 文件列表，列表项以及文件内容与本地配置同步。
    - 支持修改 Event 内容发起调用，修改后的内容将自动同步到本地事件文件中。
 
-![](https://github.com/alibaba/serverless-vscode/blob/master/media/changelog/v1.16.0/remoteInvoke.gif?raw=true)  
+![](https://github.com/alibaba/serverless-vscode/blob/master/media/changelog/v1.16.0/remoteInvoke.gif?raw=true)
 
 ## 1.15.0 - 2019-11-08
+
 ### Added
+
 1. 支持更新部署云端 Function Flow 流程。
    - 在 Explorer 面板中，右键流程文件选择 `Deploy Flow`，根据向导输入流程名称等信息。
    - 若输入的流程名称在远端已存在，插件将会弹出是否继续更新的提示框，点击确认后将会进行更新。
@@ -262,7 +325,9 @@
 ![](https://github.com/alibaba/serverless-vscode/blob/master/media/changelog/v1.15.0/startExec.gif?raw=true)
 
 ## 1.14.0 - 2019-11-01
+
 ### Added
+
 1. 支持部署 Function Flow 流程。
    - 在 Explorer 面板中，右键流程文件选择 `Deploy Flow`，根据向导输入流程名称、流程描述，即可将流程部署至云端。
    - 部署成功后，插件将会自动切换到 Function Flow 视图并刷新远端资源树。
@@ -276,26 +341,34 @@
 4. 提供 Debugger 插件自动检测。在调试本地 Python 以及 Php 函数时，插件将会检测相应的 Debugger 插件并提示安装。
 
 ### Other
+
 1. 修复 fun install 功能在插件端无法使用的 Issue。
 
 ## 1.13.0 - 2019-10-23
+
 ### Added
+
 1. Function Flow 流程定义文件提供语法智能提示。支持流程定义文件内属性的自动补全、信息校验和上下文帮助。
 2. Function Flow 流程定义文件提供层级色彩。在流程定义文件中会根据设定的缩进大小进行彩虹色渲染。
 
 ![language-suggestion](https://github.com/alibaba/serverless-vscode/blob/master/media/changelog/v1.13.0/language-suggestion.gif?raw=true)
 
 ### Other
+
 1. 修复函数运行调试面板有时打开不加载事件文件列表.
 2. 屏蔽内置 Fun 的版本自动检测。
 
 ## 1.12.3 - 2019-10-16
+
 ### Other
+
 1. 适配 1.39 及以上版本的 VSCode。
 2. 更新 Win 上 Fun 的下载地址。
 
 ## 1.12.0 - 2019-10-13
+
 ### Added
+
 - Funfile 文件提供关键字补全以及 fun-install 子命令补全。在 Funfile 文件中输入关键字子串，自动补全会依据输入内容给出精准的提示选项。
 
 ![funfile-completion](https://github.com/alibaba/serverless-vscode/blob/master/media/changelog/v1.12.0/funfile-completion.gif?raw=true)
@@ -307,10 +380,13 @@
 - 函数运行调试面板支持配置 Quick Run/Debug 默认事件文件。在函数运行调试面板中，选择相应事件文件并单击 `设为 Quick Run/Debug 默认事件文件`，即可进行相关配置。
 
 ### Other
+
 - README 更新优化。
 
 ## 1.11.0 - 2019-09-27
+
 ### Added
+
 - 函数运行调试面板支持启动长驻型函数。用户可在函数运行调试面板中启动运行或启动调试，启动后通过单击面板中的 "调用" 按钮，可以触发单次的运行或调试。每次点击 "调用" 按钮，Handler 函数都将被执行，Initializer 函数在启动后只会被初始化执行一次。
 
 ![invokePanel](https://github.com/alibaba/serverless-vscode/blob/master/media/changelog/v1.11.0/invokePanel.gif?raw=true)
@@ -320,11 +396,14 @@
 ![copy-paste](https://github.com/alibaba/serverless-vscode/blob/master/media/changelog/v1.11.0/copy-paste.gif?raw=true)
 
 ### Other
+
 - 优化本地资源树的加载，提高资源树展开的加载速度。
 - 优化 fun 命令调用方式。避免多次调试 HTTP Trigger 时，出现调试端口被占用的情况。
 
 ## 1.10.0 - 2019-09-20
+
 ### Added
+
 - 新增函数运行调试面板。插件将会根据用户设定的函数入口文件，在 Event Trigger 函数入口方法名上显示 Invoke Panel，用户点击后将会跳转至函数运行调试面板。用户可在运行调试面板中新增编辑事件、运行调试函数。
 
 ![invokePanel](https://github.com/alibaba/serverless-vscode/blob/master/media/changelog/v1.10.0/invokePanel.gif?raw=true)
@@ -334,11 +413,14 @@
 ![cronExpression](https://github.com/alibaba/serverless-vscode/blob/master/media/changelog/v1.10.0/cronExpression.png?raw=true)
 
 ### Other
+
 - 优化命令顺序以及新增命令注册。
 - 修复 win 下 fun 路径带有空格无法调用的 issue。
 
 ## 1.9.0 - 2019-09-12
+
 ### Added
+
 - 优化 HTTP 触发器调试，调试进程可复用以及支持修改 HTTP 调用参数。指定调试带有 HTTP 触发器的某函数后，会在输出面板提示访问链接，可在浏览器或 Postman 中配置访问参数并进行调试，一次会话结束后可以再次发起调用进行下一次调试。
 
 ![http-trigger](https://github.com/alibaba/serverless-vscode/blob/master/media/changelog/v1.9.0/http-trigger.gif?raw=true)
@@ -349,10 +431,13 @@
 ![funfile](https://github.com/alibaba/serverless-vscode/blob/master/media/changelog/v1.9.0/funfile.gif?raw=true)
 
 ### Other
+
 - 修复 HTTP 触发器无法调试的 Issue。
 
 ## 1.8.3 - 2019-09-06
+
 ### Added
+
 - 提供模版文件 template.yml 内触发器配置信息的智能提示
   - 支持模版文件 template.yml 内触发器属性的自动补全
   - 支持模版文件 template.yml 内触发器配置信息的校验
@@ -369,11 +454,14 @@
 - 将内置 fun 加入终端 `PATH` 中。在 VSCode `Function Compute` 终端中，可以通过输入 `fun.sh` 或 `fun.exe` 使用 fun。
 
 ### Other
+
 - 优化插件激活时机
 - 更新本地资源面板的右键菜单排序
 
 ## 1.7.0 - 2019-08-29
+
 ### Added
+
 - 支持引用 nodejs、python runtime 的内置模块。通过插件创建函数后，会弹出模块引用向导。完成向导后，可以在编辑器中引用 runtime 的内置模块以及获得相关智能提示。
 
 ![runtime-lib-refer](https://github.com/alibaba/serverless-vscode/blob/master/media/changelog/v1.7.0/runtime-lib-refer.gif?raw=true)
@@ -387,23 +475,31 @@
 - 提供云端触发器资源的显示。在云端资源面板中会显示函数的触发器列表，左击可看到触发器的详细信息。
 
 ### Changed
+
 - 默认事件文件名由 event.dat 变更为 event.evt。
 
 ### Other
+
 - 支持未打开工作区时调用云端函数。
 - 优化部分弹窗显示时机。
 - 优化云端视图样式。
 
 ## 1.6.2 - 2019-08-26
+
 ### Fixed
+
 - 修复本地资源面板顶层 deploy 无效的问题。
 
 ## 1.6.1 - 2019-08-25
+
 ### Fixed
+
 - 多模版下适配 Terminal 进行命令输出时 PowerShell 不支持 && 的问题。
 
 ## 1.6.0 - 2019-08-22
+
 ### Added
+
 - 支持 nodejs10 运行时。
 - 支持空模版文件快速构建 ROS 模版。在新建的 template.yml 中，输入 ROS 字样，会出现自动补全的可选项。
 
@@ -420,11 +516,14 @@
 ![multi-tmp](https://github.com/alibaba/serverless-vscode/blob/master/media/changelog/v1.6.0/multi-tmp.gif?raw=true)
 
 ### Other
+
 - 远端调用带有 HTTP 触发器的函数时，在输出面板提供访问链接。
 - 本地资源面板监听模版文件变化，进行自动刷新。
 
 ## 1.5.0 - 2019-08-15
+
 ### Added
+
 - 模版文件 template.yml 提供层级色彩。在 template.yml 中会根据设定的缩进大小进行彩虹色渲染。
 
 ![rainbow](https://github.com/alibaba/serverless-vscode/blob/master/media/changelog/v1.5.0/rainbow.gif?raw=true)
@@ -444,18 +543,23 @@
 ![local-resource-nas](https://github.com/alibaba/serverless-vscode/blob/master/media/changelog/v1.5.0/local-resource-nas.gif?raw=true)
 
 ### Other
+
 - 支持配置外部 Fun。在 Settings 中可以通过设定 `aliyun.fc.fun.path` 替代插件使用的 fun。
 
-
 ## 1.4.2 - 2019-08-10
+
 ### Added
+
 - 补充模版文件 template.yml 资源配置信息的校验。在 template.yml 中会检测资源配置信息是否符合[规格说明](https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03-zh-cn.md)，并在不符合的地方进行标示，鼠标移动到标示位置即可看到相关提示信息。
 
 ### Other
+
 - Windows 平台静默下载 Fun。
 
 ## 1.4.0 - 2019-08-09
+
 ### Added
+
 - 去除了对 Fun CLI 的安装依赖。安装插件后可以直接使用插件的所有功能，无需再额外安装 Fun。
 - 支持模版文件 template.yml 内服务与函数配置信息的校验。在 template.yml 中会检测服务与函数的配置信息是否符合[规格说明](https://github.com/alibaba/funcraft/blob/master/docs/specs/2018-04-03-zh-cn.md)，并在不符合的地方进行标示，鼠标移动到标示位置即可看到相关提示信息。
 
@@ -472,9 +576,11 @@
 ## 1.3.1 - 2019-08-02
 
 ### Fixed
+
 - 函数入口文件本地执行与本地调试快捷入口在视窗外时，输入内容会导致滚动条抖动。
 
 ### Added
+
 - 支持模版文件 template.yml 内属性自动补全。自动补全会依据缩进层级给出更精准的提示选项。
 
 ![支持模版文件内所有资源属性的自动补全](https://github.com/alibaba/serverless-vscode/blob/master/media/changelog/v1.3.0/template-auto-complete.gif?raw=true)
@@ -490,15 +596,18 @@
 - 支持版本更新通知。当插件更新版本后，会在 VSCode 右下角弹出更新通知，可点击 Release Notes 查看更新内容。
 
 ### Other
+
 - 优化模版文件内的代码智能提示。在 template.yml 中，智能提示的展示时机更加精准。
 - 优化远端服务资源的信息展示。在服务未配置 NAS 挂载信息时，不展现挂载信息表格。
 
 ## 1.2.0 - 2019-07-26
 
 ### Fixed
+
 - 使用函数本地执行或本地调试功能，event 文件路径带空格时，无法正确执行。[Track](https://github.com/alibaba/serverless-vscode/issues/16)
 
 ### Added
+
 - 提供云端服务与函数资源信息面板。
 
 ![提供云端服务与函数资源信息面板](https://github.com/alibaba/serverless-vscode/blob/master/media/changelog/v1.2.0/remote-resource-panel.gif?raw=true)
@@ -512,15 +621,18 @@
 ![template 文件跳转](https://github.com/alibaba/serverless-vscode/blob/master/media/changelog/v1.2.0/template-jump.gif?raw=true)
 
 ### Other
+
 - 检测到 Fun 工程时自动激活插件。[Track](https://github.com/alibaba/serverless-vscode/issues/18)
 - 执行报错输出到 Output 面板而不是错误弹窗。[Track](https://github.com/alibaba/serverless-vscode/issues/24)
 
 ## 1.1.0 - 2019-07-19
 
 ### Fixed
+
 - 使用函数本地调试功能，在遇到下载镜像时，系统弹出 Failed to attach 错误。[Track](https://github.com/alibaba/serverless-vscode/issues/4)
 
 ### Added
+
 - 支持多账户多区域的切换。
 
 ![多账户多区域切换](https://github.com/alibaba/serverless-vscode/blob/master/media/changelog/v1.1.0/multi-account-region-switch.gif?raw=true)
