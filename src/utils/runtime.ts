@@ -2,7 +2,9 @@ import { isPathExists, createDirectory } from './file';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as util from 'util';
+import * as vscode from 'vscode';
 import { ncp } from 'ncp';
+import { FunService } from '../services/FunService';
 
 const cp = util.promisify(ncp);
 
@@ -10,12 +12,41 @@ const supportedRuntimes =
   ['nodejs6', 'nodejs8', 'nodejs10', 'nodejs12', 'python2.7', 'python3', 'php7.2', 'java8', 'dotnetcore2.1', 'custom'];
   const types = ['NORMAL', 'HTTP'];
 
+const supportedSystemRuntimeTemplates =
+  ['event-nodejs12', 'event-nodejs10', 'event-nodejs8', 'event-nodejs6', 'event-python3',
+    'event-python2.7', 'event-java8', 'event-java11', 'event-php7.2', 'event-dotnetcore2.1',
+    'http-trigger-nodejs12', 'http-trigger-nodejs10', 'http-trigger-nodejs8', 'http-trigger-nodejs6',
+    'http-trigger-python3', 'http-trigger-python2.7', 'http-trigger-java8', 'http-trigger-java11',
+    'http-trigger-php7.2', 'http-trigger-dotnetcore2.1', 'http-trigger-spring-boot',
+    'http-trigger-node-puppeteer'];
+
+// except custom-cpp and custom-fsharp
+const supportedCustomRuntimeTemplates =
+  ['custom-springboot', 'custom-golang', 'custom-dart', 'custom-lua',
+    'custom-powershell', 'custom-ruby', 'custom-rust', 'custom-typescript'];
+
 export function getSupportedRuntimes() {
   return supportedRuntimes;
 }
 
 export function isSupportedRuntime(runtime: string) {
   return supportedRuntimes.includes(runtime);
+}
+
+export function getSupportedInitTemplates() {
+  return supportedSystemRuntimeTemplates.concat(supportedCustomRuntimeTemplates);
+}
+
+export function isSupportedSystemRuntimeTemplates(template: string) {
+  return supportedSystemRuntimeTemplates.includes(template);
+}
+
+export function getSupportedCustomRuntimeTemplates() {
+  return supportedCustomRuntimeTemplates;
+}
+
+export function isSupportedCustomRuntimeTemplates(template: string) {
+  return supportedCustomRuntimeTemplates.includes(template);
 }
 
 export function getHandlerFileByRuntime(runtime: string): string {
@@ -137,6 +168,28 @@ export async function createCodeFile(type: string, runtime: string, codeUriPath:
   const srcDirPath = path.join(__dirname, '..', '..', 'templates', templateName);
 
   await cp(srcDirPath, codeUriPath).catch((err) => { throw new Error(err) });
+}
+
+export async function createCustomRuntimeCodeFile(functionTemplate: string, codeUriPath: string) {
+  if (!isSupportedCustomRuntimeTemplates(functionTemplate)) {
+    throw new Error(`${functionTemplate} is not supported`);
+  }
+
+  if (!isPathExists(codeUriPath)) {
+    if (!createDirectory(codeUriPath)) {
+      throw new Error(`Create ${codeUriPath} error`);
+    }
+  }
+
+  let cwd = vscode.workspace.rootPath;
+  if (!cwd) {
+    vscode.window.showErrorMessage('Please open a workspace');
+    return false;
+  }
+
+  // fun init under ${codeUriPath}
+  const funService = new FunService(cwd);
+  funService.initTemplate(functionTemplate, codeUriPath);
 }
 
 export function createNodejsHelloWorldIndexFile(ph: string): boolean {

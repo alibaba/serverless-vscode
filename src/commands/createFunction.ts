@@ -6,7 +6,7 @@ import { getSupportedRuntimes, isSupportedRuntime, isNodejs, isPython } from '..
 import { serverlessCommands, serverlessConfigs } from '../utils/constants';
 import { isNotEmpty, checkExistsWithTimeout } from '../utils/file';
 import { createCodeFile, isCustomRuntime } from '../utils/runtime';
-import { getSupportedCustomRuntimeTemplates, isSupportedCustomRuntimeTemplates, createCustomRuntimeCodeFile } from '../utils/customRuntime';
+import { getSupportedCustomRuntimeTemplates, isSupportedCustomRuntimeTemplates, createCustomRuntimeCodeFile } from '../utils/runtime';
 import { recordPageView } from '../utils/visitor';
 import { ServiceResource } from '../models/resource';
 import { TemplateService } from '../services/TemplateService';
