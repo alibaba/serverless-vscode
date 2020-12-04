@@ -4,13 +4,15 @@ import { ext } from '../extensionVariables';
 import { MultiStepInput } from '../ui/MultiStepInput';
 import { getSupportedRuntimes, isSupportedRuntime, isNodejs, isPython } from '../utils/runtime';
 import { serverlessCommands, serverlessConfigs } from '../utils/constants';
-import { isNotEmpty } from '../utils/file';
-import { createCodeFile } from '../utils/runtime';
+import { isNotEmpty, checkExistsWithTimeout } from '../utils/file';
+import { createCodeFile, isCustomRuntime } from '../utils/runtime';
+import { getSupportedCustomRuntimeTemplates, isSupportedCustomRuntimeTemplates, createCustomRuntimeCodeFile } from '../utils/customRuntime';
 import { recordPageView } from '../utils/visitor';
 import { ServiceResource } from '../models/resource';
 import { TemplateService } from '../services/TemplateService';
 import { process as gotoFunctionCode } from './gotoFunctionCode';
 import { templateChangeEventEmitter } from '../models/events';
+import { toUnicode } from 'punycode';
 
 export function createFunction(context: vscode.ExtensionContext) {
   context.subscriptions.push(vscode.commands.registerCommand(serverlessCommands.CREATE_FUNCTION.id,
@@ -35,6 +37,8 @@ async function process(context: vscode.ExtensionContext, serviceName: string, te
     label: 'HTTP',
     description: 'HTTP Trigger',
   }];
+  const customRuntimeTemplates: vscode.QuickPickItem[] = getSupportedCustomRuntimeTemplates().map(label => <vscode.QuickPickItem>{ label });
+
   const runtimes: vscode.QuickPickItem[] = getSupportedRuntimes().map(label => <vscode.QuickPickItem>{ label });
 
   interface State {
@@ -45,6 +49,7 @@ async function process(context: vscode.ExtensionContext, serviceName: string, te
     step: number;
     totalSteps: number;
     codeUri: string;
+    functionTemplate: string;
   }
 
   async function collectFuncInfo() {
@@ -113,7 +118,11 @@ async function process(context: vscode.ExtensionContext, serviceName: string, te
       items: runtimes,
     });
     state.runtime = (<any>pick).label as string;
-    return (input: MultiStepInput) => pickFunctionType(input, state);
+    if (isCustomRuntime(state.runtime)) {
+      return (input: MultiStepInput) => pickFunctionTemplate(input, state);
+    } else {
+      return (input: MultiStepInput) => pickFunctionType(input, state);
+    }
   }
 
   async function pickFunctionType(input: MultiStepInput, state: Partial<State>) {
@@ -125,6 +134,17 @@ async function process(context: vscode.ExtensionContext, serviceName: string, te
       items: functionTypes,
     });
     state.type = (<any>pick).label as string;
+  }
+
+  async function pickFunctionTemplate(input: MultiStepInput, state: Partial<State>) {
+    const pick = await input.showQuickPick({
+      title: 'Create Function (Choose Function Template)',
+      step: 5,
+      totalSteps: 5,
+      placeholder: 'Pick function template',
+      items: customRuntimeTemplates,
+    });
+    state.functionTemplate = (<any>pick).label as string;
   }
 
   async function validateServiceName(input: string): Promise<string | undefined> {
@@ -142,15 +162,17 @@ async function process(context: vscode.ExtensionContext, serviceName: string, te
   async function validateCreateFuncionState(state: State): Promise<boolean> {
     const functionTypes = ['NORMAL', 'HTTP'];
     if (!state || !state.serviceName
-      || !state.functionName || !functionTypes.includes(state.type)
-      || !isSupportedRuntime(state.runtime)) {
+      || !state.functionName 
+      || (!isCustomRuntime(state.runtime) && !functionTypes.includes(state.type))
+      || !isSupportedRuntime(state.runtime) 
+      || (isCustomRuntime(state.runtime) && !isSupportedCustomRuntimeTemplates(state.functionTemplate))) {
       return false;
     }
     return true;
   }
 
   async function createFunctionFile(state: State): Promise<void> {
-    const { runtime, type } = state;
+    const { runtime, type, functionTemplate } = state;
     if (!ext.cwd) {
       throw new Error('You should open a workspace');
     }
@@ -166,10 +188,13 @@ async function process(context: vscode.ExtensionContext, serviceName: string, te
         throw new Error('Interrupt create function operation');
       }
     }
-
-    await createCodeFile(type, runtime, codeUriPath);
+    if (isCustomRuntime(runtime)) {
+      await createCustomRuntimeCodeFile(functionTemplate, codeUriPath);
+    } else {
+      await createCodeFile(type, runtime, codeUriPath);
+    }
   }
-
+  
   const state = await collectFuncInfo();
   if (!await validateCreateFuncionState(state)) {
     return;
@@ -181,9 +206,28 @@ async function process(context: vscode.ExtensionContext, serviceName: string, te
   templateChangeEventEmitter.fire();
   await createFunctionFile(state);
 
-  vscode.commands.executeCommand(serverlessCommands.REFRESH_LOCAL_RESOURCE.id);
-  await gotoFunctionCode(state.serviceName, state.functionName, templatePath);
-  if (isNodejs(state.runtime) || isPython(state.runtime)) {
-    vscode.commands.executeCommand(serverlessCommands.REFERENCE_RUNTIME_LIB.id, state.runtime);
+  await vscode.commands.executeCommand(serverlessCommands.REFRESH_LOCAL_RESOURCE.id);
+
+  if (isCustomRuntime(state.runtime)) {
+    const initProjectTemplatePath = path.resolve(path.dirname(templatePath as string), state.codeUri, 'template.yml');
+    await checkExistsWithTimeout(initProjectTemplatePath, 10000);
+    const initProjectTemplateService = new TemplateService(initProjectTemplatePath as string);
+
+    const functionRes = await initProjectTemplateService.getFunction(state.functionName, state.functionName);
+    if (functionRes && functionRes.Properties && functionRes.Properties.CodeUri) {
+      functionRes.Properties.CodeUri = path.join(state.codeUri, functionRes.Properties.CodeUri);
+    } else {
+      vscode.window.showErrorMessage(`Function definition error in ${initProjectTemplatePath}`);
+    }
+
+    await initProjectTemplateService.rmTemplate();
+    if (!await templateService.replaceFunction(state.serviceName, state.functionName, functionRes)) {
+      return;
+    }
+  } else {
+    await gotoFunctionCode(state.serviceName, state.functionName, templatePath);
+    if (isNodejs(state.runtime) || isPython(state.runtime)) {
+      vscode.commands.executeCommand(serverlessCommands.REFERENCE_RUNTIME_LIB.id, state.runtime);
+    }
   }
 }

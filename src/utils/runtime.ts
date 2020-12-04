@@ -7,8 +7,8 @@ import { ncp } from 'ncp';
 const cp = util.promisify(ncp);
 
 const supportedRuntimes =
-  ['nodejs6', 'nodejs8', 'nodejs10', 'nodejs12', 'python2.7', 'python3', 'php7.2', 'java8', 'dotnetcore2.1'];
-const types = ['NORMAL', 'HTTP'];
+  ['nodejs6', 'nodejs8', 'nodejs10', 'nodejs12', 'python2.7', 'python3', 'php7.2', 'java8', 'dotnetcore2.1', 'custom'];
+  const types = ['NORMAL', 'HTTP'];
 
 export function getSupportedRuntimes() {
   return supportedRuntimes;
@@ -218,4 +218,8 @@ export function isJava(runtime: string): boolean {
 
 export function isDotnetcore(runtime: string): boolean {
   return runtime.indexOf('dotnetcore') > -1;
+}
+
+export function isCustomRuntime(runtime: string) {
+  return runtime.indexOf('custom') > -1;
 }
