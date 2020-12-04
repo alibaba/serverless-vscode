@@ -5,6 +5,7 @@ import * as terminalService from '../utils/terminal';
 import { getFunBin } from '../utils/fun';
 import { isDirectory } from '../utils/file';
 import { serverlessConfigs } from '../utils/constants';
+import { isSupportedCustomRuntimeTemplates } from '../utils/customRuntime'
 
 export class FunService {
   constructor (private templatePath: string) {
@@ -21,6 +22,22 @@ export class FunService {
       terminal.sendText(command);
       terminal.show();
     })
+  }
+
+  initTemplate(functionTemplate: string, outputDir?: string) {
+    const terminal = terminalService.getFunctionComputeTerminal();
+    if (!isSupportedCustomRuntimeTemplates(functionTemplate)) {
+      vscode.window.showErrorMessage(`${functionTemplate} is not supported`);
+    }
+
+    getFunBin().then(funBin => {
+      let command = `${funBin} init ${functionTemplate}`;
+      if (outputDir) {
+        command = command + ` -o ${outputDir}`;
+      }
+      terminal.sendText(command);
+      terminal.show();
+    });
   }
 
   deploy(serviceName?: string, functionName? :string) {

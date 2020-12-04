@@ -9,6 +9,7 @@ import { ALIYUN_SERVERLESS_FUNCTION_TYPE, ALIYUN_SERVERLESS_FLOW_TYPE } from '..
 import { getSuffix } from '../utils/runtime';
 
 const readFile = util.promisify(fs.readFile);
+const rmFile = util.promisify(fs.unlink);
 
 const JAVA_DEFAULT_HANDLER = 'example.App::handleRequest';
 const DOTNET_DEFAULT_HANDLER = 'project::example.App::HandleRequest';
@@ -123,6 +124,7 @@ export class TemplateService {
       return null;
     }
     const content = await readFile(this.getTemplatePath(), 'utf8');
+    
     const tpl = <Tpl>yaml.safeLoad(content);
     if (!tpl.Resources) {
       return null;
@@ -133,7 +135,7 @@ export class TemplateService {
       return services[0][1];
     }
     return null;
-  }
+  } 
   async getFlow(flowName: string): Promise<any> {
     if (!this.templateExists()) {
       return null;
@@ -165,6 +167,30 @@ export class TemplateService {
       return functions[0][1];
     }
     return null;
+  }
+  async replaceFunction(serviceName: string, functionName: string, newFunctionRes: string) {
+    if (!newFunctionRes) {
+      vscode.window.showErrorMessage(`empty definition of function ${functionName}`);
+      return false;
+    }
+    
+    let tpl: any = await this.getTemplateDefinition();
+    if (!tpl) {
+      vscode.window.showErrorMessage(`${this.getTemplatePath()} not exist`);
+      return false;
+    }
+    
+    if (!tpl.Resources) {
+      vscode.window.showErrorMessage(`Resources not exist in ${this.getTemplatePath()}`);
+      return false;
+    }
+    if (!tpl.Resources[serviceName]) {
+      vscode.window.showErrorMessage(`service ${serviceName} not exist in ${this.getTemplatePath()}`);
+      return false;
+    }
+    tpl.Resources[serviceName][functionName] = newFunctionRes;
+    const tplContent = yaml.dump(tpl);
+    return this.writeTemplate(tplContent);
   }
   async addFunction({ type, runtime, functionName, serviceName, codeUri }: State): Promise<boolean> {
     let tpl: any = await this.getTemplateContent();
@@ -248,6 +274,9 @@ Resources:
       return false;
     }
     return true;
+  }
+  async rmTemplate() {
+    await rmFile(this.getTemplatePath());
   }
 }
 
