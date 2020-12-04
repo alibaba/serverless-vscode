@@ -2,6 +2,16 @@
 
 所有对 "Aliyun Serverless" 插件的更改都将记录在这个文件中。
 
+## 1.27.16 - 2020-12-04
+
+### Fixed
+
+1. 将 initProject 列表与 fun init 模版进行同步。
+
+### Added
+
+1. 创建函数时支持选择 custom runtime 函数模版。
+
 ## 1.27.15 - 2020-11-12
 
 ### Fixed
