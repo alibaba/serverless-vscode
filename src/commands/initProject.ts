@@ -4,7 +4,7 @@ import { serverlessCommands } from '../utils/constants';
 import { isPathExists } from '../utils/file';
 import { recordPageView } from '../utils/visitor';
 import { FunService } from '../services/FunService';
-import { getSupportedRuntimes } from '../utils/runtime';
+import { getSupportedInitTemplates } from '../utils/runtime';
 
 export function initProject(context: vscode.ExtensionContext) {
   context.subscriptions.push(vscode.commands.registerCommand(serverlessCommands.INIT_PROJECT.id, async () => {
@@ -15,24 +15,20 @@ export function initProject(context: vscode.ExtensionContext) {
       return;
     }
 
-    const runtimes = getSupportedRuntimes();
-    vscode.window.showQuickPick(runtimes, {
+    const templates = getSupportedInitTemplates();
+    vscode.window.showQuickPick(templates, {
       ignoreFocusOut: true,
-      placeHolder: 'Select a runtime for your function project',
+      placeHolder: 'Select a template for your function project',
       canPickMany: false,
-    }).then(runtime => {
+    }).then(template => {
       if (!cwd) {
         cwd = '';
       }
-      if (!runtime) {
+      if (!template) {
         return;
       }
-      if (!runtimes.includes(runtime)) {
-        vscode.window.showErrorMessage(`${runtime} runtime is invalid`);
-        return;
-      }
-      const funService = new FunService(cwd);
 
+      const funService = new FunService(cwd);
       // check template.yml file
       const templateFilePath = path.join(cwd, 'template.yml');
       if (isPathExists(templateFilePath)) {
@@ -40,7 +36,7 @@ export function initProject(context: vscode.ExtensionContext) {
           + 'Initializing the project in this case is not recommended. If you insist，please remove it first.');
         return;
       }
-      funService.init(runtime);
+      funService.initTemplate(template);
     })
   }));
 }

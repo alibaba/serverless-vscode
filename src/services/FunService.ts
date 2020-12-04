@@ -5,7 +5,7 @@ import * as terminalService from '../utils/terminal';
 import { getFunBin } from '../utils/fun';
 import { isDirectory } from '../utils/file';
 import { serverlessConfigs } from '../utils/constants';
-import { isSupportedCustomRuntimeTemplates } from '../utils/customRuntime'
+import { isSupportedCustomRuntimeTemplates, isSupportedSystemRuntimeTemplates } from '../utils/runtime'
 
 export class FunService {
   constructor (private templatePath: string) {
@@ -26,7 +26,7 @@ export class FunService {
 
   initTemplate(functionTemplate: string, outputDir?: string) {
     const terminal = terminalService.getFunctionComputeTerminal();
-    if (!isSupportedCustomRuntimeTemplates(functionTemplate)) {
+    if (!isSupportedCustomRuntimeTemplates(functionTemplate) && !isSupportedSystemRuntimeTemplates(functionTemplate)) {
       vscode.window.showErrorMessage(`${functionTemplate} is not supported`);
     }
 
@@ -160,6 +160,16 @@ export class FunService {
   private validateInitRumtime(runtime: string): boolean {
     const runtimes = ['nodejs8', 'nodejs6', 'python3', 'python2.7', 'java8', 'php7.2'];
     return runtimes.includes(runtime);
+  }
+
+  private validateInitTemplates(template: string): boolean {
+    const runtimes = 
+      ['nodejs8', 'nodejs6', 'python3', 'python2.7', 'java8', 'php7.2', 'custom-golang',
+      'custom-springboot', 'custom-golang', 'custom-fsharp', 'custom-dart', 'custom-lua',
+      'custom-powershell', 'custom-ruby', 'custom-rust', 'custom-typescript', 'custom-cpp'];
+    const templates = 
+    [ 'http-trigger-spring-boot', 'http-trigger-node-puppeteer']
+    return runtimes.includes(template) || templates.includes(template) ;
   }
 
   private escapeSpace(str: string): string {
