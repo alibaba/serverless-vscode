@@ -163,6 +163,7 @@ async function process(context: vscode.ExtensionContext, serviceName: string, te
     const functionTypes = ['NORMAL', 'HTTP'];
     if (!state || !state.serviceName
       || !state.functionName 
+      || !state.runtime
       || (!isCustomRuntime(state.runtime) && !functionTypes.includes(state.type))
       || !isSupportedRuntime(state.runtime) 
       || (isCustomRuntime(state.runtime) && !isSupportedCustomRuntimeTemplates(state.functionTemplate))) {
