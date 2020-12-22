@@ -159,3 +159,4 @@ Resource specifications that can be configured in the template.yml file are prom
 You can scan the following QR code to join the Function Compute customer DingTalk group for troubleshooting or give feedback in GitHub.
 
 <img src="https://github.com/alibaba/serverless-vscode/blob/master/media/snapshot/two-dimension-code.png?raw=true" width="360px" />
+Luis
