@@ -8,7 +8,7 @@ import { serverlessConfigs } from '../utils/constants';
 import { isSupportedCustomRuntimeTemplates, isSupportedSystemRuntimeTemplates } from '../utils/runtime'
 
 export class FunService {
-  constructor (private templatePath: string) {
+  constructor(private templatePath: string) {
 
   }
 
@@ -40,7 +40,7 @@ export class FunService {
     });
   }
 
-  deploy(serviceName?: string, functionName? :string) {
+  deploy(serviceName?: string, functionName?: string) {
     const terminal = terminalService.getFunctionComputeTerminal(path.dirname(this.templatePath));
     const assumeYes =
       <boolean>vscode.workspace.getConfiguration().get(serverlessConfigs.ALIYUN_FC_FUN_DEPLOY_ASSUMEYES) ? '-y' : '';
@@ -55,7 +55,7 @@ export class FunService {
   }
 
   syncNas(serviceName: string, mountDir: string) {
-    const terminal =  terminalService.getFunctionComputeTerminal(path.dirname(this.templatePath));
+    const terminal = terminalService.getFunctionComputeTerminal(path.dirname(this.templatePath));
     getFunBin().then(funBin => {
       const command = `${funBin} nas sync -s ${serviceName} -m ${mountDir}`;
       terminal.sendText(command);
@@ -64,7 +64,7 @@ export class FunService {
   }
 
   localInvoke(serviceName: string, functionName: string, eventFilePath: string, reuse: boolean) {
-    const terminal =  terminalService.getFunctionComputeTerminal(path.dirname(this.templatePath));
+    const terminal = terminalService.getFunctionComputeTerminal(path.dirname(this.templatePath));
     getFunBin().then(funBin => {
       const command =
         `${funBin} local invoke ${serviceName}/${functionName} -e ${this.escapeSpace(eventFilePath)} `
@@ -77,13 +77,13 @@ export class FunService {
 
   localInvokeDebug(serviceName: string, functionName: string,
     debugPort: string, eventFilePath: string, reuse: boolean): vscode.Terminal {
-    const terminal =  terminalService.getFunctionComputeTerminal(path.dirname(this.templatePath));
+    const terminal = terminalService.getFunctionComputeTerminal(path.dirname(this.templatePath));
     getFunBin().then(funBin => {
       /* eslint-disable max-len */
       const command =
-      `${funBin} local invoke ${serviceName}/${functionName} -d ${debugPort} -e ${this.escapeSpace(eventFilePath)} `
-      +
-      (reuse ? '' : '--no-reuse');
+        `${funBin} local invoke ${serviceName}/${functionName} -d ${debugPort} -e ${this.escapeSpace(eventFilePath)} `
+        +
+        (reuse ? '' : '--no-reuse');
       terminal.sendText(command);
       terminal.show();
     })
@@ -138,7 +138,7 @@ export class FunService {
   }
 
   remoteInvokeWithEventFilePath(serviceName: string, functionName: string, eventFilePath: string) {
-    const terminal =  terminalService.getFunctionComputeTerminal(path.dirname(this.templatePath));
+    const terminal = terminalService.getFunctionComputeTerminal(path.dirname(this.templatePath));
     getFunBin().then(funBin => {
       const command =
         `${funBin} invoke ${serviceName}/${functionName} -f ${this.escapeSpace(eventFilePath)}`;
@@ -148,7 +148,7 @@ export class FunService {
   }
 
   remoteInvokeWithStdin(serviceName: string, functionName: string) {
-    const terminal =  terminalService.getFunctionComputeTerminal(path.dirname(this.templatePath));
+    const terminal = terminalService.getFunctionComputeTerminal(path.dirname(this.templatePath));
     getFunBin().then(funBin => {
       const command =
         `${funBin} invoke ${serviceName}/${functionName} -s`;
@@ -163,13 +163,13 @@ export class FunService {
   }
 
   private validateInitTemplates(template: string): boolean {
-    const runtimes = 
+    const runtimes =
       ['nodejs8', 'nodejs6', 'python3', 'python2.7', 'java8', 'php7.2', 'custom-golang',
-      'custom-springboot', 'custom-golang', 'custom-fsharp', 'custom-dart', 'custom-lua',
-      'custom-powershell', 'custom-ruby', 'custom-rust', 'custom-typescript', 'custom-cpp'];
-    const templates = 
-    [ 'http-trigger-spring-boot', 'http-trigger-node-puppeteer']
-    return runtimes.includes(template) || templates.includes(template) ;
+        'custom-springboot', 'custom-golang', 'custom-fsharp', 'custom-dart', 'custom-lua',
+        'custom-powershell', 'custom-ruby', 'custom-rust', 'custom-typescript', 'custom-cpp'];
+    const templates =
+      ['http-trigger-spring-boot', 'http-trigger-node-puppeteer']
+    return runtimes.includes(template) || templates.includes(template);
   }
 
   private escapeSpace(str: string): string {

@@ -4,7 +4,7 @@ import * as os from 'os';
 import * as fs from 'fs';
 import * as download from 'download';
 import * as unzipper from 'unzipper';
-import { cpUtils  } from './cpUtils';
+import { cpUtils } from './cpUtils';
 import { createFile, isPathExists, createDirectory } from './file';
 import { ext } from '../extensionVariables';
 
@@ -12,7 +12,7 @@ const { dependencies } = require('../../package.json');
 const FUN_VERSION = dependencies['@alicloud/fun'] || '3.0.1';
 
 abstract class FunExecutorGenerator {
-  async generate(): Promise<string>  {
+  async generate(): Promise<string> {
     if (!this.exists() || await this.needUpdate()) {
       await this.doGenerate();
     }
@@ -42,7 +42,7 @@ class PosixFunExecutorGenerator extends FunExecutorGenerator {
     const funPath = this.getFunPath();
     const actualFunEntryPath =
       path.resolve(ext.context.extensionPath, 'node_modules', '@alicloud', 'fun', 'bin', 'fun.js');
-      try {
+    try {
       const electronPath = await cpUtils.executeCommand(undefined, undefined, `${funPath}`, '--electron-path');
       const funEntryPath = await cpUtils.executeCommand(undefined, undefined, `${funPath}`, '--fun-path');
       return process.argv0 !== electronPath.trim() || actualFunEntryPath !== funEntryPath.trim();
@@ -70,7 +70,7 @@ class PosixFunExecutorGenerator extends FunExecutorGenerator {
       fs.chmodSync(funPath, 0o755);
     } catch (err) {
       vscode.window.showErrorMessage(err.message);
-      throw(err);
+      throw (err);
     }
 
     return true;
@@ -122,7 +122,7 @@ class WindowsFunExecutorGenerator extends FunExecutorGenerator {
         });
     }).catch(err => {
       vscode.window.showErrorMessage(err.message);
-      throw(err);
+      throw (err);
     });
     return true;
   }
