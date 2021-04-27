@@ -46,6 +46,18 @@
         },
         "Code": {
           "type": "object"
+        },
+        "InstanceType": {
+          "type": "string"
+        },
+        "CustomContainerConfig": {
+          "type": "object"
+        },
+        "CAPort": {
+          "type": "integer"
+        },
+        "AsyncConfiguration": {
+          "type": "object"
         }
       },
       "required": [

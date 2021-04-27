@@ -68,6 +68,13 @@ export const rosSchema = {
             "InternetAccess": {
               "type": "boolean"
             },
+            "TracingConfig": {
+              "type": "string",
+              "enum": [
+                "Enable",
+                "Disable"
+              ]
+            },
             "VpcConfig": {
               "oneOf": [
                 { "type": "string" },
@@ -259,7 +266,34 @@ export const rosSchema = {
             },
             "InstanceConcurrency": {
               "type": "integer"
-            }
+            },
+            "InstanceLifecycleConfig": {
+              "type": "object",
+              "properties": {
+                "PreFreeze": {
+                  "type": "object",
+                  "properties": {
+                    "Handler": {
+                      "type": "string"
+                    },
+                    "Timeout": {
+                      "type": "integer"
+                    }
+                  }
+                },
+                "PreStop": {
+                  "type": "object",
+                  "properties": {
+                    "Handler": {
+                      "type": "string"
+                    },
+                    "Timeout": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            },
           },
           "required": (data: any) => {
             if (data.Runtime && data.Runtime.value === "custom-container") {

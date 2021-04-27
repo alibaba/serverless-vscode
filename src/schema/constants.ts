@@ -150,6 +150,10 @@ export const MEMORYSIZE_INSERT_TEXT =
   "MemorySize: ${1|" +
   SUPPORTED_MEMORYSIZES.join(",") +
   "|}"
+export const TRACINGCONFIG_INSERT_TEXT = 
+  "TracingConfig: ${1|" +
+  "Enable, Disable" +
+  "|}"
 export const TIMER_TRIGGER_INSERT_TEXT =
   "${1:timeTrigger}:\n" +
   "  Type: Timer\n" +

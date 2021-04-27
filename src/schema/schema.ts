@@ -52,6 +52,7 @@ import {
   CDN_TRIGGER_INSERT_TEXT,
   MEMORYSIZE_INSERT_TEXT,
   FLOW_INSERT_TEXT,
+  TRACINGCONFIG_INSERT_TEXT
 } from './constants';
 
 // TODO: schema 的进一步定义
@@ -214,6 +215,7 @@ const functionSchema = {
         'InitializationTimeout': {},
         'EnvironmentVariables': {},
         'InstanceConcurrency': {},
+        'InstanceLifecycleConfig': {}
       }
     },
   },
@@ -264,6 +266,9 @@ const serviceSchema = {
         'LogConfig': logConfigSchema,
         'NasConfig': nasConfigSchema,
         'Description': {},
+        'TracingConfig': {
+          insertText: TRACINGCONFIG_INSERT_TEXT
+        },
       },
     },
     [ALIYUN_SERVERLESS_FUNCTION_TYPE]: functionSchema,

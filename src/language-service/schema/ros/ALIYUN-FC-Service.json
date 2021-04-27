@@ -31,6 +31,9 @@
         },
         "LogConfig": {
           "type": "object"
+        },
+        "TracingConfig": {
+          "type": "string"
         }
       },
       "required": [
