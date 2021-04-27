@@ -6,7 +6,11 @@ import { getSupportedRuntimes, isSupportedRuntime, isNodejs, isPython } from '..
 import { serverlessCommands, serverlessConfigs } from '../utils/constants';
 import { isNotEmpty, checkExistsWithTimeout } from '../utils/file';
 import { createCodeFile, isCustomRuntime } from '../utils/runtime';
-import { getSupportedCustomRuntimeTemplates, isSupportedCustomRuntimeTemplates, createCustomRuntimeCodeFile } from '../utils/runtime';
+import {
+  getSupportedCustomRuntimeTemplates,
+  isSupportedCustomRuntimeTemplates,
+  createCustomRuntimeCodeFile
+} from '../utils/runtime';
 import { recordPageView } from '../utils/visitor';
 import { ServiceResource } from '../models/resource';
 import { TemplateService } from '../services/TemplateService';
@@ -37,7 +41,8 @@ async function process(context: vscode.ExtensionContext, serviceName: string, te
     label: 'HTTP',
     description: 'HTTP Trigger',
   }];
-  const customRuntimeTemplates: vscode.QuickPickItem[] = getSupportedCustomRuntimeTemplates().map(label => <vscode.QuickPickItem>{ label });
+  const customRuntimeTemplates: vscode.QuickPickItem[] =
+    getSupportedCustomRuntimeTemplates().map(label => <vscode.QuickPickItem>{ label });
 
   const runtimes: vscode.QuickPickItem[] = getSupportedRuntimes().map(label => <vscode.QuickPickItem>{ label });
 
@@ -162,9 +167,9 @@ async function process(context: vscode.ExtensionContext, serviceName: string, te
   async function validateCreateFuncionState(state: State): Promise<boolean> {
     const functionTypes = ['NORMAL', 'HTTP'];
     if (!state || !state.serviceName
-      || !state.functionName 
+      || !state.functionName
       || (!isCustomRuntime(state.runtime) && !functionTypes.includes(state.type))
-      || !isSupportedRuntime(state.runtime) 
+      || !isSupportedRuntime(state.runtime)
       || (isCustomRuntime(state.runtime) && !isSupportedCustomRuntimeTemplates(state.functionTemplate))) {
       return false;
     }
@@ -194,7 +199,7 @@ async function process(context: vscode.ExtensionContext, serviceName: string, te
       await createCodeFile(type, runtime, codeUriPath);
     }
   }
-  
+
   const state = await collectFuncInfo();
   if (!await validateCreateFuncionState(state)) {
     return;

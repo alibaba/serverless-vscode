@@ -10,7 +10,7 @@ const cp = util.promisify(ncp);
 
 const supportedRuntimes =
   ['nodejs6', 'nodejs8', 'nodejs10', 'nodejs12', 'python2.7', 'python3', 'php7.2', 'java8', 'dotnetcore2.1', 'custom'];
-  const types = ['NORMAL', 'HTTP'];
+const types = ['NORMAL', 'HTTP'];
 
 const supportedSystemRuntimeTemplates =
   ['event-nodejs12', 'event-nodejs10', 'event-nodejs8', 'event-nodejs6', 'event-python3',
@@ -218,7 +218,7 @@ export function createPythonHelloWorldIndexFile(ph: string): boolean {
     const srcPath = path.join(__dirname, '..', '..', 'templates', 'python-helloworld', 'index.py');
     fs.copyFileSync(srcPath, ph);
     return true;
-  } catch(err) {
+  } catch (err) {
     return false;
   }
 }
@@ -228,7 +228,7 @@ export function createPythonHttpIndexFile(ph: string): boolean {
     const srcPath = path.join(__dirname, '..', '..', 'templates', 'python-http', 'index.py');
     fs.copyFileSync(srcPath, ph);
     return true;
-  } catch(err) {
+  } catch (err) {
     return false;
   }
 }
@@ -238,7 +238,7 @@ export function createPhpHelloWorldIndexFile(ph: string): boolean {
     const srcPath = path.join(__dirname, '..', '..', 'templates', 'php-helloworld', 'index.php');
     fs.copyFileSync(srcPath, ph);
     return true;
-  } catch(err) {
+  } catch (err) {
     return false;
   }
 }
@@ -248,7 +248,7 @@ export function createPhpHttpIndexFile(ph: string): boolean {
     const srcPath = path.join(__dirname, '..', '..', 'templates', 'php-http', 'index.php');
     fs.copyFileSync(srcPath, ph);
     return true;
-  } catch(err) {
+  } catch (err) {
     return false;
   }
 }

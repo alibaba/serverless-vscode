@@ -2,6 +2,18 @@
 
 所有对 "Aliyun Serverless" 插件的更改都将记录在这个文件中。
 
+## 1.27.17 - 2021-04-27
+
+### Fixed
+
+1. 修复无法显示工作流的问题。
+
+### Added
+
+1. Service schema 中增加 TracingConfig 字段
+2. Function schema 中增加 InstanceLifecycleConfig 字段
+3. Function ros schema 中增加 InstanceType、CustomContainerConfig、CAPort 以及 AsyncConfiguration 字段
+
 ## 1.27.16 - 2020-12-04
 
 ### Fixed
