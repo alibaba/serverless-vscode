@@ -404,6 +404,11 @@
           "command": "fnf.extension.show.definition.graph",
           "when": "resourceExtname == .yml",
           "group": "navigation"
+        },
+        {
+          "command": "fnf.extension.show.definition.graph",
+          "when": "resourceExtname == .yaml",
+          "group": "navigation"
         }
       ],
       "view/title": [
