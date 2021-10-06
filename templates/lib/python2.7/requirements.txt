@@ -3,7 +3,7 @@ scipy==1.0.0.0
 wand==0.4.4
 opencv-python==3.3.0.10
 matplotlib==2.0.2
-scrapy==1.4.0
+scrapy==1.8.1
 cbor==1.0.0
 aliyun-fc==0.6
 aliyun-fc2==2.1.0
