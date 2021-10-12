@@ -1,7 +1,7 @@
 numpy==1.13.3
 scipy==1.0.0.0
 wand==0.4.4
-opencv-python==3.3.0.10
+opencv-python==3.4.0.12
 matplotlib==2.0.2
 scrapy==1.4.0
 cbor==1.0.0
