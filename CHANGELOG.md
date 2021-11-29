@@ -2,6 +2,12 @@
 
 所有对 "Aliyun Serverless" 插件的更改都将记录在这个文件中。
 
+## 1.27.19 - 2021-11-29
+
+### Fixed
+
+1. 修复 macOS Monterey 系统下，vscode 插件不可用问题
+
 ## 1.27.18 - 2021-09-26
 
 ### Fixed
