@@ -104,7 +104,7 @@ class WindowsFunExecutorGenerator extends FunExecutorGenerator {
     }
     const funFileName = `fun-v${FUN_VERSION}-win.exe`;
     await new Promise((resolve, reject) => {
-      download(`https://gosspublic.alicdn.com/fun/${funFileName}.zip`)
+      download(`https://funcraft-release.oss-accelerate.aliyuncs.com/fun/${funFileName}.zip`)
         .pipe(unzipper.Parse())
         .on('entry', (entry) => {
           const fileName = entry.path;

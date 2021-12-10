@@ -7,6 +7,7 @@
 ### Fixed
 
 1. 修复 macOS Monterey 系统下，vscode 插件不可用问题
+2. 更新 funcraft win exe 的下载地址为 `https://funcraft-release.oss-accelerate.aliyuncs.com/fun/fun-v${FUN_VERSION}-win.exe.zip`
 
 ## 1.27.18 - 2021-09-26
 
